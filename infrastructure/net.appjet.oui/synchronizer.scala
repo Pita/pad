@@ -16,6 +16,9 @@
 
 package net.appjet.oui;
 
+
+//YOURNAME:
+//YOURCOMMENT
 class Synchronizer {
   import java.util.concurrent.locks.ReentrantLock;
   import java.util.concurrent.ConcurrentHashMap;
@@ -23,11 +26,17 @@ class Synchronizer {
   private val lockMap = new ConcurrentHashMap[Object, Lock];
   private val monitor = new Object {};
   
-  private class Lock {
+  private
+ //YOURNAME:
+ //YOURCOMMENT
+ class Lock {
     var users = 0;
     val impl = new ReentrantLock;
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def acquire(key: Object) {
     val lock = monitor.synchronized {
       var lck = lockMap.get(key);
@@ -41,6 +50,9 @@ class Synchronizer {
     lock.impl.lock();
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def isHeld(key: Object): Boolean = {
     monitor.synchronized {
       val lck = lockMap.get(key);
@@ -53,6 +65,9 @@ class Synchronizer {
     }
   }
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def release(key: Object) {
     val lock = monitor.synchronized {
       var lck = lockMap.get(key);
@@ -66,4 +81,7 @@ class Synchronizer {
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 object GlobalSynchronizer extends Synchronizer;

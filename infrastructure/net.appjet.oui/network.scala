@@ -24,27 +24,57 @@ import javax.net.ssl.SSLEngine;
 
 import java.nio.channels.{SocketChannel, SelectionKey};
 
+
+//YOURNAME:
+//YOURCOMMENT
 trait KnowsAboutDispatch extends SelectChannelConnector.ConnectorEndPoint {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def isDispatched: Boolean;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class CometConnectorEndPoint(channel: SocketChannel, selectSet: SelectorManager#SelectSet, key: SelectionKey)
     extends SelectChannelConnector.ConnectorEndPoint(channel, selectSet, key) with KnowsAboutDispatch {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def isDispatched = _dispatched;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class CometSelectChannelConnector extends SelectChannelConnector {
-  override def newEndPoint(channel: SocketChannel, selectSet: SelectorManager#SelectSet, key: SelectionKey) =
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def newEndPoint(channel: SocketChannel, selectSet: SelectorManager#SelectSet, key: SelectionKey) =
     new CometConnectorEndPoint(channel, selectSet, key);
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class CometSslHttpChannelEndPoint(buffers: Buffers, channel: SocketChannel, selectSet: SelectorManager#SelectSet, 
 				  key: SelectionKey, engine: SSLEngine)
     extends SslHttpChannelEndPoint(buffers, channel, selectSet, key, engine) with KnowsAboutDispatch {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def isDispatched = _dispatched;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class CometSslSelectChannelConnector extends SslSelectChannelConnector {
-  override def newEndPoint(channel: SocketChannel, selectSet: SelectorManager#SelectSet, key: SelectionKey) =
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def newEndPoint(channel: SocketChannel, selectSet: SelectorManager#SelectSet, key: SelectionKey) =
     new CometSslHttpChannelEndPoint(this, channel, selectSet, key, createSSLEngine());
 }

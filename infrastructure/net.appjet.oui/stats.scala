@@ -21,19 +21,49 @@ import java.util.Date;
 import scala.collection.mutable.{HashMap, HashSet, Set, Map, ArrayBuffer};
 import scala.util.Sorting;
 
+
+//YOURNAME:
+//YOURCOMMENT
 trait BucketMap extends scala.collection.mutable.Map[int, BucketedLastHits] {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def t = 1000*60;
-  override def apply(s: int) = synchronized { getOrElseUpdate(s, new BucketedLastHits(t)) };
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def apply(s: int) = synchronized { getOrElseUpdate(s, new BucketedLastHits(t)) };
+
+  //YOURNAME:
+  //YOURCOMMENT
   def counts = { val p = this; new scala.collection.Map.Projection[int, int] {
+
+    //YOURNAME:
+    //YOURCOMMENT
     def size = p.size;
+
+    //YOURNAME:
+    //YOURCOMMENT
     def get(s: int) = p.get(s).map(_.count);
+
+    //YOURNAME:
+    //YOURCOMMENT
     def elements = p.elements.map(o => (o._1, o._2.count));
   }};
 }
 
-abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpdate: Boolean) {
+abstract
+ //YOURNAME:
+ //YOURCOMMENT
+ class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpdate: Boolean) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long, noUpdate: Boolean) = 
     this(size, Math.max(100, if (noUpdate) 1 else (size/60000).toInt), noUpdate)
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long) = this(size, false);
 
   val buckets = new Array[A](numbuckets);
@@ -42,12 +72,18 @@ abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpd
   var lastSwitch = System.currentTimeMillis();
   var currentBucket = 0;
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def withSyncUpdate[E](block: E): E = synchronized {
     updateBuckets();
     block;
   }
   
-  protected def bucketAtTime(d: Date) = {
+  protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketAtTime(d: Date) = {
     val msAgo = lastSwitch - d.getTime();
     val bucketsAgo = Math.floor(msAgo/millisPerBucket).asInstanceOf[Int];
     if (bucketsAgo < numbuckets) {
@@ -60,7 +96,10 @@ abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpd
     }
   }
 
-  protected def updateBuckets(): Unit = {
+  protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def updateBuckets(): Unit = {
     if (! noUpdate) {
       val now = System.currentTimeMillis();
       while (now > lastSwitch + millisPerBucket) {
@@ -71,13 +110,25 @@ abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpd
     }
   }
   
-  protected def bucketClear(index: Int);
-  protected def bucketsInOrder: Seq[A] = 
+  protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketClear(index: Int);
+  protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketsInOrder: Seq[A] = 
     buckets.slice((currentBucket+1)%numbuckets, numbuckets) ++ 
     buckets.slice(0, currentBucket)
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def mergeBuckets(b: Seq[A]): B;
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def history(bucketsPerSample: Int, numSamples: Int): Array[B] = withSyncUpdate {
     val bseq = bucketsInOrder.reverse.take(bucketsPerSample*numSamples);
     val sampleCount = Math.min(numSamples, bseq.length);
@@ -87,7 +138,13 @@ abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpd
       }
     samples.reverse.toArray;
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def latest(bucketsPerSample: Int): B = history(bucketsPerSample, 1)(0);
+
+  //YOURNAME:
+  //YOURCOMMENT
   def count: B = withSyncUpdate { mergeBuckets(buckets); }
     
   for (i <- 0 until numbuckets) {
@@ -95,18 +152,33 @@ abstract class BucketKeeper[A, B](val size: Long, val numbuckets: int, val noUpd
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class BucketedUniques(size: Long, noUpdate: Boolean) 
 extends BucketKeeper[Set[Any], Int](size, noUpdate) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long) = this(size, false);
       
-  override protected def bucketClear(index: Int): Unit = {
+  override protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketClear(index: Int): Unit = {
     buckets(index) = new HashSet[Any];
   }
   
-  override def mergeBuckets(b: Seq[Set[Any]]) = {
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def mergeBuckets(b: Seq[Set[Any]]) = {
     b.foldLeft(scala.collection.immutable.Set[Any]())(_ ++ _).size;
   }
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date, value: Any): Unit = withSyncUpdate {
     for (bucket <- bucketAtTime(d)) {
       buckets(bucket) += value;      
@@ -114,15 +186,27 @@ extends BucketKeeper[Set[Any], Int](size, noUpdate) {
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class BucketedValueCounts(size: Long, noUpdate: Boolean) 
 extends BucketKeeper[HashMap[String, Int], (Int, Map[String, Int])](size, noUpdate) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long) = this(size, false);
   
-  override protected def bucketClear(index: Int): Unit = {
+  override protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketClear(index: Int): Unit = {
     buckets(index) = new HashMap[String, Int];
   }
 
-  override def mergeBuckets(b: Seq[HashMap[String, Int]]) = {
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def mergeBuckets(b: Seq[HashMap[String, Int]]) = {
     val out = new HashMap[String, Int];
     var total = 0;
     for (m <- b) {
@@ -134,6 +218,9 @@ extends BucketKeeper[HashMap[String, Int], (Int, Map[String, Int])](size, noUpda
     (total, out);    
   }
     
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date, value: String, increment: Int): Unit = withSyncUpdate {
     for (bucket <- bucketAtTime(d)) {
       buckets(bucket)(value) = 
@@ -141,6 +228,9 @@ extends BucketKeeper[HashMap[String, Int], (Int, Map[String, Int])](size, noUpda
     }
   }
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date, value: String): Unit = hit(d, value, 1);
 }
     
@@ -149,19 +239,37 @@ extends BucketKeeper[HashMap[String, Int], (Int, Map[String, Int])](size, noUpda
  * Keeps track of how many "hits" in the last size milliseconds.
  * Has granularity speicified by numbuckets.
  */
+
+//YOURNAME:
+//YOURCOMMENT
 class BucketedLastHits(size: Long, noUpdate: Boolean) 
 extends BucketKeeper[Int, Int](size, noUpdate) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long) = this(size, false);
       
-  override protected def bucketClear(index: int): Unit = {
+  override protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketClear(index: int): Unit = {
     buckets(index) = 0;
   }
 
-  override def mergeBuckets(b: Seq[Int]) = {
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def mergeBuckets(b: Seq[Int]) = {
     b.foldRight(0)(_+_);
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date): Unit = hit(d, 1);
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date, n: Int): Unit = withSyncUpdate {
     for (bucket <- bucketAtTime(d)) {
       buckets(bucket) = buckets(bucket) + n;
@@ -169,16 +277,28 @@ extends BucketKeeper[Int, Int](size, noUpdate) {
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class BucketedLastHitsHistogram(size: Long, noUpdate: Boolean)
 extends BucketKeeper[ArrayBuffer[Int], Function1[Float, Int]](size, noUpdate) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(size: Long) = this(size, false);
   
-  override protected def bucketClear(index: Int): Unit = {
+  override protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def bucketClear(index: Int): Unit = {
     buckets(index) = new ArrayBuffer[Int];
   }
 
   // elements will end up sorted.
-  protected def histogramFunction(elements: Array[Int]): Function1[Float, Int] = {
+  protected
+ //YOURNAME:
+ //YOURCOMMENT
+ def histogramFunction(elements: Array[Int]): Function1[Float, Int] = {
     Sorting.quickSort(elements);
     (percentile: Float) => {
       if (elements.length == 0) {
@@ -190,7 +310,10 @@ extends BucketKeeper[ArrayBuffer[Int], Function1[Float, Int]](size, noUpdate) {
     }    
   }
   
-  override def mergeBuckets(b: Seq[ArrayBuffer[Int]]) = {
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def mergeBuckets(b: Seq[ArrayBuffer[Int]]) = {
     val elements = new Array[Int](b.foldRight(0)(_.size + _));
     var currentIndex = 0;
     for (bucket <- b if bucket.length > 0) {
@@ -203,7 +326,13 @@ extends BucketKeeper[ArrayBuffer[Int], Function1[Float, Int]](size, noUpdate) {
     histogramFunction(elements);
   }
     
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date): Unit = hit(d, 1);
+
+  //YOURNAME:
+  //YOURCOMMENT
   def hit(d: Date, n: Int): Unit = withSyncUpdate {
     for (bucket <- bucketAtTime(d)) {
       buckets(bucket) += n;
@@ -211,6 +340,9 @@ extends BucketKeeper[ArrayBuffer[Int], Function1[Float, Int]](size, noUpdate) {
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 object appstats {
   val minutelyStatus = new HashMap[int, BucketedLastHits] with BucketMap;
   val hourlyStatus = new HashMap[int, BucketedLastHits] with BucketMap { override val t = 1000*60*60 };

@@ -16,12 +16,21 @@
 
 package net.appjet.oui;
 
+
+//YOURNAME:
+//YOURCOMMENT
 class NoninheritedDynamicVariable[T](init: T) {
   private val tl = new ThreadLocal[T] {
-    override def initialValue = init.asInstanceOf[T with AnyRef]
+    override
+ //YOURNAME:
+ //YOURCOMMENT
+ def initialValue = init.asInstanceOf[T with AnyRef]
   }
 
   /** Retrieve the current value */
+
+  //YOURNAME:
+  //YOURCOMMENT
   def value: T = tl.get.asInstanceOf[T]
   
    
@@ -31,6 +40,9 @@ class NoninheritedDynamicVariable[T](init: T) {
     * @param newval The value to which to set the fluid
     * @param thunk The code to evaluate under the new setting
     */
+
+  //YOURNAME:
+  //YOURCOMMENT
   def withValue[S](newval: T)(thunk: =>S): S = {
     val oldval = value
     tl.set(newval)
@@ -43,7 +55,13 @@ class NoninheritedDynamicVariable[T](init: T) {
   /** Change the currently bound value, discarding the old value.
     * Usually <code>withValue()</code> gives better semantics.
     */
+
+  //YOURNAME:
+  //YOURCOMMENT
   def value_=(newval: T) = { tl.set(newval) }
   
-  override def toString: String = "NoninheritedDynamicVariable(" + value  +")"
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def toString: String = "NoninheritedDynamicVariable(" + value  +")"
 }

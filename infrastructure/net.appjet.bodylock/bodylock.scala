@@ -22,20 +22,47 @@ import scala.collection.mutable.{SynchronizedMap, ArrayBuffer, HashMap};
 
 import org.mozilla.javascript.{Context, Scriptable, ScriptableObject, Script, JavaScriptException, NativeJavaObject, WrappedException, IdScriptableObject};
 
+
+//YOURNAME:
+//YOURCOMMENT
 trait Executable {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def execute(scope: Scriptable): Object;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 trait JSStackFrame {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def errorLine: Int; // 1-indexed.
+
+  //YOURNAME:
+  //YOURCOMMENT
   def errorContext(rad: Int): (Int, Int, Seq[String]); // 1-indexed
+
+  //YOURNAME:
+  //YOURCOMMENT
   def name: String;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class ExecutionException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def this(message: String) = this(message, null);
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class JSRuntimeException(val message: String, val cause: Throwable) extends ExecutionException(message, cause) {
   private val i_frames: Seq[JSStackFrame] = if (cause == null) List() else {
     val ab = new ArrayBuffer[JSStackFrame];
@@ -44,6 +71,9 @@ class JSRuntimeException(val message: String, val cause: Throwable) extends Exec
         val errorLine = elt.getLineNumber;
         val name = elt.getFileName;
         val code = BodyLock.map.getOrElse(Map[String, String]()).getOrElse(elt.getFileName, "").split("\n"); // 0-indexed.
+
+        //YOURNAME:
+        //YOURCOMMENT
         def errorContext(rad: Int) = {
           val start_i = Math.max(errorLine-rad, 1)-1;
           val end_i = Math.min(errorLine+rad, code.length)-1;
@@ -53,15 +83,24 @@ class JSRuntimeException(val message: String, val cause: Throwable) extends Exec
     }
     ab;
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def frames = i_frames;
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 class JSCompileException(message: String, cause: org.mozilla.javascript.EvaluatorException) extends JSRuntimeException(message, cause) {
   override val frames =
     List(new JSStackFrame {
       val errorLine = cause.lineNumber();
       val name = cause.sourceName();
       val code = BodyLock.map.getOrElse(Map[String, String]()).getOrElse(cause.sourceName(), "").split("\n"); // 0-indexed.
+
+      //YOURNAME:
+      //YOURCOMMENT
       def errorContext(rad: Int) = {
         val start_i = Math.max(errorLine-rad, 1)-1;
         val end_i = Math.min(errorLine+rad, code.length)-1;
@@ -70,7 +109,13 @@ class JSCompileException(message: String, cause: org.mozilla.javascript.Evaluato
     }).concat(List(super.frames: _*));
 }
 
-private[bodylock] class InnerExecutable(val code: String, val script: Script) extends Executable {
+private[bodylock]
+ //YOURNAME:
+ //YOURCOMMENT
+ class InnerExecutable(val code: String, val script: Script) extends Executable {
+
+  //YOURNAME:
+  //YOURCOMMENT
   def execute(scope: Scriptable) = try {
     BodyLock.runInContext { cx =>
       script.exec(cx, scope);
@@ -86,25 +131,43 @@ private[bodylock] class InnerExecutable(val code: String, val script: Script) ex
     }
   }
 
-  override def toString() = 
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def toString() = 
     rhinospect.dumpFields(script, 1, "");
 }   
 
+
+//YOURNAME:
+//YOURCOMMENT
 object CustomContextFactory extends org.mozilla.javascript.ContextFactory {
   val wrapFactory = new org.mozilla.javascript.WrapFactory {
     setJavaPrimitiveWrap(false); // don't wrap strings, numbers, booleans
   }
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   class CustomContext() extends Context() {
     setWrapFactory(wrapFactory);
   }
   
-  override def makeContext(): Context = new CustomContext();
+  override
+ //YOURNAME:
+ //YOURCOMMENT
+ def makeContext(): Context = new CustomContext();
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 object BodyLock {
   var map: Option[SynchronizedMap[String, String]] = None;
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def runInContext[E](expr: Context => E): E = {
     val cx = CustomContextFactory.enterContext();
     try {
@@ -114,9 +177,15 @@ object BodyLock {
     }
   } 
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def newScope = runInContext { cx =>
     cx.initStandardObjects(null, true);
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def subScope(scope: Scriptable) = runInContext { cx =>
     val newObj = cx.newObject(scope).asInstanceOf[ScriptableObject];
     newObj.setPrototype(scope);
@@ -124,10 +193,16 @@ object BodyLock {
     newObj;
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def evaluateString(scope: Scriptable, source: String, sourceName: String, 
                      lineno: Int /*, securityDomain: AnyRef = null */) = runInContext { cx =>
     cx.evaluateString(scope, source, sourceName, lineno, null);
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def compileString(source: String, sourceName: String, lineno: Int
                     /*, securityDomain: AnyRef = null */) = runInContext { cx =>
     map.foreach(_(sourceName) = source);
@@ -140,20 +215,50 @@ object BodyLock {
     }
   }
 
-  private val classId = new java.util.concurrent.atomic.AtomicInteger(0);
+  private val
+ //YOURNAME:
+ //YOURCOMMENT
+ classId = new java.util.concurrent.atomic.AtomicInteger(0);
   
-  private def compileToScript(source: String, sourceName: String, lineNumber: Int): Script = {
-    val className = "JS$"+sourceName.replaceAll("[^a-zA-Z0-9]", "\\$")+"$"+classId.incrementAndGet();
-    compilationutils.compileToScript(source, sourceName, lineNumber, className);
+  private
+ //YOURNAME:
+ //YOURCOMMENT
+ def compileToScript(source: String, sourceName: String, lineNumber: Int): Script = {
+    val
+ //YOURNAME:
+ //YOURCOMMENT
+ className = "JS$"+sourceName.replaceAll("[^a-zA-Z0-9]", "\\$")+"$"+
+//YOURNAME:
+//YOURCOMMENT
+classId.incrementAndGet();
+    compilationutils.compileToScript(source, sourceName, lineNumber,
+ //YOURNAME:
+ //YOURCOMMENT
+ className);
   }
 
-  def executableFromBytes(bytes: Array[byte], className: String) =
-    new InnerExecutable("(source not available)", compilationutils.bytesToScript(bytes, className));
+
+  //YOURNAME:
+  //YOURCOMMENT
+  def executableFromBytes(bytes: Array[byte],
+ //YOURNAME:
+ //YOURCOMMENT
+ className: String) =
+    new InnerExecutable("(source not available)", compilationutils.bytesToScript(bytes,
+ //YOURNAME:
+ //YOURCOMMENT
+ className));
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def unwrapExceptionIfNecessary(e: Throwable): Throwable = {
     e match {
       case e: JavaScriptException => e.getValue() match {
-        case njo: NativeJavaObject => Context.jsToJava(njo, classOf[Object]) match {
+        case njo: NativeJavaObject => Context.jsToJava(njo,
+ //YOURNAME:
+ //YOURCOMMENT
+ classOf[Object]) match {
           case e: Throwable => e;
           case _ => e;
         }
@@ -167,16 +272,46 @@ object BodyLock {
   }
 }
 
+
+//YOURNAME:
+//YOURCOMMENT
 private[bodylock] object compilationutils {
+
+  //YOURNAME:
+  //YOURCOMMENT
   class Loader(parent: ClassLoader) extends ClassLoader(parent) {
+
+    //YOURNAME:
+    //YOURCOMMENT
     def this() = this(getClass.getClassLoader);
-    def defineClass(className: String, bytes: Array[Byte]): Class[_] = {
+
+    //YOURNAME:
+    //YOURCOMMENT
+    def
+ //YOURNAME:
+ //YOURCOMMENT
+ defineClass(
+//YOURNAME:
+//YOURCOMMENT
+className: String, bytes: Array[Byte]): Class[_] = {
       // call protected method
-      defineClass(className, bytes, 0, bytes.length);
+
+      //YOURNAME:
+      //YOURCOMMENT
+      defineClass(
+//YOURNAME:
+//YOURCOMMENT
+className, bytes, 0, bytes.length);
     }
   }
   
+
+  //YOURNAME:
+  //YOURCOMMENT
   def compileToBytes(source: String, sourceName: String, lineNumber: Int,
+
+                     //YOURNAME:
+                     //YOURCOMMENT
                      className: String): Array[Byte] = {
     val environs = new org.mozilla.javascript.CompilerEnvirons;
     BodyLock.runInContext(environs.initFromContext(_));
@@ -185,19 +320,52 @@ private[bodylock] object compilationutils {
     
     // throws EvaluatorException
     val result:Array[Object] =
-      compiler.compileToClassFiles(source, sourceName, lineNumber, className);
+      compiler.compileToClassFiles(source, sourceName, lineNumber,
+ //YOURNAME:
+ //YOURCOMMENT
+ className);
     
-    // result[0] is class name, result[1] is class bytes
+    // result[0] is
+ //YOURNAME:
+ //YOURCOMMENT
+ class name, result[1] is
+ //YOURNAME:
+ //YOURCOMMENT
+ class bytes
     result(1).asInstanceOf[Array[Byte]];
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def compileToScript(source: String, sourceName: String, lineNumber: Int,
+
+                       //YOURNAME:
+                       //YOURCOMMENT
                        className: String): Script = {
-    bytesToScript(compileToBytes(source, sourceName, lineNumber, className), className);
+    bytesToScript(compileToBytes(source, sourceName, lineNumber,
+ //YOURNAME:
+ //YOURCOMMENT
+ className),
+ //YOURNAME:
+ //YOURCOMMENT
+ className);
   }
 
-  def bytesToScript(bytes: Array[Byte], className: String): Script = {
-    (new Loader()).defineClass(className, bytes).newInstance.asInstanceOf[Script];
+
+  //YOURNAME:
+  //YOURCOMMENT
+  def bytesToScript(bytes: Array[Byte],
+ //YOURNAME:
+ //YOURCOMMENT
+ className: String): Script = {
+    (new Loader()).
+//YOURNAME:
+//YOURCOMMENT
+defineClass(
+//YOURNAME:
+//YOURCOMMENT
+className, bytes).newInstance.asInstanceOf[Script];
   }
 }
 
@@ -207,9 +375,15 @@ import scala.collection.mutable.HashMap;
 import net.appjet.common.util.BetterFile;
 import net.appjet.common.cli._;
 
+
+//YOURNAME:
+//YOURCOMMENT
 object Compiler {
   val optionsList = Array(
-    ("destination", true, "Destination for class files", "path"),
+    ("destination", true, "Destination for
+ //YOURNAME:
+ //YOURCOMMENT
+ class files", "path"),
     ("cutPrefix", true, "Drop this prefix from files", "path"),
     ("verbose", false, "Print debug information", "")
   );
@@ -234,13 +408,22 @@ object Compiler {
 //   }
 
   var verbose = true;
+
+  //YOURNAME:
+  //YOURCOMMENT
   def vprintln(s: String) {
     if (verbose) println(s);
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def printUsage() {
     println((new CliParser(options)).usage);
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def extractOptions(args0: Array[String]) = {
     val parser = new CliParser(options);
     val (opts, args) = 
@@ -259,15 +442,27 @@ object Compiler {
     }
     args
   }
+
+  //YOURNAME:
+  //YOURCOMMENT
   def compileSingleFile(src: File, dst: File) {
     val source = BetterFile.getFileContents(src);
     vprintln("to: "+dst.getPath());
-    val classBytes = compilationutils.compileToBytes(source, src.getName(), 1, dst.getName().split("\\.")(0));
+    val
+ //YOURNAME:
+ //YOURCOMMENT
+ classBytes = compilationutils.compileToBytes(source, src.getName(), 1, dst.getName().split("\\.")(0));
 
     val fos = new java.io.FileOutputStream(dst);
-    fos.write(classBytes);
+    fos.write(
+//YOURNAME:
+//YOURCOMMENT
+classBytes);
   }
 
+
+  //YOURNAME:
+  //YOURCOMMENT
   def main(args0: Array[String]) {
     // should contain paths, relative to PWD, of javascript files to compile.
     val args = extractOptions(args0);
@@ -285,7 +480,10 @@ object Compiler {
           new File(dst);
         }
       parentDir.mkdirs();
-      compileSingleFile(srcFile, new File(parentDir.getPath()+"/JS$"+srcFile.getName().split("\\.").reverse.drop(1).reverse.mkString(".").replaceAll("[^a-zA-Z0-9]", "\\$")+".class"));
+      compileSingleFile(srcFile, new File(parentDir.getPath()+"/JS$"+srcFile.getName().split("\\.").reverse.drop(1).reverse.mkString(".").replaceAll("[^a-zA-Z0-9]", "\\$")+".
+//YOURNAME:
+//YOURCOMMENT
+class"));
     }
   }
 }
