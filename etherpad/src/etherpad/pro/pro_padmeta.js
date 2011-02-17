@@ -21,11 +21,17 @@ import("sync");
 import("etherpad.pad.padutils");
 import("etherpad.pro.pro_pad_db");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doWithProPadLock(domainId, localPadId, func) {
   var lockName = ["pro-pad", domainId, localPadId].join("/");
   return sync.doWithStringLock(lockName, func);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function accessProPad(globalPadId, fn) {
   // retrieve pad from cache
   var domainId = padutils.getDomainId(globalPadId);
@@ -35,25 +41,58 @@ function accessProPad(globalPadId, fn) {
   var localPadId = padutils.globalToLocalId(globalPadId);
   var padRecord = pro_pad_db.getSingleRecord(domainId, localPadId);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _doWithProPadLock(domainId, localPadId, function() {
     var isDirty = false;
 
     var proPad = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       exists: function() { return !!padRecord; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       getDomainId: function() { return domainId; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       getLocalPadId: function() { return localPadId; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       getGlobalId: function() { return globalPadId; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       getDisplayTitle: function() { return padutils.getProDisplayTitle(localPadId, padRecord.title); },
+
+      // YOURNAME:
+      // YOURCOMMENT
       setTitle: function(newTitle) {
         padRecord.title = newTitle;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       isDeleted: function() { return padRecord.isDeleted; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       markDeleted: function() {
         padRecord.isDeleted = true;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       getPassword: function() { return padRecord.password; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       setPassword: function(newPass) {
         if (newPass == "") {
           newPass = null;
@@ -61,19 +100,34 @@ function accessProPad(globalPadId, fn) {
         padRecord.password = newPass;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       isArchived: function() { return padRecord.isArchived; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       markArchived: function() {
         padRecord.isArchived = true;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       unmarkArchived: function() {
         padRecord.isArchived = false;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       setLastEditedDate: function(d) {
         padRecord.lastEditedDate = d;
         isDirty = true;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       addEditor: function(editorId) {
         var es = String(editorId);
         if (es && es.length > 0 && stringutils.isNumeric(editorId)) {
@@ -84,6 +138,9 @@ function accessProPad(globalPadId, fn) {
           isDirty = true;
         }
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       setLastEditor: function(editorId) {
         var es = String(editorId);
         if (es && es.length > 0 && stringutils.isNumeric(editorId)) {
@@ -104,6 +161,9 @@ function accessProPad(globalPadId, fn) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function accessProPadLocal(localPadId, fn) {
    var globalPadId = padutils.getGlobalPadId(localPadId);
    return accessProPad(globalPadId, fn);

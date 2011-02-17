@@ -20,14 +20,23 @@ import("fastJSON");
 
 import("etherpad.statistics.statistics");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (isPrivateNetworkEdition()) {
     return;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   statistics.getAllStatNames().forEach(function(statName) {
     if (statistics.getStatData(statName).dataType == 'topValues') {
       var entries = sqlobj.selectMulti('statistics', {name: statName});
+
+      // YOURNAME:
+      // YOURCOMMENT
       entries.forEach(function(statEntry) {
         var value = fastJSON.parse(statEntry.value);
         value.topValues = value.topValues.slice(0, 50);

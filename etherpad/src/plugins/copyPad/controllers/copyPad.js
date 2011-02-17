@@ -34,6 +34,9 @@ import("etherpad.pad.model");
 import("etherpad.collab.server_utils");
 import("etherpad.collab.collab_server.buildHistoricalAuthorDataMapForPadHistory");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function formatAuthorData(historicalAuthorData) {
   var authors_all = [];
   for (var author in historicalAuthorData) {
@@ -52,6 +55,9 @@ function formatAuthorData(historicalAuthorData) {
   return authors;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createCopy(localPadId, pad, clonePadId, cloneRevNum) {
   if (pad.exists()) {
     throw new Error("Destination pad already exists");
@@ -67,6 +73,9 @@ function createCopy(localPadId, pad, clonePadId, cloneRevNum) {
     usePadId = padutils.getGlobalPadId(clonePadId);
   }
  
+
+  // YOURNAME:
+  // YOURCOMMENT
   var cloneData = model.accessPadGlobal(usePadId, function(pad) {
     if (cloneRevNum == undefined)
       cloneRevNum = pad.getHeadRevisionNumber();
@@ -84,6 +93,9 @@ function createCopy(localPadId, pad, clonePadId, cloneRevNum) {
   return;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (request.params['old'] == undefined) {
     throw new Error("No source pad specified");
@@ -99,6 +111,9 @@ function onRequest() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     createCopy(padId, pad, request.params.old, request.params.old_rev);
     response.redirect('/'+ padId);

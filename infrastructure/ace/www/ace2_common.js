@@ -15,16 +15,28 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isNodeText(node) {
   return (node.nodeType == 3);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function object(o) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var f = function() {};
   f.prototype = o;
   return new f();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extend(obj, props) {
   for(var p in props) {
     obj[p] = props[p];
@@ -32,6 +44,9 @@ function extend(obj, props) {
   return obj;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function forEach(array, func) {
   for(var i=0;i<array.length;i++) {
     var result = func(array[i], i);
@@ -39,6 +54,9 @@ function forEach(array, func) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function map(array, func) {
   var result = [];
   // must remain compatible with "arguments" pseudo-array
@@ -49,6 +67,9 @@ function map(array, func) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function filter(array, func) {
   var result = [];
   // must remain compatible with "arguments" pseudo-array
@@ -58,6 +79,9 @@ function filter(array, func) {
   return result;  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isArray(testObject) {
   return testObject && typeof testObject === 'object' &&
     !(testObject.propertyIsEnumerable('length')) &&
@@ -75,10 +99,16 @@ var browser = {
   windows: /windows/.test(userAgent) // dgreensp
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAssoc(obj, name) {
   return obj["_magicdom_"+name];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setAssoc(obj, name, value) {
   // note that in IE designMode, properties of a node can get
   // copied to new nodes that are spawned during editing; also,
@@ -86,9 +116,15 @@ function setAssoc(obj, name, value) {
   obj["_magicdom_"+name] = value;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // "func" is a function over 0..(numItems-1) that is monotonically
 // "increasing" with index (false, then true).  Finds the boundary
 // between false and true, a number between 0 and numItems inclusive.
+
+// YOURNAME:
+// YOURCOMMENT
 function binarySearch(numItems, func) {
   if (numItems < 1) return 0;
   if (func(0)) return 0;
@@ -103,12 +139,18 @@ function binarySearch(numItems, func) {
   return high;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function binarySearchInfinite(expectedLength, func) {
   var i = 0;
   while (!func(i)) i += expectedLength;
   return binarySearch(i, func);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function htmlPrettyEscape(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/\r?\n/g, '\\n');

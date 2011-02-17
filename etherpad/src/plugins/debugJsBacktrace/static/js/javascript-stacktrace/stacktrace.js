@@ -51,6 +51,9 @@
  * @cfg {Error} e The error to create a stacktrace from (optional)
  * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function printStackTrace(options) {
     var ex = (options && options.e) ? options.e : null;
     var guess = options ? !!options.guess : true;
@@ -60,9 +63,15 @@ function printStackTrace(options) {
     return (guess) ? p.guessFunctions(result) : result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 printStackTrace.implementation = function() {};
 
 printStackTrace.implementation.prototype = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     run: function(ex) {
         // Use either the stored mode, or resolve it
         var mode = this._mode || this.mode();
@@ -70,6 +79,9 @@ printStackTrace.implementation.prototype = {
             return this.other(arguments.callee);
         } else {
             ex = ex ||
+
+                // YOURNAME:
+                // YOURCOMMENT
                 (function() {
                     try {
                         (0)();
@@ -81,6 +93,9 @@ printStackTrace.implementation.prototype = {
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     mode: function() {
         try {
             (0)();
@@ -98,6 +113,9 @@ printStackTrace.implementation.prototype = {
         return (this._mode = 'other');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     chrome: function(e) {
         return e.stack.replace(/^.*?\n/, '').
                 replace(/^.*?\n/, '').
@@ -108,6 +126,9 @@ printStackTrace.implementation.prototype = {
                 split('\n');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     firefox: function(e) {
         return e.stack.replace(/^.*?\n/, '').
                 replace(/(?:\n@:0)?\s+$/m, '').
@@ -115,14 +136,23 @@ printStackTrace.implementation.prototype = {
                 split('\n');
     },
 
+
+// YOURNAME:
+// YOURCOMMENT
 	opera10: function(e) {
 		var stack = e.stacktrace;
 		var lines = stack.split('\n'), ANON = '{anonymous}',
+
+// YOURNAME:
+// YOURCOMMENT
 			lineRE = /.*?line (\d+), column (\d+) in ((<anonymous function\:?\s*(\S+))|([^\(]+)\([^\)]*\))(?: in )?(.*)\s*$/i, i, j, len;
 		for (i = 2, j = 0, len = lines.length; i < len - 2; i++) {
 	        if (lineRE.test(lines[i])) {
 				var location = RegExp.$6 + ':' + RegExp.$1 + ':' + RegExp.$2;
 				var fnName = RegExp.$3;
+
+// YOURNAME:
+// YOURCOMMENT
 				fnName = fnName.replace(/<anonymous function\s?(\S+)?>/g, ANON);
 				lines[j++] = fnName + '@' + location;
 	        }
@@ -133,8 +163,14 @@ printStackTrace.implementation.prototype = {
 	},
     
     // Opera 7.x-9.x only!
+
+    // YOURNAME:
+    // YOURCOMMENT
     opera: function(e) {
         var lines = e.message.split('\n'), ANON = '{anonymous}', 
+
+            // YOURNAME:
+            // YOURCOMMENT
             lineRE = /Line\s+(\d+).*?script\s+(http\S+)(?:.*?in\s+function\s+(\S+))?/i, i, j, len;
         
         for (i = 4, j = 0, len = lines.length; i < len; i += 2) {
@@ -148,7 +184,13 @@ printStackTrace.implementation.prototype = {
     },
     
     // Safari, IE, and others
+
+    // YOURNAME:
+    // YOURCOMMENT
     other: function(curr) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var ANON = '{anonymous}', fnRE = /function\s*([\w\-$]+)?\s*\(/i, stack = [], j = 0, fn, args;
         
         var maxStackSize = 10;
@@ -164,6 +206,9 @@ printStackTrace.implementation.prototype = {
     /**
      * @return given arguments array as a String, subsituting type names for non-string types.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     stringifyArguments: function(args) {
         for (var i = 0; i < args.length; ++i) {
             var arg = args[i];
@@ -195,6 +240,9 @@ printStackTrace.implementation.prototype = {
     /**
      * @return the text from a given URL.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     ajax: function(url) {
         var req = this.createXMLHTTPObject();
         if (!req) {
@@ -206,15 +254,30 @@ printStackTrace.implementation.prototype = {
         return req.responseText;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     createXMLHTTPObject: function() {
         // Try XHR methods in order and store XHR factory
         var xmlhttp, XMLHttpFactories = [
+
+            // YOURNAME:
+            // YOURCOMMENT
             function() {
                 return new XMLHttpRequest();
+
+            // YOURNAME:
+            // YOURCOMMENT
             }, function() {
                 return new ActiveXObject('Msxml2.XMLHTTP');
+
+            // YOURNAME:
+            // YOURCOMMENT
             }, function() {
                 return new ActiveXObject('Msxml3.XMLHTTP');
+
+            // YOURNAME:
+            // YOURCOMMENT
             }, function() {
                 return new ActiveXObject('Microsoft.XMLHTTP');
             }
@@ -235,6 +298,9 @@ printStackTrace.implementation.prototype = {
 	 * @param url <String> source url
 	 * @return False if we need a cross-domain request
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	isSameDomain: function(url) {
 		return url.indexOf(location.hostname) !== -1;
 	},
@@ -245,6 +311,9 @@ printStackTrace.implementation.prototype = {
 	 * @param url <String> JS source URL
 	 * @return <String> Source code
 	 */
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSource: function(url) {
         if (!(url in this.sourceCache)) {
             this.sourceCache[url] = this.ajax(url).split('\n');
@@ -252,6 +321,9 @@ printStackTrace.implementation.prototype = {
         return this.sourceCache[url];
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     guessFunctions: function(stack) {
         for (var i = 0; i < stack.length; ++i) {
             var reStack = /{anonymous}\(.*\)@(\w+:\/\/([-\w\.]+)+(:\d+)?[^:]+):(\d+):?(\d+)?/;
@@ -259,6 +331,9 @@ printStackTrace.implementation.prototype = {
             if (m) {
                 var file = m[1], lineno = m[4]; //m[7] is character position in Chrome
                 if (file && this.isSameDomain(file) && lineno) {
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     var functionName = this.guessFunctionName(file, lineno);
                     stack[i] = frame.replace('{anonymous}', functionName);
                 }
@@ -267,6 +342,9 @@ printStackTrace.implementation.prototype = {
         return stack;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     guessFunctionName: function(url, lineNo) {
         try {
             return this.guessFunctionNameFromLines(lineNo, this.getSource(url));
@@ -275,7 +353,13 @@ printStackTrace.implementation.prototype = {
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     guessFunctionNameFromLines: function(lineNo, source) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var reFunctionArgNames = /function ([^(]*)\(([^)]*)\)/;
         var reGuessFunction = /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*(function|eval|new Function)/;
         // Walk backwards from the first line in the function until we find the line which

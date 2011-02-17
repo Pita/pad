@@ -17,6 +17,9 @@
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (sqlcommon.doesTableExist("pad_guests")) {
     sqlobj.dropTable("pad_guests");

@@ -16,8 +16,14 @@
 
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   var recordList = sqlobj.selectMulti('pro_domains', {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   recordList.forEach(function(r) {
     var subDomain = r.subDomain;
     if (subDomain != subDomain.toLowerCase()) {

@@ -29,10 +29,16 @@ import("etherpad.utils.renderTemplateAsString");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function recurringBillingNotifyUrl() {
   return "";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _billing() {
   if (! appjet.cache.billing) {
     appjet.cache.billing = {};
@@ -40,6 +46,9 @@ function _billing() {
   return appjet.cache.billing;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _lpad(str, width, padDigit) {
   str = String(str);
   padDigit = (padDigit === undefined ? ' ' : padDigit);
@@ -53,12 +62,21 @@ function _lpad(str, width, padDigit) {
 
 // utility functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dayToDateTime(date) {
   return [date.getFullYear(), _lpad(date.getMonth()+1, 2, '0'), _lpad(date.getDate(), 2, '0')].join("-");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _createInvoice(subscription) {
   var maxUsers = getMaxUsers(subscription.customer);
+
+  // YOURNAME:
+  // YOURCOMMENT
   var invoice = inTransaction(function() {
     var invoiceId = billing.createInvoice();
     billing.updateInvoice(
@@ -74,6 +92,9 @@ function _createInvoice(subscription) {
   return invoice;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getExpiredSubscriptions(date) {
   return sqlobj.selectMulti('billing_purchase',
                             {type: 'subscription', 
@@ -81,17 +102,29 @@ function getExpiredSubscriptions(date) {
                              paidThrough: ['<', _dayToDateTime(date)]});  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllSubscriptions() {
   return sqlobj.selectMulti('billing_purchase', {type: 'subscription', status: 'active'});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSubscriptionForCustomer(customerId) {
   return sqlobj.selectSingle('billing_purchase',
                              {type: 'subscription',
                               customer: customerId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getOrCreateInvoice(subscription) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return inTransaction(function() {
     var existingInvoice = 
       sqlobj.selectSingle('billing_invoice',
@@ -104,39 +137,63 @@ function getOrCreateInvoice(subscription) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLatestPendingInvoice(subscriptionId) {
   return sqlobj.selectMulti('billing_invoice',
                             {purchase: subscriptionId, status: 'pending'},
                             {orderBy: '-time', limit: 1})[0];  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLatestPaidInvoice(subscriptionId) {
   return sqlobj.selectMulti('billing_invoice',
                             {purchase: subscriptionId, status: 'paid'},
                             {orderBy: '-time', limit: 1})[0];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function pendingTransactions(customer) {
   return billing.getPendingTransactionsForCustomer(customer);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkPendingTransactions(transactions) {
   // XXX: do nothing for now.
   return transactions.length > 0;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRecurringBillingTransactionId(customerId) {
   return sqlobj.selectSingle('billing_payment_info', {customer: customerId}).transaction;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRecurringBillingInfo(customerId) {
   return sqlobj.selectSingle('billing_payment_info', {customer: customerId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clearRecurringBillingInfo(customerId) {
   return sqlobj.deleteRows('billing_payment_info', {customer: customerId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setRecurringBillingInfo(customerId, fullName, email, paymentSummary, expiration, transactionId) {
   var info = {
     fullname: fullName,
@@ -145,6 +202,9 @@ function setRecurringBillingInfo(customerId, fullName, email, paymentSummary, ex
     expiration: expiration,
     transaction: transactionId
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   inTransaction(function() {
     if (sqlobj.selectSingle('billing_payment_info', {customer: customerId})) {
       sqlobj.update('billing_payment_info', {customer: customerId}, info);
@@ -155,38 +215,62 @@ function setRecurringBillingInfo(customerId, fullName, email, paymentSummary, ex
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createSubscription(customerId, couponCode) {
   domainCacheClear(customerId);
+
+  // YOURNAME:
+  // YOURCOMMENT
   return inTransaction(function() {
     return billing.createSubscription(customerId, 'ONDEMAND', 0, couponCode);
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateSubscriptionCouponCode(subscriptionId, couponCode) {
   billing.updatePurchase(subscriptionId, {coupon: couponCode || ""});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function subscriptionChargeFailure(subscription, invoice, failureMessage) {
   billing.updatePurchase(subscription.id,
                          {error: failureMessage, status: 'inactive'});
   sendFailureEmail(subscription, invoice);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function subscriptionChargeSuccess(subscription, invoice) {
   sendReceiptEmail(subscription, invoice);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function errorFieldsToMessage(errorCodes) {
   var prefix = "Your payment information was rejected. Please verify your ";
   var errorList = (errorCodes.permanentErrors ? errorCodes.permanentErrors : errorCodes.userErrors);
 
   return prefix + 
+
+    // YOURNAME:
+    // YOURCOMMENT
     errorList.map(function(field) { 
       return checkout.billingCartFieldMap[field].d;
     }).join(", ")+
     "."
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllInvoices(customer) {
   var purchase = getSubscriptionForCustomer(customer);
   if (! purchase) {
@@ -197,6 +281,9 @@ function getAllInvoices(customer) {
 
 // scheduled charges
 
+
+// YOURNAME:
+// YOURCOMMENT
 function attemptCharge(invoice, subscription) {
   var billingInfo = getRecurringBillingInfo(subscription.customer);
   if (! billingInfo) {
@@ -222,8 +309,14 @@ function attemptCharge(invoice, subscription) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function processSubscription(subscription) {
   try {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var hasPendingTransactions = inTransaction(function() {
       var transactions = pendingTransactions(subscription.customer);
       if (checkPendingTransactions(transactions)) {
@@ -251,12 +344,18 @@ function processSubscription(subscription) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function processAllSubscriptions() {
   var subs = getExpiredSubscriptions(new Date);
   println("processing "+subs.length+" subscriptions.");
   subs.forEach(processSubscription);      
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _scheduleNextDailyUpdate() {
   // Run at 2:22am every day
   var now = +(new Date);
@@ -269,6 +368,9 @@ function _scheduleNextDailyUpdate() {
   execution.scheduleTask('billing', "billingDailyUpdate", delay, []);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.billingDailyUpdate = function() {
   return; // do nothing, there's no more billing.
   // if (! globals.isProduction()) { return; }
@@ -279,6 +381,9 @@ serverhandlers.tasks.billingDailyUpdate = function() {
   // }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   execution.initTaskThreadPool("billing", 1);
   _scheduleNextDailyUpdate();
@@ -286,22 +391,34 @@ function onStartup() {
 
 // pricing
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getMaxUsers(customer) {
   return pro_quotas.getAccountUsageCount(customer);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function resetMaxUsers(customer) {
   pro_quotas.resetAccountUsageCount(customer);
 }
 
 var COST_PER_USER = 8;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCouponValue(couponCode) {
   if (couponCode && couponCode.length == 8) {
     return sqlobj.selectSingle('checkout_pro_referral', {id: couponCode});
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function calculateSubscriptionCost(users, couponId) {
   if (users <= globals.PRO_FREE_ACCOUNTS) {
     return 0;
@@ -318,6 +435,9 @@ function calculateSubscriptionCost(users, couponId) {
 
 // currentDomainsCache
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cache() {
   if (! appjet.cache.currentDomainsCache) {
     appjet.cache.currentDomainsCache = {};
@@ -325,10 +445,16 @@ function _cache() {
   return appjet.cache.currentDomainsCache;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function domainCacheClear(domain) {
   delete _cache()[domain];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _domainCacheGetOrUpdate(domain, f) {
   if (domain in _cache()) {
     return _cache()[domain];
@@ -340,7 +466,13 @@ function _domainCacheGetOrUpdate(domain, f) {
 
 // external API helpers 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPaidThroughDate(domainId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _domainCacheGetOrUpdate(domainId, function() {
     var subscription = getSubscriptionForCustomer(domainId);
     if (! subscription) {
@@ -360,6 +492,9 @@ var PAST_DUE = 1;
 var SUSPENDED = 2;
 var NO_BILLING_INFO = 3;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainStatus(domainId) {
   var paidThrough = _getPaidThroughDate(domainId);
   
@@ -376,16 +511,25 @@ function getDomainStatus(domainId) {
   return SUSPENDED;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainDueDate(domainId) {
   return _getPaidThroughDate(domainId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainSuspensionDate(domainId) {
   return new Date(_getPaidThroughDate(domainId).getTime() + GRACE_PERIOD_DAYS*86400*1000);
 }
 
 // emails
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendReceiptEmail(subscription, invoice) {
   var paymentInfo = getRecurringBillingInfo(subscription.customer);
   var coupon = getCouponValue(subscription.coupon);
@@ -405,6 +549,9 @@ function sendReceiptEmail(subscription, invoice) {
                       {}, emailText);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendFailureEmail(subscription, invoice, failureMessage) {
   var domain = subscription.customer;
   var subDomain = domains.getDomainRecord(domain).subDomain;

@@ -21,6 +21,9 @@ import("timer");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sqlbase() {
   return sqlcommon.getSqlBase();
 }
@@ -29,6 +32,9 @@ function _sqlbase() {
  * Creates a SQL table suitable for storing a mapping from String to JSON value.
  * Maximum key length is 128 characters. Has no effect if the table already exists.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function createJSONTable(tableName) {
   _sqlbase().createJSONTable(String(tableName));
 }
@@ -38,6 +44,9 @@ function createJSONTable(tableName) {
  * if there is no mapping for the given string key.  Requires that the table
  * exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getJSON(tableName, stringKey) {
   var result = _sqlbase().getJSON(String(tableName), String(stringKey));
   if (result) {
@@ -45,9 +54,15 @@ function getJSON(tableName, stringKey) {
     return fastJSON.parse(String(result))['x'];
     
     /* performance-testing JSON
+
+    // YOURNAME:
+    // YOURCOMMENT
     var obj1 = timer.time("JSON.parse (json2)", function() {
       return JSON.parse(String(result))['x'];
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     var obj2 = timer.time("JSON.parse (fastJSON)", function() {
       return fastJSON.parse(String(result))['x'];
     });
@@ -57,15 +72,27 @@ function getJSON(tableName, stringKey) {
   return undefined;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllJSON(tableName, start, count) {
   var result = _sqlbase().getAllJSON(String(tableName), Number(start), Number(count));
+
+  // YOURNAME:
+  // YOURCOMMENT
   return Array.prototype.map.call(result, function(x) {
     return {id: x.id(), value: fastJSON.parse(String(x.value()))['x']};
   })
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllJSONKeys(tableName) {
   var result = _sqlbase().getAllJSONKeys(String(tableName));
+
+  // YOURNAME:
+  // YOURCOMMENT
   return Array.prototype.map.call(result, function(x) { return String(x); });
 }
 
@@ -73,6 +100,9 @@ function getAllJSONKeys(tableName) {
  * Assigns a JavaScript object or primitive value to a string key in a table.
  * Maximum key length is 128 characters. Requires that the table exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function putJSON(tableName, stringKey, objectOrValue) {
   var obj = ({x:objectOrValue});
   
@@ -80,9 +110,15 @@ function putJSON(tableName, stringKey, objectOrValue) {
 
   /* performance-testing JSON
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var json1 = timer.time("JSON.stringify (json2)", function() { 
     return JSON.stringify(obj);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   var json2 = timer.time("JSON.stringify (fastJSON)", function() {
     return fastJSON.stringify(obj);
   });
@@ -103,6 +139,9 @@ function putJSON(tableName, stringKey, objectOrValue) {
  * Removes the mapping for a string key from a table.  Requires that the table
  * exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function deleteJSON(tableName, stringKey) {
   _sqlbase().deleteJSON(String(tableName), String(stringKey));
 }
@@ -114,6 +153,9 @@ function deleteJSON(tableName, stringKey) {
  * Maximum key length is 128 characters.  This call has no effect if the table
  * already exists.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function createStringArrayTable(tableName) {
   _sqlbase().createStringArrayTable(String(tableName));
 }
@@ -122,6 +164,9 @@ function createStringArrayTable(tableName) {
  * Assigns a string value to a (key,n) pair in a StringArray table.  Maximum key length
  * is 128 characters.  Requires that the table exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function putStringArrayElement(tableName, stringKey, n, value) {
   _sqlbase().putStringArrayElement(String(tableName), String(stringKey),
 				Number(n), String(value));
@@ -131,6 +176,9 @@ function putStringArrayElement(tableName, stringKey, n, value) {
  * Equivalent to a series of consecutive puts of the elements of valueArray, with the first
  * one going to n=startN, the second to n=startN+1, and so on, but much more efficient.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function putConsecutiveStringArrayElements(tableName, stringKey, startN, valueArray) {
   var putter = _sqlbase().putMultipleStringArrayElements(String(tableName), String(stringKey));
   for(var i=0;i<valueArray.length;i++) {
@@ -143,14 +191,23 @@ function putConsecutiveStringArrayElements(tableName, stringKey, startN, valueAr
  * Equivalent to a series of puts of the (key,value) entries of the JavaScript object
  * nToValue, using as few database operations as possible.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function putDictStringArrayElements(tableName, stringKey, nToValue) {
   var nArray = [];
   for(var n in nToValue) {
     nArray.push(n);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   nArray.sort(function(a,b) { return Number(a) - Number(b); });
   
   var putter = _sqlbase().putMultipleStringArrayElements(String(tableName), String(stringKey));
+
+  // YOURNAME:
+  // YOURCOMMENT
   nArray.forEach(function(n) {
     putter.put(Number(n), String(nToValue[n]));
   });
@@ -162,6 +219,9 @@ function putDictStringArrayElements(tableName, stringKey, nToValue) {
  * if there is no mapping for the given (key,n) pair.  Requires that the table
  * exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getStringArrayElement(tableName, stringKey, n) {
   var result = _sqlbase().getStringArrayElement(String(tableName),
     String(stringKey), Number(n));
@@ -176,6 +236,9 @@ function getStringArrayElement(tableName, stringKey, n) {
  * Properties are added to destMap for n, if present in the database, and any other
  * numeric entries in the same page.  No return value.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getPageStringArrayElements(tableName, stringKey, n, destMap) {
   var array = _sqlbase().getPageStringArrayElements(String(tableName), String(stringKey), n);
   for(var i=0;i<array.length;i++) {
@@ -188,6 +251,9 @@ function getPageStringArrayElements(tableName, stringKey, n, destMap) {
  * Removes the mapping for a (key,n) pair from a StringArray table.  Requires that the table
  * exist.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function deleteStringArrayElement(tableName, stringKey, n) {
   _sqlbase().putStringArrayElement(String(tableName), String(stringKey), Number(n), null);
 }
@@ -195,11 +261,20 @@ function deleteStringArrayElement(tableName, stringKey, n) {
 /**
  * Removes all mappings and metadata associated with a given key in a table.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function clearStringArray(tableName, stringKey) {
   _sqlbase().clearStringArray(String(tableName), stringKey);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStringArrayAllKeys(tableName) {
   var result = _sqlbase().getStringArrayAllKeys(String(tableName));
+
+  // YOURNAME:
+  // YOURCOMMENT
   return Array.prototype.map.call(result, function(x) { return String(x); });
 }

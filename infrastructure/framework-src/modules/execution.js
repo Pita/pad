@@ -19,23 +19,41 @@ import("jsutils.{scalaF0,scalaF1}");
 /**
  * Asynchronously call a function as soon as the current request completes.
  **/
+
+// YOURNAME:
+// YOURCOMMENT
 function async(f) {
   Packages.net.appjet.ajstdlib.execution.runAsync(appjet.context, f);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function initTaskThreadPool(name, poolSize) {
   Packages.net.appjet.ajstdlib.execution.createNamedTaskThreadPool(name, poolSize);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function scheduleTask(poolName, taskName, delayMillis, args) {
   return Packages.net.appjet.ajstdlib.execution.scheduleTaskInPool(poolName, taskName, delayMillis, args);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function shutdownAndWaitOnTaskThreadPool(poolName, timeoutMillis) {
   return Packages.net.appjet.ajstdlib.execution.shutdownAndWaitOnTaskThreadPool(poolName, timeoutMillis);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fancyAssEval(initCode, mainCode) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function init(runner) {
     Packages.net.appjet.bodylock.BodyLock.evaluateString(
       runner.globalScope(),
@@ -51,6 +69,9 @@ function fancyAssEval(initCode, mainCode) {
     requestWrapper,
     null, runner);
   return Packages.net.appjet.oui.ExecutionContextUtils.withContext(ec,
+
+    // YOURNAME:
+    // YOURCOMMENT
     scalaF0(function() {
       return Packages.net.appjet.bodylock.BodyLock.evaluateString(
         runner.globalScope(),

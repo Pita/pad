@@ -19,6 +19,9 @@ import("funhtml.*");
 import("etherpad.utils.*");
 import("etherpad.globals.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var p = request.path.split('/')[3];
   if (!p) {
@@ -32,6 +35,9 @@ function onRequest() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getTitle(t) {
   var titles = {
     'main': " ",
@@ -45,6 +51,9 @@ function _getTitle(t) {
   return titles[t];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderTopnav(p) {
   var d = DIV({className: "pne-manual-topnav"});
   if (p != "main") {
@@ -55,15 +64,24 @@ function _renderTopnav(p) {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderManualPage(p, data) {
   data = (data || {});
   data.pneVersion = PNE_RELEASE_VERSION;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getContent() {
     return renderTemplateAsString('pne-manual/'+p+'.ejs', data);
   }
   renderFramed('pne-manual/manual-template.ejs', {
     getContent: getContent,
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderTopnav: function() { return _renderTopnav(p); },
     title: _getTitle(p),
     id: p

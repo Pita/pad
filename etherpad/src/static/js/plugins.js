@@ -1,4 +1,7 @@
 plugins = {
+
+  // YOURNAME:
+  // YOURCOMMENT
   callHook: function (hookName, args) {
     var hook = clientVars.hooks[hookName];
     if (hook === undefined)
@@ -13,10 +16,16 @@ plugins = {
     return res;
   },
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   callHookStr: function (hookName, args, sep, pre, post) {
     if (sep == undefined) sep = '';
     if (pre == undefined) pre = '';
     if (post == undefined) post = '';
+
+    // YOURNAME:
+    // YOURCOMMENT
     return plugins.callHook(hookName, args).map(function (x) { return pre + x + post}).join(sep || "");
   }
 };

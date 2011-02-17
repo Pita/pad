@@ -24,6 +24,9 @@ var _helpTopics = [
 /*  ['guests', "Collaborating with Teammates and Guests"] */
 ];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var pageId = request.path.split('/')[3];
   if (!pageId) {
@@ -41,7 +44,13 @@ function onRequest() {
   response.redirect('/ep/pro-help/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderPage(pageId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function renderContent() {
     return renderTemplateAsString('pro-help/'+pageId+'.ejs', {
       helpTopics: _helpTopics,

@@ -16,6 +16,9 @@
 
 import("sqlbase.sqlbase");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   // These table creations used to be in etherpad.pad.model.onStartup, but

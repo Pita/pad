@@ -32,18 +32,27 @@ import("etherpad.control.pro.admin.account_manager_control");
 
 import("etherpad.helpers");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (!getSession().ods) {
     getSession().ods = {};
   }
   if (request.method == "POST") {
     // add params to cart
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(request.params, function(k,v) {
       getSession().ods[k] = stringutils.toHTML(v);
     });
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() {
   var m = getSession().errorMessage;
   if (m) {
@@ -53,11 +62,17 @@ function _errorDiv() {
   return "";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _input(id, type) {
   return INPUT({type: type ? type : 'text', name: id, id: id,
                 value: getSession().ods[id] || ""});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _inf(id, label, type) {
   return DIV(
     DIV({style: "width: 100px; text-align: right; float: left; padding-top: 3px;"}, label, ":  "),
@@ -66,6 +81,9 @@ function _inf(id, label, type) {
     DIV({style: "height: 6px; clear: both;"}, " "));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   // observe activation code
   if (request.params.sc) {
@@ -90,6 +108,9 @@ function render_main_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _err(m) {
   if (m) {
     getSession().errorMessage = m;
@@ -97,6 +118,9 @@ function _err(m) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_post() {
   var subdomain = trim(String(request.params.subdomain).toLowerCase());
   var fullName = request.params.fullName;
@@ -147,12 +171,18 @@ function render_main_post() {
   // TODO: log a bunch of stuff, and request IP address, etc.
 
   var ok = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   sqlcommon.inTransaction(function() {
     var tempPass = stringutils.randomString(10);
     // TODO: move validation code into domains.createNewSubdomain...
     var domainId = domains.createNewSubdomain(subdomain, orgName);
     var accountId = pro_accounts.createNewAccount(domainId, fullName, email, tempPass, true);
     // send welcome email
+
+    // YOURNAME:
+    // YOURCOMMENT
     syncedWithCache('pro-activations', function(c) {
       c[domainId] = true;
     });

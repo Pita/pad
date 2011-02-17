@@ -7,6 +7,9 @@
 import("etherpad.log");
 import("plugins.showImages.static.js.main");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function showImagesInit() {
  this.hooks = ['aceGetFilterStack', 'aceCreateDomLine'];
  this.client = new main.showImagesInit(); 
@@ -17,10 +20,16 @@ function showImagesInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing inlineImages");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling inlineImages");
 }

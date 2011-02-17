@@ -20,6 +20,9 @@ import("sqlbase.sqlcommon");
 import("etherpad.utils.startConsoleProgressBar");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   sqlobj.dropAndCreateTable('PAD_SQLMETA', {
@@ -44,6 +47,9 @@ function run() {
   var numPadsSoFar = 0;
   var progressBar = startConsoleProgressBar();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   allPadIds.forEach(function(padId) {
     var meta = sqlbase.getJSON("PAD_META", padId);
 

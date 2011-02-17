@@ -15,11 +15,20 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeDraggable(jqueryNodes, eventHandler) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   jqueryNodes.each(function() {
     var node = $(this);
     var state = {};
     var inDrag = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function dragStart(evt) {
       if (inDrag) {
         return;
@@ -32,6 +41,9 @@ function makeDraggable(jqueryNodes, eventHandler) {
       evt.preventDefault();
       return false;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function dragUpdate(evt) {
       if (! inDrag) {
         return;
@@ -40,6 +52,9 @@ function makeDraggable(jqueryNodes, eventHandler) {
       evt.preventDefault();
       return false;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function dragEnd(evt) {
       if (! inDrag) {
         return;
@@ -59,10 +74,16 @@ function makeDraggable(jqueryNodes, eventHandler) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeResizableVPane(top, sep, bottom, minTop, minBottom) {
   if (minTop === undefined) minTop = 0;
   if (minBottom === undefined) minBottom = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   makeDraggable($(sep), function(eType, evt, state) {
     if (eType == 'dragstart') {
       state.startY = evt.pageY;
@@ -96,10 +117,16 @@ function makeResizableVPane(top, sep, bottom, minTop, minBottom) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeResizableHPane(left, sep, right, minLeft, minRight, sepWidth, sepOffset) {
   if (minLeft === undefined) minLeft = 0;
   if (minRight === undefined) minRight = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   makeDraggable($(sep), function(eType, evt, state) {
     if (eType == 'dragstart') {
       state.startX = evt.pageX;

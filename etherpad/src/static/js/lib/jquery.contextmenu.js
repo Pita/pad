@@ -25,6 +25,9 @@
  * @todo More themes
  * @todo Nested context menus
  */
+
+// YOURNAME:
+// YOURCOMMENT
 ;(function($){
   $.contextMenu = {
     shadow:true,
@@ -71,6 +74,9 @@
     bindTarget: 'contextmenu',
 
     // Create the menu instance
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(menu,opts) {
       var cmenu = $.extend({},this,opts); // Clone all default properties to created object
       
@@ -99,24 +105,45 @@
 
       // when to hide the menu:
       // click anywhere in the body:
+
+      // YOURNAME:
+      // YOURCOMMENT
       $('body').bind('click',function(){cmenu.hide();});
       // right-click anywhere in the body:
+
+      // YOURNAME:
+      // YOURCOMMENT
       $('body').bind('contextmenu',function(){cmenu.hide();});
       // escape key:
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).keyup(function(e) { if (e.keyCode == 27) { cmenu.hide(); } });
 
       return cmenu;
     },
     
     // Create an iframe object to go behind the menu
+
+    // YOURNAME:
+    // YOURCOMMENT
     createIframe: function() {
         return $('<iframe frameborder="0" tabindex="-1" src="javascript:false" style="display:block;position:absolute;z-index:-1;filter:Alpha(Opacity=0);"/>');
     },
     
     // Accept an Array representing a menu structure and turn it into HTML
+
+    // YOURNAME:
+    // YOURCOMMENT
     createMenu: function(menu,cmenu) {
       var className = cmenu.className;
+
+      // YOURNAME:
+      // YOURCOMMENT
       $.each(cmenu.theme.split(","),function(i,n){className+=' '+cmenu.themePrefix+n});
+
+      // YOURNAME:
+      // YOURCOMMENT
       var $t = $('<table cellspacing=0 cellpadding=0></table>').click(function(){cmenu.hide(); return false;}); // We wrap a table around it so width can be flexible
       var $tr = $('<tr></tr>');
       var $td = $('<td></td>');
@@ -144,11 +171,17 @@
     },
     
     // Create an individual menu item
+
+    // YOURNAME:
+    // YOURCOMMENT
     createMenuItem: function(label,obj) {
       var cmenu = this;
       if (typeof obj=="function") { obj={onclick:obj}; } // If passed a simple function, turn it into a property of an object
       // Default properties, extended in case properties are passed
       var o = $.extend({
+
+        // YOURNAME:
+        // YOURCOMMENT
         onclick:function() { },
         className:'',
         hoverClassName:cmenu.itemHoverClassName,
@@ -162,9 +195,18 @@
       var iconStyle = (o.icon)?'background-image:url('+o.icon+');':'';
       var $div = $('<div class="'+cmenu.itemClassName+' '+o.className+((o.disabled)?' '+cmenu.disabledItemClassName:'')+'" title="'+o.title+'"></div>')
               // If the item is disabled, don't do anything when it is clicked
+
+              // YOURNAME:
+              // YOURCOMMENT
               .click(function(e){if(cmenu.isItemDisabled(this)){return false;}else{return o.onclick.call(cmenu.target,this,cmenu,e)}})
               // Change the class of the item when hovered over
+
+              // YOURNAME:
+              // YOURCOMMENT
               .hover( function(){ o.hoverItem.call(this,(cmenu.isItemDisabled(this))?cmenu.disabledItemHoverClassName:o.hoverClassName); }
+
+                  // YOURNAME:
+                  // YOURCOMMENT
                   ,function(){ o.hoverItemOut.call(this,(cmenu.isItemDisabled(this))?cmenu.disabledItemHoverClassName:o.hoverClassName); }
               );
       var $idiv = $('<div class="'+cmenu.innerDivClassName+'" style="'+iconStyle+'">'+label+'</div>');
@@ -173,24 +215,42 @@
     },
     
     // Create a separator row
+
+    // YOURNAME:
+    // YOURCOMMENT
     createSeparator: function() {
       return $('<div class="'+this.separatorClassName+'"></div>');
     },
     
     // Determine if an individual item is currently disabled. This is called each time the item is hovered or clicked because the disabled status may change at any time
+
+    // YOURNAME:
+    // YOURCOMMENT
     isItemDisabled: function(item) { return $(item).is('.'+this.disabledItemClassName); },
     
     // Functions to fire on hover. Extracted to methods for extensibility
+
+    // YOURNAME:
+    // YOURCOMMENT
     hoverItem: function(c) { $(this).addClass(c); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hoverItemOut: function(c) { $(this).removeClass(c); },
     
     // Create the shadow object
+
+    // YOURNAME:
+    // YOURCOMMENT
     createShadow: function(cmenu) {
       cmenu.shadowObj = $('<div class="'+cmenu.shadowClass+'"></div>').css( {display:'none',position:"absolute", zIndex:9998, opacity:cmenu.shadowOpacity, backgroundColor:cmenu.shadowColor } );
       $(cmenu.appendTo).append(cmenu.shadowObj);
     },
     
     // Display the shadow object, given the position of the menu itself
+
+    // YOURNAME:
+    // YOURCOMMENT
     showShadow: function(x,y,e) {
       var cmenu = this;
       if (cmenu.shadow) {
@@ -205,9 +265,15 @@
     
     // A hook to call before the menu is shown, in case special processing needs to be done.
     // Return false to cancel the default show operation
+
+    // YOURNAME:
+    // YOURCOMMENT
     beforeShow: function() { return true; },
     
     // Show the context menu
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(t,e) {
       var cmenu=this, x=e.pageX, y=e.pageY;
       cmenu.target = t; // Preserve the object that triggered this context menu so menu item click methods can see it
@@ -227,13 +293,22 @@
         if (cmenu.useIframe) {
           $c.find('iframe').css({width:$c.width()+cmenu.shadowOffsetX+cmenu.shadowWidthAdjust,height:$c.height()+cmenu.shadowOffsetY+cmenu.shadowHeightAdjust});
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         $c.css( {top:pos.y+"px", left:pos.x+"px", position:"absolute",zIndex:9999} )[cmenu.showTransition](cmenu.showSpeed,((cmenu.showCallback)?function(){cmenu.showCallback.call(cmenu);}:null));
         cmenu.shown=true;
+
+        // YOURNAME:
+        // YOURCOMMENT
         $(document).one('click',null,function(){cmenu.hide()}); // Handle a single click to the document to hide the menu
       }
     },
     
     // Find the position where the menu should appear, given an x,y of the click event
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPosition: function(clickX,clickY,cmenu,e) {
       var x = clickX+cmenu.offsetX;
       var y = clickY+cmenu.offsetY
@@ -253,6 +328,9 @@
     },
     
     // Hide the menu, of course
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function() {
       var cmenu=this;
       if (cmenu.shown) {
@@ -274,9 +352,18 @@
   };
   
   // This actually adds the .contextMenu() function to the jQuery namespace
+
+  // YOURNAME:
+  // YOURCOMMENT
   $.fn.contextMenu = function(menu,options) {
     var cmenu = $.contextMenu.create(menu,options);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return this.each(function(){
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(this).bind(cmenu.bindTarget,function(e){cmenu.show(this,e);return false;});
     });
   };

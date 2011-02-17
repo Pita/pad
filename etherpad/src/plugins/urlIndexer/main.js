@@ -3,6 +3,9 @@ import("plugins.urlIndexer.hooks");
 import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function urlIndexerInit() {
  this.hooks = ['padModelWriteToDB', 'queryFormat', 'docbarItemsSearch'];
  this.description = 'Indexes URLs linked to in pads so that they can be displayed outside pads, searched for etc.';
@@ -14,6 +17,9 @@ function urlIndexerInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing urlIndexer");
 
@@ -28,6 +34,9 @@ function install() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling urlIndexer");
 }

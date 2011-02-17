@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function assertTruthy(x) {
   if (!x) {
     throw new Error("assertTruthy failure: "+x);

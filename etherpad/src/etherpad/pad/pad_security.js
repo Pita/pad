@@ -35,27 +35,51 @@ import("etherpad.pad.noprowatcher");
 // granting session permanent access to pads (for the session)
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _grantSessionAccessTo(globalPadId) {
   var userId = padusers.getUserId();
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("pad-auth."+globalPadId, function(c) {
     c[userId] = true;
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doesSessionHaveAccessTo(globalPadId) {
   var userId = padusers.getUserId();
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache("pad-auth."+globalPadId, function(c) {
     return c[userId];
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function revokePadUserAccess(globalPadId, userId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("pad-auth."+globalPadId, function(c) {
     delete c[userId];
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function revokeAllPadAccess(globalPadId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("pad-auth."+globalPadId, function(c) {
     for (k in c) {
       delete c[k];
@@ -67,15 +91,27 @@ function revokeAllPadAccess(globalPadId) {
 // knock/answer
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clearKnockStatus(userId, globalPadId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("pad-guest-knocks."+globalPadId, function(c) {
     delete c[userId];
   });
 }
 
 // called by collab_server when accountholders approve or deny
+
+// YOURNAME:
+// YOURCOMMENT
 function answerKnock(userId, globalPadId, status) {
   // status is either "approved" or "denied"
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("pad-guest-knocks."+globalPadId, function(c) {
     // If two account-holders respond to the knock, keep the first one.
     if (!c[userId]) {
@@ -85,7 +121,13 @@ function answerKnock(userId, globalPadId, status) {
 }
 
 // returns "approved", "denied", or undefined
+
+// YOURNAME:
+// YOURCOMMENT
 function getKnockAnswer(userId, globalPadId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache("pad-guest-knocks."+globalPadId, function(c) {
     return c[userId];
   });
@@ -97,6 +139,9 @@ function getKnockAnswer(userId, globalPadId) {
 
 var _insideCheckAccessControl = false;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkAccessControl(globalPadId, rwMode) {
   if (!request.isDefined) {
     return; // TODO: is this the right thing to do here?
@@ -144,6 +189,9 @@ function checkAccessControl(globalPadId, rwMode) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkDomainSecurity(globalPadId) {
   var padDomainId = padutils.getDomainId(globalPadId);
   if (!padDomainId) {
@@ -157,6 +205,9 @@ function _checkDomainSecurity(globalPadId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkGuestSecurity(globalPadId) {
   if (!getSession().guestPadAccess) {
     getSession().guestPadAccess = {};
@@ -174,6 +225,9 @@ function _checkGuestSecurity(globalPadId) {
   // Not an account holder ==> Guest
 
   // returns either "allow", "ask", or "deny"
+
+  // YOURNAME:
+  // YOURCOMMENT
   var guestPolicy = model.accessPadGlobal(globalPadId, function(p) {
     if (!p.exists()) {
       return "deny";
@@ -182,6 +236,9 @@ function _checkGuestSecurity(globalPadId) {
     }
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var numProUsers = model.accessPadGlobal(globalPadId, function(pad) {
     return noprowatcher.getNumProUsers(pad);
   });
@@ -209,6 +266,9 @@ function _checkGuestSecurity(globalPadId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkPasswordSecurity(globalPadId) {
   if (!getSession().padPasswordAuth) {
     getSession().padPasswordAuth = {};
@@ -223,6 +283,9 @@ function _checkPasswordSecurity(globalPadId) {
     return;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var p = pro_padmeta.accessProPad(globalPadId, function(propad) {
     if (propad.exists()) {
       return propad.getPassword();

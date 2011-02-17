@@ -5,6 +5,9 @@ import("etherpad.helpers");
 import("etherpad.collab.server_utils");
 import("etherpad.utils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function urlSql(querySql, limit, offset) {
   var sql = '' +
    'select ' +
@@ -36,6 +39,9 @@ REGEX_WORDCHAR = /[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u
 REGEX_URLCHAR = new RegExp('('+/[-:@a-zA-Z0-9_.,~%+\/\\?=&#;()$]/.source+'|'+REGEX_WORDCHAR.source+')');
 REGEX_URL = new RegExp(/(?:(?:https?|s?ftp|ftps|file|smb|afp|nfs|(x-)?man|gopher|txmt):\/\/|mailto:)/.source+REGEX_URLCHAR.source+'*(?![:.,;])'+REGEX_URLCHAR.source, 'g');
 
+
+// YOURNAME:
+// YOURCOMMENT
 function padModelWriteToDB(args) {
   /* Update tags for the pad */
 
@@ -68,7 +74,13 @@ function padModelWriteToDB(args) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryFormat() {
+
+ // YOURNAME:
+ // YOURCOMMENT
  return [{'urls.html': function (querySql, info, clientVars) {
    url = urlSql(querySql, 10);
    var matchingUrls = sqlobj.executeRaw(url.sql, url.params);
@@ -92,6 +104,9 @@ function queryFormat() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function docbarItemsSearch() {
  return ["<td class='docbarbutton'><a href='/ep/search?type=urls'>URLs</a></td>"];
 }

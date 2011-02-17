@@ -9,6 +9,9 @@ import("etherpad.pad.padutils");
 import("etherpad.sessions.getSession");
 import("plugins.padHierarchy.helpers.hierarchyHelper.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
 	var section_path = (request.path.toString() == '/pads') ? 'pads'  :  request.path.toString().split("/pads/")[1].replace(/\/$/ , '');
 	var id_filter = section_path=='pads' ? '' : section_path.replace(/\//g,"-");
@@ -25,6 +28,9 @@ function onRequest() {
 	return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function edit_page(){
 	var padId = request.path.toString().split("/pads/")[1].replace(/\/\+edit$/, '').replace(/\//g,"-");
 	getSession().instantCreate = encodeURIComponent(padId);
@@ -32,6 +38,9 @@ function edit_page(){
 	return pad_control.render_pad(padId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function redirect_to_pads_path(){
 	if (!isStaticRequest()) {
 		if (request.path == '/pads') {
@@ -44,6 +53,9 @@ function redirect_to_pads_path(){
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main(){
 	response.redirect("/pads");
 }

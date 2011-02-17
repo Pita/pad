@@ -27,9 +27,15 @@ jimport("java.lang.System.out.println");
 // Util
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function PrefixMatcher(p) {
   var rs = p.replace(/([\[\]\^\$\\\.\*\+\?\(\)\{\}\|])/g, "\\$1");
   var r = new RegExp('^' + rs + '(.*)$');
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(path) {
     return r.exec(path);
   }
@@ -37,11 +43,17 @@ function PrefixMatcher(p) {
 
 // Like PrefixMatcher, but makes trailing '/' optional, as in /ep/admin or /ep/admin/.
 // If trailing '/' is omitted, will redirect to same path with trailing /.
+
+// YOURNAME:
+// YOURCOMMENT
 function DirMatcher(p) {
   if (p.substr(-1) == '/') {
     p = p.substr(0, p.length-1);
   }
   var prefixMatcher = PrefixMatcher(p+'/');
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(path) {
     if (path == p) {
       response.redirect(p+'/');
@@ -50,6 +62,9 @@ function DirMatcher(p) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _pathMatches(p, loc) {
   // returns a regex-result kind of array with length >= 1, or null
   if (typeof(loc) == 'string') {
@@ -69,15 +84,27 @@ function _pathMatches(p, loc) {
 // Dispatcher
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 var Dispatcher = function() {
   this._routes = [];  // Array([location, (local file path or function)])
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Dispatcher.prototype.addLocations = function(l) {
   var that = this;
+
+  // YOURNAME:
+  // YOURCOMMENT
   l.forEach(function(x) { that._routes.push(x); });
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Dispatcher.prototype.dispatch = function() {
   var p = request.path;
   var served = false;
@@ -89,6 +116,9 @@ Dispatcher.prototype.dispatch = function() {
     var match = _pathMatches(p, loc);
     if (match) {
       if (typeof(dst) != 'function') {
+
+// YOURNAME:
+// YOURCOMMENT
 	throw new Error('dispatch only dispatches to functions, and this is not a function: '+typeof(dst));
       }
       
@@ -104,7 +134,13 @@ Dispatcher.prototype.dispatch = function() {
 // fdisp
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function forward(module) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(name) {
     if (name === "") {
       name = "main";

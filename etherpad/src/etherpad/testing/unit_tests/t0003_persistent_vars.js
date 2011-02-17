@@ -20,6 +20,9 @@ import("stringutils");
 
 import("etherpad.testing.testutils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   var varname = stringutils.randomString(50);
   var varval = stringutils.randomString(50);

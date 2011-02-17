@@ -26,6 +26,9 @@ jimport("java.lang.System");
 jimport("java.util.ArrayList");
 jimport("java.util.Collections");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   if (! appjet.cache.pad_migrations) {
     appjet.cache.pad_migrations = {};
@@ -38,6 +41,9 @@ function onStartup() {
   //}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function initLiveMigration() {
 
   if (! appjet.cache.pad_migrations) {
@@ -50,19 +56,31 @@ function initLiveMigration() {
   // presence of a pad in padMap indicates migration is needed
   var padMap = _padMap();
   var migrationsNeeded = sqlobj.selectMulti("PAD_SQLMETA", {version: 1});
+
+  // YOURNAME:
+  // YOURCOMMENT
   migrationsNeeded.forEach(function(obj) {
     padMap.put(String(obj.id), {from: obj.version});
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _padMap() {
   return appjet.cache.pad_migrations.padMap;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doingItLive() {
   return !! appjet.cache.pad_migrations.doingAnyLiveMigrations;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkPadStatus(padId) {
   if (! _doingItLive()) {
     return "ready";
@@ -79,6 +97,9 @@ function checkPadStatus(padId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function ensureMigrated(padId, async) {
   if (! _doingItLive()) {
     return false;
@@ -94,6 +115,9 @@ function ensureMigrated(padId, async) {
     return false;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return model.doWithPadLock(padId, function() {
     // inside pad lock...
     var info = _padMap().get(padId);
@@ -109,6 +133,9 @@ function ensureMigrated(padId, async) {
       var success = false;
       var whichTry = 1;
       while ((! success) && whichTry <= 3) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         success = sqlcommon.inTransaction(function() {
           try {
             easysync2migration.migratePad(padId);
@@ -143,6 +170,9 @@ function ensureMigrated(padId, async) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function numUnmigratedPads() {
   if (! _doingItLive()) {
     return 0;
@@ -153,6 +183,9 @@ function numUnmigratedPads() {
 
 ////////// BACKGROUND MIGRATIONS
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _logPadMigration(runnerId, padNumber, padTotal, timeMs, fourCharResult, padId) {
   log.custom("pad_migrations", {
     runnerId: runnerId,
@@ -163,6 +196,9 @@ function _logPadMigration(runnerId, padNumber, padTotal, timeMs, fourCharResult,
     padId: padId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getNeededMigrationsArrayList(filter) {
   var L = new ArrayList(_padMap().keySet());
   for(var i=L.size()-1; i>=0; i--) {
@@ -173,7 +209,13 @@ function _getNeededMigrationsArrayList(filter) {
   return L;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function runBackgroundMigration(residue, modulus, runnerId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var L = _getNeededMigrationsArrayList(function(padId) {
     return (padId.charCodeAt(0) % modulus) == residue;
   });

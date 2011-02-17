@@ -39,6 +39,9 @@ import("static.js.billing_shared.{billing=>billingJS}");
 
 var billingButtonName = "Confirm"
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cart() {
   var s = sessions.getSession();
   if (! s.proBillingCart) {
@@ -47,6 +50,9 @@ function _cart() {
   return s.proBillingCart;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _billingForm() {
   return renderTemplateAsString('store/eepnet-checkout/billing-info.ejs', {
     cart: _cart(),
@@ -64,10 +70,16 @@ function _billingForm() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _plural(num) {
   return (num == 1 ? "" : "s");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _billingSummary(domainId, subscription) {
   var paymentInfo = team_billing.getRecurringBillingInfo(domainId);
   if (! paymentInfo) {
@@ -113,6 +125,9 @@ function _billingSummary(domainId, subscription) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _statusMessage() {
   if (_cart().statusMessage) {
     return toHTML(P({style: "color: green;"}, _cart().statusMessage));
@@ -121,6 +136,9 @@ function _statusMessage() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderMainPage(doEdit) {
   var cart = _cart();
   var domainId = domains.getRequestDomainId();
@@ -161,14 +179,23 @@ function renderMainPage(doEdit) {
   delete _cart().statusMessage;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   renderMainPage(false);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_edit() {
   renderMainPage(true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() {
   var m = _cart().errorMsg;
   if (m) {
@@ -178,11 +205,17 @@ function _errorDiv() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _validationError(id, errorMessage) {
   var cart = _cart();
   cart.errorMsg = errorMessage;
   cart.errorId = {};
   if (id instanceof Array) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     id.forEach(function(k) {
       cart.errorId[k] = true;
     });
@@ -192,6 +225,9 @@ function _validationError(id, errorMessage) {
   response.redirect('/ep/admin/billing/edit');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorIfInvalid(id) {
   var cart = _cart();
   if (cart.errorId && cart.errorId[id]) {
@@ -201,18 +237,30 @@ function _errorIfInvalid(id) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function paypalNotifyUrl() {
   return request.scheme+"://"+pro_utils.getFullSuperdomainHost()+"/ep/store/paypalnotify";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _paymentSummary(payInfo) {
   return payInfo.cardType + " ending in " + payInfo.cardNumber.substr(-4);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _expiration(payInfo) {
   return payInfo.cardExpiration;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _attemptAuthorization(success_f) {
   var cart = _cart();
   var domain = domains.getRequestDomainRecord();
@@ -258,7 +306,13 @@ function _attemptAuthorization(success_f) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processNewSubscription() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   _attemptAuthorization(function(result) {
     var domain = domains.getRequestDomainRecord();
     var domainId = domain.id;
@@ -270,6 +324,9 @@ function _processNewSubscription() {
     var fullName = cart.billingFirstName+" "+cart.billingLastName;
     var email = proAccount.email;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inTransaction(function() {
 
       var subscriptionId = team_billing.createSubscription(domainId, cart.billingReferralCode);
@@ -291,10 +348,19 @@ function _processNewSubscription() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateExistingSubscription(subscription) {
   var cart = _cart();
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   _attemptAuthorization(function(result) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     inTransaction(function() {
       var cart = _cart();
       var domain = domains.getRequestDomainId();
@@ -325,6 +391,9 @@ function _updateExistingSubscription(subscription) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processBillingInfo() {
   var cart = _cart();
   var domain = domains.getRequestDomainId();
@@ -342,6 +411,9 @@ function _processBillingInfo() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processPaypalPurchase() {
   var domain = domains.getRequestDomainId();
   billing.log({type: "paypal-attempt", 
@@ -352,6 +424,9 @@ function _processPaypalPurchase() {
   _validationError('billingPurchaseType', "There was an error contacting PayPal. Please try another payment type.")  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processInvoicePurchase() {
   var output = [
       "Name: "+cart.billingFirstName+" "+cart.billingLastName,
@@ -374,8 +449,14 @@ function _processInvoicePurchase() {
   _validationError('', "Your information has been sent to our sales department; a salesperson will contact you shortly regarding your invoice request.")
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_apply() {
   var cart = _cart();
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(request.params, function(k, v) {
     if (startsWith(k, "billing")) {
       if (k == "billingCCNumber" && v.charAt(0) == 'X') { return; }
@@ -386,6 +467,9 @@ function render_apply() {
   if (! request.params.backbutton) {
     var allPaymentFields = ["billingCCNumber", "billingExpirationMonth", "billingExpirationYear", "billingCSC", "billingAddressLine1", "billingAddressLine2", "billingCity", "billingState", "billingZipCode", "billingProvince", "billingPostalCode"];
     var allBlank = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     allPaymentFields.forEach(function(field) { if (cart[field].length > 0) { allBlank = false; }});
     if (! allBlank) {
       checkout.validateBillingCart(_validationError, cart);
@@ -409,10 +493,16 @@ function render_apply() {
   _processBillingInfo();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handlePaypalNotify() {
   // XXX: handle delayed paypal authorization
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_invoices() {
   if (request.params.id) {
     var purchaseId = team_billing.getSubscriptionForCustomer(domains.getRequestDomainId()).id;

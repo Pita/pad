@@ -19,6 +19,9 @@ import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 import("fastJSON");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (isPrivateNetworkEdition()) {
     return;
@@ -32,6 +35,9 @@ function run() {
   });
   
   var oldStats = sqlobj.selectMulti('usage_stats', {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   oldStats.forEach(function(stat) {
     sqlobj.insert('statistics', {
       timestamp: stat.timestamp,

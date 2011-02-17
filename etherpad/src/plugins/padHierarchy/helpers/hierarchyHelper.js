@@ -5,9 +5,15 @@ import("etherpad.pad.exporthtml");
 import("etherpad.utils.*");
 import("etherpad.pad.padutils");
 // class
+
+// YOURNAME:
+// YOURCOMMENT
 function HierarchyParser(){
 	
 	// this basically goes down and then checks back up the chain for the closest grouping
+
+// YOURNAME:
+// YOURCOMMENT
 	this.parse = function(titles, topLevelLabel,block){
 		var chain = [];
 		var result = { id:topLevelLabel, shortName:topLevelLabel, children:[] };
@@ -39,6 +45,9 @@ function HierarchyParser(){
 		}
 		return result;	
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	function getPath(obj){
 		var parent = obj;
 		var result = [];
@@ -51,15 +60,27 @@ function HierarchyParser(){
 }
 
 // helper methods
+
+// YOURNAME:
+// YOURCOMMENT
 function getHierarchy(titles, topLevelLabel, block){
 	return new HierarchyParser().parse(titles,topLevelLabel,block);
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getPadsBelow(top_id){
 	var matching_pads = sqlobj.selectMulti("PAD_SQLMETA",{id:['like', top_id+'%']});
+
+// YOURNAME:
+// YOURCOMMENT
 	return getHierarchy(matching_pads.map(function(item){ return item.id; }),top_id, function(pad){
 		var json = sqlbase.getJSON("PAD_META", pad.id);
 		if (json) {
 			pad.meta = json;
+
+// YOURNAME:
+// YOURCOMMENT
 			var html = padutils.accessPadLocal(pad.id, function(pad){
 				return pad.exists() ? exporthtml.getPadHTML(pad) : null;
 			}, 'r');
@@ -68,14 +89,23 @@ function getPadsBelow(top_id){
 		return pad;
 	});
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getImageTag(group){
 	if(!group.meta ) return '';
 	return (group.meta.images ? "<img src='" + group.meta.images[0] + "' width='60px'/>" : '<div class="noimage">&nbsp;</div>');
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getGroupLink(group, options){
 	return '<a href="'+ group.path +''+ (options && options.edit? '/+edit' : '') +'" >' + getImageTag(group) + (group.shortName || group.id || 'pads') + '</a>';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getGroupChildren( group , options){
 	if(group.children.length == 0){
 		return getGroupLink(group, options);

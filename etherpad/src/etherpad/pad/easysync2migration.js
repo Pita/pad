@@ -22,15 +22,27 @@ import("fastJSON");
 import("sqlbase.sqlcommon.*");
 import("etherpad.collab.ace.contentcollector.sanitizeUnicode");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadStringArrayNumId(padId, arrayName) {
   var stmnt = "SELECT NUMID FROM "+btquote("PAD_"+arrayName.toUpperCase()+"_META")+
     " WHERE ("+btquote("ID")+" = ?)";
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       pstmnt.setString(1, padId);
       var resultSet = pstmnt.executeQuery();
+
+      // YOURNAME:
+      // YOURCOMMENT
       return closing(resultSet, function() {
         if (! resultSet.next()) {
           return -1;
@@ -41,6 +53,9 @@ function _getPadStringArrayNumId(padId, arrayName) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getEntirePadStringArray(padId, arrayName) {
   var numId = _getPadStringArrayNumId(padId, arrayName);
   if (numId < 0) {
@@ -50,11 +65,20 @@ function _getEntirePadStringArray(padId, arrayName) {
   var stmnt = "SELECT PAGESTART, OFFSETS, DATA FROM "+btquote("PAD_"+arrayName.toUpperCase()+"_TEXT")+
     " WHERE ("+btquote("NUMID")+" = ?)";
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       pstmnt.setInt(1, numId);
       var resultSet = pstmnt.executeQuery();
+
+      // YOURNAME:
+      // YOURCOMMENT
       return closing(resultSet, function() {
         var array = [];
         while (resultSet.next()) {
@@ -63,6 +87,9 @@ function _getEntirePadStringArray(padId, arrayName) {
           var dataString = resultSet.getString(3);
           var dataIndex = 0;
           var arrayIndex = pageStart;
+
+          // YOURNAME:
+          // YOURCOMMENT
           lengthsString.split(',').forEach(function(len) {
             if (len) {
               len = Number(len);
@@ -78,14 +105,23 @@ function _getEntirePadStringArray(padId, arrayName) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _overwriteEntirePadStringArray(padId, arrayName, array) {
   var numId = _getPadStringArrayNumId(padId, arrayName);
   if (numId < 0) {
     // generate numId
+
+    // YOURNAME:
+    // YOURCOMMENT
     withConnection(function(conn) {
       var ps = conn.prepareStatement("INSERT INTO "+btquote("PAD_"+arrayName.toUpperCase()+"_META")+
                                      " ("+btquote("ID")+") VALUES (?)",
                                      java.sql.Statement.RETURN_GENERATED_KEYS);
+
+      // YOURNAME:
+      // YOURCOMMENT
       closing(ps, function() {
         ps.setString(1, padId);
         ps.executeUpdate();
@@ -93,6 +129,9 @@ function _overwriteEntirePadStringArray(padId, arrayName, array) {
         if ((! keys) || (! keys.next())) {
           throw new Error("Couldn't generate key for "+arrayName+" table for pad "+padId);
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         closing(keys, function() {
           numId = keys.getInt(1);
         });
@@ -100,11 +139,17 @@ function _overwriteEntirePadStringArray(padId, arrayName, array) {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   withConnection(function(conn) {
 
     var stmnt1 = "DELETE FROM "+btquote("PAD_"+arrayName.toUpperCase()+"_TEXT")+
       " WHERE ("+btquote("NUMID")+" = ?)";
     var pstmnt1 = conn.prepareStatement(stmnt1);
+
+    // YOURNAME:
+    // YOURCOMMENT
     closing(pstmnt1, function() {
       pstmnt1.setInt(1, numId);
       pstmnt1.executeUpdate();
@@ -121,6 +166,9 @@ function _overwriteEntirePadStringArray(padId, arrayName, array) {
         " ("+btquote("NUMID")+", "+btquote("PAGESTART")+", "+btquote("OFFSETS")+
         ", "+btquote("DATA")+") VALUES (?, ?, ?, ?)";
       var pstmnt2 = conn.prepareStatement(stmnt2);
+
+      // YOURNAME:
+      // YOURCOMMENT
       closing(pstmnt2, function() {
         for(var n=0;n<PAGES_PER_BATCH && curPage < numPages;n++) {
           var pageStart = curPage*PAGE_SIZE;
@@ -150,6 +198,9 @@ function _overwriteEntirePadStringArray(padId, arrayName, array) {
 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getEntirePadJSONArray(padId, arrayName) {
   var array = _getEntirePadStringArray(padId, arrayName);
   for(var k in array) {
@@ -160,6 +211,9 @@ function _getEntirePadJSONArray(padId, arrayName) {
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _overwriteEntirePadJSONArray(padId, arrayName, objArray) {
   var array = [];
   for(var k in objArray) {
@@ -170,6 +224,9 @@ function _overwriteEntirePadJSONArray(padId, arrayName, objArray) {
   _overwriteEntirePadStringArray(padId, arrayName, array);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getMigrationPad(padId) {
   var oldRevs = _getEntirePadStringArray(padId, "revs");
   var oldRevMeta = _getEntirePadJSONArray(padId, "revmeta");
@@ -177,19 +234,37 @@ function _getMigrationPad(padId) {
   var oldMeta = sqlbase.getJSON("PAD_META", padId);
 
   var oldPad = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getHeadRevisionNumber: function() {
       return oldMeta.head;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRevisionChangesetString: function(r) {
       return oldRevs[r];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRevisionAuthor: function(r) {
       return oldMeta.numToAuthor[oldRevMeta[r].a];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getId: function() { return padId; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getKeyRevisionNumber: function(r) {
       return Math.floor(r / oldMeta.keyRevInterval) * oldMeta.keyRevInterval;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getInternalRevisionText: function(r) {
       if (r != oldPad.getKeyRevisionNumber(r)) {
 	throw new Error("Assertion error: "+r+" != "+oldPad.getKeyRevisionNumber(r));
@@ -197,9 +272,15 @@ function _getMigrationPad(padId) {
       return oldRevMeta[r].atext.text;
     },
     _meta: oldMeta,
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAuthorArrayEntry: function(n) {
       return oldAuthors[n];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRevMetaArrayEntry: function(r) {
       return oldRevMeta[r];
     }
@@ -212,26 +293,47 @@ function _getMigrationPad(padId) {
   var metaPropsToDelete = [];
 
   var newPad = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     pool: function() { return apool; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setAuthorArrayEntry: function(n, obj) {
       newAuthors[n] = obj;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setRevMetaArrayEntry: function(r, obj) {
       newRevMeta[r] = obj;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setRevsArrayEntry: function(r, cs) {
       newRevs[r] = cs;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     deleteMetaProp: function(propName) {
       metaPropsToDelete.push(propName);
     }
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function writeToDB() {
     var newMeta = {};
     for(var k in oldMeta) {
       newMeta[k] = oldMeta[k];
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     metaPropsToDelete.forEach(function(p) {
       delete newMeta[p];
     });
@@ -247,6 +349,9 @@ function _getMigrationPad(padId) {
   return {oldPad:oldPad, newPad:newPad, writeToDB:writeToDB};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function migratePad(padId) {
 
   var mpad = _getMigrationPad(padId);
@@ -263,12 +368,18 @@ function migratePad(padId) {
 
   var isExtraFinalNewline = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function authorToNewNum(author) {
     return pool.putAttrib(['author',author||'']);
   }
 
   //S var oldTotalChangesetSize = 0;
   //S var newTotalChangesetSize = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   //S function stringSize(str) {
   //S return new java.lang.String(str).getBytes("UTF-8").length;
   //S }
@@ -403,6 +514,9 @@ function migratePad(padId) {
   mpad.writeToDB();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getInitialChangeset(txt, pool, author) {
   var txt2 = txt.substring(0, txt.length-1); // strip off final newline
 
@@ -412,12 +526,18 @@ function getInitialChangeset(txt, pool, author) {
   return easysync2.Changeset.pack(1, txt2.length+1, assem.toString(), txt2);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
   var attribs = '';
   if (pool && author) {
     attribs = '*'+easysync2.Changeset.numToString(pool.putAttrib(['author', author]));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function keepLastCharacter(c) {
     if (! c[c.length-1] && c[c.length-3] + c[c.length-2] >= (c.oldLen() - 1)) {
       c[c.length-2] = c.oldLen() - c[c.length-3];
@@ -454,6 +574,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
   //   fixed changesets obey all the constraints on version 1 changesets
   //   so that they may become valid version 2 changesets.
   {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function collapsePotentialEmptyLastTake(c) {
       if (c[c.length-2] == 0 && c.length > 6) {
 	if (! c[c.length-1]) {
@@ -499,7 +622,13 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 
   var ops = [];
   var lastOpcode = '';
+
+  // YOURNAME:
+  // YOURCOMMENT
   function appendOp(opcode, text, startChar, endChar) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function num(n) {
       return easysync2.Changeset.numToString(n);
     }
@@ -539,6 +668,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 
   var textPieces = [];
   var charBankPieces = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   cs.eachStrip(function(start, take, insert) {
     if (start > oldPos) {
       appendOp('-', inputText, oldPos, start);
@@ -599,6 +731,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   'wGFJJRT514', 'wTgEoQGqng', 'xomMZGhius', 'yFEFYWBSvr', 'z7tGFKsGk6',
 //   'zIJWNK8Z4i', 'zNMGJYI7hq'];
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function _time(f) {
 //   var t1 = +(new Date);
 //   f();
@@ -606,11 +741,20 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   return t2 - t1;
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function listAllRevisionCounts() {
 //   var padList = sqlbase.getAllJSONKeys("PAD_META");
 //   //padList.length = 10;
 //   padList = padList.slice(68000, 68100);
+
+// YOURNAME:
+// YOURCOMMENT
 //   padList.forEach(function(id) {
+
+// YOURNAME:
+// YOURCOMMENT
 //     model.accessPadGlobal(id, function(pad) {
 //       System.out.println((new java.lang.Integer(pad.getHeadRevisionNumber()).toString())+
 // 			 " "+id);
@@ -619,6 +763,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   });
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function verifyAllPads() {
 //   //var padList = sqlbase.getAllJSONKeys("PAD_META");
 //   //padList = newlineCorruptedPads;
@@ -631,9 +778,21 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   var longestPad;
 //   var longestPadTime = -1;
 //   System.out.println(padList.length+" pads.");
+
+// YOURNAME:
+// YOURCOMMENT
 //   var totalTime = _time(function() {
+
+// YOURNAME:
+// YOURCOMMENT
 //     padList.forEach(function(id) {
+
+// YOURNAME:
+// YOURCOMMENT
 //       model.accessPadGlobal(id, function(pad) {
+
+// YOURNAME:
+// YOURCOMMENT
 // 	var padTime = _time(function() {
 // 	  System.out.print(id+"... ");
 // 	  try {
@@ -661,6 +820,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   System.out.println("Most time-consuming pad: "+longestPad+" / "+longestPadTime+" ms");
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function _literal(v) {
 //   if ((typeof v) == "string") {
 //     return '"'+v.replace(/[\\\"]/g, '\\$1').replace(/\n/g, '\\n')+'"';
@@ -668,6 +830,9 @@ function upgradeChangeset(cs, inputText, pool, author, isExtraNewlineInSource) {
 //   else return v.toSource();
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function _putFile(str, path) {
 //   var writer = new java.io.FileWriter(path);
 //   writer.write(str);

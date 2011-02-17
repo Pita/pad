@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 padeditor.enable = function()
 {
     if (padeditor.ace)
@@ -7,6 +10,9 @@ padeditor.enable = function()
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyPad_moveTop(start, height)
 {
     var el = start;
@@ -34,6 +40,9 @@ function readonlyPad_moveTop(start, height)
     } while(el = el.next());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyPad_adminInit()
 {
     var div = $('div#readonlyPad');
@@ -66,11 +75,17 @@ function readonlyPad_adminInit()
 	$('#readonlyPadCheckbox')[0].checked = true;
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     $('#readonlyPadCheckbox').bind('change click', function(evt) {
 	pad.changeViewOption('readonlyPadPolicy', $('#readonlyPadCheckbox')[0].checked)
     });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyPad_guestInit()
 {
     if(clientVars.initialOptions && clientVars.initialOptions.view && clientVars.initialOptions.view.readonlyPadPolicy)
@@ -79,6 +94,9 @@ function readonlyPad_guestInit()
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyPad_handleOptionsChange(opts)
 {
     if(opts && opts.view && opts.view.readonlyPadPolicy!=null)
@@ -102,10 +120,16 @@ function readonlyPad_handleOptionsChange(opts)
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyPad_handleInit()
 {
     var old = pad.handleOptionsChange;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     pad.handleOptionsChange = function(opts)
     {
 	old(opts);
@@ -115,6 +139,9 @@ function readonlyPad_handleInit()
     
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function ()
 {
 

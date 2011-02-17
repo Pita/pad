@@ -35,18 +35,30 @@ jimport("java.util.concurrent.ConcurrentHashMap");
 
 var PADPAGE_ROOMTYPE = "padpage";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _padIdToRoom(padId) {
   return "padpage/"+padId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _roomToPadId(roomName) {
   return roomName.substring(roomName.indexOf("/")+1);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function removeFromMemory(pad) {
   // notification so we can free stuff
   if (getNumConnections(pad) == 0) {
@@ -55,16 +67,28 @@ function removeFromMemory(pad) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadConnections(pad) {
   return getRoomConnections(_padIdToRoom(pad.getId()));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function guestKnock(globalPadId, guestId, displayName) {
   var askedSomeone = false;
 
   // requires that we somehow have permission on this pad
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(globalPadId, function(pad) {
     var connections = _getPadConnections(pad);
+
+    // YOURNAME:
+    // YOURCOMMENT
     connections.forEach(function(connection) {
       // only send to pro users
       if (! padusers.isGuest(connection.data.userInfo.userId)) {
@@ -83,6 +107,9 @@ function guestKnock(globalPadId, guestId, displayName) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _verifyUserId(userId) {
   var result;
   if (padusers.isGuest(userId)) {
@@ -95,8 +122,14 @@ function _verifyUserId(userId) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkChangesetAndPool(cs, pool) {
   Changeset.checkRep(cs);
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.eachAttribNumber(cs, function(n) {
     if (! pool.getAttrib(n)) {
       throw new Error("Attribute pool is missing attribute "+n+" for changeset "+cs);
@@ -104,14 +137,23 @@ function _checkChangesetAndPool(cs, pool) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doWarn(str) {
   log.warn(appjet.executionId+": "+str);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doInfo(str) {
   log.info(appjet.executionId+": "+str);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadRevisionSockets(pad) {
   var revisionSockets = pad.tempObj().revisionSockets;
   if (! revisionSockets) {
@@ -121,6 +163,9 @@ function _getPadRevisionSockets(pad) {
   return revisionSockets;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function applyUserChanges(pad, baseRev, changeset, optSocketId, optAuthor) {
   // changeset must be already adapted to the server's apool
 
@@ -177,6 +222,9 @@ function applyUserChanges(pad, baseRev, changeset, optSocketId, optAuthor) {
   padevents.onEditPad(pad, thisAuthor);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateClient(pad, connectionId) {
   var conn = getConnection(connectionId);
   if (! conn) {
@@ -205,7 +253,13 @@ function updateClient(pad, connectionId) {
   updateRoomConnectionData(connectionId, conn.data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updatePadClients(pad) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   _getPadConnections(pad).forEach(function(connection) {
     updateClient(pad, connection.connectionId);
   });
@@ -213,6 +267,9 @@ function updatePadClients(pad) {
   readonly_server.updatePadClients(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function applyMissedChanges(pad, missedChanges) {
   var userInfo = missedChanges.userInfo;
   var baseRev = missedChanges.baseRev;
@@ -275,20 +332,35 @@ function applyMissedChanges(pad, missedChanges) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllPadsWithConnections() {
   // returns array of global pad id strings
   return getAllRoomsOfType(PADPAGE_ROOMTYPE).map(_roomToPadId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function broadcastServerMessage(msgObj) {
   var msg = {type: "SERVER_MESSAGE", payload: msgObj};
+
+  // YOURNAME:
+  // YOURCOMMENT
   getAllRoomsOfType(PADPAGE_ROOMTYPE).forEach(function(roomName) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRoomConnections(roomName).forEach(function(connection) {
       sendMessage(connection.connectionId, msg);
     });
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function appendPadText(pad, txt) {
   txt = model.cleanText(txt);
   var oldFullText = pad.text();
@@ -296,6 +368,9 @@ function appendPadText(pad, txt) {
                                                  oldFullText.length-1, 0, txt));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setPadText(pad, txt) {
   txt = model.cleanText(txt);
   var oldFullText = pad.text();
@@ -304,6 +379,9 @@ function setPadText(pad, txt) {
                                                  oldFullText.length-1, txt));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setPadAText(pad, atext) {
   var oldFullText = pad.text();
   var deletion = Changeset.makeSplice(oldFullText, 0, oldFullText.length-1, "");
@@ -320,17 +398,26 @@ function setPadAText(pad, atext) {
   _applyChangesetToPad(pad, cs);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function applyChangesetToPad(pad, changeset) {
   Changeset.checkRep(changeset);
 
   _applyChangesetToPad(pad, changeset);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _applyChangesetToPad(pad, changeset) {
   pad.appendRevision(changeset);
   updatePadClients(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getHistoricalAuthorData(pad, author) {
   var authorData = pad.getAuthorData(author);
   if (authorData) {
@@ -352,8 +439,14 @@ function getHistoricalAuthorData(pad, author) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function buildHistoricalAuthorDataMapFromAText(pad, atext) {
   var map = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   pad.eachATextAuthor(atext, function(author, authorNum) {
     var data = getHistoricalAuthorData(pad, author);
     if (data) {
@@ -363,8 +456,14 @@ function buildHistoricalAuthorDataMapFromAText(pad, atext) {
   return map;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function buildHistoricalAuthorDataMapForPadHistory(pad) {
   var map = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   pad.pool().eachAttrib(function(key, value) {
     if (key == 'author') {
       var author = value;
@@ -377,6 +476,9 @@ function buildHistoricalAuthorDataMapForPadHistory(pad) {
   return map;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getATextForWire(pad, optRev) {
   var atext;
   if ((optRev && ! isNaN(Number(optRev))) || (typeof optRev) == "number") {
@@ -397,6 +499,9 @@ function getATextForWire(pad, optRev) {
           historicalAuthorData:historicalAuthorData };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCollabClientVars(pad) {
   // construct object that is made available on the client
   // as collab_client_vars
@@ -415,12 +520,21 @@ function getCollabClientVars(pad) {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getNumConnections(pad) {
   return _getPadConnections(pad).length;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getConnectedUsers(pad) {
   var users = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   _getPadConnections(pad).forEach(function(connection) {
     users.push(connection.data.userInfo);
   });
@@ -428,13 +542,22 @@ function getConnectedUsers(pad) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bootAllUsersFromPad(pad, reason) {
   return bootUsersFromPad(pad, reason);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bootUsersFromPad(pad, reason, userInfoFilter) {
   var connections = _getPadConnections(pad);
   var bootedUserInfos = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   connections.forEach(function(connection) {
     if ((! userInfoFilter) || userInfoFilter(connection.data.userInfo)) {
       bootedUserInfos.push(connection.data.userInfo);
@@ -444,6 +567,9 @@ function bootUsersFromPad(pad, reason, userInfoFilter) {
   return bootedUserInfos;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dumpStorageToString(pad) {
   var lines = [];
   var errors = [];
@@ -467,6 +593,9 @@ function dumpStorageToString(pad) {
   return errors.concat(lines).join('\n');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadIdForSocket(socketId) {
   var connectionId = getSocketConnectionId(socketId);
   if (connectionId) {
@@ -478,6 +607,9 @@ function _getPadIdForSocket(socketId) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getUserIdForSocket(socketId) {
   var connectionId = getSocketConnectionId(socketId);
   if (connectionId) {
@@ -489,18 +621,30 @@ function _getUserIdForSocket(socketId) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _serverDebug(msg) { /* nothing */ }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _accessSocketPad(socketId, accessType, padFunc, dontRequirePad) {
   return _accessCollabPad(_getPadIdForSocket(socketId), accessType,
                           padFunc, dontRequirePad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _accessConnectionPad(connection, accessType, padFunc, dontRequirePad) {
   return _accessCollabPad(_roomToPadId(connection.roomName), accessType,
                           padFunc, dontRequirePad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _accessCollabPad(padId, accessType, padFunc, dontRequirePad) {
   if (! padId) {
     if (! dontRequirePad) {
@@ -509,13 +653,22 @@ function _accessCollabPad(padId, accessType, padFunc, dontRequirePad) {
     return;
   }
   else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return _accessExistingPad(padId, accessType, function(pad) {
       return padFunc(pad);
     }, dontRequirePad);
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _accessExistingPad(padId, accessType, padFunc, dontRequireExist) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return model.accessPadGlobal(padId, function(pad) {
     if (! pad.exists()) {
       if (! dontRequireExist) {
@@ -529,6 +682,9 @@ function _accessExistingPad(padId, accessType, padFunc, dontRequireExist) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _handlePadUserInfo(pad, userInfo) {
   var author = userInfo.userId;
   var colorId = Number(userInfo.colorId);
@@ -543,6 +699,9 @@ function _handlePadUserInfo(pad, userInfo) {
   padusers.notifyUserData(data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sendUserInfoMessage(connectionId, type, userInfo) {
   if (translateSpecialKey(userInfo.specialKey) != 'invisible') {
     sendMessage(connectionId, {type: type, userInfo: userInfo });
@@ -550,9 +709,15 @@ function _sendUserInfoMessage(connectionId, type, userInfo) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRoomCallbacks(roomName) {
   var callbacks = {};
   callbacks.introduceUsers =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (joiningConnection, existingConnection) {
       // notify users of each other
       _sendUserInfoMessage(existingConnection.connectionId,
@@ -563,12 +728,21 @@ function getRoomCallbacks(roomName) {
                           existingConnection.data.userInfo);
     };
   callbacks.extroduceUsers =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (leavingConnection, existingConnection) {
       _sendUserInfoMessage(existingConnection.connectionId, "USER_LEAVE",
                           leavingConnection.data.userInfo);
     };
   callbacks.onAddConnection =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (data) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       model.accessPadGlobal(_roomToPadId(roomName), function(pad) {
         _handlePadUserInfo(pad, data.userInfo);
         padevents.onUserJoin(pad, data.userInfo);
@@ -576,12 +750,21 @@ function getRoomCallbacks(roomName) {
       });
     };
   callbacks.onRemoveConnection =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (data) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       model.accessPadGlobal(_roomToPadId(roomName), function(pad) {
         padevents.onUserLeave(pad, data.userInfo);
       });
     };
   callbacks.handleConnect =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (data) {
       if (roomName.indexOf("padpage/") != 0) {
         return null;
@@ -593,6 +776,9 @@ function getRoomCallbacks(roomName) {
       return data.userInfo;
     };
   callbacks.clientReady =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(newConnection, data) {
       var padId = _roomToPadId(newConnection.roomName);
 
@@ -609,6 +795,9 @@ function getRoomCallbacks(roomName) {
       updateRoomConnectionData(connectionId, newConnection.data);
 
       if (padutils.isProPadId(padId)) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         pro_padmeta.accessProPad(padId, function(propad) {
           // tell client about pad title
           sendMessage(connectionId, {type: "CLIENT_MESSAGE", payload: {
@@ -618,6 +807,9 @@ function getRoomCallbacks(roomName) {
         });
       }
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       _accessExistingPad(padId, "CLIENT_READY", function(pad) {
         sendMessage(connectionId, {type: "CLIENT_MESSAGE", payload: {
           type: "padoptions", options: pad.getPadOptionsObj() } });
@@ -631,6 +823,9 @@ function getRoomCallbacks(roomName) {
         sendMessage(connectionId, {type:"NO_COMMIT_PENDING"});
       }
     };
+
+  // YOURNAME:
+  // YOURCOMMENT
   callbacks.handleMessage = function(connection, msg) {
     _handleCometMessage(connection, msg);
   };
@@ -639,6 +834,9 @@ function getRoomCallbacks(roomName) {
 
 var _specialKeys = [['x375b', 'invisible']];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function translateSpecialKey(specialKey) {
   // code -> name
   for(var i=0;i<_specialKeys.length;i++) {
@@ -649,6 +847,9 @@ function translateSpecialKey(specialKey) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSpecialKey(name) {
   // name -> code
   for(var i=0;i<_specialKeys.length;i++) {
@@ -659,12 +860,18 @@ function getSpecialKey(name) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateDocumentConnectionUserInfo(pad, socketId, userInfo) {
   var connectionId = getSocketConnectionId(socketId);
   if (connectionId) {
     var updatingConnection = getConnection(connectionId);
     updatingConnection.data.userInfo = userInfo;
     updateRoomConnectionData(connectionId, updatingConnection.data);
+
+    // YOURNAME:
+    // YOURCOMMENT
     _getPadConnections(pad).forEach(function(connection) {
       if (connection.socketId != updatingConnection.socketId) {
         _sendUserInfoMessage(connection.connectionId,
@@ -678,6 +885,9 @@ function _updateDocumentConnectionUserInfo(pad, socketId, userInfo) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _handleCometMessage(connection, msg) {
 
   var socketUserId = connection.data.userInfo.userId;
@@ -692,6 +902,9 @@ function _handleCometMessage(connection, msg) {
 	var plugin_checks = plugins.callHook("collabServerUserChanges", {pad: _roomToPadId(connection.roomName), msg: msg});
         var plugin_access=true;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         plugin_checks.forEach(function(value) {
             if(value==false)
             {
@@ -704,6 +917,9 @@ function _handleCometMessage(connection, msg) {
             return false;
         }
     
+
+      // YOURNAME:
+      // YOURCOMMENT
       _accessConnectionPad(connection, "USER_CHANGES", function(pad) {
         var baseRev = msg.baseRev;
         var wireApool = (new AttribPool()).fromJsonable(msg.apool);
@@ -720,6 +936,9 @@ function _handleCometMessage(connection, msg) {
     }
   }
   else if (msg.type == "USERINFO_UPDATE") {
+
+    // YOURNAME:
+    // YOURCOMMENT
     _accessConnectionPad(connection, "USERINFO_UPDATE", function(pad) {
       var userInfo = msg.userInfo;
       // security check
@@ -733,6 +952,9 @@ function _handleCometMessage(connection, msg) {
     });
   }
   else if (msg.type == "CLIENT_MESSAGE") {
+
+    // YOURNAME:
+    // YOURCOMMENT
     _accessConnectionPad(connection, "CLIENT_MESSAGE", function(pad) {
       var payload = msg.payload;
       if (payload.authId &&
@@ -742,6 +964,9 @@ function _handleCometMessage(connection, msg) {
       }
       else {
         getRoomConnections(connection.roomName).forEach(
+
+          // YOURNAME:
+          // YOURCOMMENT
           function(conn) {
             if (conn.socketId != connection.socketId) {
               sendMessage(conn.connectionId,
@@ -755,6 +980,9 @@ function _handleCometMessage(connection, msg) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _correctMarkersInPad(atext, apool) {
   var text = atext.text;
 
@@ -786,6 +1014,9 @@ function _correctMarkersInPad(atext, apool) {
   // create changeset that removes these bad markers
   offset = 0;
   var builder = Changeset.builder(text.length);
+
+  // YOURNAME:
+  // YOURCOMMENT
   badMarkers.forEach(function(pos) {
     builder.keepText(text.substring(offset, pos));
     builder.remove(1);

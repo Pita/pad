@@ -22,14 +22,23 @@ import("funhtml.*");
 import("jsutils.{eachProperty,keys}");
 import("etherpad.utils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dayKey(date) {
   return [date.getFullYear(), date.getMonth()+1, date.getDate()].join(',');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dateAddDays(date, numDays) {
   return new Date((+date) + numDays*1000*60*60*24);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _loadDay(date) {
   var fileName = log.frontendLogFileName('exception', date);
   if (! fileName) {
@@ -44,7 +53,13 @@ function _loadDay(date) {
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _accessLatestLogs(func) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("etherpad.statistics.exceptions", function(exc) {
     if (! exc.byDay) {
       exc.byDay = {};
@@ -75,14 +90,23 @@ function _accessLatestLogs(func) {
     }
 
     var logs = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       getDay: function(daysAgo) {
         return exc.byDay[_dayKey(_dateAddDays(today, -daysAgo))];
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       eachLineInLastNDays: function(n, func) {
         var oldest = _dateAddDays(now, -n);
         var oldestNum = +oldest;
         for(var i=n;i>=0;i--) {
           var lines = logs.getDay(i);
+
+          // YOURNAME:
+          // YOURCOMMENT
           lines.forEach(function(line) {
             if (line.date > oldestNum) {
               func(line);
@@ -96,6 +120,9 @@ function _accessLatestLogs(func) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _exceptionHash(line) {
   // skip the first line of jsTrace, take hashCode of rest
   var trace = line.jsTrace;
@@ -108,7 +135,13 @@ function _exceptionHash(line) {
 // [string] if the strings are the same.  Takes oldInfo
 // and returns newInfo; each is either null or an array
 // of length 1 or 3.
+
+// YOURNAME:
+// YOURCOMMENT
 function _accumCommonPrefixSuffix(oldInfo, newString) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _commonPrefixLength(a, b) {
     var x = 0;
     while (x < a.length && x < b.length && a.charAt(x) == b.charAt(x)) {
@@ -117,6 +150,9 @@ function _accumCommonPrefixSuffix(oldInfo, newString) {
     return x;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _commonSuffixLength(a, b) {
     var x = 0;
     while (x < a.length && x < b.length &&
@@ -155,13 +191,22 @@ function _accumCommonPrefixSuffix(oldInfo, newString) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _accessLatestLogs(function(logs) {
     var weekCounts = {};
     var totalWeekCount = 0;
 
     // count exceptions of each kind in last week
+
+    // YOURNAME:
+    // YOURCOMMENT
     logs.eachLineInLastNDays(7, function(line) {
       var hash = _exceptionHash(line);
       weekCounts[hash] = (weekCounts[hash] || 0) + 1;
@@ -172,6 +217,9 @@ function render() {
     var totalDayCount = 0;
 
     // accumulate data about each exception in last 24 hours
+
+    // YOURNAME:
+    // YOURCOMMENT
     logs.eachLineInLastNDays(1, function(line) {
       var hash = _exceptionHash(line);
       var oldData = dayData[hash];
@@ -191,20 +239,32 @@ function render() {
 
     // put day datas in an array and sort
     var dayDatas = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(dayData, function(k,v) {
       dayDatas.push(v);
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     dayDatas.sort(function(a, b) {
       return b.count - a.count;
     });
 
     // process
+
+    // YOURNAME:
+    // YOURCOMMENT
     dayDatas.forEach(function(data) {
       data.weekCount = (weekCounts[data.hash] || 0);
       data.numTrackers = keys(data.trackers).length;
     });
 
     // gen HTML
+
+    // YOURNAME:
+    // YOURCOMMENT
     function num(n) { return SPAN({className:'num'}, n); }
 
     var b = DIV();
@@ -220,6 +280,9 @@ function render() {
 
     b.push(H2("Exceptions grouped by stack trace:"));
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     dayDatas.forEach(function(data) {
       b.push(DIV({className:'exc'},
                          'Past day: ',num(data.count),', Past week: ',

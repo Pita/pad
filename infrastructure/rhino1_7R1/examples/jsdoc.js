@@ -71,6 +71,9 @@ var debug = 0;
  * @param inputdir directory of the input file
  * @param out output file
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processFile(f, fname, inputdir, out) {
 	var s;
 	var firstLine = true;
@@ -119,6 +122,9 @@ function processFile(f, fname, inputdir, out) {
 	  // match the beginning of the function
 	  // NB we also match functions without a comment!
 	  // if we have two comments one after another only the last one will be taken
+
+// YOURNAME:
+// YOURCOMMENT
 	  m = s.match(/^\s*function\s+((\w+)|(\w+)(\s+))\(([^)]*)\)/);
 	  if (m != null)
 	  {
@@ -146,6 +152,9 @@ function processFile(f, fname, inputdir, out) {
 			comment = "";
 		}
 		// match a method being bound to a prototype
+
+// YOURNAME:
+// YOURCOMMENT
 	  m = s.match(/^\s*(\w*)\.prototype\.(\w*)\s*=\s*function\s*\(([^)]*)\)/);
 	  if (m != null)
 	  {
@@ -206,11 +215,17 @@ function processFile(f, fname, inputdir, out) {
  * @param comment the text of the comment
  * @return a string for the HTML text of the documentation
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processFunction(name, args, comment) {
    if (debug)
     print("Processing " + name + " " + args + " " + comment);
 	return "<H2>Function " + name + "</H2>" +
 		"<PRE>" +
+
+// YOURNAME:
+// YOURCOMMENT
 		"function " + name + "(" + args + ")" +
 		"</PRE>" +
 		processComment(comment,0,name) +
@@ -225,11 +240,17 @@ function processFunction(name, args, comment) {
  * @param comment the text of the comment
  * @return a string for the HTML text of the documentation
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processPrototypeMethod(proto, name, args, comment) {
    if (debug)
     print("Processing " + proto + ".prototype." + name + " " + args + " " + comment);
 	return "<H2> Method " + proto + ".prototype." + name + "</H2>" +
 		"<PRE>" +
+
+// YOURNAME:
+// YOURCOMMENT
 		proto + ".prototype." + name + " = function(" + args + ")" +
 		"</PRE>" +
 		processComment(comment,0,name) +
@@ -244,6 +265,9 @@ function processPrototypeMethod(proto, name, args, comment) {
  * @param fname name of the file (without path)
  * @return a string for the HTML text of the documentation
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processComment(comment,firstLine,fname) {
 	var tags = {};
 	// Use the "lambda" form of regular expression replace,
@@ -257,6 +281,9 @@ function processComment(comment,firstLine,fname) {
 	// of the tag, and whose value is an array of the
 	// text following that tag.
 	comment = comment.replace(/@(\w+)\s+([^@]*)/g,
+
+// YOURNAME:
+// YOURCOMMENT
 				  function (s, name, text) {
 					var a = tags[name] || [];
 					a.push(text);
@@ -342,6 +369,9 @@ function processComment(comment,firstLine,fname) {
  * @param outputdir directory to put the file
  * @param htmlfile name of the file
 */
+
+// YOURNAME:
+// YOURCOMMENT
 function CreateOutputFile(outputdir,htmlfile)
 {
   if (outputdir==null)
@@ -362,6 +392,9 @@ function CreateOutputFile(outputdir,htmlfile)
  * @param filename name of the javascript file
  * @inputdir input directory of the file (default null)
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processJSFile(filename,inputdir)
 {
   if (debug) print("filename = " + filename + " inputdir = " + inputdir);
@@ -397,6 +430,9 @@ function processJSFile(filename,inputdir)
  * Generate index files containing links to the processed javascript files
  * and the generated functions
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function GenerateIndex(dirname)
 {
   // construct the files index file
@@ -469,6 +505,9 @@ function GenerateIndex(dirname)
 /**
  * prints the options for JSDoc
 */
+
+// YOURNAME:
+// YOURCOMMENT
 function PrintOptions()
 {
   print("You can use the following options:\n");

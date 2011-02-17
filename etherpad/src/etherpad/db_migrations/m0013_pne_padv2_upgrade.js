@@ -20,6 +20,9 @@ import("etherpad.pne.pne_utils");
 import("sqlbase.sqlobj");
 import("etherpad.log");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   // this is a PNE-only migration
@@ -37,6 +40,9 @@ function run() {
   var migrationsSoFar = 0;
   var progressBar = startConsoleProgressBar();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   migrationsNeeded.forEach(function(obj) {
     var padId = String(obj.id);
 

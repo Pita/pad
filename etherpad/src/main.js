@@ -70,10 +70,16 @@ import("etherpad.admin.plugins");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.startupHandler = function() {
   // Order matters.
   checkSystemRequirements();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var sp = function(k) { return appjet.config['etherpad.SQL_'+k] || null; };
   sqlcommon.init(sp('JDBC_DRIVER'), sp('JDBC_URL'), sp('USERNAME'), sp('PASSWORD'));
 
@@ -96,10 +102,16 @@ serverhandlers.startupHandler = function() {
   plugins.callHook('serverStartup');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.resetHandler = function() {
   statistics.onReset();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.shutdownHandler = function() {
   plugins.callHook('serverShutdown');
 
@@ -115,6 +127,9 @@ serverhandlers.shutdownHandler = function() {
 // request handling
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.requestHandler = function() {
   checkRequestIsWellFormed();
   sessions.preRequestCookieCheck();
@@ -127,6 +142,9 @@ serverhandlers.requestHandler = function() {
 // Exceptions that are thrown in frontend etherpad javascript should
 //   always be caught and treated specially.
 // If serverhandlers.errorHandler gets called, then it's a bug in the frontend.
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.errorHandler = function(ex) {
   logException(ex);
   response.setStatusCode(500);
@@ -141,6 +159,9 @@ serverhandlers.errorHandler = function(ex) {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.postRequestHandler = function() {
   logRequest();
 };
@@ -149,27 +170,51 @@ serverhandlers.postRequestHandler = function() {
 // Scheduled tasks
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.writePad = function(globalPadId) {
   dbwriter.taskWritePad(globalPadId);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.flushPad = function(globalPadId, reason) {
   dbwriter.taskFlushPad(globalPadId, reason);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.checkForStalePads = function() {
   dbwriter.taskCheckForStalePads();
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.statisticsDailyUpdate = function() {
   //statistics.dailyUpdate();
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.doSlowFileConversion = function(from, to, bytes, cont) {
   return importexport.doSlowFileConversion(from, to, bytes, cont);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.proPadmetaFlushEdits = function(domainId) {
   pro_pad_editors.flushEditsNow(domainId);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.noProWatcherCheckPad = function(globalPadId) {
   noprowatcher.checkPad(globalPadId);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.collabRoomDisconnectSocket = function(connectionId, socketId) {
   collabroom_server.disconnectDefunctSocket(connectionId, socketId);
 };
@@ -178,6 +223,9 @@ serverhandlers.tasks.collabRoomDisconnectSocket = function(connectionId, socketI
 // cometHandler()
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.cometHandler = function(op, id, data) {
   checkRequestIsWellFormed();
   if (!data) {
@@ -214,6 +262,9 @@ serverhandlers.cometHandler = function(op, id, data) {
 // sarsHandler()
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.sarsHandler = function(str) {
   str = String(str);
   println("sarsHandler: parsing JSON string (length="+str.length+")");
@@ -229,6 +280,9 @@ serverhandlers.sarsHandler = function(str) {
 //----------------------------------------------------------------
 // checkSystemRequirements()
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function checkSystemRequirements() {
   var jv = Packages.java.lang.System.getProperty("java.version");
   jv = +(String(jv).split(".").slice(0,2).join("."));
@@ -240,6 +294,9 @@ function checkSystemRequirements() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkRequestIsWellFormed() {
   // We require the "host" field to be present.
   // This should always be true, as long as the protocl is HTTP/1.1
@@ -255,6 +312,9 @@ function checkRequestIsWellFormed() {
 //----------------------------------------------------------------
 // checkHost()
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function checkHost() {
   var trueRegex = /\s*true\s*/i;
   if (trueRegex.test(appjet.config['etherpad.skipHostnameCheck'])) {
@@ -284,6 +344,9 @@ function checkHost() {
 //----------------------------------------------------------------
 
 // Check for HTTPS
+
+// YOURNAME:
+// YOURCOMMENT
 function checkHTTPS() {
   /* Open-source note: this function used to check the protocol and make
    * sure that pages that needed to be secure went over HTTPS, and pages
@@ -319,6 +382,9 @@ function checkHTTPS() {
   ];
 
   var httpsRequired = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   _requiredHttpsPrefixes.forEach(function(p) {
     if (stringutils.startsWith(request.path, p)) {
       httpsRequired = true;
@@ -336,6 +402,9 @@ function checkHTTPS() {
     _redirectToScheme("http");
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _redirectToScheme(scheme) {
     var url = scheme + "://";
     url += request.host.split(':')[0]; // server
@@ -356,6 +425,9 @@ function checkHTTPS() {
 // dispatching
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handlePath() {
   // Default.  Can be overridden in case of static files.
   response.neverCache();

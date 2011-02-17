@@ -17,6 +17,9 @@
 
 import("etherpad.collab.ace.easysync2_tests");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   easysync2_tests.runTests();
 }

@@ -18,6 +18,9 @@
 // Below Array#map code was direct pasted by AppJet/Etherpad, licence unknown. Possible source: http://www.tutorialspoint.com/javascript/array_map.htm
 if (!Array.prototype.map)
 {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Array.prototype.map = function(fun /*, thisp*/)
   {
     var len = this.length >>> 0;
@@ -39,6 +42,9 @@ if (!Array.prototype.map)
 // Below Array#forEach code was direct pasted by AppJet/Etherpad, licence unknown. Possible source: http://www.tutorialspoint.com/javascript/array_foreach.htm
 if (!Array.prototype.forEach)
 {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Array.prototype.forEach = function(fun /*, thisp*/)
   {
     var len = this.length >>> 0;
@@ -57,6 +63,9 @@ if (!Array.prototype.forEach)
 // Below Array#indexOf code was direct pasted by AppJet/Etherpad, licence unknown. Possible source: http://www.tutorialspoint.com/javascript/array_indexof.htm
 if (!Array.prototype.indexOf)
 {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Array.prototype.indexOf = function(elt /*, from*/)
   {
     var len = this.length >>> 0;
@@ -78,12 +87,18 @@ if (!Array.prototype.indexOf)
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function debugLog() {
   try {
     // console.log.apply(console, arguments);
   } catch (e) {console.log("error printing: ",e);}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function randomString() {
 	return "_"+Math.floor(Math.random() * 1000000);
 }
@@ -114,6 +129,9 @@ var padContents = {
     clientVars.initialStyledContents.atext.text),
 
   // generates a jquery element containing HTML for a line
+
+  // YOURNAME:
+  // YOURCOMMENT
   lineToElement: function(line, aline) {
     var element = document.createElement("div");
     var emptyLine = (line == '\n');
@@ -127,6 +145,9 @@ var padContents = {
     return $(element);
   },
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   applySpliceToDivs: function(start, numRemoved, newLines) {
     // remove spliced-out lines from DOM
     for(var i=start; i<start+numRemoved && i<this.currentDivs.length; i++) {
@@ -165,8 +186,14 @@ var padContents = {
   },
 
   // splice the lines
+
+  // YOURNAME:
+  // YOURCOMMENT
   splice: function(start, numRemoved, newLinesVA) {
     var newLines = Array.prototype.slice.call(arguments, 2).map(
+
+        // YOURNAME:
+        // YOURCOMMENT
         function(s) { return s; });
 
     // apply this splice to the divs
@@ -178,20 +205,32 @@ var padContents = {
     this.currentLines.splice.apply(this.currentLines, arguments);
   },
   // returns the contents of the specified line I
+
+  // YOURNAME:
+  // YOURCOMMENT
   get: function(i) {
     return this.currentLines[i];
   },
   // returns the number of lines in the document
+
+  // YOURNAME:
+  // YOURCOMMENT
   length: function() {
     return this.currentLines.length;
   },
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   getActiveAuthors: function() {
     var self = this;
     var authors = [];
     var seenNums = {};
     var alines = self.alines;
     for(var i=0;i<alines.length;i++) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       Changeset.eachAttribNumber(alines[i], function(n) {
         if (! seenNums[n]) {
           seenNums[n] = true;
@@ -209,6 +248,9 @@ var padContents = {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function callCatchingErrors(catcher, func) {
   try {
     wrapRecordingErrors(catcher, func)();
@@ -216,7 +258,13 @@ function callCatchingErrors(catcher, func) {
   catch (e) { /*absorb*/ }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function wrapRecordingErrors(catcher, func) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     try {
       return func.apply(this, Array.prototype.slice.call(arguments));
@@ -232,6 +280,9 @@ function wrapRecordingErrors(catcher, func) {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadedNewChangeset(changesetForward, changesetBackward, revision, timeDelta) {
   var broadcasting = (BroadcastSlider.getSliderPosition() == revisionInfo.latest);
   debugLog("broadcasting:", broadcasting, BroadcastSlider.getSliderPosition(), revisionInfo.latest, revision);
@@ -246,6 +297,9 @@ function loadedNewChangeset(changesetForward, changesetBackward, revision, timeD
  the current revision to the specified revision.  Any mistakes here will
  cause the whole slider to get out of sync.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function applyChangeset(changeset, revision, preventSliderMovement, timeDelta) {
   // disable the next 'gotorevision' call handled by a timeslider update
   if(!preventSliderMovement) {
@@ -263,10 +317,19 @@ function applyChangeset(changeset, revision, preventSliderMovement, timeDelta) {
   padContents.currentTime += timeDelta * 1000;
   debugLog('Time Delta: ',timeDelta)
   updateTimer();
+
+  // YOURNAME:
+  // YOURCOMMENT
   BroadcastSlider.setAuthors(padContents.getActiveAuthors().map(function(name) {return authorData[name];}));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateTimer() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var zpad = function(str, length) {
     str = str+"";
     while(str.length < length)
@@ -274,6 +337,9 @@ function updateTimer() {
     return str;
   }
   var date = new Date(padContents.currentTime);
+
+  // YOURNAME:
+  // YOURCOMMENT
   var dateFormat = function() {
     var month = zpad(date.getMonth()+1,2);
     var day = zpad(date.getDate(),2);
@@ -299,6 +365,9 @@ function updateTimer() {
 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function goToRevision(newRevision) {
   padContents.targetRevision = newRevision;
   var self = this;
@@ -320,6 +389,9 @@ function goToRevision(newRevision) {
     var sliderLocation = padContents.currentRevision;
     // callback is called after changeset information is pulled from server
     // this may never get called, if the changeset has already been loaded
+
+    // YOURNAME:
+    // YOURCOMMENT
     var update = function(start, end) {
       // if we've called goToRevision in the time since, don't goToRevision
       goToRevision(padContents.targetRevision);
@@ -352,6 +424,9 @@ function goToRevision(newRevision) {
 
     changesetLoader.queueUp(start, 1, update);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   BroadcastSlider.setAuthors(padContents.getActiveAuthors().map(function(name) {return authorData[name];}));
 }
 
@@ -361,6 +436,9 @@ var changesetLoader = {
   requestQueue1: [],
   requestQueue2: [],
   requestQueue3: [],
+
+  // YOURNAME:
+  // YOURCOMMENT
   queueUp: function(revision, width, callback) {
     if(revision < 0) revision = 0;
     // if(changesetLoader.requestQueue.indexOf(revision) != -1)
@@ -378,6 +456,9 @@ var changesetLoader = {
       setTimeout(changesetLoader.loadFromQueue, 10);
     }
   },
+
+  // YOURNAME:
+  // YOURCOMMENT
   loadFromQueue: function() {
     var self = changesetLoader;
     var requestQueue = self.requestQueue1.length > 0 ? self.requestQueue1 :
@@ -396,6 +477,9 @@ var changesetLoader = {
     debugLog("loadinging revision", start, "through ajax");
     $.getJSON(
       "/ep/pad/changes/"+clientVars.padIdForUrl+"?s="+start + "&g="+granularity,
+
+      // YOURNAME:
+      // YOURCOMMENT
       function(data, textStatus) {
         if(textStatus !== "success") {
           console.log(textStatus);
@@ -407,6 +491,9 @@ var changesetLoader = {
       }
     );
   },
+
+  // YOURNAME:
+  // YOURCOMMENT
   handleResponse: function(data, start, granularity, callback) {
     debugLog("response: ", data);
     var pool = (new AttribPool()).fromJsonable(data.apool);
@@ -423,6 +510,9 @@ var changesetLoader = {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handleMessageFromServer() {
   debugLog("handleMessage:", arguments);
   var obj = arguments[0]['data'];
@@ -448,6 +538,9 @@ function handleMessageFromServer() {
       var authorMap = {};
       authorMap[obj.author] = obj.data;
       receiveAuthorData(authorMap);
+
+      // YOURNAME:
+      // YOURCOMMENT
       BroadcastSlider.setAuthors(padContents.getActiveAuthors().map(function(name) {return authorData[name];}));
     } else if (obj['type'] == "NEW_SAVEDREV") {
       var savedRev = obj.savedRev;
@@ -458,6 +551,9 @@ function handleMessageFromServer() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handleSocketClosed(params) {
   debugLog("socket closed!", params);
 	socket = null;
@@ -486,10 +582,16 @@ function handleSocketClosed(params) {
   // }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendMessage(msg) {
   socket.postMessage(JSON.stringify({type: "COLLABROOM", data: msg}));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setUpSocket() {
   // required for Comet
   if ((! $.browser.msie) &&
@@ -498,6 +600,9 @@ function setUpSocket() {
   }
 
   var success = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   callCatchingErrors("setUpSocket", function() {
     appLevelDisconnectReason = null;
 
@@ -505,6 +610,9 @@ function setUpSocket() {
     socket = new WebSocket(socketId);
     socket.onmessage = wrapRecordingErrors("socket.onmessage", handleMessageFromServer);
     socket.onclosed = wrapRecordingErrors("socket.onclosed", handleSocketClosed);
+
+    // YOURNAME:
+    // YOURCOMMENT
     socket.onopen = wrapRecordingErrors("socket.onopen", function() {
       setChannelState("CONNECTED");
       var msg = { type:"CLIENT_READY", roomType:'padview',
@@ -514,6 +622,9 @@ function setUpSocket() {
       sendMessage(msg);
     });
     // socket.onhiccup = wrapRecordingErrors("socket.onhiccup", handleCometHiccup);
+
+    // YOURNAME:
+    // YOURCOMMENT
     // socket.onlogmessage = function(x) {debugLog(x); };
     socket.connect();
     success = true;
@@ -526,6 +637,9 @@ function setUpSocket() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setChannelState(newChannelState, moreInfo) {
   if (newChannelState != channelState) {
     channelState = newChannelState;
@@ -533,9 +647,18 @@ function setChannelState(newChannelState, moreInfo) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function abandonConnection(reason) {
   if (socket) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     socket.onclosed = function() {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     socket.onhiccup = function() {};
     socket.disconnect();
   }
@@ -544,8 +667,14 @@ function abandonConnection(reason) {
 }
 
 window['onloadFuncts'] = [];
+
+// YOURNAME:
+// YOURCOMMENT
 window.onload = function() {
   window['isloaded'] = true;
+
+  // YOURNAME:
+  // YOURCOMMENT
   window['onloadFuncts'].forEach(function(funct) {
     funct();
   });
@@ -553,6 +682,9 @@ window.onload = function() {
 
 // to start upon window load, just push a function onto this array
 window['onloadFuncts'].push(setUpSocket);
+
+// YOURNAME:
+// YOURCOMMENT
 window['onloadFuncts'].push(function() {
   // set up the currentDivs and DOM
   padContents.currentDivs = [];
@@ -569,6 +701,9 @@ window['onloadFuncts'].push(function() {
 // this is necessary to keep infinite loops of events firing,
 // since goToRevision changes the slider position
 var goToRevisionIfEnabledCount = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 var goToRevisionIfEnabled = function() {
   if(goToRevisionIfEnabledCount > 0) {
     goToRevisionIfEnabledCount --;
@@ -579,6 +714,9 @@ var goToRevisionIfEnabled = function() {
 
 BroadcastSlider.onSlider(goToRevisionIfEnabled);
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
   for(var i=0; i<clientVars.initialChangesets.length; i++) {
     var csgroup = clientVars.initialChangesets[i];
@@ -592,6 +730,9 @@ BroadcastSlider.onSlider(goToRevisionIfEnabled);
 var dynamicCSS = makeCSSManager('dynamicsyntax');
 var authorData = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 function receiveAuthorData(newAuthorData) {
   for(var author in newAuthorData) {
     var data = newAuthorData[author];

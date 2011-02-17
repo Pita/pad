@@ -28,20 +28,32 @@ diagnostics.steps = [
   ['showResult', ""] 
 ];
 
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.processNext = function(i) {
   if (i < diagnostics.steps.length) {
     var msg = "Step "+(i+1)+": "+diagnostics.steps[i][1]+"...";
     $('#statusmsg').html(msg);
+
+    // YOURNAME:
+    // YOURCOMMENT
     diagnostics[diagnostics.steps[i][0]](function() { 
       diagnostics.processNext(i+1);
     });
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
   diagnostics.processNext(0);
   
   var emailClicked = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('#email').click(function() {
     if (!emailClicked) {
       $('#email').select();
@@ -49,7 +61,13 @@ $(document).ready(function() {
     }
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('#emailsubmit').click(function() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function err(m) {
       $('#emailerrormsg').hide().html(m).fadeIn('fast');
     }
@@ -65,6 +83,9 @@ $(document).ready(function() {
       success: success,
       error: error
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     function success(responseText) {
       if (responseText == "OK") {
 	$('#emailform').html("<p>Thanks!  We will look at your case shortly.</p>");
@@ -72,32 +93,53 @@ $(document).ready(function() {
 	err(responseText);
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function error() {
       err("There was an error processing your request.");
     }
   });
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.init = function(done) {
   setTimeout(done, 1000);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.examineBrowser = function(done) {
   setTimeout(done, 1000);
 };
 		  
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.testStreaming = function(done) {
   setTimeout(done, 1000);
 };
 		  
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.testPolling = function(done) {
   setTimeout(done, 1000);
 };
 		  
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.testHiccups = function(done) {
   setTimeout(done, 1000);
 };
 		  
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.sendInfo = function(done) {
 
   // TODO(jd): remove these test data when you submit actual data.
@@ -112,10 +154,16 @@ diagnostics.sendInfo = function(done) {
     data: {dataJson: JSON.stringify(diagnostics.data),
 	   diagnosticStorableId: clientVars.diagnosticStorableId},
     success: done,
+
+    // YOURNAME:
+    // YOURCOMMENT
     error: function() { alert("There was an error submitting the diagnostic information to the server."); done(); }
   });
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 diagnostics.showResult = function(done) {
   $('#linkanimation').hide();
   $('#statusmsg').html("<br/>Result: your browser and internet"

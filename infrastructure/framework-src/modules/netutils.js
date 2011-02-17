@@ -23,6 +23,9 @@ import("jsutils.eachProperty");
 jimport("java.net.InetAddress");
 
  
+
+// YOURNAME:
+// YOURCOMMENT
 function urlPost(url0, params, options) {
   var url = new java.net.URL(url0);
   
@@ -31,6 +34,9 @@ function urlPost(url0, params, options) {
     data = params;
   } else if (typeof(params) == 'object') {
     var components = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(params, function(k, v) {
       components.push(encodeURIComponent(k)+"="+encodeURIComponent(v));
     });
@@ -75,6 +81,9 @@ function urlPost(url0, params, options) {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getHostnameFromIp(ip) {
   var ret = null;
   try {

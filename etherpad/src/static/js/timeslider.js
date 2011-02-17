@@ -17,6 +17,9 @@
 
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function repeatString(str, times) {
   if (times <= 0) return "";
   var s = repeatString(str, times >> 1);
@@ -24,9 +27,18 @@ function repeatString(str, times) {
   if (times & 1) s += str;
   return s;
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function chr(n) { return String.fromCharCode(n+48); }
+
+// YOURNAME:
+// YOURCOMMENT
 function ord(c) { return c.charCodeAt(0)-48; }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function map(array, func) {
   var result = [];
   // must remain compatible with "arguments" pseudo-array
@@ -37,6 +49,9 @@ function map(array, func) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function forEach(array, func) {
   for(var i=0;i<array.length;i++) {
     var result = func(array[i], i);
@@ -44,8 +59,14 @@ function forEach(array, func) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getText(padOpaqueRef, r, func/*(text, optErrorData)*/) {
   doAjaxGet('/ep/pad/history/'+padOpaqueRef+'/text/'+Number(r),
+
+// YOURNAME:
+// YOURCOMMENT
 	    function(data, optErrorData) {
 	      if (optErrorData) {
 		func(null, optErrorData);
@@ -57,8 +78,14 @@ function getText(padOpaqueRef, r, func/*(text, optErrorData)*/) {
 	    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getChanges(padOpaqueRef, first, last, func/*(data, optErrorData)*/) {
   doAjaxGet('/ep/pad/history/'+padOpaqueRef+'/changes/'+Number(first)+'-'+Number(last),
+
+// YOURNAME:
+// YOURCOMMENT
 	    function(data, optErrorData) {
 	      if (optErrorData) {
 		func(null, optErrorData);
@@ -71,8 +98,14 @@ function getChanges(padOpaqueRef, first, last, func/*(data, optErrorData)*/) {
 	    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function statPad(padOpaqueRef, func/*(atext, optErrorData)*/) {
   doAjaxGet('/ep/pad/history/'+padOpaqueRef+'/stat',
+
+// YOURNAME:
+// YOURCOMMENT
 	    function(data, optErrorData) {
 	      if (optErrorData) {
 		func(null, optErrorData);
@@ -88,11 +121,17 @@ function statPad(padOpaqueRef, func/*(atext, optErrorData)*/) {
 	    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doAjaxGet(url, func/*(data, optErrorData)*/) {
   $.ajax({
     type: 'get',
     dataType: 'json',
     url: url,
+
+    // YOURNAME:
+    // YOURCOMMENT
     success: function(data) {
       if (data.error) {
 	func(null, {serverError: data});
@@ -101,12 +140,18 @@ function doAjaxGet(url, func/*(data, optErrorData)*/) {
 	func(data);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     error: function(xhr, textStatus, errorThrown) {
       func(null, {clientError: { textStatus:textStatus, errorThrown: errorThrown }});
     }
   });  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uncompressChangesBlock(data) {
   var charPool = data.charPool;
   var changesArray = data.changes.split(',');
@@ -119,23 +164,38 @@ function uncompressChangesBlock(data) {
   for(var i=0;i<changesArray.length;i++) {
     var receiver = [null, 0];
     var curString = changesArray[i];
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextChar() {
       return curString.charAt(receiver[1]);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function readChar() {
       var c = nextChar();
       receiver[1]++;
       return c;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function readNum() {
       return decodeVarInt(curString, receiver[1], receiver);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function readString() {
       var len = readNum();
       var str = charPool.substr(charPoolIndex, len);
       charPoolIndex += len;
       return str;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function readTimestamp() {
       var absolute = false;
       if (nextChar() == "+") {
@@ -149,6 +209,9 @@ function uncompressChangesBlock(data) {
       lastTimestamp = t;
       return t;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function atEnd() {
       return receiver[1] >= curString.length;
     }
@@ -178,6 +241,9 @@ function uncompressChangesBlock(data) {
 }
 
 var BASE64_DIGITS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._";
+
+// YOURNAME:
+// YOURCOMMENT
 var BASE64_DIGIT_TO_NUM = (function() {
   var map = {};
   for(var i=0;i<BASE64_DIGITS.length;i++) {
@@ -186,6 +252,9 @@ var BASE64_DIGIT_TO_NUM = (function() {
   return map;
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 function decodeVarInt(stringIn, indexIn, numAndIndexOut) {
   var n = 0;
   var done = false;
@@ -205,6 +274,9 @@ function decodeVarInt(stringIn, indexIn, numAndIndexOut) {
   return n;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTML(s) {
   var re = /[&<>\n]/g;
   if (! re.MAP) {
@@ -216,6 +288,9 @@ function escapeHTML(s) {
       '\n': '<br/>'
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.replace(re, function(c) { return re.MAP[c]; });
 }
 
@@ -228,13 +303,22 @@ var problemData = null;
 var curRev = -1;
 var curText = { lines: [/*string, length+1*/] };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setLastRevLoaded(r) {
   lastRevLoaded = r;
   //$("#sliderui").slider('option', 'max', lastRevLoaded);
   $("#currevdisplay .max").html(String(lastRevLoaded));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function initialStat(continuation) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   statPad(padOpaqueRef, function(data, errorData) {
     if (errorData) {
       reportProblem(errorData);
@@ -254,7 +338,13 @@ function initialStat(continuation) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadKeyframe(r, continuation) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   getText(padOpaqueRef, r, function(data, errorData) {
     if (errorData) {
       reportProblem(errorData);
@@ -262,6 +352,9 @@ function loadKeyframe(r, continuation) {
     }
     else {
       keyframes.push([r, data]);
+
+      // YOURNAME:
+      // YOURCOMMENT
       keyframes.sort(function(a, b) {
 	return a[0] - b[0];
       });
@@ -270,7 +363,13 @@ function loadKeyframe(r, continuation) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadChangesBlock(first, last, continuation) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   getChanges(padOpaqueRef, first, last, function(data, errorData) {
     if (errorData) {
       reportProblem(errorData);
@@ -283,9 +382,18 @@ function loadChangesBlock(first, last, continuation) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadThroughZero(continuation) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   initialStat(function(success) {
     if (success) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       loadKeyframe(0, function(success) {
 	if (success) {
 	  setLastRevLoaded(0);
@@ -298,6 +406,9 @@ function loadThroughZero(continuation) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadMoreRevs(continuation) {
   if (lastRevLoaded >= lastRev) {
     continuation(true);
@@ -308,8 +419,14 @@ function loadMoreRevs(continuation) {
     if (last > lastRev) {
       last = lastRev;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadChangesBlock(first, last, function(success) {
       if (success) {
+
+// YOURNAME:
+// YOURCOMMENT
 	loadKeyframe(last, function(success) {
 	  if (success) {
 	    setLastRevLoaded(last);
@@ -323,13 +440,22 @@ function loadMoreRevs(continuation) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDocTextForText(text) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var lines = map(text.split('\n').slice(0, -1), function(s) {
     return [s, s.length+1];
   });
   return { lines: lines };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLineAndChar(docText, charIndex) {
   // returns [lineIndex, charIndexIntoLine];
   // if the charIndex is after the final newline of the document,
@@ -359,6 +485,9 @@ function getLineAndChar(docText, charIndex) {
   return [startLine, charIndex - startLineStartChar];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function applySplice(docText, splice, forward) {
   var startChar = splice[0];
   var oldText = splice[1];
@@ -369,6 +498,9 @@ function applySplice(docText, splice, forward) {
     newText = tmp;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   //var OLD_FULL_TEXT = map(docText.lines, function(L) { return L[0]; }).join('\n')+'\n';
   //var OLD_NUM_LINES = docText.lines.length;
   
@@ -394,6 +526,9 @@ function applySplice(docText, splice, forward) {
     newLines.pop();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   var newLineEntries = map(newLines, function(s) {
     return [s, s.length+1];
   });
@@ -404,6 +539,9 @@ function applySplice(docText, splice, forward) {
   // check it
   //var EXPECTED_FULL_TEXT = OLD_FULL_TEXT.substring(0, startChar) + newText +
   //OLD_FULL_TEXT.substring(startChar + oldText.length, OLD_FULL_TEXT.length);
+
+  // YOURNAME:
+  // YOURCOMMENT
   //var ACTUAL_FULL_TEXT = map(docText.lines, function(L) { return L[0]; }).join('\n')+'\n';
   
   //console.log("%o %o %o %d %d %d %d %d",
@@ -417,14 +555,23 @@ function applySplice(docText, splice, forward) {
   return [lineSpliceStart, lineSpliceEnd-lineSpliceStart, newLines];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function lineHTML(line) {
   return (escapeHTML(line) || '&nbsp;');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setCurText(docText, dontSetDom) {
   curText = docText;
   if (! dontSetDom) {
     var docNode = $("#stuff");
+
+    // YOURNAME:
+    // YOURCOMMENT
     var html = map(docText.lines, function(line) {
       return '<div>'+lineHTML(line[0])+'</div>';
     });
@@ -432,6 +579,9 @@ function setCurText(docText, dontSetDom) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function spliceDom(splice) {
   var index = splice[0];
   var numRemoved = splice[1];
@@ -465,6 +615,9 @@ function spliceDom(splice) {
   //container.childNodes.length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function seekToRev(r) {
   // precond: r is reachable
 
@@ -472,6 +625,9 @@ function seekToRev(r) {
   
   var bestKeyFrameIndex = -1;
   var bestKeyFrameDistance = -1;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function considerKeyframe(index, kr) {
     var dist = Math.abs(r - kr);
     if (bestKeyFrameDistance < 0 || dist < bestKeyFrameDistance) {
@@ -506,7 +662,13 @@ function seekToRev(r) {
   var destRev = r;
 
   var curChangesBlock = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findChangesBlockFor(n) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function changesBlockWorks(arr) {
       return n >= arr[0] && n <= arr[1];
     }
@@ -524,6 +686,9 @@ function seekToRev(r) {
 
   //var DEBUG_REVS_APPLIED = [];
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function applyRev(n, forward) {
     findChangesBlockFor(n);
     var cb = curChangesBlock[2];
@@ -565,6 +730,9 @@ function seekToRev(r) {
   $("#currevdisplay .cur").html(String(curRev));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function reportProblem(probData) {
   problemData = probData;
   if (probData.msg) {
@@ -574,14 +742,23 @@ function reportProblem(probData) {
 
 var playTimer = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(function() {
   /*$("#sliderui").slider({min: 0, max: 0, value: 0, step: 1, change: slidechange});
+
+  // YOURNAME:
+  // YOURCOMMENT
   function slidechange(event, ui) {
     alert("HELLO");
     var value = ui.value;
     console.log(value);
   }*/
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("#controls .next").click(function() {
     if (curRev < lastRevLoaded) {
       seekToRev(curRev+1);
@@ -589,6 +766,9 @@ $(function() {
     return false;
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("#controls .prev").click(function() {
     if (curRev > 0) {
       seekToRev(curRev-1);
@@ -596,6 +776,9 @@ $(function() {
     return false;
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function stop() {
     if (playTimer) {
       clearInterval(playTimer);
@@ -603,8 +786,14 @@ $(function() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function play() {
     stop();
+
+    // YOURNAME:
+    // YOURCOMMENT
     playTimer = setInterval(function() {
       if (curRev < lastRevLoaded) {
 	seekToRev(curRev+1);	
@@ -618,11 +807,17 @@ $(function() {
   
   $("#controls .play").click(play);
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("#controls .stop").click(function() {
     stop();
     return false;
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("#controls .entry").change(function() {
     var value = $("#controls .entry").val();
     value = Number(value || 0);
@@ -639,15 +834,24 @@ $(function() {
   var useAutoplay = true;
   var hasAutoplayed = false;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   loadThroughZero(function(success) {
     if (success) {
       seekToRev(0);
       
+
+      // YOURNAME:
+      // YOURCOMMENT
       function loadMoreRevsIfNecessary(continuation) {
 	if (lastRevLoaded < lastRev) {
 	  loadMoreRevs(continuation);
 	}
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       loadMoreRevsIfNecessary(function cont(success) {
 	if (success) {
 	  if (lastRevLoaded > 0 && useAutoplay && ! hasAutoplayed) {

@@ -19,6 +19,9 @@
 /**
  * Constructs and returns a new Blob from a JavaScript string.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function stringToBlob(contentType, string) {
   return { contentType: contentType,
 	   _stringData: string,
@@ -28,6 +31,9 @@ function stringToBlob(contentType, string) {
 /**
  * Constructs and returns a new Blob from a Java byte array (byte[]).
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function byteArrayToBlob(contentType, javaByteArray) {
   return { contentType: contentType,
 	   _binaryData: javaByteArray,
@@ -38,6 +44,9 @@ function byteArrayToBlob(contentType, javaByteArray) {
  * Serves a Blob to the client, using the appropriate content-type,
  * and stops execution of the current request.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function serveBlob(blob) {
   response.setContentType(blob.contentType);
   if (blob._binaryData) {

@@ -60,10 +60,16 @@ jimport("java.lang.System.out.println");
 
 var DISABLE_PAD_CREATION = false;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   sqlbase.createJSONTable("PAD_DIAGNOSTIC");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
 
   // TODO: take a hard look at /ep/pad/FOO/BAR/ dispatching.
@@ -95,6 +101,9 @@ function onRequest() {
 // utils
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDefaultPadText() {
   if (pro_utils.isProDomainRequest()) {
     return pro_config.getConfig().defaultPadText;
@@ -102,6 +111,9 @@ function getDefaultPadText() {
   return renderTemplateAsString("misc/pad_default.ejs", {padUrl: request.url.split("?", 1)[0]});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function assignName(pad, userId) {
   if (padusers.isGuest(userId)) {
     // use pad-specific name if possible
@@ -119,6 +131,9 @@ function assignName(pad, userId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function assignColorId(pad, userId) {
   // use pad-specific color if possible
   var userData = pad.getAuthorData(userId);
@@ -127,12 +142,18 @@ function assignColorId(pad, userId) {
   }
 
   // assign random unique color
+
+  // YOURNAME:
+  // YOURCOMMENT
   function r(n) {
     return Math.floor(Math.random() * n);
   }
   var colorsUsed = {};
   var users = collab_server.getConnectedUsers(pad);
   var availableColors = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   users.forEach(function(u) {
     colorsUsed[u.colorId] = true;
   });
@@ -148,6 +169,9 @@ function assignColorId(pad, userId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPrivs() {
   return {
     maxRevisions: quotas.getMaxSavedRevisionsPerPad()
@@ -158,6 +182,9 @@ function _getPrivs() {
 // linkfile (a file that users can save that redirects them to
 // a particular pad; auto-download)
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_linkfile() {
   var padId = request.params.padId;
 
@@ -172,6 +199,9 @@ function render_linkfile() {
 // newpad
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_newpad() {
   var session = getSession();
   var padId;
@@ -187,6 +217,9 @@ function render_newpad() {
 }
 
 // Tokbox
+
+// YOURNAME:
+// YOURCOMMENT
 function render_newpad_xml_post() {
   var localPadId;
   if (pro_utils.isProDomainRequest()) {
@@ -203,6 +236,9 @@ function render_newpad_xml_post() {
   }
   // </RAFTER>
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(localPadId, function(pad) {
     if (!pad.exists()) {
       pad.create(getDefaultPadText());
@@ -220,6 +256,9 @@ function render_newpad_xml_post() {
 // pad
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _createIfNecessary(localPadId, pad) {
   if (pad.exists()) {
     delete getSession().instantCreate;
@@ -247,6 +286,9 @@ function _createIfNecessary(localPadId, pad) {
   response.redirect("/ep/pad/create?padId="+encodeURIComponent(localPadId));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _promptForMobileDevices(pad) {
   // TODO: also work with blackbery and windows mobile and others
   if (request.userAgent.isIPhone() && (!request.params.skipIphoneCheck)) {
@@ -255,6 +297,9 @@ function _promptForMobileDevices(pad) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkPadQuota(pad) {
   var numConnectedUsers = collab_server.getNumConnections(pad);
   var maxUsersPerPad = quotas.getMaxSimultaneousPadEditors(pad.getId());
@@ -277,9 +322,15 @@ function _checkPadQuota(pad) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkIfDeleted(pad) {
   // TODO: move to access control check on access?
   if (pro_utils.isProDomainRequest()) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     pro_padmeta.accessProPad(pad.getId(), function(propad) {
       if (propad.exists() && propad.isDeleted()) {
         renderNoticeString("This pad has been deleted.");
@@ -289,6 +340,9 @@ function _checkIfDeleted(pad) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pad(localPadId) {
   var proTitle = null, documentBarTitle, initialPassword = null;
   var isPro = isProDomainRequest();
@@ -301,6 +355,9 @@ function render_pad(localPadId) {
     pro_quotas.perRequestBillingCheck();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(localPadId, function(pad) {
     globalPadId = pad.getId();
     request.cache.globalPadId = globalPadId;
@@ -322,6 +379,9 @@ function render_pad(localPadId) {
     }
 
     if (isProDomainRequest()) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       pro_padmeta.accessProPadLocal(localPadId, function(propad) {
         proTitle = propad.getDisplayTitle();
         initialPassword = propad.getPassword();
@@ -388,6 +448,9 @@ function render_pad(localPadId) {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_create_get() {
   var padId = request.params.padId;
   // <RAFTER>
@@ -402,6 +465,9 @@ function render_create_get() {
     fullSuperdomain: pro_utils.getFullSuperdomainHost()});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_create_post() {
   var padId = request.params.padId;
   getSession().instantCreate = padId;
@@ -412,12 +478,18 @@ function render_create_post() {
 // saverevision
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_saverevision_post() {
   var padId = request.params.padId;
   var savedBy = request.params.savedBy;
   var savedById = request.params.savedById;
   var revNum = request.params.revNum;
   var privs = _getPrivs();
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     if (! pad.exists()) { response.notFound(); }
     var currentRevs = revisions.getRevisionList(pad);
@@ -432,11 +504,17 @@ function render_saverevision_post() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_saverevisionlabel_post() {
   var userId = request.params.userId;
   var padId = request.params.padId;
   var revId = request.params.revId;
   var newLabel = request.params.newLabel;
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     revisions.setLabel(pad, revId, userId, newLabel);
     response.setContentType('text/x-json');
@@ -444,11 +522,17 @@ function render_saverevisionlabel_post() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_getrevisionatext_get() {
   var padId = request.params.padId;
   var revId = request.params.revId;
   var result = null;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var rev = padutils.accessPadLocal(padId, function(pad) {
     var r = revisions.getStoredRevision(pad, revId);
     var forWire = collab_server.getATextForWire(pad, r.revNum);
@@ -465,6 +549,9 @@ function render_getrevisionatext_get() {
 // reconnect
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _recordDiagnosticInfo(padId, diagnosticInfoJson) {
 
   var diagnosticInfo = {};
@@ -488,6 +575,9 @@ function _recordDiagnosticInfo(padId, diagnosticInfoJson) {
   diagnosticInfo.clientAddr = request.clientAddr;
   diagnosticInfo.padId = padId;
   diagnosticInfo.headers = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(request.headers, function(k,v) {
     diagnosticInfo.headers[k] = v;
   });
@@ -498,12 +588,21 @@ function _recordDiagnosticInfo(padId, diagnosticInfoJson) {
 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function recordMigratedDiagnosticInfo(objArray) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   objArray.forEach(function(obj) {
     sqlbase.putJSON("PAD_DIAGNOSTIC", (obj.date)+"-"+obj.uniqueId, obj);
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_reconnect() {
   var localPadId = request.params.padId;
   var globalPadId = padutils.getGlobalPadId(localPadId);
@@ -540,6 +639,9 @@ function render_reconnect() {
 }
 
 /* posted asynchronously by the client as soon as reconnect dialogue appears. */
+
+// YOURNAME:
+// YOURCOMMENT
 function render_connection_diagnostic_info_post() {
   var localPadId = request.params.padId;
   var globalPadId = padutils.getGlobalPadId(localPadId);
@@ -569,6 +671,9 @@ function render_connection_diagnostic_info_post() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _applyMissedChanges(localPadId, missedChangesJson) {
   var missedChanges;
   try {
@@ -578,6 +683,9 @@ function _applyMissedChanges(localPadId, missedChangesJson) {
     return;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(localPadId, function(pad) {
     if (pad.exists()) {
       collab_server.applyMissedChanges(pad, missedChanges);
@@ -589,6 +697,9 @@ function _applyMissedChanges(localPadId, missedChangesJson) {
 // feedback
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_feedback_post() {
   var feedback = request.params.feedback;
   var localPadId = request.params.padId;
@@ -629,6 +740,9 @@ function render_feedback_post() {
 // emailinvite
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_emailinvite_post() {
   var toEmails = String(request.params.toEmails).split(',');
   var padId = String(request.params.padId);
@@ -665,6 +779,9 @@ function render_emailinvite_post() {
 //----------------------------------------------------------------
 // time-slider
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_slider() {
   var parts = request.path.split('/');
   var padOpaqueRef = parts[4];
@@ -682,6 +799,9 @@ function render_slider() {
 // auth
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_auth_get() {
   var parts = request.path.split('/');
   var localPadId = parts[4];
@@ -693,6 +813,9 @@ function render_auth_get() {
   } else {
     errDiv = DIV();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   renderFramedHtml(function() {
     return DIV({className: "fpcontent"},
            DIV({style: "margin: 1em;"},
@@ -715,6 +838,9 @@ function render_auth_get() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_auth_post() {
   var parts = request.path.split('/');
   var localPadId = parts[4];
@@ -722,6 +848,9 @@ function render_auth_post() {
   if (!getSession().padPasswordAuth) {
     getSession().padPasswordAuth = {};
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var currentPassword = pro_padmeta.accessProPadLocal(localPadId, function(propad) {
     return propad.getPassword();
   });
@@ -743,12 +872,18 @@ function render_auth_post() {
 // chathistory
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_chathistory_get() {
   var padId = request.params.padId;
   var start = Number(request.params.start || 0);
   var end = Number(request.params.end || 0);
   var result = null;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var rev = padutils.accessPadLocal(padId, function(pad) {
     result = chatarchive.getChatBlock(pad, start, end);
   }, "r");

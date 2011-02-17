@@ -35,22 +35,37 @@ jimport("java.lang.System.out.println");
 
 var PADVIEW_ROOMTYPE = 'padview';
 
+
+// YOURNAME:
+// YOURCOMMENT
 var _serverDebug = println;//function(x) {};
 
 // "view id" is either a padId or an ro.id
+
+// YOURNAME:
+// YOURCOMMENT
 function _viewIdToRoom(padId) {
   return "padview/"+padId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _roomToViewId(roomName) {
   return roomName.substring(roomName.indexOf("/")+1);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRoomCallbacks(roomName, emptyCallbacks) {
   var callbacks = emptyCallbacks;
 
   var viewId = _roomToViewId(roomName);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   callbacks.handleConnect = function(data) {
     if (data.userInfo && data.userInfo.userId) {
       return data.userInfo;
@@ -58,6 +73,9 @@ function getRoomCallbacks(roomName, emptyCallbacks) {
     return null;
   };
   callbacks.clientReady =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(newConnection, data) {
       newConnection.data.lastRev = data.lastRev;
       collabroom_server.updateRoomConnectionData(newConnection.connectionId,
@@ -67,10 +85,16 @@ function getRoomCallbacks(roomName, emptyCallbacks) {
   return callbacks;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updatePadClients(pad) {
   var padId = pad.getId();
   var roId = padIdToReadonly(padId);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function update(connection) {
     updateClient(pad, connection.connectionId);
   }
@@ -81,6 +105,9 @@ function updatePadClients(pad) {
 
 // Get arrays of text lines and attribute lines for a revision
 // of a pad.
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadLines(pad, revNum) {
   var atext;
   if (revNum >= 0) {
@@ -96,6 +123,9 @@ function _getPadLines(pad, revNum) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateClient(pad, connectionId) {
   var conn = collabroom_server.getConnection(connectionId);
   if (! conn) {
@@ -115,6 +145,9 @@ function updateClient(pad, connectionId) {
     var backwards2 = Changeset.moveOpsToNewPool(backwards, pad.pool(),
                                                 wirePool);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function revTime(r) {
       var date = pad.getRevisionDate(r);
       var s = Math.floor((+date)/1000);
@@ -134,10 +167,16 @@ function updateClient(pad, connectionId) {
   collabroom_server.updateRoomConnectionData(connectionId, conn.data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendMessageToPadConnections(pad, msg) {
   var padId = pad.getId();
   var roId = padIdToReadonly(padId);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function update(connection) {
     collabroom_server.sendMessage(connection.connectionId, msg);
   }
@@ -146,6 +185,9 @@ function sendMessageToPadConnections(pad, msg) {
   collabroom_server.getRoomConnections(_viewIdToRoom(roId)).forEach(update);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateUserInfo(pad, userInfo) {
   var msg = { type:"NEW_AUTHORDATA",
               author: userInfo.userId,
@@ -164,6 +206,9 @@ function updateUserInfo(pad, userInfo) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function broadcastNewRevision(pad, revObj) {
   var msg = { type:"NEW_SAVEDREV",
               savedRev: revObj };

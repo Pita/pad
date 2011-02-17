@@ -16,10 +16,16 @@
 
 var billing = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.CC = function(shortName, prefixes, length) {
   this.type = shortName;
   this.prefixes = prefixes;
   this.length = length;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function validateLuhn(number) {
     var digits = [];
     var sum = 0;
@@ -35,6 +41,9 @@ billing.CC = function(shortName, prefixes, length) {
     }
     return (sum % 10 == 0);    
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.validatePrefix = function(number) {
     for (var i = 0; i < this.prefixes.length; ++i) {
       if (number.indexOf(String(this.prefixes[i])) == 0) {
@@ -43,10 +52,16 @@ billing.CC = function(shortName, prefixes, length) {
     }
     return false;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.validateLength = function(number) {
     return number.length == this.length;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.validateNumber = function(number) {
     return this.validateLength(number) &&
       this.validatePrefix(number) &&
@@ -60,6 +75,9 @@ billing.ccTypes = [
   new billing.CC('mc', [51, 52, 53, 54, 55], 16),
   new billing.CC('visa', [4], 16)];
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.validateCcNumber = function(number) {
   if (! (/^\d+$/.test(number))) { 
     return false;
@@ -73,6 +91,9 @@ billing.validateCcNumber = function(number) {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.validateCcLength = function(number) {
   for (var i = 0; i < billing.ccTypes.length; ++i) {
     var ccType = billing.ccTypes[i];
@@ -83,6 +104,9 @@ billing.validateCcLength = function(number) {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.getCcType = function(number) {
   for (var i = 0; i < billing.ccTypes.length; ++i) {
     var ccType = billing.ccTypes[i];

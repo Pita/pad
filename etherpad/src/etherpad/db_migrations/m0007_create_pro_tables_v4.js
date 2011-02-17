@@ -17,7 +17,13 @@
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   ['pro_domains', 'pro_users', 'pro_padmeta'].forEach(function(t) {
     if (sqlcommon.doesTableExist(t)) {
       sqlobj.dropTable(t);

@@ -31,6 +31,9 @@ import("etherpad.pro.pro_padlist");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest(name) {
   if (name == "all_pads.zip") {
     render_all_pads_zip_get();
@@ -40,8 +43,14 @@ function onRequest(name) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getBaseUrl() { return "/ep/padlist/"; }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderPadNav() {
   var d = DIV({id: "padlist-nav"});
   var ul = UL();
@@ -66,12 +75,18 @@ function _renderPadNav() {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderPage(name, data) {
   getSession().latestPadlistView = request.path + "?" + request.query;
   var r = domains.getRequestDomainRecord();
   appjet.requestCache.proTopNavSelection = 'padlist';
   data.renderPadNav = _renderPadNav;
   data.orgName = r.orgName;
+
+  // YOURNAME:
+  // YOURCOMMENT
   data.renderNotice = function() {
     var m = getSession().padlistMessage;
     if (m) {
@@ -85,12 +100,21 @@ function _renderPage(name, data) {
   renderFramed("pro/padlist/"+name+".ejs", data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderListPage(padList, showingDesc, columns) {
   _renderPage("pro-padlist", {
     padList: padList,
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderPadList: function() {
       return pro_padlist.renderPadList(padList, columns);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderShowingDesc: function(count) {
       return DIV({id: "showing-desc"}, 
                   "Showing "+showingDesc+" ("+count+").");
@@ -99,6 +123,9 @@ function _renderListPage(padList, showingDesc, columns) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   if (!getSession().latestPadlistView) {
     getSession().latestPadlistView = "/ep/padlist/all-pads";
@@ -106,6 +133,9 @@ function render_main() {
   response.redirect(getSession().latestPadlistView);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_all_pads_get() {
   _renderListPage(
     pro_pad_db.listAllDomainPads(),
@@ -113,6 +143,9 @@ function render_all_pads_get() {
     ['secure', 'title', 'lastEditedDate', 'editors', 'actions']);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_all_pads_zip_get() {
   if (! pro_accounts.isAdminSignedIn()) {
     response.redirect(_getBaseUrl()+"all-pads");
@@ -121,9 +154,15 @@ function render_all_pads_zip_get() {
   var zos = new java.util.zip.ZipOutputStream(bytes);
 
   var pads = pro_pad_db.listAllDomainPads();
+
+  // YOURNAME:
+  // YOURCOMMENT
   pads.forEach(function(pad) {
     var padHtml;
     var title;
+
+    // YOURNAME:
+    // YOURCOMMENT
     padutils.accessPadLocal(pad.localPadId, function(p) {
       title = padutils.getProDisplayTitle(pad.localPadId, pad.title);
       padHtml = exporthtml.getPadHTML(p);
@@ -144,6 +183,9 @@ function render_all_pads_zip_get() {
   response.writeBytes(bytes.toByteArray());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_my_pads_get() {
   _renderListPage(
       pro_pad_db.listMyPads(),
@@ -151,6 +193,9 @@ function render_my_pads_get() {
       ['secure', 'title', 'lastEditedDate', 'editors', 'actions']);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_archived_pads_get() {
   helpers.addClientVars({
     showingArchivedPads: true
@@ -161,6 +206,9 @@ function render_archived_pads_get() {
       ['secure', 'title', 'lastEditedDate', 'actions']);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_edited_by_get() {
   var editorId = request.params.editorId;
   var editorName = pro_accounts.getFullNameById(editorId);
@@ -170,9 +218,15 @@ function render_edited_by_get() {
     ['secure', 'title', 'lastEditedDate', 'editors', 'actions']);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_delete_post() {
   var localPadId = request.params.padIdToDelete;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   pro_padmeta.accessProPadLocal(localPadId, function(propad) {
     propad.markDeleted();
     getSession().padlistMessage = 'Pad "'+propad.getDisplayTitle()+'" has been deleted.';
@@ -181,9 +235,15 @@ function render_delete_post() {
   response.redirect(request.params.returnPath);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_toggle_archive_post() {
   var localPadId = request.params.padIdToToggleArchive;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   pro_padmeta.accessProPadLocal(localPadId, function(propad) {
     if (propad.isArchived()) {
       propad.unmarkArchived();

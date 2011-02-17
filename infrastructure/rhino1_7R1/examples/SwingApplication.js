@@ -45,6 +45,9 @@ swingNames.importPackage(Packages.javax.swing);
 swingNames.importPackage(Packages.java.awt);
 swingNames.importPackage(Packages.java.awt.event);
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createComponents() 
 {
     with (swingNames) {
@@ -58,6 +61,9 @@ function createComponents()
         // or all its methods have the same number of arguments and the
         // corresponding arguments has the same type. See also comments for
         // frame.addWindowListener bellow
+
+        // YOURNAME:
+        // YOURCOMMENT
         button.addActionListener(function() {
             numClicks += 1;
             label.setText(labelPrefix + numClicks);
@@ -96,6 +102,9 @@ with (swingNames) {
     // all methods in WindowListener have the same signature. To distinguish 
     // between methods Rhino passes to JS function the name of corresponding 
     // method as the last argument  
+
+    // YOURNAME:
+    // YOURCOMMENT
     frame.addWindowListener(function(event, methodName) {
 	if (methodName == "windowClosing") {     
             java.lang.System.exit(0);

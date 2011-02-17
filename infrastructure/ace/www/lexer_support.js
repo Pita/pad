@@ -17,10 +17,16 @@
 
 /* This file is also a Helma module, referenced by its path! */
 
+
+// YOURNAME:
+// YOURCOMMENT
 AceLexer = (function lexer_init() {
 
 // utility functions, make this file self-contained
 
+
+// YOURNAME:
+// YOURCOMMENT
 function forEach(array, func) {
   for(var i=0;i<array.length;i++) {
     var result = func(array[i], i);
@@ -28,6 +34,9 @@ function forEach(array, func) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function map(array, func) {
   var result = [];
     // must remain compatible with "arguments" pseudo-array
@@ -38,6 +47,9 @@ function map(array, func) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function filter(array, func) {
   var result = [];
     // must remain compatible with "arguments" pseudo-array
@@ -47,6 +59,9 @@ function filter(array, func) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isArray(testObject) {
   return testObject && typeof testObject === 'object' &&
     !(testObject.propertyIsEnumerable('length')) &&
@@ -58,8 +73,14 @@ var singleLineRegex = /(?:[^[\\.]+|\\(?:[\S\s]|$)|\[\^?]?(?:[^\\\]]+|\\(?:[\S\s]
 var backReferenceRegex = /(?:[^\\[]+|\\(?:[^0-9]|$)|\[\^?]?(?:[^\\\]]+|\\(?:[\S\s]|$))*]?)+|\\([0-9]+)/g;
 var parenFindingRegex = /(?:[^[(\\]+|\\(?:[\S\s]|$)|\[\^?]?(?:[^\\\]]+|\\(?:[\S\s]|$))*]?|\((?=\?))+|(\()/g;
 
+
+// YOURNAME:
+// YOURCOMMENT
 // Creates a function that, when called with (string, startIndex), finds the first of the patterns that
 // matches the string starting at startIndex (and anchored there).  Expects startIndex < string.length.
+
+// YOURNAME:
+// YOURCOMMENT
 // The function returns a structure containing "whichCase", a number 0..(patterns.length-1) giving the
 // index of the pattern that matched, or -1 if no pattern did, and "result", an array of the kind
 // returned by RegExp.exec called on that pattern, or the array that would be returned by matching /[\S\s]/
@@ -69,13 +90,22 @@ var parenFindingRegex = /(?:[^[(\\]+|\\(?:[\S\s]|$)|\[\^?]?(?:[^\\\]]+|\\(?:[\S\
 // as a regular expression literal with the 'm' flag is considered special, and may be zero-width,
 // though as a consequence the match cannot include the final newline of the document.  (Other flags
 // on regular expression literals are ignored; use the "flags" argument instead.)
+
+// YOURNAME:
+// YOURCOMMENT
 function makeRegexSwitch(patterns, flags) {
   var numPatterns = patterns.length;
+
+  // YOURNAME:
+  // YOURCOMMENT
   var patternStrings = map(patterns, function (p) {
     if ((typeof p) == "string")
       return p; // a string
     else return p.source; // assume it's a regex
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   var patternZeros = map(patterns, function (p) {
     // using "multiline" is a special way to indicate the reg-ex is zero-width
     return ((typeof p) != "string") && p.multiline;
@@ -83,18 +113,33 @@ function makeRegexSwitch(patterns, flags) {
   patternStrings.push("[\\S\\s]"); // default case
   patternZeros.push(false);
   // how many capturing groups each pattern has
+
+  // YOURNAME:
+  // YOURCOMMENT
   var numGroups = map(patternStrings, function (p) {
     var count = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.replace(parenFindingRegex, function (full,paren,offset) { if (paren) count++; });
     return count;
   });
   // the group number for each case of the switch
   var caseGroupNums = [];
   var idx = 1;
+
+  // YOURNAME:
+  // YOURCOMMENT
   forEach(numGroups, function (n) { caseGroupNums.push(idx); idx += n+1; });
   // make a big alternation of capturing groups
+
+  // YOURNAME:
+  // YOURCOMMENT
   var alternation = map(patternStrings, function(p, pi) {
     // correct the back-reference numbers
+
+    // YOURNAME:
+    // YOURCOMMENT
     p = p.replace(backReferenceRegex, function (full, num) {
       if (num) return "\\"+((+num)+caseGroupNums[pi]);
       else return full;
@@ -110,11 +155,17 @@ function makeRegexSwitch(patterns, flags) {
     if (f == "i" || f == "m") realFlags += f;
     else if (f == "s") {
       alternation = alternation.replace(singleLineRegex,
+
+// YOURNAME:
+// YOURCOMMENT
 					function (x) { return x==='.' ? "[\\S\\s]" : x; });
     }
   }
   //console.log(alternation);
   var bigRegex = new RegExp(alternation, realFlags);
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (string, matchIndex) {
     bigRegex.lastIndex = matchIndex;
     var execResult = bigRegex.exec(string);
@@ -227,6 +278,9 @@ var tokenClasses = {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeTokenProducer(regexData, flags) {
   var data = {};
   var procCasesMap = {};
@@ -239,6 +293,9 @@ function makeTokenProducer(regexData, flags) {
   while (statesToProcess.length > 0) {
     var state = statesToProcess.shift();
     var stateReady = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(regexData[state], function (c) {
       if ((typeof c) == "object" && c.include) {
 	var otherState = c.include;
@@ -261,9 +318,15 @@ function makeTokenProducer(regexData, flags) {
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   forEach(sortedStates, function(state) {
     var cases = regexData[state];
     var procCases = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(cases, function (c) {
       if ((typeof c) == "object" && c.include) {
 	var otherState = c.include;
@@ -273,6 +336,9 @@ function makeTokenProducer(regexData, flags) {
 	  otherState = otherState.substring(0, otherState.length-1);
 	  isBang = true;
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	forEach(procCasesMap[otherState], function (d) {
 	  var dd = [d[0], d[1], d[2]];
 	  if (isBang) {
@@ -287,8 +353,17 @@ function makeTokenProducer(regexData, flags) {
     });
     procCasesMap[state] = procCases;
     data[state] = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       switcher: makeRegexSwitch(map(procCases, function(x) { return x[0]; }), flags),
+
+      // YOURNAME:
+      // YOURCOMMENT
       tokenTypes: map(procCases, function(x) { return x[1]; }),
+
+      // YOURNAME:
+      // YOURCOMMENT
       stateEffects: map(procCases, function(y) {
 	var x = y[2];
 	if (!x) return [];
@@ -299,6 +374,9 @@ function makeTokenProducer(regexData, flags) {
   });
   
   // mutates stateStack, calls tokenFunc on each new token in order, returns new index
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(string, startIndex, stateStack, tokenFunc) {
     var stateBefore = stateStack.join('/');
 
@@ -318,6 +396,9 @@ function makeTokenProducer(regexData, flags) {
       }
       
       if (stateEffects) {
+
+// YOURNAME:
+// YOURCOMMENT
 	forEach(stateEffects, function (se) {
 	  if (se === '#pop') stateStack.pop();
 	  else if (se === '#popall') {
@@ -331,6 +412,9 @@ function makeTokenProducer(regexData, flags) {
       if (regexResult[0].length > 0) {
 	if ((typeof tokenTypes) === "object" && tokenTypes.bygroups) {
 	  var types = tokenTypes.bygroups;
+
+// YOURNAME:
+// YOURCOMMENT
 	  forEach(types, function (t,i) {
 	    var tkn = { width:regexResult[i+1].length, type:t };
 	    if (i == 0) tkn.stateBefore = stateBefore;
@@ -348,23 +432,38 @@ function makeTokenProducer(regexData, flags) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeSimpleLexer(tokenProducer) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexString(str, tokenFunc) {
     var state = ['root'];
     var idx = 0;
     while (idx < str.length) {
       var i = idx;
+
+      // YOURNAME:
+      // YOURCOMMENT
       idx = tokenProducer(str, idx, state, function (tkn) {
         tokenFunc(str.substr(i, tkn.width), tkn.type);
         i += tkn.width;
       });
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexAsLines(str, tokenFunc, newLineFunc) {
     str += "\n";
     var nextNewline = str.indexOf('\n');
     var curIndex = 0;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     lexString(str, function(txt, typ) {
       var wid = txt.length;
       var widthLeft = wid;
@@ -582,6 +681,9 @@ var jsTokenProducer = makeTokenProducer(
   }
 );
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTML(s) {
   var re = /[&<>\'\" ]/g;
   if (! re.MAP) {
@@ -595,14 +697,23 @@ function escapeHTML(s) {
       ' ': '&#160;'
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.replace(re, function(c) { return re.MAP[c]; });
 }
 
 var simpleLexer = makeSimpleLexer(jsTokenProducer);
 
+
+// YOURNAME:
+// YOURCOMMENT
 function codeStringToHTML(codeString) {
   var atLineStart = true;
   var html = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tokenFunc(txt, type) {
     var cls = tokenClasses[type];
     if (cls) html.push('<tt class="',tokenClasses[type],'">');
@@ -610,6 +721,9 @@ function codeStringToHTML(codeString) {
     html.push(escapeHTML(txt),'</tt>');
     atLineStart = false;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function newLineFunc() {
     html.push('<br/>\n');
     atLineStart = true;
@@ -621,6 +735,9 @@ function codeStringToHTML(codeString) {
 
 /* ========== Incremental Lexer for ACE ========== */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeIncrementalLexer(tokenProducer) {
 
   var tokens = newSkipList();
@@ -629,9 +746,18 @@ function makeIncrementalLexer(tokenProducer) {
   var dirtyTokenKeys = [];
   var uncoloredRanges = [];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   //top.dbg_uncoloredRanges = function() { return uncoloredRanges; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   //top.dbg_dirtyTokenKeys = function() { return dirtyTokenKeys; }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function mergeRangesIfTouching(a, b) {
     // if a = [a0,a1] and b = [b0,b1] are overlapping or touching, return a single merged range
     // else return null
@@ -643,9 +769,15 @@ function makeIncrementalLexer(tokenProducer) {
     return [c0,c1];
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addUncoloredRange(rng) {
     // shouldn't this merge existing ranges if the new range overlaps multiple ones?
     var done = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(uncoloredRanges, function (x, i) {
       var merged = mergeRangesIfTouching(x, rng);
       if (merged) {
@@ -659,6 +791,9 @@ function makeIncrementalLexer(tokenProducer) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeUncoloredRange(rng) {
     var i = uncoloredRanges.length-1;
     while (i >= 0) {
@@ -667,6 +802,9 @@ function makeIncrementalLexer(tokenProducer) {
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeUncoloredRangeFrom(rangeToRemove, containingRangeIndex) {
     var idx = containingRangeIndex;
     var cont = uncoloredRanges[idx];
@@ -683,16 +821,28 @@ function makeIncrementalLexer(tokenProducer) {
       uncoloredRanges.splice(idx, 0, [rem1, cont[1]]);
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function prepareTokens(tokenArray) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(tokenArray, function (t) {
       t.key = "$"+(nextId++);
     });
     return tokenArray;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function roundBackToTokenBoundary(charOffset) {
     return tokens.indexOfOffset(charOffset);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function roundForwardToTokenBoundary(charOffset) {
     var tokenEnd;
     if (charOffset == tokens.totalWidth())
@@ -714,6 +864,9 @@ function makeIncrementalLexer(tokenProducer) {
   // the boundary has a pre/post lexing state associated with it (i.e is not
   // a dirty-region token or in the middle of a multi-token lexing rule).
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findLexingStartPoint(startChar) {
     if (tokens.length() == 0) return 0;
     var tokenStart = roundBackToTokenBoundary(startChar);
@@ -729,6 +882,9 @@ function makeIncrementalLexer(tokenProducer) {
     return tokenStart;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findLexingEndPoint(endChar) {
     if (tokens.length() == 0) return 0;
     var tokenEnd = roundForwardToTokenBoundary(endChar);
@@ -744,6 +900,9 @@ function makeIncrementalLexer(tokenProducer) {
     return tokenEnd;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateBuffer(newBuffer, spliceStart, charsRemoved, charsAdded) {
     buffer = newBuffer;
 
@@ -789,10 +948,19 @@ function makeIncrementalLexer(tokenProducer) {
 		    tokens.totalWidth()+" not "+buffer.length);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(dirtyTokens, function (t) { dirtyTokenKeys.push(t.key); });
+
+    // YOURNAME:
+    // YOURCOMMENT
     dirtyTokenKeys = filter(dirtyTokenKeys, function (k) { return tokens.containsKey(k); });
     //console.log("after update: %s", toSource(tokens.slice()));
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function applySpliceToIndex(i) {
       if (i <= spliceStart) return i;
       if (i >= (spliceStart + charsRemoved)) return i + charsAdded - charsRemoved;
@@ -806,6 +974,9 @@ function makeIncrementalLexer(tokenProducer) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function processDirtyToken(dirtyToken, isTimeUp, stopAtChar) {
 
     //console.time("lexing");
@@ -828,6 +999,9 @@ function makeIncrementalLexer(tokenProducer) {
 
     while ((! done) && (! isTimeUp()) && (! (stopBasedOnChar && curOffset >= stopAtChar))) {
       curOffset = tokenProducer(buffer, curOffset, stateStack,
+
+// YOURNAME:
+// YOURCOMMENT
 				function (t) { newTokens.push(t); });
       while (oldToken && (oldTokenOffset + oldToken.width <= curOffset)) {
 	oldTokenOffset += oldToken.width;
@@ -891,9 +1065,15 @@ function makeIncrementalLexer(tokenProducer) {
     return (newDirtyToken && newDirtyToken.key);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexSomeDirty(filter, isTimeUp) {
     var newDirtyTokenKeys = [];
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(dirtyTokenKeys, function (dirtyKey) {
       if (! tokens.containsKey(dirtyKey)) return;
       var dirtyToken = tokens.atKey(dirtyKey);
@@ -919,12 +1099,21 @@ function makeIncrementalLexer(tokenProducer) {
     dirtyTokenKeys = newDirtyTokenKeys;    
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexCharRange(charRange, isTimeUp) {
     //var startTime = (new Date()).getTime();
+
+    // YOURNAME:
+    // YOURCOMMENT
     //function isTimeUp() { return ((new Date()).getTime() - startTime) > timeLimit; }
 
     if (isTimeUp()) return;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     lexSomeDirty(function (dirtyToken) {
       var start = tokens.offsetOfEntry(dirtyToken);
       var end = start + dirtyToken.width;
@@ -960,6 +1149,9 @@ function makeIncrementalLexer(tokenProducer) {
     }*/
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tokenToString(tkn) {
     return toSource({width:tkn.width, type:tkn.type, stateBefore:tkn.stateBefore, stateAfter:tkn.stateAfter});
   }
@@ -971,6 +1163,9 @@ function makeIncrementalLexer(tokenProducer) {
   // even the whole document.
   // func must return true iff any tokens are accessed through getSpansForRange during
   // the call.  func should not do new lexing.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function forEachUncoloredRange(func, isTimeUp) {
     var i = 0;
     // uncoloredRanges will change during this function!
@@ -992,7 +1187,13 @@ function makeIncrementalLexer(tokenProducer) {
   // Like forEachUncoloredRange, but "cropped" to the char range given.  For example,
   // if no "uncolored ranges" extend by a non-zero amount into the char range,
   // func will never be called.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function forEachUncoloredSubrange(startChar, endChar, func, isTimeUp) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEachUncoloredRange(function (s, e, isTimeUp2) {
       if (s < startChar) s = startChar;
       if (e > endChar) e = endChar;
@@ -1007,6 +1208,9 @@ function makeIncrementalLexer(tokenProducer) {
   // DOM has been taken care of (unless justPeek).
   // The "func" takes arguments tokenWidth and tokenClass, and is called on each
   // token in the range, with the widths adding up to the range size.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSpansForRange(startChar, endChar, func, justPeek) {
     
     if (startChar == endChar) return;
@@ -1034,6 +1238,9 @@ function makeIncrementalLexer(tokenProducer) {
     if (! justPeek) removeUncoloredRange([startChar, endChar]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function markRangeUncolored(start, end) {
     addUncoloredRange([start, end]);
   }
@@ -1051,13 +1258,22 @@ function makeIncrementalLexer(tokenProducer) {
 
 tokenProds = {js: jsTokenProducer, txt: txtTokenProducer};
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTokenProducer(type) {
   return tokenProds[type || 'txt'] || tokenProds['txt'];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getIncrementalLexer(type) {
   return makeIncrementalLexer(getTokenProducer(type));
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getSimpleLexer(type) {
   return makeSimpleLexer(getTokenProducer(type));
 }

@@ -28,6 +28,9 @@ import("etherpad.quotas");
 // bloghelpers
 //----------------------------------------------------------------
 bloghelpers = {};
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.disqusDeveloper = function() {
   if (isProduction()) {
     return '';
@@ -39,11 +42,17 @@ bloghelpers.disqusDeveloper = function() {
   ].join('\n');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.feedburnerUrl = function() {
   var name = isProduction() ? "TheEtherPadBlog" : "TheEtherPadBlogDev";
   return "http://feeds.feedburner.com/"+name;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.feedLink = function() {
   return [
     '<link rel="alternate"',
@@ -53,10 +62,16 @@ bloghelpers.feedLink = function() {
   ].join('');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.dfmt = function(d) {
   return d.toString().split(' ').slice(0,3).join(' ');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.feedbuttonHtml = function() {
   var aProps = {
     href: bloghelpers.feedburnerUrl(),
@@ -70,6 +85,9 @@ bloghelpers.feedbuttonHtml = function() {
 	 style: "vertical-align:middle; border:0;"}))).toHTML();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 bloghelpers.getMaxUsersPerPad = function() {
   return quotas.getMaxSimultaneousPadEditors()
 };
@@ -78,12 +96,24 @@ bloghelpers.getMaxUsersPerPad = function() {
 // posts "database"
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _wrapPost(p) {
   var wp = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(p).forEach(function(k) { wp[k] = p[k]; });
+
+  // YOURNAME:
+  // YOURCOMMENT
   wp.url = function() {
     return "http://"+request.host+"/ep/blog/posts/"+p.id;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   wp.renderContent = function() {
     return renderTemplateAsString("blog/posts/"+p.id+".ejs",
       {post: wp, bloghelpers: bloghelpers});
@@ -91,6 +121,9 @@ function _wrapPost(p) {
   return wp;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _addPost(id, title, author, published, updated) {
   if (!appjet.cache.blogDB) {
     appjet.cache.blogDB = {
@@ -103,17 +136,29 @@ function _addPost(id, title, author, published, updated) {
   appjet.cache.blogDB.postMap[p.id] = p;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPostById(id) {
   var p = appjet.cache.blogDB.postMap[id];
   if (!p) { return null; }
   return _wrapPost(p);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getAllPosts() {
   return [];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sortBlogDB() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   appjet.cache.blogDB.posts.sort(function(a,b) { return cmp(b.published, a.published); });
 }
 
@@ -121,15 +166,24 @@ function _sortBlogDB() {
 // Posts
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initBlogDB() {
 	return;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function reloadBlogDb() {
   delete appjet.cache.blogDB;
   _initBlogDB();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   reloadBlogDb();
 }
@@ -137,6 +191,9 @@ function onStartup() {
 //----------------------------------------------------------------
 // onRequest
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest(name) {
   // nothing yet.
 }
@@ -144,6 +201,9 @@ function onRequest(name) {
 //----------------------------------------------------------------
 // main
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   renderFramed('blog/blog_main_body.ejs', 
 	       {posts: _getAllPosts(), bloghelpers: bloghelpers});
@@ -152,10 +212,16 @@ function render_main() {
 //----------------------------------------------------------------
 // render_feed
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_feed() {
   var lastModified = new Date();  // TODO: most recent of all entries modified
 
   var entries = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   _getAllPosts().forEach(function(post) {
     entries.push({
       title: post.title,
@@ -177,6 +243,9 @@ function render_feed() {
 //----------------------------------------------------------------
 // render_post
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_post(name) {
   var p = _getPostById(name);
   if (!p) {
@@ -193,6 +262,9 @@ function render_post(name) {
 // render_new_from_etherpad()
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_new_from_etherpad() {
   return "";
 }

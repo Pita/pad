@@ -40,6 +40,9 @@ template.render etc. SEE helpers.includeJS renderhtml --
 Right now I've got the onRequest from twitterStyleTags
 copied and pasted in here, just changing it to make it
 call rtrc browser.  Is this at all sensible?  Maybe.*/
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var tags = tagQuery.queryToTags(request.params.query);
 

@@ -15,7 +15,13 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 undoModule = (function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var stack = (function() {
     var stackElements = [];
     // two types of stackElements:
@@ -28,6 +34,9 @@ undoModule = (function() {
     var UNDOABLE_EVENT = "undoableEvent";
     var EXTERNAL_CHANGE = "externalChange";
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clearStack() {
       stackElements.length = 0;
       stackElements.push({ elementType: UNDOABLE_EVENT, eventType: "bottom" });
@@ -35,6 +44,9 @@ undoModule = (function() {
     }
     clearStack();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function pushEvent(event) {
       var e = extend({}, event);
       e.elementType = UNDOABLE_EVENT;
@@ -43,6 +55,9 @@ undoModule = (function() {
       //dmesg("pushEvent backset: "+event.backset);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function pushExternalChange(cs) {
       var idx = stackElements.length-1;
       if (stackElements[idx].elementType == EXTERNAL_CHANGE) {
@@ -53,6 +68,9 @@ undoModule = (function() {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function _exposeEvent(nthFromTop) {
       // precond: 0 <= nthFromTop < numUndoableEvents
       var targetIndex = stackElements.length - 1 - nthFromTop;
@@ -90,16 +108,25 @@ undoModule = (function() {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getNthFromTop(n) {
       // precond: 0 <= n < numEvents()
       _exposeEvent(n);
       return stackElements[stackElements.length - 1 - n];
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function numEvents() {
       return numUndoableEvents;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function popEvent() {
       // precond: numEvents() > 0
       _exposeEvent(0);
@@ -116,11 +143,17 @@ undoModule = (function() {
 
   var undoPtr = 0; // zero-index from top of stack, 0 == top
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function clearHistory() {
     stack.clearStack();
     undoPtr = 0;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _charOccurrences(str, c) {
     var i = 0;
     var count = 0;
@@ -134,10 +167,16 @@ undoModule = (function() {
     return count;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _opcodeOccurrences(cs, opcode) {
     return _charOccurrences(Changeset.unpack(cs).ops, opcode);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _mergeChangesets(cs1, cs2) {
     if (! cs1) return cs2;
     if (! cs2) return cs1;
@@ -171,9 +210,15 @@ undoModule = (function() {
     return null;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function reportEvent(event) {
     var topEvent = stack.getNthFromTop(0);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function applySelectionToTop() {
       if ((typeof event.selStart) == "number") {
 	topEvent.selStart = event.selStart;
@@ -204,12 +249,18 @@ undoModule = (function() {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function reportExternalChange(changeset) {
     if (changeset && ! Changeset.isIdentity(changeset)) {
       stack.pushExternalChange(changeset);
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getSelectionInfo(event) {
     if ((typeof event.selStart) != "number") {
       return null;
@@ -226,6 +277,9 @@ undoModule = (function() {
   // or can be called with no arguments to mean that no undo is possible.
   // "eventFunc" will be called exactly once.
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performUndo(eventFunc) {
     if (undoPtr < stack.numEvents()-1) {
       var backsetEvent = stack.getNthFromTop(undoPtr);
@@ -237,6 +291,9 @@ undoModule = (function() {
     else eventFunc();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performRedo(eventFunc) {
     if (undoPtr >= 2) {
       var backsetEvent = stack.getNthFromTop(0);
@@ -248,6 +305,9 @@ undoModule = (function() {
     else eventFunc();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAPool() {
     return undoModule.apool;
   }

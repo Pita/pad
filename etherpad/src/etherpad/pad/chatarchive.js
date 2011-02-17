@@ -19,6 +19,9 @@ import("etherpad.log");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onChatMessage(pad, senderUserInfo, msg) {
   pad.appendChatMessage({
     name: senderUserInfo.name,
@@ -28,6 +31,9 @@ function onChatMessage(pad, senderUserInfo, msg) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRecentChatBlock(pad, howMany) {
   var numMessages = pad.getNumChatMessages();
   var firstToGet = Math.max(0, numMessages - howMany);
@@ -35,6 +41,9 @@ function getRecentChatBlock(pad, howMany) {
   return getChatBlock(pad, firstToGet, numMessages);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getChatBlock(pad, start, end) {
   if (start < 0) {
     start = 0;

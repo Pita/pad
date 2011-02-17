@@ -21,6 +21,9 @@ import("etherpad.pne.pne_utils");
 
 // TODO: hook into PNE?
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getMaxSimultaneousPadEditors(globalPadId) {
   if (isProDomainRequest()) {
     if (pne_utils.isPNE()) {
@@ -39,6 +42,9 @@ function getMaxSimultaneousPadEditors(globalPadId) {
   return 1e6;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getMaxSavedRevisionsPerPad() {
   if (isProDomainRequest()) {
     return 1e3;

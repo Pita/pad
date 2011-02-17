@@ -34,6 +34,9 @@ import("etherpad.pad.padutils");
 import("etherpad.pad.padusers");
 import("etherpad.collab.collab_server");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (!getSession().tempFormData) {
     getSession().tempFormData = {};
@@ -46,6 +49,9 @@ function onRequest() {
 // helpers
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _redirOnError(m, clearQuery) {
   if (m) {
     getSession().accountFormError = m;
@@ -58,14 +64,23 @@ function _redirOnError(m, clearQuery) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setSigninNotice(m) {
   getSession().accountSigninNotice = m;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setSessionError(m) {
   getSession().accountFormError = m;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _topDiv(id, name) {
   var m = getSession()[name];
   if (m) {
@@ -76,10 +91,22 @@ function _topDiv(id, name) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _messageDiv() { return _topDiv('account-message', 'accountMessage'); }
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() { return _topDiv('account-error', 'accountFormError'); }
+
+// YOURNAME:
+// YOURCOMMENT
 function _signinNoticeDiv() { return _topDiv('signin-notice', 'accountSigninNotice'); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderTemplate(name, data) {
   data.messageDiv = _messageDiv;
   data.errorDiv = _errorDiv;
@@ -92,6 +119,9 @@ function _renderTemplate(name, data) {
 // /ep/account/
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   _renderTemplate('my-account', {
     account: getSessionProAccount(),
@@ -99,10 +129,16 @@ function render_main_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_update_info_get() {
   response.redirect('/ep/account/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_update_info_post() {
   var fullName = request.params.fullName;
   var email = trim(request.params.email).toLowerCase();
@@ -120,10 +156,16 @@ function render_update_info_post() {
   response.redirect('/ep/account/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_update_password_get() {
   response.redirect('/ep/account/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_update_password_post() {
   var password = request.params.password;
   var passwordConfirm = request.params.passwordConfirm;
@@ -147,6 +189,9 @@ function render_update_password_post() {
 // signin/signout
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_sign_in_get() {
   if (request.params.uid && request.params.tp) {
     var m = pro_accounts.authenticateTempSignIn(Number(request.params.uid), request.params.tp);
@@ -183,10 +228,16 @@ function render_sign_in_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _attemptInstantSignin(key) {
   // See src/etherpad/control/global_pro_account_control.js
   var email = null;
   var password = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache('global_signin_passwords', function(c) {
     if (c[key]) {
       email = c[key].email;
@@ -198,6 +249,9 @@ function _attemptInstantSignin(key) {
   _redirOnError(pro_accounts.authenticateSignIn(email, password), true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_sign_in_post() {
   var email = trim(request.params.email).toLowerCase();
   var password = request.params.password;
@@ -210,6 +264,9 @@ function render_sign_in_post() {
   _redirectToPostSigninDestination();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_guest_sign_in_get() {
   var localPadId = request.params.padId;
   var domainId = domains.getRequestDomainId();
@@ -227,7 +284,13 @@ function render_guest_sign_in_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_guest_sign_in_post() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _err(m) {
     if (m) {
       getSession().guestAccessError = m;
@@ -244,6 +307,9 @@ function render_guest_sign_in_post() {
     "&guestDisplayName="+encodeURIComponent(displayName));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_guest_knock_get() {
   var localPadId = request.params.padId;
   helpers.addClientVars({
@@ -254,6 +320,9 @@ function render_guest_knock_get() {
   _renderTemplate('guest-knock', {});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_guest_knock_post() {
   var localPadId = request.params.padId;
   var displayName = request.params.guestDisplayName;
@@ -272,12 +341,18 @@ function render_guest_knock_post() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _redirectToPostSigninDestination() {
   var cont = request.params.cont;
   if (!cont) { cont = '/'; }
   response.redirect(cont);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_sign_out() {
   pro_account_auto_signin.setAutoSigninCookie(false);
   pro_accounts.signOut();
@@ -290,6 +365,9 @@ function render_sign_out() {
 // create-admin-account (eepnet only)
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_create_admin_account_get() {
   if (pro_accounts.doesAdminExist()) {
     renderFramedError("An admin account already exists on this domain.");
@@ -298,6 +376,9 @@ function render_create_admin_account_get() {
   _renderTemplate('create-admin-account', {});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_create_admin_account_post() {
   var email = trim(request.params.email).toLowerCase();
   var password = request.params.password;
@@ -330,6 +411,9 @@ function render_create_admin_account_post() {
 // forgot password
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_forgot_password_get() {
   if (request.params.instantSubmit && request.params.email) {
     render_forgot_password_post();
@@ -340,6 +424,9 @@ function render_forgot_password_get() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_forgot_password_post() {
   var email = trim(request.params.email).toLowerCase();
 

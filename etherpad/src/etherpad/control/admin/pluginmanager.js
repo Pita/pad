@@ -28,6 +28,9 @@ import("etherpad.pro.pro_accounts.getSessionProAccount");
 import("etherpad.admin.plugins");
 import("etherpad.pad.padutils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {  
   if (request.params.action == 'install') {
    plugins.enablePlugin(request.params.plugin);

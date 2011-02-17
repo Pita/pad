@@ -15,17 +15,26 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var paddocbar = (function() {
   var isTitleEditable = false;
   var isEditingTitle = false;
   var isEditingPassword = false;
   var enabled = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getPanelOpenCloseAnimator(panelName, panelHeight) {
     var wrapper = $("#"+panelName+"-wrapper");
     var openingClass = "docbar"+panelName+"-opening";
     var openClass = "docbar"+panelName+"-open";
     var closingClass = "docbar"+panelName+"-closing";
+
+    // YOURNAME:
+    // YOURCOMMENT
     function setPanelState(action) {
       $("#docbar").removeClass(openingClass).removeClass(openClass).
         removeClass(closingClass);
@@ -34,7 +43,13 @@ var paddocbar = (function() {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function openCloseAnimate(state) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function pow(x) { x = 1-x; x *= x*x; return 1-x; }
 
       if (state == -1) {
@@ -70,6 +85,9 @@ var paddocbar = (function() {
 
 
   var currentPanel = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setCurrentPanel(newCurrentPanel) {
     if (currentPanel != newCurrentPanel) {
       currentPanel = newCurrentPanel;
@@ -78,6 +96,9 @@ var paddocbar = (function() {
   }
   var panels;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function changePassword(newPass) {
     if ((newPass || null) != (self.password || null)) {
       self.password = (newPass || null);
@@ -89,6 +110,9 @@ var paddocbar = (function() {
   var self = {
     title: null,
     password: null,
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(opts) {
       panels = {
         impexp: { animator: getPanelOpenCloseAnimator("impexp", 160) },
@@ -102,21 +126,51 @@ var paddocbar = (function() {
       self.title = opts.initialTitle;
       self.password = opts.initialPassword;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#docbarimpexp").click(function() {self.togglePanel("impexp");});
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#docbarsavedrevs").click(function() {self.togglePanel("savedrevs");});
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#docbaroptions").click(function() {self.togglePanel("options");});
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#docbarsecurity").click(function() {self.togglePanel("security");});
 
       $("#docbarrenamelink").click(self.editTitle);
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#padtitlesave").click(function() { self.closeTitleEdit(true); });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#padtitlecancel").click(function() { self.closeTitleEdit(false); });
       padutils.bindEnterAndEscape($("#padtitleedit"),
+
+                                  // YOURNAME:
+                                  // YOURCOMMENT
                                   function() {
                                     $("#padtitlesave").trigger('click'); },
+
+                                  // YOURNAME:
+                                  // YOURCOMMENT
                                   function() {
                                     $("#padtitlecancel").trigger('click'); });
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#options-close").click(function() {self.setShownPanel(null);});
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#security-close").click(function() {self.setShownPanel(null);});
 
       if (pad.getIsProPad()) {
@@ -127,45 +181,78 @@ var paddocbar = (function() {
       self.render();
 
       // public/private
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#security-access input").bind("change click", function(evt) {
         pad.changePadOption('guestPolicy',
                             $("#security-access input[name='padaccess']:checked").val());
       });
       self.setGuestPolicy(opts.guestPolicy);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setGuestPolicy: function(newPolicy) {
       $("#security-access input[value='"+newPolicy+"']").attr("checked",
                                                               "checked");
       self.render();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     initPassword: function() {
       self.renderPassword();
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#password-clearlink").click(function() {
         changePassword(null);
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#password-setlink, #password-display").click(function() {
         self.enterPassword();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#password-cancellink").click(function() {
         self.exitPassword(false);
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#password-savelink").click(function() {
         self.exitPassword(true);
       });
       padutils.bindEnterAndEscape($("#security-passwordedit"),
+
+                                  // YOURNAME:
+                                  // YOURCOMMENT
                                   function() {
                                     self.exitPassword(true);
                                   },
+
+                                  // YOURNAME:
+                                  // YOURCOMMENT
                                   function() {
                                     self.exitPassword(false);
                                   });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     enterPassword: function() {
       isEditingPassword = true;
       $("#security-passwordedit").val(self.password || '');
       self.renderPassword();
       $("#security-passwordedit").focus().select();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     exitPassword: function(accept) {
       isEditingPassword = false;
       if (accept) {
@@ -175,6 +262,9 @@ var paddocbar = (function() {
         self.renderPassword();
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderPassword: function() {
       if (isEditingPassword) {
         $("#password-nonedit").hide();
@@ -193,6 +283,9 @@ var paddocbar = (function() {
         $("#password-nonedit").show();
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     togglePanel: function(panelName) {
       if (panelName in panels) {
         if (currentPanel == panelName) {
@@ -203,7 +296,13 @@ var paddocbar = (function() {
         }
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setShownPanel: function(panelName) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function animateHidePanel(panelName, next) {
         var delay = 0;
         if (panelName == 'options' && isEditingPassword) {
@@ -213,6 +312,9 @@ var paddocbar = (function() {
           delay = 500;
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.setTimeout(function() {
           panels[panelName].animator.hide();
           if (next) {
@@ -230,6 +332,9 @@ var paddocbar = (function() {
       else if (panelName in panels) {
         if (currentPanel != panelName) {
           if (currentPanel) {
+
+            // YOURNAME:
+            // YOURCOMMENT
             animateHidePanel(currentPanel, function() {
               panels[panelName].animator.show();
               setCurrentPanel(panelName);
@@ -242,6 +347,9 @@ var paddocbar = (function() {
         }
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     isPanelShown: function(panelName) {
       if (! panelName) {
         return ! currentPanel;
@@ -250,10 +358,16 @@ var paddocbar = (function() {
         return (panelName == currentPanel);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     changeTitle: function(newTitle) {
       self.title = newTitle;
       self.render();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     editTitle: function() {
       if (! enabled) {
         return;
@@ -263,6 +377,9 @@ var paddocbar = (function() {
       self.render();
       $("#padtitleedit").focus().select();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     closeTitleEdit: function(accept) {
       if (! enabled) {
         return;
@@ -280,6 +397,9 @@ var paddocbar = (function() {
       isEditingTitle = false;
       self.render();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     changePassword: function(newPass) {
       if (newPass) {
         self.password = newPass;
@@ -289,6 +409,9 @@ var paddocbar = (function() {
       }
       self.renderPassword();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function() {
       if (isEditingTitle) {
         $("#docbarpadtitle").hide();
@@ -329,15 +452,27 @@ var paddocbar = (function() {
         }
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function() {
       enabled = false;
       self.render();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleResizePage: function() {
       padsavedrevs.handleResizePage();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideLaterIfNoOtherInteraction: function() {
       return padutils.getCancellableAction('hide-docbar-panel',
+
+                                           // YOURNAME:
+                                           // YOURCOMMENT
                                            function() {
                                              self.setShownPanel(null);
                                            });

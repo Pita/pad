@@ -22,13 +22,25 @@
 // requires: undefined
 
 var domline = {};
+
+// YOURNAME:
+// YOURCOMMENT
 domline.noop = function() {};
+
+// YOURNAME:
+// YOURCOMMENT
 domline.identity = function(x) { return x; };
 
+
+// YOURNAME:
+// YOURCOMMENT
 domline.addToLineClass = function(lineClass, cls) {
   // an "empty span" at any point can be used to add classes to
   // the line, using line:className.  otherwise, we ignore
   // the span.
+
+  // YOURNAME:
+  // YOURCOMMENT
   cls.replace(/\S+/g, function (c) {
     if (c.indexOf("line:") == 0) {
       // add class to line
@@ -40,6 +52,9 @@ domline.addToLineClass = function(lineClass, cls) {
 
 // if "document" is falsy we don't create a DOM node, just
 // an object with innerHTML and className
+
+// YOURNAME:
+// YOURCOMMENT
 domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
   var result = { node: null,
                  appendSpan: domline.noop,
@@ -62,6 +77,9 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
   var html = [];
   var preHtml, postHtml;
   var curHTML = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function processSpaces(s) {
     return domline.processSpaces(s, doesWrap);
   }
@@ -69,6 +87,9 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
   var perTextNodeProcess = (doesWrap ? identity : processSpaces);
   var perHtmlLineProcess = (doesWrap ? processSpaces : identity);
   var lineClass = 'ace-line';
+
+  // YOURNAME:
+  // YOURCOMMENT
   result.appendSpan = function(txt, cls) {
     if (cls.indexOf('list') >= 0) {
       var listType = /(?:^| )list:(\S+)/.exec(cls);
@@ -85,12 +106,18 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
     var href = null;
     var simpleTags = null;
     if (cls.indexOf('url') >= 0) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       cls = cls.replace(/(^| )url:(\S+)/g, function(x0, space, url) {
 	href = url;
 	return space+"url";
       });
     }
     if (cls.indexOf('tag') >= 0) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       cls = cls.replace(/(^| )tag:(\S+)/g, function(x0, space, tag) {
 	if (! simpleTags) simpleTags = [];
 	simpleTags.push(tag.toLowerCase());
@@ -110,6 +137,9 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
 
     plugins_.callHook(
       "aceCreateDomLine", {domline:domline, cls:cls}
+
+    // YOURNAME:
+    // YOURCOMMENT
     ).map(function (modifier) {
       cls = modifier.cls;
       extraOpenTags = extraOpenTags+modifier.extraOpenTags;
@@ -136,11 +166,17 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
                 extraCloseTags,'</span>');
     }
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   result.clearSpans = function() {
     html = [];
     lineClass = ''; // non-null to cause update
     result.lineMarker = 0;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   function writeHTML() {
     var newHTML = perHtmlLineProcess(html.join(''));
     if (! newHTML) {
@@ -163,11 +199,17 @@ domline.createDomLine = function(nonEmpty, doesWrap, optBrowser, optDocument) {
   }
   result.prepareForAdd = writeHTML;
   result.finishUpdate = writeHTML;
+
+  // YOURNAME:
+  // YOURCOMMENT
   result.getInnerHTML = function() { return curHTML || ''; };
 
   return result;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 domline.escapeHTML = function(s) {
   var re = /[&<>'"]/g; /']/; // stupid indentation thing
   if (! re.MAP) {
@@ -180,15 +222,24 @@ domline.escapeHTML = function(s) {
       "'": '&#39;'
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.replace(re, function(c) { return re.MAP[c]; });
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 domline.processSpaces = function(s, doesWrap) {
   if (s.indexOf("<") < 0 && ! doesWrap) {
     // short-cut
     return s.replace(/ /g, '&nbsp;');
   }
   var parts = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   s.replace(/<[^>]*>?| |[^ <]+/g, function(m) { parts.push(m); });
   if (doesWrap) {
     var endOfLine = true;

@@ -2,6 +2,9 @@ import("etherpad.log");
 import("plugins.heading1.hooks");
 import("plugins.heading1.static.js.main");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function heading1Init() {
  this.hooks = ['editBarItemsLeftPad', 'aceAttribsToClasses', 'aceCreateDomLine'];
  this.description = 'heading1';
@@ -13,10 +16,16 @@ function heading1Init() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing heading1");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling heading1");
 }

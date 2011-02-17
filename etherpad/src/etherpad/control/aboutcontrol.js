@@ -32,11 +32,17 @@ jimport("java.lang.System.out.println");
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_product() {
   if (request.params.from) { response.redirect(request.path); }
   renderFramed("about/product_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_faq() {
   renderFramed("about/faq_body.ejs", {
     LI: LI,
@@ -46,35 +52,59 @@ function render_faq() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_faq() {
   renderFramed("about/pne-faq.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_company() {
   renderFramed("about/company_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_contact() {
   renderFramed("about/contact_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_privacy() {
   renderFramed("about/privacy_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_tos() {
   renderFramed("about/tos_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_testimonials() {
   renderFramed("about/testimonials.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_appjet() {
   response.redirect("/ep/blog/posts/etherpad-and-appjet");
 //  renderFramed("about/appjet_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_screencast() {
   if (request.params.from) { response.redirect(request.path); }
   var screencastUrl;
@@ -86,18 +116,30 @@ function render_screencast() {
   renderFramed("about/screencast_body.ejs", {screencastUrl: screencastUrl});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_forums() {
   renderFramed("about/forums_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_blog() {
   renderFramed("about/blog_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_really_real_time() {
   renderFramed("about/simultaneously.ejs");
 }
   
+
+// YOURNAME:
+// YOURCOMMENT
 function render_simultaneously() {
   renderFramed("about/simultaneously.ejs");
 }
@@ -106,6 +148,9 @@ function render_simultaneously() {
 // pricing
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing() {
   renderFramed("about/pricing.ejs", {
     trialDays: eepnet_trial.getTrialDays(),
@@ -113,12 +158,18 @@ function render_pricing() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_free() {
   renderFramed("about/pricing_free.ejs", {
     maxUsersPerPad: quotas.getMaxSimultaneousPadEditors()
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_eepnet() {
   renderFramed("about/pricing_eepnet.ejs", {
     trialDays: eepnet_trial.getTrialDays(),
@@ -126,10 +177,16 @@ function render_pricing_eepnet() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_pro() {
   renderFramed("about/pricing_pro.ejs", {});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_pricing_contact_post() {
   response.setContentType("text/plain; charset=utf-8");
   var data = {};
@@ -140,15 +197,24 @@ function render_eepnet_pricing_contact_post() {
     getSession().pricingContactData = {};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function err(m) {
     response.write(m);
     response.stop();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   fields.forEach(function(f) { 
     getSession().pricingContactData[f] = request.params[f];
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   fields.forEach(function(f) {
     data[f] = request.params[f];
     if (!(data[f] && (data[f].length > 0))) {
@@ -208,6 +274,9 @@ function render_eepnet_pricing_contact_post() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_interest_signup() {
   response.setContentType('text/plain; charset=utf-8');
 
@@ -228,10 +297,16 @@ function render_pricing_interest_signup() {
   response.write('OK');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_eepnet_users() {
   renderFramed('about/pricing_eepnet_users.ejs', {});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pricing_eepnet_support() {
   renderFramed('about/pricing_eepnet_support.ejs', {});
 }
@@ -240,6 +315,9 @@ function render_pricing_eepnet_support() {
 //------------------------------------------------------------
 // survey
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_survey() {
   var id = request.params.id;
   log.custom("pro-user-survey", { surveyProAccountId: (id || "unknown") });
@@ -251,6 +329,9 @@ function render_survey() {
 
 import("etherpad.billing.billing");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_testbillingnotify() {
   var ret = billing.handlePaypalNotification();
   if (ret.status == 'completion') {

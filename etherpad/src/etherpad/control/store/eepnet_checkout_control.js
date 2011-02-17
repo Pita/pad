@@ -56,18 +56,33 @@ var _specialPages = {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cart() {
   return getSession().eepnetCart;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageSegment() {
   return request.path.split('/')[4];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageId() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps) { return ps[0]; });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _applyToCurrentPageSequenceEntry(f) {
   for (var i = 0; i < _pageSequence.length; i++) {
     if (_pageSequence[i][0] == _currentPageSegment()) {
@@ -80,23 +95,53 @@ function _applyToCurrentPageSequenceEntry(f) {
   return undefined;  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageIndex() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps, i) { return i; });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageTitle() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps) { return ps[1]; });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageShowCart() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps) { return ps[2]; });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _currentPageInFlow() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps, i, isSpecial) { return isSpecial });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _pageId(d) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _applyToCurrentPageSequenceEntry(function(ps, i) {
     if (_pageSequence[i+d]) {
       return _pageSequence[i+d][0];
@@ -104,18 +149,33 @@ function _pageId(d) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _nextPageId() { return _pageId(+1); }
+
+// YOURNAME:
+// YOURCOMMENT
 function _prevPageId() { return _pageId(-1); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _advancePage() {
   response.redirect(_pathTo(_nextPageId()));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _pathTo(id) {
   return STORE_URL+id;
 }
 
 // anything starting with 'billing' is also ok.
+
+// YOURNAME:
+// YOURCOMMENT
 function _isAutomaticallySetParam(p) {
   var _automaticallySetParams = arrayToSet([
     'numUsers', 'couponCode', 'supportContract', 
@@ -125,21 +185,36 @@ function _isAutomaticallySetParam(p) {
   return _automaticallySetParams[p] || stringutils.startsWith(p, "billing");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _lastSubmittedPage() {
   var cart = _cart();
   return isNaN(cart.lastSubmittedPage) ? -1 : Number(cart.lastSubmittedPage);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _shallowSafeCopy(obj) {
   return billing.clearKeys(obj, [
     {name: 'billingCCNumber',
+
+     // YOURNAME:
+     // YOURCOMMENT
      valueTest: function(s) { return /^\d{15,16}$/.test(s) },
      valueReplace: billing.replaceWithX },
     {name: 'billingCSC',
+
+     // YOURNAME:
+     // YOURCOMMENT
      valueTest: function(s) { return /^\d{3,4}$/.test(s) },
      valueReplace: billing.replaceWithX }]);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   billing.log({
     'type': "billing-request",
@@ -192,6 +267,9 @@ function onRequest() {
   }
   if (request.isPost) {
     // add params to cart
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(request.params, function(k,v) {
       if (! _isAutomaticallySetParam(k)) { return; }
       if (k == "billingCCNumber" && v.charAt(0) == 'X') { return; }
@@ -211,15 +289,24 @@ function onRequest() {
   return false; // commence auto-dispatch
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCoupon(code) {
   return sqlobj.selectSingle('checkout_referral', {id: code});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _supportCost() {
   var cart = _cart();
   return Math.max(eepnet_checkout.SUPPORT_MIN_COST, eepnet_checkout.SUPPORT_COST_PCT/100*cart.baseCost);  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _discountedSupportCost() {
   var cart = _cart();
   if ('couponSupportPctDiscount' in cart) {
@@ -230,6 +317,9 @@ function _discountedSupportCost() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateCosts() {
   var cart = _cart();
   
@@ -298,6 +388,9 @@ function _updateCosts() {
 // template helper functions
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cartDebug() {
   if (globals.isProduction()) {
     return '';
@@ -306,6 +399,9 @@ function _cartDebug() {
   var d = DIV({style: 'font-family: monospace; font-size: 1em; border: 1px solid #ccc; padding: 1em; margin: 1em;'});
   d.push(H3({style: "font-size: 1.5em; font-weight: bold;"}, "Debug Info:"));
   var t = TABLE({border: 1, cellspacing: 0, cellpadding: 4});
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(_cart()).sort().forEach(function(k) {
     var v = _cart()[k];
     if (typeof(v) == 'object' && v != null) {
@@ -320,6 +416,9 @@ function _cartDebug() {
 
 var billingButtonName = "Review Order";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _templateContext(extra) {
   var cart = _cart();
   
@@ -350,12 +449,18 @@ function _templateContext(extra) {
     getFullSuperdomainHost: pro_utils.getFullSuperdomainHost,
     showCouponCode: false
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(extra, function(k, v) {
     ret[k] = v;
   });
   return ret;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _displayCart(cartid, editable) {
   return renderTemplateAsString('store/eepnet-checkout/cart.ejs', _templateContext({
     shoppingcartid: cartid || "shoppingcart",
@@ -363,18 +468,27 @@ function _displayCart(cartid, editable) {
   }));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _displaySummary(editable) {
   return renderTemplateAsString('store/eepnet-checkout/summary.ejs', _templateContext({
     editable: editable
   }));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderCartPage() {
   var cart = _cart();
 
   var pageId = _currentPageId();
   var title = _currentPageTitle();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getContent() {
     return renderTemplateAsString('store/eepnet-checkout/'+pageId+'.ejs', _templateContext());
   }
@@ -397,6 +511,9 @@ function _renderCartPage() {
   delete cart.errorId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() {
   var m = _cart().errorMsg;
   if (m) {
@@ -406,6 +523,9 @@ function _errorDiv() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorIfInvalid(id) {
   var e = _cart().errorId
   if (e && e[id]) {
@@ -415,11 +535,17 @@ function _errorIfInvalid(id) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _validationError(id, msg, pageId) {
   var cart = _cart();
   cart.errorMsg = msg;
   cart.errorId = {};
   if (id instanceof Array) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     id.forEach(function(k) {
       cart.errorId[k] = true;
     });
@@ -436,6 +562,9 @@ function _validationError(id, msg, pageId) {
 // main
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   response.redirect(STORE_URL+'purchase');
 }
@@ -444,6 +573,9 @@ function render_main() {
 // cart
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_purchase_post() {
   var cart = _cart();
 
@@ -467,6 +599,9 @@ function render_purchase_post() {
 // support-contract
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_support_contract_post() {
   var cart = _cart();
 
@@ -482,6 +617,9 @@ function render_support_contract_post() {
 // license-info
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_license_info_post() {
   var cart = _cart();
 
@@ -516,6 +654,9 @@ function render_license_info_post() {
 // billing-info
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_billing_info_post() {
   var cart = _cart();
 
@@ -528,10 +669,16 @@ function render_billing_info_post() {
   _advancePage();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _absoluteUrl(id) {
   return request.scheme+"://"+request.host+_pathTo(id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _beginPaypalPurchase() {
   _updateCosts();
   
@@ -557,6 +704,9 @@ function _beginPaypalPurchase() {
 // confirmation
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _handlePaypalNotification() {
   var ret = billing.handlePaypalNotification();
   if (ret.status == 'completion') {
@@ -577,6 +727,9 @@ function _handlePaypalNotification() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _handlePayPalRedirect() {
   var cart = _cart();
   
@@ -599,10 +752,16 @@ function _handlePayPalRedirect() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _recordPurchase(p) {
   return sqlobj.insert("checkout_purchase", p);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _generatePurchaseRecord() {
   var cart = _cart();
 
@@ -631,6 +790,9 @@ function _generatePurchaseRecord() {
   return purchase;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _performCreditCardPurchase() {
   var cart = _cart();
   var purchase = _generatePurchaseRecord();
@@ -682,9 +844,15 @@ function _performCreditCardPurchase() {
                            "within 24 hours, please email <a href='mailto:sales@etherpad.com'>"+
                            "sales@etherpad.com</a>.)");
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     checkout.validateErrorFields(function(x, y) { _validationError(x, y, 'billing-info') }, "There seems to be an error in your billing information."+
                          " Please verify and correct your ",
                          result.errorField.userErrors);
+
+    // YOURNAME:
+    // YOURCOMMENT
     checkout.validateErrorFields(function(x, y) { _validationError(x, y, 'billing-info') }, "The bank declined your billing information. Please try a different ",
                          result.errorField.permanentErrors);
     _validationError('', "A temporary error has prevented processing of your payment. Please try again later.");
@@ -698,6 +866,9 @@ function _performCreditCardPurchase() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _completePaypalPurchase() {
   var cart = _cart();
   var purchaseInfo = cart.paypalPurchaseInfo;
@@ -730,10 +901,16 @@ function _completePaypalPurchase() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _showReceipt() {
   response.redirect(_pathTo('receipt'));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_confirmation_post() {
   var cart = _cart();
 
@@ -752,6 +929,9 @@ function render_confirmation_post() {
 // receipt
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_receipt_post() {
   response.redirect(request.path);
 }

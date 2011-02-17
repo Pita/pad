@@ -18,28 +18,55 @@ jimport("java.util.concurrent.atomic.AtomicInteger");
 
 import("sync");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function varz() {
   sync.callsyncIfTrue(appjet.cache,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return ! appjet.cache.varz; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { appjet.cache.varz = {}; });
   return appjet.cache.varz;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getInteger(name) {
   sync.callsyncIfTrue(varz(), 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return ! varz()[name] },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { varz()[name] = new AtomicInteger(0) });
   return varz()[name];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function incrementInt(name) {
   _getInteger(name).getAndIncrement();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addToInt(name, count) {
   _getInteger(name).getAndAdd(count);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSnapshot() {
   var ret = {};
   for (var k in varz()) {

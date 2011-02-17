@@ -34,13 +34,22 @@ import("etherpad.collab.collab_server");
 // importClass(java.util.Random);
 // importClass(java.lang.System);
 
+
+// YOURNAME:
+// YOURCOMMENT
 var _serverDebug = function() {};
+
+// YOURNAME:
+// YOURCOMMENT
 var _dmesg = function() { System.out.println(arguments[0]+""); };
 
 /// Begin readonly/padId conversion code
 /// TODO: refactor into new file?
 var _baseRandomNumber = 0x123123; // keep this number seekrit
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _map(array, func) {
   for(var i=0; i<array.length; i++) {
     array[i] = func(array[i]);
@@ -48,6 +57,9 @@ function _map(array, func) {
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseUrlId(readOnlyIdOrLocalPadId) {
   var localPadId;
   var viewId;
@@ -78,6 +90,9 @@ function parseUrlId(readOnlyIdOrLocalPadId) {
           roPadId:roPadId, globalPadId:globalPadId};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isReadOnlyId(str) {
   return str.indexOf("ro.") == 0;
 }
@@ -86,6 +101,9 @@ function isReadOnlyId(str) {
   for now, we just make it 'hard to guess'
   TODO: make it impossible to find read/write page through hash
 */
+
+// YOURNAME:
+// YOURCOMMENT
 function readonlyToPadId (readOnlyHash) {
 
   // readOnly hashes must start with 'ro-'
@@ -102,6 +120,9 @@ function readonlyToPadId (readOnlyHash) {
   var seed = _baseRandomNumber + sum;
   var rand = new Random(seed);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _map(result, function(elem) {
     return ((64 + elem - rand.nextInt(64)) % 64);
   });
@@ -113,6 +134,9 @@ function readonlyToPadId (readOnlyHash) {
 /*
  Temporary code. see comment at readonlyToPadId.
 */
+
+// YOURNAME:
+// YOURCOMMENT
 function padIdToReadonly (padid) {
   var result = _strToArray(padid);
   var sum = 0;
@@ -128,6 +152,9 @@ function padIdToReadonly (padid) {
   var seed = _baseRandomNumber + sum;
   var rand = new Random(seed);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _map(result, function(elem) {
     var randnum = rand.nextInt(64);
     return ((elem + randnum) % 64);
@@ -142,6 +169,9 @@ function padIdToReadonly (padid) {
 // 10-35 are the uppercase letters A-Z
 // 36-61 are the lowercase letters a-z
 // 62 are all other characters
+
+// YOURNAME:
+// YOURCOMMENT
 function _strToArray(str) {
   var result = new Array(str.length);
   for(var i=0; i<str.length; i++) {
@@ -166,6 +196,9 @@ function _strToArray(str) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _arrayToStr(array) {
   var result = "";
   for(var i=0; i<array.length; i++) {
@@ -187,11 +220,17 @@ function _arrayToStr(array) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _between(charcode, start, end) {
   return charcode >= start && charcode <= end;
 }
 
 /* a short little testing function, converts back and forth */
+
+// YOURNAME:
+// YOURCOMMENT
 // function _testEncrypt(str) {
 //   var encrypted = padIdToReadonly(str);
 //   var decrypted = readonlyToPadId(encrypted);

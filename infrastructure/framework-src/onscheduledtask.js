@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
   if (serverhandlers.tasks === undefined) {
     throw new Packages.net.appjet.oui.NoHandlerException("No task handlers defined!");

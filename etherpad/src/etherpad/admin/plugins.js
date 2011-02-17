@@ -41,6 +41,9 @@ jimport("java.io.File",
         "net.appjet.oui.JarVirtualFile");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function selectOrInsert(table, columns) {
   var res = sqlobj.selectSingle(table, columns);
   if (res !== null)
@@ -50,6 +53,9 @@ function selectOrInsert(table, columns) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function PluginRegistry() {
   this.pluginModules = {};
   this.plugins = {};
@@ -57,6 +63,9 @@ function PluginRegistry() {
   this.clientHooks = {}; 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.loadAvailablePlugin = function (pluginName) {
   if (this.pluginModules[pluginName] != undefined)
     return this.pluginModules[pluginName];
@@ -78,6 +87,9 @@ PluginRegistry.prototype.loadAvailablePlugin = function (pluginName) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.loadAvailablePlugins = function () {
   var pluginsDir = new Packages.java.io.File("src/plugins");
 
@@ -90,8 +102,17 @@ PluginRegistry.prototype.loadAvailablePlugins = function () {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.loadPluginHooks = function (pluginName) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function registerHookNames(hookSet, type) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function (hook) {
       var row = {hook:hook, type:type, plugin:pluginName};
       if (hookSet[hook] == undefined) hookSet[hook] = [];
@@ -104,7 +125,13 @@ PluginRegistry.prototype.loadPluginHooks = function (pluginName) {
     this.plugins[pluginName] = this.plugins[pluginName].concat(this.pluginModules[pluginName].client.hooks.map(registerHookNames(this.clientHooks, 'client')));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.unloadPluginHooks = function (pluginName) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   [this.hooks, this.clientHooks].forEach(function (hookSet) {
     for (var hookName in hookSet) {
       var hook = hookSet[hookName];
@@ -117,6 +144,9 @@ PluginRegistry.prototype.unloadPluginHooks = function (pluginName) {
   delete this.plugins[pluginName];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.loadInstalledHooks = function () {
   var sql = '' +
    'select ' +
@@ -156,6 +186,9 @@ PluginRegistry.prototype.loadInstalledHooks = function () {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.saveInstalledHooks = function (pluginName) {
   var plugin = sqlobj.selectSingle('plugin', {name:pluginName});
 
@@ -180,6 +213,9 @@ PluginRegistry.prototype.saveInstalledHooks = function (pluginName) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.enablePlugin = function (pluginName) {
   log.info("enablePlugin(" + pluginName + ")");
   this.loadPluginHooks(pluginName);
@@ -192,6 +228,9 @@ PluginRegistry.prototype.enablePlugin = function (pluginName) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.disablePlugin = function (pluginName) {
   log.info("disablePlugin(" + pluginName + ")");
   try {
@@ -203,6 +242,9 @@ PluginRegistry.prototype.disablePlugin = function (pluginName) {
   this.saveInstalledHooks(pluginName);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.registerClientHandlerJS = function () {
   for (pluginName in this.plugins) {
     var plugin = this.pluginModules[pluginName];
@@ -227,6 +269,9 @@ PluginRegistry.prototype.registerClientHandlerJS = function () {
   helpers.includeJs("plugins.js");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 PluginRegistry.prototype.callHook = function (hookName, args) {
   if (this.hooks[hookName] === undefined)
     return [];
@@ -261,7 +306,13 @@ PluginRegistry.prototype.callHook = function (hookName, args) {
   return res;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function loadPlugins(force) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache("plugin_registry", function(cache) {
     if (force !== undefined || cache.plugin_registry === undefined) {
       cache.plugin_registry = new PluginRegistry();
@@ -274,14 +325,32 @@ function loadPlugins(force) {
 
 
 /* User API */
+
+// YOURNAME:
+// YOURCOMMENT
 function enablePlugin(pluginName) { loadPlugins().enablePlugin(pluginName); }
+
+// YOURNAME:
+// YOURCOMMENT
 function disablePlugin(pluginName) { loadPlugins().disablePlugin(pluginName); }
+
+// YOURNAME:
+// YOURCOMMENT
 function registerClientHandlerJS() { loadPlugins().registerClientHandlerJS(); }
+
+// YOURNAME:
+// YOURCOMMENT
 function callHook(hookName, args) { return loadPlugins().callHook(hookName, args); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function callHookStr(hookName, args, sep, pre, post) {
   if (sep == undefined) sep = '';
   if (pre == undefined) pre = '';
   if (post == undefined) post = '';
+
+  // YOURNAME:
+  // YOURCOMMENT
   return callHook(hookName, args).map(function (x) { return pre + x + post}).join(sep || "");
 }

@@ -17,8 +17,14 @@
 import("stringutils.trim");
 import("jsutils.scalaF0")
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cx() { return appjet.context };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _addIfNotPresent(obj, key, value) {
   if (!(key in obj)) obj[key] = value;
 }
@@ -47,12 +53,24 @@ get continuation() {
     var c = Packages.net.appjet.ajstdlib.execution.getContinuation(_cx());
     var u = this.underlying;
     return {
+
+      // YOURNAME:
+      // YOURCOMMENT
       suspend: function(timeout) { 
         return Packages.net.appjet.ajstdlib.execution.sync(
+
+          // YOURNAME:
+          // YOURCOMMENT
           u, scalaF0(function() { return c.suspend(timeout); }));
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       resume: function() { 
         Packages.net.appjet.ajstdlib.execution.sync(
+
+          // YOURNAME:
+          // YOURCOMMENT
           u, scalaF0(function() { c.resume(); })) 
       }
     }
@@ -180,6 +198,9 @@ get params() {
     var cx = _cx();
     var req = cx.request();
     return cx.attributes().getOrElseUpdate("requestParams",
+
+      // YOURNAME:
+      // YOURCOMMENT
       scalaF0(function() { return req.params(cx.runner().globalScope()); }));
   }
 },
@@ -194,6 +215,9 @@ get files() {
     var cx = _cx();
     var req = cx.request();
     return cx.attributes().getOrElseUpdate("requestFiles",
+
+      // YOURNAME:
+      // YOURCOMMENT
       scalaF0(function() { return req.files(cx.runner().globalScope()); }));
   }
 },
@@ -213,6 +237,9 @@ get headers() {
     var cx = _cx();
     var req = cx.request();
     return cx.attributes().getOrElseUpdate("requestHeaders",
+
+      // YOURNAME:
+      // YOURCOMMENT
       scalaF0(function() { return req.headers(cx.runner().globalScope()); }));
   }
 },
@@ -227,7 +254,13 @@ get cookies() {
     cookieHeaderArray = [cookieHeaderArray];
   var name, val;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   cookieHeaderArray.forEach(function (cookieHeader) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     cookieHeader.split(';').forEach(function(cs) {
       var parts = cs.split('=');
       if (parts.length == 2) {
@@ -278,7 +311,13 @@ get userAgent() {
   if (this.isDefined) {
     var agentString = (request.headers['User-Agent'] || "?");
     return {
+
+      // YOURNAME:
+      // YOURCOMMENT
       toString: function() { return agentString; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       isIPhone: function() { return (agentString.indexOf("(iPhone;") > 0); }
     };
   }
@@ -294,8 +333,14 @@ get acceptsGzip() {
     // Starting with: "Accept-Encoding: gzip; q=0.5, deflate; q=1.0"
     // 1. Split into ["gzip; q=0.5", "delfate; q=1.0"]
     // 2. See if some entry is gzip with q > 0. (q is optional.)
+
+    // YOURNAME:
+    // YOURCOMMENT
     return headerArray.some(function(header) {
       if (! header) return false;
+
+      // YOURNAME:
+      // YOURCOMMENT
       return header.split(/,\s*/).some(function(validEncoding) {
           if (!validEncoding.indexOf("gzip") == 0) {
               return false;

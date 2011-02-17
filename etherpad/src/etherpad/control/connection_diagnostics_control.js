@@ -22,6 +22,9 @@ import("etherpad.helpers.*");
 //----------------------------------------------------------------
 
 /*
+
+// YOURNAME:
+// YOURCOMMENT
 function _getDiagnosticsCollection() {
   var db = storage.getRoot("connection_diagnostics");
   if (!db.diagnostics) {
@@ -31,6 +34,9 @@ function _getDiagnosticsCollection() {
 }
 */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   /*
   var diagnostics = _getDiagnosticsCollection();
@@ -49,6 +55,9 @@ function render_main_get() {
   renderFramed("main/connection_diagnostics_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_submitdata_post() {
   response.setContentType('text/plain; charset=utf-8');
   /*
@@ -59,6 +68,9 @@ function render_submitdata_post() {
     response.stop();
   }
   var diagnosticData = JSON.parse(request.params.dataJson);
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(diagnosticData, function(k,v) {
     storedData[k] = v;
   });
@@ -66,6 +78,9 @@ function render_submitdata_post() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_submitemail_post() {
   response.setContentType('text/plain; charset=utf-8');
   /*

@@ -16,6 +16,9 @@
 
 var host = window.location.host;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function WebSocket(id) {
   var self = this;
   var socket = this;
@@ -23,10 +26,25 @@ function WebSocket(id) {
 
   var timeouts = {};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.onopen = function() { }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.onclosed = function() { }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.onmessage = function() { }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.onhiccup = function() { }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.onlogmessage = function() { }
   this.CONNECTING = 0;
   this.OPEN = 1;
@@ -34,6 +52,9 @@ function WebSocket(id) {
   this.readyState = -1;
 
   var hiccupsLastMinute = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   var hiccupResetInterval = setInterval(function() {
     hiccupsLastMinute = 0;
     if (self.readyState == self.CLOSED)
@@ -41,6 +62,9 @@ function WebSocket(id) {
   }, 60*1000);
 
   var isHiccuping = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function hiccup(channel) {
     if (channel != officialChannel && channel != self) return;
     if (isHiccuping) return;
@@ -50,18 +74,30 @@ function WebSocket(id) {
       return;
     }
     closeAllChannels();
+
+    // YOURNAME:
+    // YOURCOMMENT
     timeout(timeouts, "hiccup", 15000, function() {
       isHiccuping = false;
       doDisconnect({reconnect: false, reason: "Couldn't contact server to hiccup."});
     });
     isHiccuping = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function tryHiccup() {
       if (! isHiccuping) return;
       self.onhiccup({connected: false});
       log("trying hiccup");
+
+      // YOURNAME:
+      // YOURCOMMENT
       timeout(timeouts, "singleHiccup", 5000, function() {
         tryHiccup();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       simpleXhr('post', postPath(), true, [{key: "oob", value: "hiccup"}], function(sc, msg) {
         if (! isHiccuping) return;
         if (msg.substring(0, "restart-fail".length) == "restart-fail") {
@@ -79,6 +115,9 @@ function WebSocket(id) {
     }
     tryHiccup();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function closeAllChannels() {
     for (var i in activeChannels) {
       if (activeChannels.hasOwnProperty(i)) {
@@ -88,6 +127,9 @@ function WebSocket(id) {
     officialChannel = undefined;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doDisconnect(obj, silent, sync) {
     log("disconnected: "+obj.reason+" / "+(obj.data !== undefined ? "data: "+obj.data : ""));
     logAll();
@@ -104,11 +146,17 @@ function WebSocket(id) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.disconnect = function(sync) {
     doDisconnect({reason: "Closed by client."}, false, sync);
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doBasicConnect() {
     var type = getBasicChannel();
     log("basic connect on type: "+type);
@@ -116,6 +164,9 @@ function WebSocket(id) {
     channel.connect();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doOtherConnect() {
     var channels = getOtherChannels();
     var channel; var type;
@@ -126,26 +177,50 @@ function WebSocket(id) {
       channel.connect();      
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doConnect() {
     log("doing connect!");
+
+    // YOURNAME:
+    // YOURCOMMENT
     timeout(timeouts, "connect", 15000, function() {
       doDisconnect({reconnect: false, reason: "Timeout connecting to server: no channel type was able to connect."});
     });
     doBasicConnect();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.connect = function() {
     log("socket connecting: "+id);
     doConnect();
   }
 
   // util
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nicetime() { return Math.floor((new Date()).valueOf() / 100) % 10000000; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function log(s) { self.onlogmessage("(comet @t: "+nicetime()+") "+s); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function logAll() {
     log(self.describe())
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.describe = function() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function describeChannels() {
       out = [];
       for (var i in activeChannels) {
@@ -158,7 +233,13 @@ function WebSocket(id) {
     return ("socket state: { id: "+id+", readyState: "+self.readyState+", isHiccuping: "+isHiccuping+", timeouts: "+describeTimeouts(timeouts)+", officialChannel: "+(officialChannel?officialChannel.name:"none")+", channels: "+describeChannels()+", isPosting: "+isPosting+", lastReceivedSeqNumber: "+lastReceivedSeqNumber+", lastPost: "+lastPost+", postTimeouts: "+describeTimeouts(postTimeouts)+", channelSeq: "+channelSeq+" }");
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function wrapMethod(obj, method) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function() {
       var arr = [];
       for (var i=0; i < arguments.length; i++) {
@@ -170,11 +251,17 @@ function WebSocket(id) {
   var _wm = wrapMethod;
 
   // cb should take statusCode, responseText, and optionally request
+
+  // YOURNAME:
+  // YOURCOMMENT
   function simpleXhr(method, uri, async, params, cb, makeXhr) {
 //    log("making simple Xhr: "+[method, uri, async, params].join(", "));
     var request = (makeXhr || newRequestObject)();
     request.open(method, uri, async);
     if (async) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       request.onreadystatechange = function() {
         if (request.readyState != 4) return;
         var status;
@@ -210,15 +297,30 @@ function WebSocket(id) {
     return request;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var timeout_noop = function() { }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function timeout(timeoutObject, timeoutName, millis, timeoutCallback) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clearIt(timeoutObject, timeoutName) {
       if (timeoutObject[timeoutName]) {
         timeoutObject[timeoutName]();
         timeoutObject[timeoutName] = timeout_noop;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     var timeoutId = setTimeout(function() { clearIt(timeoutObject, timeoutName); timeoutCallback(); }, millis);
+
+    // YOURNAME:
+    // YOURCOMMENT
     var f = function() {
       clearTimeout(timeoutId);
     }
@@ -230,6 +332,9 @@ function WebSocket(id) {
   // handling messages
   var lastReceivedSeqNumber = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dataHandler(msg) {
     if (msg.seqNumber > lastReceivedSeqNumber+1) {
       log("bad sequence number. expecting: "+(lastReceivedSeqNumber+1)+", got: "+msg.seqNumber);
@@ -250,17 +355,29 @@ function WebSocket(id) {
   }
 
   // client-server comm
+
+  // YOURNAME:
+  // YOURCOMMENT
   var postPath = function() {
     return "%contextPath%/post?r="+randomVar()+"&v="+version+"&id="+id+"&seq="+lastReceivedSeqNumber;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function SimpleQueue() {
     var base = [];
     var head = 0;
     var tail = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.offer = function(data) {
       base[tail++] = data;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.poll = function() {
       if (this.length() > 0) {
         var n = base[head];
@@ -268,6 +385,9 @@ function WebSocket(id) {
         return n;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.clear = function() {
       head = 0;
       tail = 0;
@@ -275,6 +395,9 @@ function WebSocket(id) {
       base = [];
       return oldBase;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.length = function() {
       return tail - head;
     }
@@ -284,10 +407,16 @@ function WebSocket(id) {
   var postTimeouts = {};
   var lastPost;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function postSingleMessageNow(isControl, data, sync, force, cb) {
     doPostMessages([{oob: isControl, data: data, cb: cb}], sync, force)
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doPostMessages(messages, sync, force, cb) {
     if (! force && self.readyState == self.CLOSED) return;
     if (messages.length == 0) {
@@ -302,6 +431,9 @@ function WebSocket(id) {
       if (messages[i].cb)
         callbacks.push(messages[i].cb);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function postFailed(sc, msg, req, src) {
       var str = "";
       try {
@@ -312,6 +444,9 @@ function WebSocket(id) {
         callbacks[i](false, str);
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function postCallback(sc, msg, request) {
       postTimeouts.post();
       if (sc != 200 || msg.substring(0, 2) != "ok") {
@@ -323,12 +458,18 @@ function WebSocket(id) {
         if (cb) cb();
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     timeout(postTimeouts, "post", 15000, function() {
       doDisconnect({reconnect: true, reason: "Posting message timed out."});
     });
     simpleXhr('post', postPath(), ! sync, data, postCallback);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function postPendingMessages() {
     if (isPosting == true)
       return;
@@ -337,18 +478,30 @@ function WebSocket(id) {
       return;
     }
     isPosting = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     doPostMessages(messages, false, false, function() { isPosting = false; setTimeout(postPendingMessages, 0); });
     lastPost = nicetime();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.postMessage = function(data, cb) {
     if (self.readyState != self.OPEN) {
       return;
     }
     outgoingMessageQueue.offer({data: data, cb: cb});
+
+    // YOURNAME:
+    // YOURCOMMENT
     setTimeout(function() { postPendingMessages() }, 0);
   }
 
   // transports
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getValidChannels() {
     var channels = [];
     for (var i = 0; i < validChannels.length; ++i) {
@@ -365,15 +518,24 @@ function WebSocket(id) {
     }
     return channels;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getBasicChannel() {
     return getValidChannels()[0];
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getOtherChannels() {
     return getValidChannels().slice(1);
   }
   
   var officialChannel;
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.getTransportType = function() {
     return (officialChannel ? officialChannel.name : "none");
   }
@@ -386,6 +548,9 @@ function WebSocket(id) {
     streaming: StreamingChannel
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function describeTimeouts(timeouts) {
     var out = [];
     for (var i in timeouts) {
@@ -397,13 +562,22 @@ function WebSocket(id) {
   }
 
   var channelSeq = 1;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function notifyConnect(channel) {
     timeouts.connect();
     if (! officialChannel || channel.weight > officialChannel.weight) {
       log("switching to use channel: "+channel.name);
       var oldChannel = officialChannel;
       officialChannel = channel;
+
+      // YOURNAME:
+      // YOURCOMMENT
       setTimeout(function() {
+
+        // YOURNAME:
+        // YOURCOMMENT
         postSingleMessageNow(true, "useChannel:"+(channelSeq++)+":"+channel.name, false, false, function(success, msg) {
           if (success) {
             if (oldChannel) {
@@ -429,14 +603,23 @@ function WebSocket(id) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomVar() {
     return String(Math.round(Math.random()*1e12));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function channelPath() {
     return "%contextPath%/channel?v="+version+"&r="+randomVar()+"&id="+id;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function newRequestObject() {
     var xmlhttp=false;
      try {
@@ -465,10 +648,16 @@ function WebSocket(id) {
     return xmlhttp
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function DataFormatError(message) {
     this.message = message;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function readMessage(data, startIndex) {
     if (! startIndex) startIndex = 0;
     var sep = data.indexOf(":", startIndex);
@@ -481,11 +670,17 @@ function WebSocket(id) {
     return { message: msg, lastConsumedChar: sep+1+chars }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function iframeReader(data, startIndex) {
     if (startIndex == 0)
       return { message: data, lastConsumedChar: data.length }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function parseWireFormat(data, startIndex, reader) {
     if (! startIndex) startIndex = 0;
     var msgs = [];
@@ -512,6 +707,9 @@ function WebSocket(id) {
     return { messages: msgs, lastConsumedChar: readThroughIndex }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleMessages(data, cursor, channel, reader) {
     try {
       messages = parseWireFormat(data, cursor, reader);
@@ -539,6 +737,9 @@ function WebSocket(id) {
     return messages.lastConsumedChar;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ShortPollingChannel() {
     this.weight = 0;
     this.name = "shortpolling";
@@ -546,6 +747,9 @@ function WebSocket(id) {
     this.isConnected = false;
     this.isClosed = false;
     this.request;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.clearRequest = function() {
       if (this.request) {
         this.request.abort();
@@ -554,10 +758,16 @@ function WebSocket(id) {
     }
     this.timeouts = {};
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.describe = function() {
       return "{ isConnected: "+this.isConnected+", isClosed: "+this.isClosed+", timeouts: "+describeTimeouts(this.timeouts)+", request: "+(this.request?"set":"not set")+" }"
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.pollDataHandler = function(sc, response, request) {
       if (request.readyState != 4) return;
       if (this.timeouts.poll) this.timeouts.poll();
@@ -597,16 +807,25 @@ function WebSocket(id) {
     }
 
     this.keepRetryingConnection = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.cancelConnect = function() {
       this.clearRequest();
       this.keepRetryingConnection = false;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.cancelPoll = function() {
       this.clearRequest();
       log("poll timed out.");
       hiccup(this);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.doPoll = function() {
       if (this.isClosed) return;
       timeout(this.timeouts, "poll", this.pollTimeout, _wm(this, this.cancelPoll));
@@ -616,12 +835,18 @@ function WebSocket(id) {
                   true, undefined, _wm(this, this.pollDataHandler), this.xhrGenerator);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.pollParams = function() {
       return "";
     }
     this.pollTimeout = 5000;
     this.pollDelay = 500;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.attemptConnect = function() {
       if (! this.keepRetryingConnection) return;
       log(this.name+" attempting connect");
@@ -630,10 +855,16 @@ function WebSocket(id) {
       this.request = simpleXhr('GET', channelPath()+"&channel="+this.name+"&new=yes&create="+(socket.readyState == socket.OPEN ? "no" : "yes")+"&seq="+lastReceivedSeqNumber,
                                true, undefined, _wm(this, this.pollDataHandler), this.xhrGenerator);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.connect = function() {
       this.attemptConnect();
       timeout(this.timeouts, "initialConnect", 15000, _wm(this, this.cancelConnect));
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.disconnect = function() {
       log(this.name+" disconnected");
       this.isClosed = true;
@@ -641,6 +872,9 @@ function WebSocket(id) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function StreamingChannel() {
     this.weight = 2;
     this.name = "streaming";
@@ -648,6 +882,9 @@ function WebSocket(id) {
 
     var isConnected = false;
     var request;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clearRequest() {
       if (request) {
         request.abort();
@@ -663,10 +900,16 @@ function WebSocket(id) {
     var timeouts = {};
     var cursor = 0;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.describe = function() {
       return "{ isConnected: "+isConnected+", isClosed: "+isClosed+", timeouts: "+describeTimeouts(timeouts)+", request: "+(request?"set":"not set")+", cursor: "+cursor+" }";
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function connectOk() {
       isConnected = true;
       timeouts.initialConnect();
@@ -677,6 +920,9 @@ function WebSocket(id) {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function streamDataHandler() {
       if (timeouts.data) timeouts.data();
       if (isClosed) return;
@@ -705,9 +951,15 @@ function WebSocket(id) {
           return;
         }
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       timeout(timeouts, "data", 60*1000, function() { hiccup(self); });
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function iframeDataHandler(data) {
       if (isClosed) return;
       if (! isConnected) {
@@ -721,6 +973,9 @@ function WebSocket(id) {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cancelConnect() {
       isClosed = true;
       clearRequest();
@@ -731,6 +986,9 @@ function WebSocket(id) {
     var theStream;
     var ifrDiv;
     var iframeTestCount = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function testIframe() {
       var state;
       try {
@@ -748,6 +1006,9 @@ function WebSocket(id) {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.connect = function() {
       timeout(timeouts, "initialConnect", 15000, cancelConnect)
 
@@ -760,6 +1021,9 @@ function WebSocket(id) {
           $('body').append(ifrDiv);
           window.comet = {
             pass_data: iframeDataHandler,
+
+            // YOURNAME:
+            // YOURCOMMENT
             disconnect: function() { hiccup(self); }
           }
           $(ifrDiv).append($("<iframe src='"+streamurl+"'></iframe>"));
@@ -768,6 +1032,9 @@ function WebSocket(id) {
           // if event-source supported disconnect notifications, fuck yeah we'd use it.
 //          theStream = $('<event-source>');
 //          var streamurl = channelPath()+"&channel=streaming&type=opera&new=yes&create="+(socket.readyState == socket.OPEN ? "no" : "yes")+"&seq="+lastReceivedSeqNumber;
+
+// YOURNAME:
+// YOURCOMMENT
 //          theStream.get(0).addEventListener('message', function(event) {
 //            iframeDataHandler(event.data);
 //          }, false);
@@ -787,6 +1054,9 @@ function WebSocket(id) {
             theStream.appendChild(ifrDiv)
             theStream.parentWindow.comet = {
               pass_data: iframeDataHandler,
+
+              // YOURNAME:
+              // YOURCOMMENT
               disconnect: function() { hiccup(self); }
             }
             ifrDiv.innerHTML = "<iframe src='"+streamurl+"'></iframe>";
@@ -813,6 +1083,9 @@ function WebSocket(id) {
       log("stream connect sent!");
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.disconnect = function() {
       log("stream disconnected");
       isClosed = true;
@@ -822,10 +1095,16 @@ function WebSocket(id) {
   }
 
   // long-polling related stuff.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function iframePath(key) {
     return "//"+key+".comet."+host+"%contextPath%/xhrXdFrame";
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function createHiddenDiv() {
     if (! document.getElementById('newcomethidden')) {
       var d = document.createElement('div');
@@ -836,18 +1115,33 @@ function WebSocket(id) {
     return document.getElementById('newcomethidden');
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ExtHostXHR(iframe) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.open = function(method, uri, async) {
       this.method = method;
       this.uri = uri;
       this.async = async;
     }
     var headers = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.setRequestHeader = function(name, value) {
       headers[name] = value;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.send = function(data) {
       var self = this;
+
+      // YOURNAME:
+      // YOURCOMMENT
       this.xhr = iframe.iframe.contentWindow.doAction(this.method, this.uri, this.async, headers, data || null, function(status, response) {
         self.readyState = 4;
         self.status = status;
@@ -855,12 +1149,18 @@ function WebSocket(id) {
         self.onreadystatechange();
       });
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.abort = function() {
       if (this.xhr)
         iframe.contentWindow.doAbort(this.xhr);
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function createRequestIframe(cb) {
     var randomKey = randomVar();
     try {
@@ -884,17 +1184,26 @@ function WebSocket(id) {
     log("Not using IE setup.");
     var requestIframe = document.createElement('iframe');
     createHiddenDiv().appendChild(requestIframe);
+
+    // YOURNAME:
+    // YOURCOMMENT
     window["done_"+randomKey] = function() { try { delete window["done_"+randomKey]; } catch (e) { }; cb(); }
     requestIframe.src = iframePath(randomKey);
     return {iframe: requestIframe};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function createIframeRequestObject() {
     if (! longPollingIFrame) throw Error("WebSocket isn't properly set up!");
     return new ExtHostXHR(longPollingIFrame);
   }
 
   var longPollingIFrame;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function LongPollingChannel() {
     ShortPollingChannel.apply(this); // sets up other state.
     this.weight = 1;
@@ -902,10 +1211,16 @@ function WebSocket(id) {
 
     this.pollDelay = 0;
     this.pollTimeout = 15000;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.pollParams = function() {
       return "&timeout="+(this.pollTimeout-5000);
     }
     var connect = this.connect;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.connect = function() {
       if (! longPollingIFrame) {
         longPollingIFrame =

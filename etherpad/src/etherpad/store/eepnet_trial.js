@@ -27,14 +27,23 @@ import("etherpad.globals.*");
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTrialDays() {
   return 30;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTrialUserQuota() {
   return 100;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function mailLicense(data, licenseKey, expiresDate) {
   var toAddr = data.email;
   if (isTestEmail(toAddr)) {
@@ -59,6 +68,9 @@ function mailLicense(data, licenseKey, expiresDate) {
   );
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function mailLostLicense(email) {
   var data = sqlobj.selectSingle('eepnet_signups', {email: email});
   var keyInfo = licensing.decodeLicenseInfoFromKey(data.licenseKey);
@@ -67,6 +79,9 @@ function mailLostLicense(email) {
   mailLicense(data, data.licenseKey, expiresDate);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function hasEmailAlreadyDownloaded(email) {
   var existingRecord = sqlobj.selectSingle('eepnet_signups', {email: email});
   if (existingRecord) {
@@ -76,7 +91,13 @@ function hasEmailAlreadyDownloaded(email) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createAndMailNewLicense(data) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   sqlcommon.inTransaction(function() {
     var expiresDate = new Date(+(new Date)+(1000*60*60*24*getTrialDays()));
     var licenseKey = licensing.generateNewKey(
@@ -115,6 +136,9 @@ function createAndMailNewLicense(data) {
     // Send sales notification
     var clientAddr = request.clientAddr;
     var initialReferer = getSession().initialReferer;
+
+    // YOURNAME:
+    // YOURCOMMENT
     execution.async(function() {
       _sendSalesNotification(data, clientAddr, initialReferer);
     });
@@ -122,6 +146,9 @@ function createAndMailNewLicense(data) {
   }); // end transaction
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _logDownloadData(data, licenseKey) {
   log.custom("eepnet_download_info", {
     email: data.email,
@@ -138,6 +165,9 @@ function _logDownloadData(data, licenseKey) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getWeb2LeadData(data, ip, ref) {
   var googleQuery = extractGoogleQuery(ref);
   var w2ldata = {
@@ -163,6 +193,9 @@ function getWeb2LeadData(data, ip, ref) {
   return w2ldata;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sendSalesNotification(data, ip, ref) {
   var hostname = ipToHostname(ip) || "unknown";
 
@@ -201,6 +234,9 @@ function _sendSalesNotification(data, ip, ref) {
   );
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSalesforceIndustryList() {
   return [
     '--None--',

@@ -2,6 +2,9 @@ import("etherpad.log");
 import("plugins.fileUpload.hooks");
 import("plugins.fileUpload.static.js.main");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fileUploadInit() {
  this.hooks = ['handlePath', 'editBarItemsLeftPad'];
  this.description = 'File upload manager adds a button to pads to upload a file. A URL to the uploaded file is then inserted into the pad.';
@@ -12,10 +15,16 @@ function fileUploadInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing fileUpload");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling fileUpload");
 }

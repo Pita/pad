@@ -29,6 +29,9 @@ import("etherpad.pro.pro_utils");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (!getSession().oldFormData) {
     getSession().oldFormData = {};
@@ -36,6 +39,9 @@ function onRequest() {
   return false;  // not handled yet.
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() {
   var m = getSession().proAccountControlError;
   delete getSession().proAccountControlError;
@@ -45,16 +51,25 @@ function _errorDiv() {
   return "";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _redirectError(m) {
   getSession().proAccountControlError = m;
   response.redirect(request.path);
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   response.redirect('/ep/pro-account/sign-in');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_sign_in_get() {
   renderFramed('pro-account/sign-in.ejs', {
     oldData: getSession().oldFormData,
@@ -63,6 +78,9 @@ function render_sign_in_get() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_sign_in_post() {
   var email = trim(request.params.email).toLowerCase();
   var password = request.params.password;
@@ -79,6 +97,9 @@ function render_sign_in_post() {
   }
 
   var instantSigninKey = stringutils.randomString(20);
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache('global_signin_passwords', function(c) {
     c[instantSigninKey] = {
       email: email,
@@ -91,6 +112,9 @@ function render_sign_in_post() {
     "/ep/account/sign-in?instantSigninKey="+instantSigninKey);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_recover_get() {
   renderFramed('pro-account/recover.ejs', {
     oldData: getSession().oldFormData,
@@ -98,8 +122,14 @@ function render_recover_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_recover_post() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _recoverLink(accountRecord, domainRecord) {
     var host = (domainRecord.subDomain + "." + httpsHost(request.host));
     return (

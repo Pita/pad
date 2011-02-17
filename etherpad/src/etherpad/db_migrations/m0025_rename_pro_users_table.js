@@ -17,6 +17,9 @@
 import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.renameTable('pro_users', 'pro_accounts');
   sqlobj.renameTable('pro_users_auto_signin', 'pro_accounts_auto_signin');

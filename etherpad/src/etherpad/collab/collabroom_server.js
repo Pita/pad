@@ -24,15 +24,24 @@ import("etherpad.log");
 jimport("java.util.concurrent.ConcurrentSkipListMap");
 jimport("java.util.concurrent.CopyOnWriteArraySet");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   execution.initTaskThreadPool("collabroom_async", 1);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doWarn(str) {
   log.warn(appjet.executionId+": "+str);
 }
 
 // deep-copies (recursively clones) an object (or value)
+
+// YOURNAME:
+// YOURCOMMENT
 function _deepCopy(obj) {
   if ((typeof obj) != 'object' || !obj) {
     return obj;
@@ -53,7 +62,13 @@ function _deepCopy(obj) {
 }
 
 // calls func inside a global lock on the cache
+
+// YOURNAME:
+// YOURCOMMENT
 function _withCache(func) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache("collabroom_server", function(cache) {
     if (! cache.rooms) {
       // roomName -> { connections: CopyOnWriteArraySet<connectionId>,
@@ -69,18 +84,30 @@ function _withCache(func) {
 }
 
 // accesses cache without lock
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCache() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _withCache(function(cache) { return cache; });
 }
 
 // if roomType is null, will only update an existing connection
 // (otherwise will insert or update as appropriate)
+
+// YOURNAME:
+// YOURCOMMENT
 function _putConnection(connection, roomType) {
   var roomName = connection.roomName;
   var connectionId = connection.connectionId;
   var socketId = connection.socketId;
   var data = connection.data;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache(function(cache) {
     var rooms = cache.rooms;
     if (! rooms.containsKey(roomName)) {
@@ -103,7 +130,13 @@ function _putConnection(connection, roomType) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _removeConnection(connection) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache(function(cache) {
     var rooms = cache.rooms;
     var thisRoom = connection.roomName;
@@ -119,11 +152,17 @@ function _removeConnection(connection) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getConnection(connectionId) {
   // return a copy of the connection object
   return _deepCopy(_getCache().allConnections.get(connectionId) || null);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getConnections(roomName) {
   var array = [];
 
@@ -142,6 +181,9 @@ function _getConnections(roomName) {
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendMessage(connectionId, msg) {
   var connection = _getConnection(connectionId);
   if (connection) {
@@ -156,11 +198,17 @@ function sendMessage(connectionId, msg) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sendMessageToSocket(socketId, msg) {
   var msgString = fastJSON.stringify({type: "COLLABROOM", data: msg});
   comet.sendMessage(socketId, msgString);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function disconnectDefunctSocket(connectionId, socketId) {
   var connection = _getConnection(connectionId);
   if (connection && connection.socketId == socketId) {
@@ -168,6 +216,9 @@ function disconnectDefunctSocket(connectionId, socketId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _bootSocket(socketId, reason) {
   if (reason) {
     _sendMessageToSocket(socketId,
@@ -176,6 +227,9 @@ function _bootSocket(socketId, reason) {
   comet.disconnect(socketId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bootConnection(connectionId, reason) {
   var connection = _getConnection(connectionId);
   if (connection) {
@@ -184,6 +238,9 @@ function bootConnection(connectionId, reason) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCallbacksForRoom(roomName, roomType) {
   if (! roomType) {
     var room = _getCache().rooms.get(roomName);
@@ -194,14 +251,35 @@ function getCallbacksForRoom(roomName, roomType) {
 
   var emptyCallbacks = {};
   emptyCallbacks.introduceUsers =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function (joiningConnection, existingConnection) {};
   emptyCallbacks.extroduceUsers =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function extroduceUsers(leavingConnection, existingConnection) {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   emptyCallbacks.onAddConnection = function (joiningData) {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   emptyCallbacks.onRemoveConnection = function (leavingData) {};
   emptyCallbacks.handleConnect =
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(data) { return /*userInfo or */null; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   emptyCallbacks.clientReady = function(newConnection, data) {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   emptyCallbacks.handleMessage = function(connection, msg) {};
 
   if (roomType == collab_server.PADPAGE_ROOMTYPE) {
@@ -218,6 +296,9 @@ function getCallbacksForRoom(roomName, roomType) {
 
 // roomName must be globally unique, just within roomType;
 // data must have a userInfo.userId
+
+// YOURNAME:
+// YOURCOMMENT
 function addRoomConnection(roomName, roomType,
                            connectionId, socketId, data) {
   var callbacks = getCallbacksForRoom(roomName, roomType);
@@ -232,6 +313,9 @@ function addRoomConnection(roomName, roomType,
   var connections = _getConnections(roomName);
   var joiningUser = data.userInfo.userId;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   connections.forEach(function(connection) {
     if (connection.socketId != socketId) {
       var user = connection.data.userInfo.userId;
@@ -249,6 +333,9 @@ function addRoomConnection(roomName, roomType,
   return joiningConnection;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function removeRoomConnection(connectionId) {
   var leavingConnection = _getConnection(connectionId);
   if (leavingConnection) {
@@ -257,6 +344,9 @@ function removeRoomConnection(connectionId) {
 
     _removeConnection(leavingConnection);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     _getConnections(roomName).forEach(function (connection) {
       callbacks.extroduceUsers(leavingConnection, connection);
     });
@@ -265,10 +355,16 @@ function removeRoomConnection(connectionId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getConnection(connectionId) {
   return _getConnection(connectionId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateRoomConnectionData(connectionId, data) {
   var connection = _getConnection(connectionId);
   if (connection) {
@@ -277,10 +373,16 @@ function updateRoomConnectionData(connectionId, data) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRoomConnections(roomName) {
   return _getConnections(roomName);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllRoomsOfType(roomType) {
   var rooms = _getCache().rooms;
   var roomsIter = rooms.entrySet().iterator();
@@ -296,14 +398,23 @@ function getAllRoomsOfType(roomType) {
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSocketConnectionId(socketId) {
   var result = comet.getAttribute(socketId, "connectionId");
   return result && String(result);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handleComet(cometOp, cometId, msg) {
   var cometEvent = cometOp;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function requireTruthy(x, id) {
     if (!x) {
       _doWarn("Collab operation rejected due to missing value, case "+id);

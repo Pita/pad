@@ -25,6 +25,9 @@
 // Note that IE/Win only has 16 ms time resolution for each run.
 
 var _profilersByName = {};
+
+// YOURNAME:
+// YOURCOMMENT
 function PROFILER(name, enabled) {
   if (!_profilersByName['$'+name]) {
     _profilersByName['$'+name] = _makeProfiler(name, enabled);
@@ -34,10 +37,16 @@ function PROFILER(name, enabled) {
   return p;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function resetProfiler(name) {
   delete _profilersByName['$'+name];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _makeProfiler(name, enabled) {
   enabled = (enabled !== false);
 
@@ -47,6 +56,9 @@ function _makeProfiler(name, enabled) {
   var _profileHistory = [];
   var running = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function profileStart(name) {
     _profileResults = [];
     _profileTotal = 0;
@@ -55,6 +67,9 @@ function _makeProfiler(name, enabled) {
     _profileTime = (new Date()).getTime();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function profileMark(name) {
     var stopTime = (new Date()).getTime();
     var dt = stopTime - _profileTime;
@@ -64,11 +79,17 @@ function _makeProfiler(name, enabled) {
     _profileTime = (new Date()).getTime();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function profileLiteral(value, name) {
     _profileResults.push(value);
     if (name) _profileResults.push("%="+name);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function profileEnd(name) {
     if (running == false) return;
     var stopTime = (new Date()).getTime();
@@ -86,13 +107,25 @@ function _makeProfiler(name, enabled) {
 
   var dumpProfileDataTimeout = null;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dumpProfileData() {
     var data = _profileHistory[0].slice();
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(_profileHistory.slice(1), function (h) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       forEach(h, function (x, i) {
 	if ((typeof x) == "number") data[i] += x;
       });
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     data = map(data, function (x) {
       if ((typeof x) == "number") return String(x/_profileHistory.length).substring(0,4);
       return x;
@@ -102,7 +135,13 @@ function _makeProfiler(name, enabled) {
     dumpProfileDataTimeout = null;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function noop() {}
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cancel() {
     running = false;
   }

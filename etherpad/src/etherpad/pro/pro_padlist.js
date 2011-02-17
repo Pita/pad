@@ -25,6 +25,9 @@ import("etherpad.collab.collab_server");
 
 import("etherpad.pro.pro_accounts");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getColumnMeta() {
   // returns map of {id --> {
   //    title,
@@ -32,6 +35,9 @@ function _getColumnMeta() {
   //    render(p)
   // }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _dateNum(d) {
     if (!d) {
       return 0;
@@ -42,13 +48,22 @@ function _getColumnMeta() {
 
   var cols = {};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addAvailableColumn(id, cdata) {
     if (!cdata.render) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       cdata.render = function(p) {
         return p[id];
       };
     }
     if (!cdata.cmpFn) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       cdata.cmpFn = function(a,b) {
         return cmp(a[id], b[id]);
       };
@@ -59,17 +74,26 @@ function _getColumnMeta() {
 
   addAvailableColumn('public', {
     title: "",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       // TODO: implement an icon with hover text that says public vs.
       // private
       return "";
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     cmpFn: function(a,b) {
       return 0; // not sort-able
     }
   });
   addAvailableColumn('secure', {
     title: "",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       if (p.password) {
         return IMG({src: '/static/img/may09/padlock.gif'});
@@ -77,16 +101,25 @@ function _getColumnMeta() {
         return "";
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     cmpFn: function(a,b) {
       return cmp(a.password, b.password);
     }
   });
   addAvailableColumn('title', {
     title: "Title",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       var t = padutils.getProDisplayTitle(p.localPadId, p.title);
       return A({href: "/"+p.localPadId}, t);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortFn: function(a, b) {
       return cmp(padutils.getProDisplayTitle(a.localPadId, a.title),
                  padutils.getProDisplayTitle(b.localPadId, b.title));
@@ -94,9 +127,15 @@ function _getColumnMeta() {
   });
   addAvailableColumn('creatorId', {
     title: "Creator",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       return pro_accounts.getFullNameById(p.creatorId);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortFn: function(a, b) {
       return cmp(pro_accounts.getFullNameById(a.creatorId),
                  pro_accounts.getFullNameById(b.creatorId));
@@ -104,15 +143,24 @@ function _getColumnMeta() {
   });
   addAvailableColumn('createdDate', {
     title: "Created",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       return timeAgo(p.createdDate);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortFn: function(a, b) {
       return cmp(_dateNum(a.createdDate), _dateNum(b.createdDate));
     }
   });
   addAvailableColumn('lastEditorId', {
     title: "Last Editor",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       if (p.lastEditorId) {
         return pro_accounts.getFullNameById(p.lastEditorId);
@@ -120,6 +168,9 @@ function _getColumnMeta() {
         return "";
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortFn: function(a, b) {
       var a_ = a.lastEditorId ? pro_accounts.getFullNameById(a.lastEditorId) : "ZZZZZZZZZZ";
       var b_ = b.lastEditorId ? pro_accounts.getFullNameById(b.lastEditorId) : "ZZZZZZZZZZ";
@@ -129,11 +180,20 @@ function _getColumnMeta() {
 
   addAvailableColumn('editors', {
     title: "Editors",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       var editors = [];
+
+      // YOURNAME:
+      // YOURCOMMENT
       p.proAttrs.editors.forEach(function(editorId) {
         editors.push([editorId, pro_accounts.getFullNameById(editorId)]);
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       editors.sort(function(a,b) { return cmp(a[1], b[1]); });
       var sp = SPAN();
       for (var i = 0; i < editors.length; i++) {
@@ -148,6 +208,9 @@ function _getColumnMeta() {
 
   addAvailableColumn('lastEditedDate', {
     title: "Last Edited",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       if (p.lastEditedDate) {
         return timeAgo(p.lastEditedDate);
@@ -155,6 +218,9 @@ function _getColumnMeta() {
         return "never";
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortFn: function(a,b) {
       return cmp(_dateNum(a.lastEditedDate), _dateNum(b.lastEditedDate));
     }
@@ -164,6 +230,9 @@ function _getColumnMeta() {
   });
   addAvailableColumn('actions', {
     title: "",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       return DIV({className: "gear-drop", id: "pad-gear-"+p.id}, "  ");
     }
@@ -171,10 +240,19 @@ function _getColumnMeta() {
 
   addAvailableColumn('connectedUsers', {
     title: "Connected Users",
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(p) {
       var names = [];
+
+      // YOURNAME:
+      // YOURCOMMENT
       padutils.accessPadLocal(p.localPadId, function(pad) {
         var userList = collab_server.getConnectedUsers(pad);
+
+        // YOURNAME:
+        // YOURCOMMENT
         userList.forEach(function(u) {
           if (collab_server.translateSpecialKey(u.specialKey) != 'invisible') {
             // excludes etherpad admin user
@@ -189,6 +267,9 @@ function _getColumnMeta() {
   return cols;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sortPads(padList) {
   var meta = _getColumnMeta();
   var sortId = _getCurrentSortId();
@@ -197,14 +278,26 @@ function _sortPads(padList) {
     reverse = true;
     sortId = sortId.slice(1);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   padList.sort(function(a,b) { return cmp(a.localPadId, b.localPadId); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   padList.sort(function(a,b) { return meta[sortId].sortFn(a, b); });
   if (reverse) { padList.reverse(); }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _addClientVars(padList) {
   var padTitles = {}; // maps localPadId -> title
   var localPadIds = {}; // maps padmetaId -> localPadId
+
+  // YOURNAME:
+  // YOURCOMMENT
   padList.forEach(function(p) {
     padTitles[p.localPadId] = stringutils.toHTML(padutils.getProDisplayTitle(p.localPadId, p.title));
     localPadIds[p.id] = p.localPadId;
@@ -215,10 +308,16 @@ function _addClientVars(padList) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCurrentSortId() {
   return request.params.sortBy || "lastEditedDate";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderColumnHeader(m) {
   var sp = SPAN();
   var sortBy = _getCurrentSortId();
@@ -239,6 +338,9 @@ function _renderColumnHeader(m) {
   return sp;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderPadList(padList, columnIds, limit) {
   _sortPads(padList);
   _addClientVars(padList);
@@ -248,6 +350,9 @@ function renderPadList(padList, columnIds, limit) {
   }
 
   var showSecurityInfo = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   padList.forEach(function(p) {
     if (p.password && p.password.length > 0) { showSecurityInfo = true; }
   });
@@ -259,11 +364,17 @@ function renderPadList(padList, columnIds, limit) {
 
   var t = TABLE({id: "padtable", cellspacing:"0", cellpadding:"0"});
   var toprow = TR({className: "toprow"});
+
+  // YOURNAME:
+  // YOURCOMMENT
   columnIds.forEach(function(cid) { 
     toprow.push(TH(_renderColumnHeader(columnMeta[cid])));
   });
   t.push(toprow);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padList.forEach(function(p) {
     // Note that this id is always numeric, and is the actual
     // canonical padmeta id.

@@ -21,6 +21,9 @@ import("etherpad.utils.*");
 import("etherpad.globals.*");
 import("etherpad.admin.plugins");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var staticBase = '/static';
 
@@ -46,6 +49,9 @@ function onRequest() {
   return disp.dispatch();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function serveRobotsTxt(name) {
   response.neverCache();
   response.setContentType('text/plain');

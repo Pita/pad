@@ -18,6 +18,9 @@ import("etherpad.utils.isPrivateNetworkEdition");
 import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.createTable('plugin', {
     id: 'INT NOT NULL '+sqlcommon.autoIncrementClause()+' PRIMARY KEY',

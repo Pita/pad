@@ -29,12 +29,21 @@ import("cache_utils.syncedWithCache");
 import("execution");
 import("etherpad.sessions");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   execution.initTaskThreadPool("noprowatcher", 1);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getNumProUsers(pad) {
   var n = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   collab_server.getConnectedUsers(pad).forEach(function(info) {
     if (! padusers.isGuest(info.userId)) {
       n++; // found a non-guest
@@ -45,8 +54,14 @@ function getNumProUsers(pad) {
 
 var _EMPTY_TIME = 60000;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkPad(padOrPadId) {
   if ((typeof padOrPadId) == "string") {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return model.accessPadGlobal(padOrPadId, function(pad) {
       return checkPad(pad);
     });
@@ -69,6 +84,9 @@ function checkPad(padOrPadId) {
 
   var numConnections = collab_server.getNumConnections(pad);
   var numProUsers = getNumProUsers(pad);
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache('noprowatcher.no_pros_since', function(noProsSince) {
     if (! numConnections) {
       // no connections, clear state and we're done
@@ -101,10 +119,16 @@ function checkPad(padOrPadId) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserJoin(pad, userInfo) {
   checkPad(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserLeave(pad, userInfo) {
   checkPad(pad);
 }

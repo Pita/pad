@@ -17,6 +17,9 @@
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.createTable('pro_users_auto_signin', {
     id: sqlobj.getIdColspec(),

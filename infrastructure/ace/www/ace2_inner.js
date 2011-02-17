@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function OUTER(gscope) {
 
   var DEBUG=true;//$$ build script replaces the string "var DEBUG=true;//$$" with "var DEBUG=false;"
@@ -45,8 +48,17 @@ function OUTER(gscope) {
   var overlaysdiv = lineMetricsDiv.nextSibling;
   initLineNumbers();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var outsideKeyDown = function(evt) {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   var outsideKeyPress = function(evt) { return true; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   var outsideNotifyDirty = function() {};
 
   // selFocusAtStart -- determines whether the selection extends "backwards", so that the focus
@@ -79,14 +91,29 @@ function OUTER(gscope) {
       "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
     console = {};
     for (var i = 0; i < names.length; ++i)
+
+      // YOURNAME:
+      // YOURCOMMENT
       console[names[i]] = function() {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     //console.error = function(str) { alert(str); };
   }
   var PROFILER = window.PROFILER;
   if (!PROFILER) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     PROFILER = function() { return {start:noop, mark:noop, literal:noop, end:noop, cancel:noop}; };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function noop() {}
+
+  // YOURNAME:
+  // YOURCOMMENT
   function identity(x) { return x; }
 
   // "dmesg" is for displaying messages in the in-page output pane
@@ -100,21 +127,39 @@ function OUTER(gscope) {
 
   var textFace = 'monospace';
   var textSize = 12;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function textLineHeight() { return Math.round(textSize * 4/3); }
 
   var dynamicCSS = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function initDynamicCSS() {
     dynamicCSS = makeCSSManager("dynamicsyntax");
   }
 
   var changesetTracker = makeChangesetTracker(scheduler, rep.apool, {
+
+    // YOURNAME:
+    // YOURCOMMENT
     withCallbacks: function(operationName, f) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       inCallStackIfNecessary(operationName, function() {
         fastIncorp(1);
         f({
+
+          // YOURNAME:
+          // YOURCOMMENT
           setDocumentAttributedText: function(atext) {
 	    setDocAText(atext);
           },
+
+          // YOURNAME:
+          // YOURCOMMENT
           applyChangesetToDocument: function(changeset, preferInsertionAfterCaret) {
 	    var oldEventType = currentCallStack.editEvent.eventType;
 	    currentCallStack.startNewEvent("nonundoable");
@@ -130,6 +175,9 @@ function OUTER(gscope) {
 
   var authorInfos = {}; // presence of key determines if author is present in doc
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setAuthorInfo(author, info) {
     if ((typeof author) != "string") {
       throw new Error("setAuthorInfo: author ("+author+") is not a string");
@@ -156,14 +204,26 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAuthorClassName(author) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return "author-"+author.replace(/[^a-y0-9]/g, function(c) {
       if (c == ".") return "-";
       return 'z'+c.charCodeAt(0)+'z';
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function className2Author(className) {
     if (className.substring(0,7) == "author-") {
+
+      // YOURNAME:
+      // YOURCOMMENT
       return className.substring(7).replace(/[a-y0-9]+|-|z.+?z/g, function(cc) {
         if (cc == '-') return '.';
         else if (cc.charAt(0) == 'z') {
@@ -176,9 +236,15 @@ function OUTER(gscope) {
     }
     return null;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAuthorColorClassSelector(oneClassName) {
     return ".authorColors ."+oneClassName;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setUpTrackingCSS() {
     if (dynamicCSS) {
       var backgroundHeight = lineMetricsDiv.offsetHeight;
@@ -194,6 +260,9 @@ function OUTER(gscope) {
       spanStyle.paddingBottom = extraBodding+"px";
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function boldColorFromColor(lightColorCSS) {
     var color = colorutils.css2triple(lightColorCSS);
 
@@ -205,21 +274,36 @@ function OUTER(gscope) {
 
     return colorutils.triple2css(color);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fadeColor(colorCSS, fadeFrac) {
     var color = colorutils.css2triple(colorCSS);
     color = colorutils.blend(color, [1,1,1], fadeFrac);
     return colorutils.triple2css(color);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doAlert(str) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     scheduler.setTimeout(function() { alert(str); }, 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_getRep = function () {
     return rep;
   }
 
   var currentCallStack = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function inCallStack(type, action) {
     if (disposed) return;
 
@@ -229,15 +313,24 @@ function OUTER(gscope) {
     }
 
     var profiling = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function profileRest() {
       profiling = true;
       console.profile();
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function newEditEvent(eventType) {
       return {eventType:eventType, backset: null};
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function submitOldEvent(evt) {
       if (rep.selStart && rep.selEnd) {
 	var selStartChar =
@@ -273,6 +366,9 @@ function OUTER(gscope) {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function startNewEvent(eventType, dontSubmitOld) {
       var oldEvent = currentCallStack.editEvent;
       if (! dontSubmitOld) {
@@ -335,6 +431,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_inCallStack = inCallStack;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function inCallStackIfNecessary(type, action) {
     if (! currentCallStack) {
       inCallStack(type, action);
@@ -345,6 +444,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_inCallStackIfNecessary = inCallStackIfNecessary;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function recolorLineByKey(key) {
     if (rep.lines.containsKey(key)) {
       var offset = rep.lines.offsetOfKey(key);
@@ -353,14 +455,23 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineKeyForOffset(charOffset) {
     return rep.lines.atOffset(charOffset).key;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var recolorModule = (function() {
     var dirtyLineKeys = {};
 
     var module = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.setCharNeedsRecoloring = function(offset) {
       if (offset >= rep.alltext.length) {
 	offset = rep.alltext.length-1;
@@ -368,6 +479,9 @@ function OUTER(gscope) {
       dirtyLineKeys[getLineKeyForOffset(offset)] = true;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.setCharRangeNeedsRecoloring = function(offset1, offset2) {
       if (offset1 >= rep.alltext.length) {
 	offset1 = rep.alltext.length-1;
@@ -385,6 +499,9 @@ function OUTER(gscope) {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.recolorLines = function() {
       for(var k in dirtyLineKeys) {
 	recolorLineByKey(k);
@@ -395,10 +512,22 @@ function OUTER(gscope) {
     return module;
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var parenModule = (function() {
     var module = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.notifyTick = function() { handleFlashing(false); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.notifyChange = function() { handleFlashing(true); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     module.shouldNormalizeOnChar = function (c) {
       if (parenFlashRep.active) {
 	// avoid highlight style from carrying on to typed text
@@ -411,7 +540,13 @@ function OUTER(gscope) {
     var parenFlashRep = { active: false, whichChars: null, whichLineKeys: null, expireTime: null };
     var bracketMap = {'(': 1, ')':-1, '[':2, ']':-2, '{':3, '}':-3};
     var bracketRegex = /[{}\[\]()]/g;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function handleFlashing(docChanged) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getSearchRange(aroundLoc) {
 	var rng = getVisibleCharRange();
 	var d = 100; // minimum radius
@@ -424,6 +559,9 @@ function OUTER(gscope) {
 	if (rng[1] > rep.lines.totalWidth()) rng[1] = rep.lines.totalWidth();
 	return rng;
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function findMatchingVisibleBracket(startLoc, forwards) {
 	var rng = getSearchRange(startLoc);
 	var str = rep.alltext.substring(rng[0], rng[1]);
@@ -432,6 +570,9 @@ function OUTER(gscope) {
 	var bracketState = [];
 	var foundParen = false;
 	var goodParen = false;
+
+// YOURNAME:
+// YOURCOMMENT
 	function nextLoc() {
 	  if (loc < 0) return;
 	  if (forwards) loc++; else loc--;
@@ -501,6 +642,9 @@ function OUTER(gscope) {
 	recolorLineByKey(linesToUnhighlight[1]);
       }
       if (r.active && charsToHighlight) {
+
+// YOURNAME:
+// YOURCOMMENT
 	function f(txt, cls, next, ofst) {
 	  var flashClass = charsToHighlight[ofst];
 	  if (cls) {
@@ -517,14 +661,23 @@ function OUTER(gscope) {
     return module;
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dispose() {
     disposed = true;
     if (idleWorkTimer) idleWorkTimer.never();
     teardown();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function checkALines() {
     return; // disable for speed
+
+    // YOURNAME:
+    // YOURCOMMENT
     function error() { throw new Error("checkALines"); }
     if (rep.alines.length != rep.lines.length()) {
       error();
@@ -551,11 +704,20 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setWraps(newVal) {
     doesWrap = newVal;
     var dwClass = "doesWrap";
     setClassPresence(root, "doesWrap", doesWrap);
+
+    // YOURNAME:
+    // YOURCOMMENT
     scheduler.setTimeout(function() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       inCallStackIfNecessary("setWraps", function() {
 	fastIncorp(7);
 	recreateDOM();
@@ -564,6 +726,9 @@ function OUTER(gscope) {
     }, 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setStyled(newVal) {
     var oldVal = isStyled;
     isStyled = !!newVal;
@@ -571,6 +736,9 @@ function OUTER(gscope) {
     if (newVal != oldVal) {
       if (! newVal) {
 	// clear styles
+
+// YOURNAME:
+// YOURCOMMENT
 	inCallStackIfNecessary("setStyled", function() {
 	  fastIncorp(12);
 	  var clearStyles = [];
@@ -583,31 +751,49 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setTextFace(face) {
     textFace = face;
     root.style.fontFamily = textFace;
     lineMetricsDiv.style.fontFamily = textFace;
+
+    // YOURNAME:
+    // YOURCOMMENT
     scheduler.setTimeout(function() {
       setUpTrackingCSS();
     }, 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setTextSize(size) {
     textSize = size;
     root.style.fontSize = textSize+"px";
     root.style.lineHeight = textLineHeight()+"px";
     sideDiv.style.lineHeight = textLineHeight()+"px";
     lineMetricsDiv.style.fontSize = textSize+"px";
+
+    // YOURNAME:
+    // YOURCOMMENT
     scheduler.setTimeout(function() {
       setUpTrackingCSS();
     }, 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function recreateDOM() {
     // precond: normalized
     recolorLinesInRange(0, rep.alltext.length);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setEditable(newVal) {
     isEditable = newVal;
 
@@ -621,10 +807,16 @@ function OUTER(gscope) {
     setClassPresence(root, "static", ! isEditable);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function enforceEditability() {
     setEditable(isEditable);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importText(text, undoable, dontProcess) {
     var lines;
     if (dontProcess) {
@@ -644,6 +836,9 @@ function OUTER(gscope) {
       newText = lines.join('\n')+'\n';
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStackIfNecessary("importText"+(undoable?"Undoable":""), function() {
       setDocText(newText);
     });
@@ -653,17 +848,26 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importAText(atext, apoolJsonObj, undoable) {
     atext = Changeset.cloneAText(atext);
     if (apoolJsonObj) {
       var wireApool = (new AttribPool()).fromJsonable(apoolJsonObj);
       atext.attribs = Changeset.moveOpsToNewPool(atext.attribs, wireApool, rep.apool);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStackIfNecessary("importText"+(undoable?"Undoable":""), function() {
       setDocAText(atext);
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setDocAText(atext) {
     fastIncorp(8);
 
@@ -698,10 +902,16 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setDocText(text) {
     setDocAText(Changeset.makeAText(text));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getDocText() {
     var alltext = rep.alltext;
     var len = alltext.length;
@@ -709,29 +919,50 @@ function OUTER(gscope) {
     return alltext.substring(0, len);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function exportText() {
     if (currentCallStack && ! currentCallStack.domClean) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       inCallStackIfNecessary("exportText", function() { fastIncorp(2); });
     }
     return getDocText();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function editorChangedSize() {
     fixView();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setOnKeyPress(handler) {
     outsideKeyPress = handler;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setOnKeyDown(handler) {
     outsideKeyDown = handler;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setNotifyDirty(handler) {
     outsideNotifyDirty = handler;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getFormattedCode() {
     if (currentCallStack && ! currentCallStack.domClean) {
       inCallStackIfNecessary("getFormattedCode", incorporateUserChanges);
@@ -754,6 +985,9 @@ function OUTER(gscope) {
   }
 
   var CMDS = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearauthorship: function(prompt) {
       if ((!(rep.selStart && rep.selEnd)) || isCaret()) {
         if (prompt) {
@@ -770,10 +1004,16 @@ function OUTER(gscope) {
     },
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function execCommand(cmd) {
     cmd = cmd.toLowerCase();
     var cmdArgs = Array.prototype.slice.call(arguments, 1);
     if (CMDS[cmd]) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       inCallStack(cmd, function() {
 	fastIncorp(9);
 	CMDS[cmd].apply(CMDS, cmdArgs);
@@ -781,7 +1021,13 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function replaceRange(start, end, text) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack('replaceRange', function() {
       fastIncorp(9);
       performDocumentReplaceRange(start, end, text);
@@ -802,13 +1048,22 @@ function OUTER(gscope) {
   editorInfo.ace_execCommand = execCommand;
   editorInfo.ace_replaceRange = replaceRange;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_callWithAce = function (fn, callStack, normalize) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var wrapper = function () {
       return fn(editorInfo);
     }
 
     if (normalize !== undefined) {
       var wrapper1 = wrapper;
+
+      // YOURNAME:
+      // YOURCOMMENT
       wrapper = function () {
         editorInfo.ace_fastIncorp(9);
 	wrapper1();
@@ -822,6 +1077,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setProperty = function(key, value) {
     var k = key.toLowerCase();
     if (k == "wraps") {
@@ -859,36 +1117,66 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setBaseText = function(txt) {
     changesetTracker.setBaseText(txt);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setBaseAttributedText = function(atxt, apoolJsonObj) {
     setUpTrackingCSS();
     changesetTracker.setBaseAttributedText(atxt, apoolJsonObj);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_applyChangesToBase = function(c, optAuthor, apoolJsonObj) {
     changesetTracker.applyChangesToBase(c, optAuthor, apoolJsonObj);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_prepareUserChangeset = function() {
     return changesetTracker.prepareUserChangeset();
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_applyPreparedChangesetToBase = function() {
     changesetTracker.applyPreparedChangesetToBase();
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setUserChangeNotificationCallback = function(f) {
     changesetTracker.setUserChangeNotificationCallback(f);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setAuthorInfo = function(author, info) {
     setAuthorInfo(author, info);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_setAuthorSelectionRange = function(author, start, end) {
     changesetTracker.setAuthorSelectionRange(author, start, end);
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_getUnhandledErrors = function() {
     return caughtErrors.slice();
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editorInfo.ace_getDebugProperty = function(prop) {
     if (prop == "debugger") {
       // obfuscate "eval" so as not to scare yuicompressor
@@ -906,14 +1194,23 @@ function OUTER(gscope) {
     return undefined;
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function now() { return (new Date()).getTime(); }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function newTimeLimit(ms) {
     //console.debug("new time limit");
     var startTime = now();
     var lastElapsed = 0;
     var exceededAlready = false;
     var printedTrace = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     var isTimeUp =  function () {
       if (exceededAlready) {
 	if ((! printedTrace)) {// && now() - startTime - ms > 300) {
@@ -934,20 +1231,32 @@ function OUTER(gscope) {
 	return false;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     isTimeUp.elapsed = function() { return now() - startTime; }
     return isTimeUp;
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function makeIdleAction(func) {
     var scheduledTimeout = null;
     var scheduledTime = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function unschedule() {
       if (scheduledTimeout) {
 	scheduler.clearTimeout(scheduledTimeout);
 	scheduledTimeout = null;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function reschedule(time) {
       unschedule();
       scheduledTime = time;
@@ -955,12 +1264,18 @@ function OUTER(gscope) {
       if (delay < 0) delay = 0;
       scheduledTimeout = scheduler.setTimeout(callback, delay);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function callback() {
       scheduledTimeout = null;
       // func may reschedule the action
       func();
     }
     return {
+
+      // YOURNAME:
+      // YOURCOMMENT
       atMost: function (ms) {
 	var latestTime = now() + ms;
 	if ((! scheduledTimeout) || scheduledTime > latestTime) {
@@ -970,24 +1285,36 @@ function OUTER(gscope) {
       // atLeast(ms) will schedule the action if not scheduled yet.
       // In other words, "infinity" is replaced by ms, even though
       // it is technically larger.
+
+      // YOURNAME:
+      // YOURCOMMENT
       atLeast: function (ms) {
 	var earliestTime = now()+ms;
 	if ((! scheduledTimeout) || scheduledTime < earliestTime) {
 	  reschedule(earliestTime);
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       never: function() {
 	unschedule();
       }
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fastIncorp(n) {
     // normalize but don't do any lexing or anything
     incorporateUserChanges(newTimeLimit(0));
   }
   editorInfo.ace_fastIncorp = fastIncorp;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function incorpIfQuick() {
     var me = incorpIfQuick;
     var failures = (me.failures || 0);
@@ -1011,6 +1338,9 @@ function OUTER(gscope) {
     return false;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var idleWorkTimer = makeIdleAction(function() {
 
     //if (! top.BEFORE) top.BEFORE = [];
@@ -1024,6 +1354,9 @@ function OUTER(gscope) {
       return;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack("idleWorkTimer", function() {
 
       var isTimeUp = newTimeLimit(250);
@@ -1078,6 +1411,9 @@ function OUTER(gscope) {
   });
 
   var _nextId = 1;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function uniqueId(n) {
     // not actually guaranteed to be unique, e.g. if user copy-pastes
     // nodes with ids
@@ -1087,6 +1423,9 @@ function OUTER(gscope) {
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function recolorLinesInRange(startChar, endChar, isTimeUp, optModFunc) {
     if (endChar <= startChar) return;
     if (startChar < 0 || startChar >= rep.lines.totalWidth()) return;
@@ -1101,11 +1440,17 @@ function OUTER(gscope) {
     // tokenFunc function; accesses current value of lineEntry and curDocChar,
     // also mutates curDocChar
     var curDocChar;
+
+    // YOURNAME:
+    // YOURCOMMENT
     var tokenFunc = function(tokenText, tokenClass) {
       lineEntry.domInfo.appendSpan(tokenText, tokenClass);
     };
     if (optModFunc) {
       var f = tokenFunc;
+
+      // YOURNAME:
+      // YOURCOMMENT
       tokenFunc = function(tokenText, tokenClass) {
 	optModFunc(tokenText, tokenClass, f, curDocChar);
 	curDocChar += tokenText.length;
@@ -1145,6 +1490,9 @@ function OUTER(gscope) {
   // like getSpansForRange, but for a line, and the func takes (text,class)
   // instead of (width,class); excludes the trailing '\n' from
   // consideration by func
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSpansForLine(lineEntry, textAndClassFunc, lineEntryOffsetHint) {
     var lineEntryOffset = lineEntryOffsetHint;
     if ((typeof lineEntryOffset) != "number") {
@@ -1171,16 +1519,25 @@ function OUTER(gscope) {
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getCharType(charIndex) {
     return '';
   }
 
   var observedChanges;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function clearObservedChanges() {
     observedChanges = { cleanNodesNearChanges: {} };
   }
   clearObservedChanges();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getCleanNodeByKey(key) {
     var p = PROFILER("getCleanNodeByKey", false);
     p.extra = 0;
@@ -1196,6 +1553,9 @@ function OUTER(gscope) {
     return n;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function observeChangesAroundNode(node) {
     // Around this top-level DOM node, look for changes to the document
     // (from how it looks in our representation) and record them in a way
@@ -1260,6 +1620,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function observeChangesAroundSelection() {
     if (currentCallStack.observedSelection) return;
     currentCallStack.observedSelection = true;
@@ -1268,6 +1631,9 @@ function OUTER(gscope) {
     var selection = getSelection();
     p.end();
     if (selection) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function topLevel(n) {
 	if ((!n) || n == root) return null;
 	while (n.parentNode != root) {
@@ -1284,6 +1650,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function observeSuspiciousNodes() {
     // inspired by Firefox bug #473255, where pasting formatted text
     // causes the cursor to jump away, making the new HTML never found.
@@ -1301,6 +1670,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function incorporateUserChanges(isTimeUp) {
 
     if (currentCallStack.domClean) return false;
@@ -1309,6 +1681,9 @@ function OUTER(gscope) {
 
     currentCallStack.isUserChange = true;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isTimeUp = (isTimeUp || function() { return false; });
 
     if (DEBUG && top.DONT_INCORP || window.DEBUG_DONT_INCORP) return false;
@@ -1443,6 +1818,9 @@ function OUTER(gscope) {
 	}
 	//var fragment = magicdom.wrapDom(document.createDocumentFragment());
 	domInsertsNeeded.push([nodeToAddAfter, lineNodeInfos]);
+
+// YOURNAME:
+// YOURCOMMENT
 	forEach(dirtyNodes, function (n) { toDeleteAtEnd.push(n); });
 	var spliceHints = {};
 	if (selStart) spliceHints.selStart = selStart;
@@ -1460,22 +1838,34 @@ function OUTER(gscope) {
 
     // update the representation
     p.mark("splice");
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(splicesToDo, function (splice) {
       doIncorpLineSplice(splice[0], splice[1], splice[2], splice[3], splice[4]);
     });
 
     //p.mark("relex");
+
+    // YOURNAME:
+    // YOURCOMMENT
     //rep.lexer.lexCharRange(getVisibleCharRange(), function() { return false; });
     //var isTimeUp = newTimeLimit(100);
 
     // do DOM inserts
     p.mark("insert");
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(domInsertsNeeded, function (ins) {
       insertDomLines(ins[0], ins[1], isTimeUp);
     });
 
     p.mark("del");
     // delete old dom nodes
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(toDeleteAtEnd, function (n) {
       //var id = n.uniqueId();
 
@@ -1536,6 +1926,9 @@ function OUTER(gscope) {
     return domChanges;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function htmlForRemovedChild(n) {
     var div = doc.createElement("DIV");
     div.appendChild(n);
@@ -1546,14 +1939,26 @@ function OUTER(gscope) {
                        strikethrough: true, list: true};
   var OTHER_INCORPED_ATTRIBS = {insertorder: true, author: true};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isStyleAttribute(aname) {
     return !! STYLE_ATTRIBS[aname];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isIncorpedAttribute(aname) {
     return (!! STYLE_ATTRIBS[aname]) || (!! OTHER_INCORPED_ATTRIBS[aname]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function insertDomLines(nodeToAddAfter, infoStructs, isTimeUp) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isTimeUp = (isTimeUp || function() { return false; });
 
     var lastEntry;
@@ -1566,6 +1971,9 @@ function OUTER(gscope) {
 
     //rep.lexer.lexCharRange([charStart, charEnd], isTimeUp);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(infoStructs, function (info) {
       var p2 = PROFILER("insertLine", false);
       var node = info.node;
@@ -1588,6 +1996,9 @@ function OUTER(gscope) {
       else p2.literal(0, "nonopt");
       lastEntry = entry;
       p2.mark("spans");
+
+      // YOURNAME:
+      // YOURCOMMENT
       getSpansForLine(entry, function (tokenText, tokenClass) {
 	info.appendSpan(tokenText, tokenClass);
       }, lineStartOffset, isTimeUp());
@@ -1611,6 +2022,9 @@ function OUTER(gscope) {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isCaret() {
     return (rep.selStart && rep.selEnd && rep.selStart[0] == rep.selEnd[0] &&
 	    rep.selStart[1] == rep.selEnd[1]);
@@ -1618,12 +2032,24 @@ function OUTER(gscope) {
   editorInfo.ace_isCaret = isCaret;
 
   // prereq: isCaret()
+
+  // YOURNAME:
+  // YOURCOMMENT
   function caretLine() { return rep.selStart[0]; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function caretColumn() { return rep.selStart[1]; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function caretDocChar() {
     return rep.lines.offsetOfIndex(caretLine()) + caretColumn();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleReturnIndentation() {
     // on return, indent to level of previous line
     if (isCaret() && caretColumn() == 0 && caretLine() > 0) {
@@ -1642,6 +2068,9 @@ function OUTER(gscope) {
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setupMozillaCaretHack(lineNum) {
     // This is really ugly, but by god, it works!
     // Fixes annoying Firefox caret artifact (observed in 2.0.0.12
@@ -1669,6 +2098,9 @@ function OUTER(gscope) {
       fc.parentNode.insertBefore(textNode, fc);
     }
     markNodeClean(lineNode);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return { unhack: function() {
       if (textNode.nodeValue == " ") {
 	textNode.parentNode.removeChild(textNode);
@@ -1681,6 +2113,9 @@ function OUTER(gscope) {
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getPointForLineAndChar(lineAndChar) {
     var line = lineAndChar[0];
     var charsLeft = lineAndChar[1];
@@ -1728,10 +2163,16 @@ function OUTER(gscope) {
     return {node: lineNode, index:1, maxIndex:1};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nodeText(n) {
     return n.innerText || n.textContent || n.nodeValue || '';
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineAndCharForPoint(point) {
     // Turn DOM node selection into [line,char] selection.
     // This method has to work when the DOM is not pristine,
@@ -1777,6 +2218,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function createDomLineEntry(lineString) {
     var info = doCreateDomLine(lineString.length > 0);
     var newNode = info.node;
@@ -1784,10 +2228,16 @@ function OUTER(gscope) {
 	    domInfo: info, lineMarker: 0};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function canApplyChangesetToDocument(changes) {
     return Changeset.oldLen(changes) == rep.alltext.length;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentApplyChangeset(changes, insertsAfterSelection) {
     doRepApplyChangeset(changes, insertsAfterSelection);
 
@@ -1801,15 +2251,33 @@ function OUTER(gscope) {
     }
 
     var linesMutatee = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       splice: function(start, numRemoved, newLinesVA) {
 	domAndRepSplice(start, numRemoved,
 			map(Array.prototype.slice.call(arguments, 2),
+
+// YOURNAME:
+// YOURCOMMENT
 			    function(s) { return s.slice(0,-1); }),
 			null);
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       get: function(i) { return rep.lines.atIndex(i).text+'\n'; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       length: function() { return rep.lines.length(); },
+
+      // YOURNAME:
+      // YOURCOMMENT
       slice_notused: function(start, end) {
+
+// YOURNAME:
+// YOURCOMMENT
 	return map(rep.lines.slice(start, end), function(e) { return e.text+'\n'; });
       }
     };
@@ -1824,6 +2292,9 @@ function OUTER(gscope) {
 			     requiredSelectionSetting[2]);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function domAndRepSplice(startLine, deleteCount, newLineStrings, isTimeUp) {
       // dgreensp 3/2009: the spliced lines may be in the middle of a dirty region,
       // so if no explicit time limit, don't spend a lot of time highlighting
@@ -1848,9 +2319,15 @@ function OUTER(gscope) {
       }
       else nodeToAddAfter = null;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       insertDomLines(nodeToAddAfter, map(lineEntries, function (entry) { return entry.domInfo; }),
 		     isTimeUp);
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       forEach(keysToDelete, function (k) {
 	var n = doc.getElementById(k);
 	n.parentNode.removeChild(n);
@@ -1863,6 +2340,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function checkChangesetLineInformationAgainstRep(changes) {
     return true; // disable for speed
     var opIter = Changeset.opIterator(Changeset.unpack(changes).ops);
@@ -1891,6 +2371,9 @@ function OUTER(gscope) {
     return true;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doRepApplyChangeset(changes, insertsAfterSelection) {
     Changeset.checkRep(changes);
 
@@ -1902,6 +2385,9 @@ function OUTER(gscope) {
       throw new Error("doRepApplyChangeset line break mismatch");
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     (function doRecordUndoInformation(changes) {
       var editEvent = currentCallStack.editEvent;
       if (editEvent.eventType == "nonundoable") {
@@ -1914,8 +2400,14 @@ function OUTER(gscope) {
 	}
       }
       else {
+
+// YOURNAME:
+// YOURCOMMENT
 	var inverseChangeset = Changeset.inverse(changes, {get: function(i) {
 	  return rep.lines.atIndex(i).text+'\n';
+
+// YOURNAME:
+// YOURCOMMENT
 	}, length: function() { return rep.lines.length(); }},
 						 rep.alines, rep.apool);
 
@@ -1938,6 +2430,9 @@ function OUTER(gscope) {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lineAndColumnFromChar(x) {
     var lineEntry = rep.lines.atOffset(x);
     var lineStart = rep.lines.offsetOfEntry(lineEntry);
@@ -1945,6 +2440,9 @@ function OUTER(gscope) {
     return [lineNum, x - lineStart];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentReplaceCharRange(startChar, endChar, newText) {
     if (startChar == endChar && newText.length == 0) {
       return;
@@ -1976,6 +2474,9 @@ function OUTER(gscope) {
 				newText);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentReplaceRange(start, end, newText) {
     if (start == undefined) start = rep.selStart;
     if (end == undefined) end = rep.selEnd;
@@ -1996,6 +2497,9 @@ function OUTER(gscope) {
     performDocumentApplyChangeset(cs);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentApplyAttributesToCharRange(start, end, attribs) {
     if (end >= rep.alltext.length) {
       end = rep.alltext.length-1;
@@ -2005,6 +2509,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_performDocumentApplyAttributesToCharRange = performDocumentApplyAttributesToCharRange;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentApplyAttributesToRange(start, end, attribs) {
     var builder = Changeset.builder(rep.lines.totalWidth());
     buildKeepToStartOfRange(builder, start);
@@ -2013,12 +2520,18 @@ function OUTER(gscope) {
     performDocumentApplyChangeset(cs);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function buildKeepToStartOfRange(builder, start) {
     var startLineOffset = rep.lines.offsetOfIndex(start[0]);
 
     builder.keep(startLineOffset, start[0]);
     builder.keep(start[1]);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function buildRemoveRange(builder, start, end) {
     var startLineOffset = rep.lines.offsetOfIndex(start[0]);
     var endLineOffset = rep.lines.offsetOfIndex(end[0]);
@@ -2031,6 +2544,9 @@ function OUTER(gscope) {
       builder.remove(end[1] - start[1]);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function buildKeepRange(builder, start, end, attribs, pool) {
     var startLineOffset = rep.lines.offsetOfIndex(start[0]);
     var endLineOffset = rep.lines.offsetOfIndex(end[0]);
@@ -2044,6 +2560,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setAttributeOnSelection(attributeName, attributeValue) {
     if (!(rep.selStart && rep.selEnd)) return;
 
@@ -2052,12 +2571,18 @@ function OUTER(gscope) {
   }
   editorInfo.ace_setAttributeOnSelection = setAttributeOnSelection;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function toggleAttributeOnSelection(attributeName) {
     if (!(rep.selStart && rep.selEnd)) return;
 
     var selectionAllHasIt = true;
     var withIt = Changeset.makeAttribsString('+', [[attributeName, 'true']], rep.apool);
     var withItRegex = new RegExp(withIt.replace(/\*/g,'\\*')+"(\\*|$)");
+
+    // YOURNAME:
+    // YOURCOMMENT
     function hasIt(attribs) { return withItRegex.test(attribs); }
 
     var selStartLine = rep.selStart[0];
@@ -2102,6 +2627,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_toggleAttributeOnSelection = toggleAttributeOnSelection;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performDocumentReplaceSelection(newText) {
     if (!(rep.selStart && rep.selEnd)) return;
     performDocumentReplaceRange(rep.selStart, rep.selEnd, newText);
@@ -2109,8 +2637,14 @@ function OUTER(gscope) {
 
   // Change the abstract representation of the document to have a different set of lines.
   // Must be called after rep.alltext is set.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doRepLineSplice(startLine, deleteCount, newLineEntries) {
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(newLineEntries, function (entry) { entry.width = entry.text.length+1; });
 
     var startOldChar = rep.lines.offsetOfIndex(startLine);
@@ -2123,6 +2657,9 @@ function OUTER(gscope) {
     currentCallStack.repChanged = true;
     var newRegionEnd = rep.lines.offsetOfIndex(startLine + newLineEntries.length);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var newText = map(newLineEntries, function (e) { return e.text+'\n'; }).join('');
 
     rep.alltext = rep.alltext.substring(0, startOldChar) + newText +
@@ -2134,6 +2671,9 @@ function OUTER(gscope) {
     //newRegionEnd - oldRegionStart);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doIncorpLineSplice(startLine, deleteCount, newLineEntries, lineAttribs, hints) {
 
     var startOldChar = rep.lines.offsetOfIndex(startLine);
@@ -2151,6 +2691,9 @@ function OUTER(gscope) {
 	oldRegionStart;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var newText = map(newLineEntries, function (e) { return e.text+'\n'; }).join('');
     var oldText = rep.alltext.substring(startOldChar, endOldChar);
     var oldAttribs = rep.alines.slice(startLine, startLine+deleteCount).join('');
@@ -2201,6 +2744,9 @@ function OUTER(gscope) {
 
       var spliceStartLine = rep.lines.indexOfOffset(spliceStart);
       var spliceStartLineStart = rep.lines.offsetOfIndex(spliceStartLine);
+
+      // YOURNAME:
+      // YOURCOMMENT
       function startBuilder() {
 	var builder = Changeset.builder(oldLen);
 	builder.keep(spliceStartLineStart, spliceStartLine);
@@ -2208,6 +2754,9 @@ function OUTER(gscope) {
 	return builder;
       }
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function eachAttribRun(attribs, func/*(startInNewText, endInNewText, attribs)*/) {
 	var attribsIter = Changeset.opIterator(attribs);
 	var textIndex = 0;
@@ -2232,7 +2781,13 @@ function OUTER(gscope) {
 	// changeset the applies the styles found in the DOM.
 	// This allows us to incorporate, e.g., Safari's native "unbold".
 
+
+// YOURNAME:
+// YOURCOMMENT
 	var incorpedAttribClearer = cachedStrFunc(function (oldAtts) {
+
+// YOURNAME:
+// YOURCOMMENT
 	  return Changeset.mapAttribNumbers(oldAtts, function(n) {
 	    var k = rep.apool.getAttribKey(n);
 	    if (isStyleAttribute(k)) {
@@ -2246,6 +2801,9 @@ function OUTER(gscope) {
 	if (shiftFinalNewlineToBeforeNewText) {
 	  builder1.keep(1, 1);
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	eachAttribRun(oldAttribs, function(start, end, attribs) {
 	  builder1.keepText(newText.substring(start, end), incorpedAttribClearer(attribs));
 	});
@@ -2255,6 +2813,9 @@ function OUTER(gscope) {
 	if (shiftFinalNewlineToBeforeNewText) {
 	  builder2.keep(1, 1);
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	eachAttribRun(newAttribs, function(start, end, attribs) {
 	  builder2.keepText(newText.substring(start, end), attribs);
 	});
@@ -2278,6 +2839,9 @@ function OUTER(gscope) {
         var isNewTextMultiauthor = false;
 	var authorAtt = Changeset.makeAttribsString(
 	  '+', (thisAuthor ? [['author', thisAuthor]] : []), rep.apool);
+
+// YOURNAME:
+// YOURCOMMENT
 	var authorizer = cachedStrFunc(function(oldAtts) {
           if (isNewTextMultiauthor) {
             // prefer colors from DOM
@@ -2290,6 +2854,9 @@ function OUTER(gscope) {
 	});
 
         var foundDomAuthor = '';
+
+        // YOURNAME:
+        // YOURCOMMENT
         eachAttribRun(newAttribs, function(start, end, attribs) {
           var a = Changeset.attribsAttributeValue(attribs, 'author', rep.apool);
           if (a && a != foundDomAuthor) {
@@ -2306,6 +2873,9 @@ function OUTER(gscope) {
 	  builder.insert('\n', authorizer(''));
 	}
 
+
+// YOURNAME:
+// YOURCOMMENT
 	eachAttribRun(newAttribs, function(start, end, attribs) {
 	  builder.insert(newText.substring(start, end), authorizer(attribs));
 	});
@@ -2324,8 +2894,14 @@ function OUTER(gscope) {
     checkALines();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cachedStrFunc(func) {
     var cache = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(s) {
       if (! cache[s]) {
 	cache[s] = func(s);
@@ -2334,10 +2910,19 @@ function OUTER(gscope) {
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function analyzeChange(oldText, newText, oldAttribs, newAttribs, optSelStartHint, optSelEndHint) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function incorpedAttribFilter(anum) {
       return isStyleAttribute(rep.apool.getAttribKey(anum));
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function attribRuns(attribs) {
       var lengs = [];
       var atts = [];
@@ -2349,11 +2934,17 @@ function OUTER(gscope) {
       }
       return [lengs,atts];
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function attribIterator(runs, backward) {
       var lengs = runs[0];
       var atts = runs[1];
       var i = (backward ? lengs.length-1 : 0);
       var j = 0;
+
+      // YOURNAME:
+      // YOURCOMMENT
       return function next() {
 	while (j >= lengs[i]) {
 	  if (backward) i--; else i++;
@@ -2433,12 +3024,18 @@ function OUTER(gscope) {
     return [commonStart, commonEnd];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function equalLineAndChars(a, b) {
     if (!a) return !b;
     if (!b) return !a;
     return (a[0] == b[0] && a[1] == b[1]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function performSelectionChange(selectStart, selectEnd, focusAtStart) {
     if (repSelectionChange(selectStart, selectEnd, focusAtStart)) {
       currentCallStack.selectionAffected = true;
@@ -2447,6 +3044,9 @@ function OUTER(gscope) {
 
   // Change the abstract representation of the document to have a different selection.
   // Should not rely on the line representation.  Should not affect the DOM.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function repSelectionChange(selectStart, selectEnd, focusAtStart) {
     focusAtStart = !! focusAtStart;
 
@@ -2472,6 +3072,9 @@ function OUTER(gscope) {
     //console.log("%o %o %s", rep.selStart, rep.selEnd, rep.selFocusAtStart);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doCreateDomLine(nonEmpty) {
     if (browser.msie && (! nonEmpty)) {
       var result = { node: null,
@@ -2485,6 +3088,9 @@ function OUTER(gscope) {
       var lineElem = doc.createElement("div");
       result.node = lineElem;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       result.notifyAdded = function() {
 	// magic -- settng an empty div's innerHTML to the empty string
 	// keeps it from collapsing.  Apparently innerHTML must be set *after*
@@ -2499,6 +3105,9 @@ function OUTER(gscope) {
 	setAssoc(lineElem, "unpasted", {});
       };
       var lineClass = 'ace-line';
+
+      // YOURNAME:
+      // YOURCOMMENT
       result.appendSpan = function(txt, cls) {
 	if ((! txt) && cls) {
 	  // gain a whole-line style (currently to show insertion point in CSS)
@@ -2506,14 +3115,23 @@ function OUTER(gscope) {
 	}
 	// otherwise, ignore appendSpan, this is an empty line
       };
+
+      // YOURNAME:
+      // YOURCOMMENT
       result.clearSpans = function() {
 	lineClass = ''; // non-null to cause update
       };
+
+      // YOURNAME:
+      // YOURCOMMENT
       function writeClass() {
 	if (lineClass !== null) lineElem.className = lineClass;
       }
       result.prepareForAdd = writeClass;
       result.finishUpdate = writeClass;
+
+      // YOURNAME:
+      // YOURCOMMENT
       result.getInnerHTML = function() { return ""; };
 
       return result;
@@ -2523,15 +3141,24 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function textify(str) {
     return str.replace(/[\n\r ]/g, ' ').replace(/\xa0/g, ' ').replace(/\t/g, '        ');
   }
 
   var _blockElems = { "div":1, "p":1, "pre":1, "li":1, "ol":1, "ul":1 };
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isBlockElement(n) {
     return !!_blockElems[(n.tagName || "").toLowerCase()];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getDirtyRanges() {
     // based on observedChanges, return a list of ranges of original lines
     // that need to be removed or replaced with new user content to incorporate
@@ -2547,6 +3174,9 @@ function OUTER(gscope) {
 
     var cleanNodeForIndexCache = {};
     var N = rep.lines.length(); // old number of lines
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cleanNodeForIndex(i) {
       // if line (i) in the un-updated line representation maps to a clean node
       // in the document, return that node.
@@ -2566,9 +3196,15 @@ function OUTER(gscope) {
       return cleanNodeForIndexCache[i];
     }
     var isConsecutiveCache = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     function isConsecutive(i) {
       if (isConsecutiveCache[i] === undefined) {
 	p.consecutives++;
+
+// YOURNAME:
+// YOURCOMMENT
 	isConsecutiveCache[i] = (function() {
 	  // returns whether line (i) and line (i-1), assumed to be map to clean DOM nodes,
 	  // or document boundaries, are consecutive in the changed DOM
@@ -2584,6 +3220,9 @@ function OUTER(gscope) {
       }
       return isConsecutiveCache[i];
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function isClean(i) {
       // returns whether line (i) in the un-updated representation maps to a clean node,
       // or is outside the bounds of the document
@@ -2593,9 +3232,15 @@ function OUTER(gscope) {
     // in the changed DOM.  lines (-1) and (N) are always clean, but may or may not
     // be consecutive with lines in the document.  pairs are in sorted order.
     var cleanRanges = [[-1,N+1]];
+
+    // YOURNAME:
+    // YOURCOMMENT
     function rangeForLine(i) {
       // returns index of cleanRange containing i, or -1 if none
       var answer = -1;
+
+      // YOURNAME:
+      // YOURCOMMENT
       forEach(cleanRanges, function (r, idx) {
 	if (i >= r[1]) return false; // keep looking
 	if (i < r[0]) return true; // not found, stop looking
@@ -2604,6 +3249,9 @@ function OUTER(gscope) {
       });
       return answer;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function removeLineFromRange(rng, line) {
       // rng is index into cleanRanges, line is line number
       // precond: line is in rng
@@ -2614,6 +3262,9 @@ function OUTER(gscope) {
       else if (line == (b-1)) cleanRanges[rng][1]--;
       else cleanRanges.splice(rng, 1, [a,line], [line+1,b]);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function splitRange(rng, pt) {
       // precond: pt splits cleanRanges[rng] into two non-empty ranges
       var a = cleanRanges[rng][0];
@@ -2621,6 +3272,9 @@ function OUTER(gscope) {
       cleanRanges.splice(rng, 1, [a,pt], [pt,b]);
     }
     var correctedLines = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     function correctlyAssignLine(line) {
       if (correctedLines[line]) return true;
       p.corrections++;
@@ -2663,6 +3317,9 @@ function OUTER(gscope) {
 	return ! didSomething;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function detectChangesAroundLine(line, reqInARow) {
       // make sure cleanRanges is correct about line number "line" and the surrounding
       // lines; only stops checking at end of document or after no changes need
@@ -2725,6 +3382,9 @@ function OUTER(gscope) {
     return dirtyRanges;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function markNodeClean(n) {
     // clean nodes have knownHTML that matches their innerHTML
     var dirtiness = {};
@@ -2739,6 +3399,9 @@ function OUTER(gscope) {
     setAssoc(n, "dirtiness", dirtiness);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isNodeDirty(n) {
     var p = PROFILER("cleanCheck", false);
     if (n.parentNode != root) return true;
@@ -2753,6 +3416,9 @@ function OUTER(gscope) {
     return false;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineEntryTopBottom(entry, destObj) {
     var dom = entry.lineNode;
     var top = dom.offsetTop;
@@ -2763,6 +3429,9 @@ function OUTER(gscope) {
     return obj;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getViewPortTopBottom() {
     var theTop = getScrollY();
     var doc = outerWin.document;
@@ -2770,13 +3439,22 @@ function OUTER(gscope) {
     return {top:theTop, bottom:(theTop+height)};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getVisibleLineRange() {
     var viewport = getViewPortTopBottom();
     //console.log("viewport top/bottom: %o", viewport);
     var obj = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     var start = rep.lines.search(function (e) {
       return getLineEntryTopBottom(e, obj).bottom > viewport.top;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     var end = rep.lines.search(function(e) {
       return getLineEntryTopBottom(e, obj).top >= viewport.bottom;
     });
@@ -2785,13 +3463,22 @@ function OUTER(gscope) {
     return [start,end];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getVisibleCharRange() {
     var lineRange = getVisibleLineRange();
     return [rep.lines.offsetOfIndex(lineRange[0]),
 	    rep.lines.offsetOfIndex(lineRange[1])];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleClick(evt) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack("handleClick", function() {
       idleWorkTimer.atMost(200);
     });
@@ -2799,6 +3486,9 @@ function OUTER(gscope) {
     // only want to catch left-click
     if ((! evt.ctrlKey) && (evt.button != 2) && (evt.button != 3)) {
       // find A tag with HREF
+
+      // YOURNAME:
+      // YOURCOMMENT
       function isLink(n) { return (n.tagName||'').toLowerCase() == "a" && n.href; }
       var n = evt.target;
       while (n && n.parentNode && ! isLink(n)) { n = n.parentNode; }
@@ -2815,6 +3505,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doReturnKey() {
     if (! (rep.selStart && rep.selEnd)) {
       return;
@@ -2833,6 +3526,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doIndentOutdent(isOut) {
     if (! (rep.selStart && rep.selEnd)) {
       return false;
@@ -2871,12 +3567,18 @@ function OUTER(gscope) {
   }
   editorInfo.ace_doIndentOutdent = doIndentOutdent;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doTabKey(shiftDown) {
     if (! doIndentOutdent(shiftDown)) {
       performDocumentReplaceSelection(THE_TAB);
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doDeleteKey(optEvt) {
     var evt = optEvt || {};
     var handled = false;
@@ -2963,20 +3665,38 @@ function OUTER(gscope) {
   var REGEX_WORDCHAR = /[\u0030-\u0039\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u1FFF\u3040-\u9FFF\uF900-\uFDFF\uFE70-\uFEFE\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFDC]/;
   var REGEX_SPACE = /\s/;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isWordChar(c) {
     return !! REGEX_WORDCHAR.exec(c);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isSpaceChar(c) {
     return !! REGEX_SPACE.exec(c);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function moveByWordInLine(lineText, initialIndex, forwardNotBack) {
     var i = initialIndex;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextChar() {
       if (forwardNotBack) return lineText.charAt(i);
       else return lineText.charAt(i-1);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function advance() { if (forwardNotBack) i++; else i--; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function isDone() {
       if (forwardNotBack) return i >= lineText.length;
       else return i <= 0;
@@ -2997,6 +3717,9 @@ function OUTER(gscope) {
     return i;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleKeyEvent(evt) {
     if (DEBUG && top.DONT_INCORP) return;
 
@@ -3027,6 +3750,9 @@ function OUTER(gscope) {
 
     var stopped = false;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack("handleKeyEvent", function() {
 
       if (type == "keypress" ||
@@ -3062,6 +3788,9 @@ function OUTER(gscope) {
 	  evt.preventDefault();
 	  doReturnKey();
 	  //scrollSelectionIntoView();
+
+// YOURNAME:
+// YOURCOMMENT
 	  scheduler.setTimeout(function() {outerWin.scrollBy(-100,0);}, 0);
 	  specialHandled = true;
 	}
@@ -3186,6 +3915,9 @@ function OUTER(gscope) {
 
   var thisKeyDoesntTriggerNormalize = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doUndoRedo(which) {
     // precond: normalized DOM
     if (undoModule.enabled) {
@@ -3195,6 +3927,9 @@ function OUTER(gscope) {
       if (whichMethod) {
 	var oldEventType = currentCallStack.editEvent.eventType;
 	currentCallStack.startNewEvent(which);
+
+// YOURNAME:
+// YOURCOMMENT
 	undoModule[whichMethod](function(backset, selectionInfo) {
 	  if (backset) {
 	    performDocumentApplyChangeset(backset);
@@ -3212,6 +3947,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_doUndoRedo = doUndoRedo;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateBrowserSelectionFromRep() {
     // requires normalized DOM!
     var selStart = rep.selStart, selEnd = rep.selEnd;
@@ -3246,7 +3984,13 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getRepHTML() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return map(rep.lines.slice(), function (entry) {
       var text = entry.text;
       var content;
@@ -3260,11 +4004,17 @@ function OUTER(gscope) {
     }).join('');
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nodeMaxIndex(nd) {
     if (isNodeText(nd)) return nd.nodeValue.length;
     else return 1;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function hasIESelection() {
     var browserSelection;
     try { browserSelection = doc.selection; } catch (e) {}
@@ -3277,6 +4027,9 @@ function OUTER(gscope) {
     return true;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSelection() {
     // returns null, or a structure containing startPoint and endPoint,
     // each of which has node (a magicdom node), index, and maxIndex.  If the node
@@ -3291,15 +4044,24 @@ function OUTER(gscope) {
       if (! origSelectionRange) return null;
       var selectionParent = origSelectionRange.parentElement();
       if (selectionParent.ownerDocument != doc) return null;
+
+      // YOURNAME:
+      // YOURCOMMENT
       function newRange() {
 	return doc.body.createTextRange();
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function rangeForElementNode(nd) {
 	var rng = newRange();
 	// doesn't work on text nodes
 	rng.moveToElementText(nd);
 	return rng;
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function pointFromCollapsedRange(rng) {
 	var parNode = rng.parentElement();
 	var elemBelow = -1;
@@ -3361,6 +4123,9 @@ function OUTER(gscope) {
 	// infinite stateful binary search! call function for values 0 to inf,
 	// expecting the answer to be about 40.  return index of smallest
 	// true value.
+
+// YOURNAME:
+// YOURCOMMENT
 	var indexIntoRange = binarySearchInfinite(40, function (i) {
 	  // the search algorithm whips the caret back and forth,
 	  // though it has to be moved relatively and may hit
@@ -3417,12 +4182,18 @@ function OUTER(gscope) {
       if (browserSelection && browserSelection.type != "None" &&
 	  browserSelection.rangeCount !== 0) {
 	var range = browserSelection.getRangeAt(0);
+
+// YOURNAME:
+// YOURCOMMENT
 	function isInBody(n) {
 	  while (n && ! (n.tagName && n.tagName.toLowerCase() == "body")) {
 	    n = n.parentNode;
 	  }
 	  return !!n;
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	function pointFromRangeBound(container, offset) {
 	  if (! isInBody(container)) {
 	    // command-click in Firefox selects whole document, HEAD and BODY!
@@ -3464,7 +4235,13 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setSelection(selection) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function copyPoint(pt) {
       return {node:pt.node, index:pt.index, maxIndex:pt.maxIndex};
     }
@@ -3473,15 +4250,24 @@ function OUTER(gscope) {
       // presumably by forcing some kind of internal DOM update.
       doc.body.scrollHeight;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function moveToElementText(s, n) {
         while (n.firstChild && ! isNodeText(n.firstChild)) {
           n = n.firstChild;
         }
         s.moveToElementText(n);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function newRange() {
 	return doc.body.createTextRange();
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function setCollapsedBefore(s, n) {
 	// s is an IE TextRange, n is a dom node
 	if (isNodeText(n)) {
@@ -3503,6 +4289,9 @@ function OUTER(gscope) {
 	  s.collapse(true); // to start
 	}
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function setCollapsedAfter(s, n) {
 	// s is an IE TextRange, n is a magicdom node
 	if (isNodeText(n)) {
@@ -3516,6 +4305,9 @@ function OUTER(gscope) {
 	  s.collapse(false); // to end
 	}
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getPointRange(point) {
 	var s = newRange();
 	var n = point.node;
@@ -3553,6 +4345,9 @@ function OUTER(gscope) {
 	// setting the selection in IE causes everything to scroll
 	// so that the selection is visible.  if setting the selection
 	// definitely accomplishes nothing, don't do it.
+
+// YOURNAME:
+// YOURCOMMENT
 	function isEqualToDocumentSelection(rng) {
 	  var browserSelection;
 	  try { browserSelection = doc.selection; } catch (e) {}
@@ -3576,12 +4371,18 @@ function OUTER(gscope) {
     else {
       // non-IE browser
       var isCollapsed;
+
+      // YOURNAME:
+      // YOURCOMMENT
       function pointToRangeBound(pt) {
 	var p = copyPoint(pt);
 	// Make sure Firefox cursor is deep enough; fixes cursor jumping when at top level,
 	// and also problem where cut/copy of a whole line selected with fake arrow-keys
 	// copies the next line too.
 	if (isCollapsed) {
+
+// YOURNAME:
+// YOURCOMMENT
 	  function diveDeep() {
 	    while (p.node.childNodes.length > 0) {
 	      //&& (p.node == root || p.node.parentNode == root)) {
@@ -3660,6 +4461,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function childIndex(n) {
     var idx = 0;
     while (n.previousSibling) {
@@ -3669,6 +4473,9 @@ function OUTER(gscope) {
     return idx;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fixView() {
     // calling this method repeatedly should be fast
 
@@ -3676,6 +4483,9 @@ function OUTER(gscope) {
       return;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function setIfNecessary(obj, prop, value) {
       if (obj[prop] != value) {
 	obj[prop] = value;
@@ -3741,6 +4551,9 @@ function OUTER(gscope) {
     addClass(sideDiv, 'sidedivdelayed');
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getScrollXY() {
     var win = outerWin;
     var odoc = outerWin.document;
@@ -3753,35 +4566,62 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getScrollX() {
     return getScrollXY().x;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getScrollY() {
     return getScrollXY().y;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setScrollX(x) {
     outerWin.scrollTo(x, getScrollY());
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setScrollY(y) {
     outerWin.scrollTo(getScrollX(), y);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setScrollXY(x, y) {
     outerWin.scrollTo(x, y);
   }
 
   var _teardownActions = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function teardown() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     forEach(_teardownActions, function (a) { a(); });
   }
 
   bindEventHandler(window, "load", setup);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setDesignMode(newVal) {
     try {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function setIfNecessary(target, prop, val) {
 	if (String(target[prop]).toLowerCase() != val) {
 	  target[prop] = val;
@@ -3807,6 +4647,9 @@ function OUTER(gscope) {
   }
 
   var iePastedLines = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleIEPaste(evt) {
     // Pasting in IE loses blank lines in a way that loses information;
     // "one\n\ntwo\nthree" becomes "<p>one</p><p>two</p><p>three</p>",
@@ -3819,6 +4662,9 @@ function OUTER(gscope) {
       // this "paste" event seems to mess with the selection whether we try to
       // stop it or not, so can't really do document-level manipulation now
       // or in an idle call-stack.  instead, use IE native manipulation
+
+      // YOURNAME:
+      // YOURCOMMENT
       //function escapeLine(txt) {
       //return processSpaces(escapeHTML(textify(txt)));
       //}
@@ -3832,6 +4678,9 @@ function OUTER(gscope) {
 
   var inInternationalComposition = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleCompositionEvent(evt) {
     // international input events, fired in FF3, at least;  allow e.g. Japanese input
     if (evt.type == "compositionstart") {
@@ -3842,6 +4691,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function bindTheEventHandlers() {
     bindEventHandler(window, "unload", teardown);
     bindEventHandler(document, "keydown", handleKeyEvent);
@@ -3859,6 +4711,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleIEOuterClick(evt) {
     if ((evt.target.tagName||'').toLowerCase() != "html") {
       return;
@@ -3868,6 +4723,9 @@ function OUTER(gscope) {
     }
 
     // click below the body
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack("handleOuterClick", function() {
       // put caret at bottom of doc
       fastIncorp(11);
@@ -3879,8 +4737,14 @@ function OUTER(gscope) {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getClassArray(elem, optFilter) {
     var bodyClasses = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     (elem.className || '').replace(/\S+/g, function (c) {
       if ((! optFilter) || (optFilter(c))) {
 	bodyClasses.push(c);
@@ -3888,32 +4752,56 @@ function OUTER(gscope) {
     });
     return bodyClasses;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setClassArray(elem, array) {
     elem.className = array.join(' ');
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addClass(elem, className) {
     var seen = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     var cc = getClassArray(elem, function(c) { if (c == className) seen = true; return true; });
     if (! seen) {
       cc.push(className);
       setClassArray(elem, cc);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeClass(elem, className) {
     var seen = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     var cc = getClassArray(elem, function(c) {
       if (c == className) { seen = true; return false; } return true; });
     if (seen) {
       setClassArray(elem, cc);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setClassPresence(elem, className, present) {
     if (present) addClass(elem, className);
     else removeClass(elem, className);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setup() {
     doc = document; // defined as a var in scope outside
+
+    // YOURNAME:
+    // YOURCOMMENT
     inCallStack("setup", function() {
       var body = doc.getElementById("innerdocbody");
       root = body; // defined as a var in scope outside
@@ -3949,6 +4837,9 @@ function OUTER(gscope) {
 
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     scheduler.setTimeout(function() {
       parent.readyFunc(); // defined in code that sets up the inner iframe
     }, 0);
@@ -3956,10 +4847,16 @@ function OUTER(gscope) {
     isSetUp = true;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function focus() {
     window.focus();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleBlur(evt) {
     if (browser.msie) {
       // a fix: in IE, clicking on a control like a button outside the
@@ -3969,9 +4866,15 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function bindEventHandler(target, type, func) {
     var handler;
     if ((typeof func._wrapper) != "function") {
+
+      // YOURNAME:
+      // YOURCOMMENT
       func._wrapper = function(event) {
 	func(fixEvent(event || window.event || {}));
       }
@@ -3981,11 +4884,17 @@ function OUTER(gscope) {
       target.addEventListener(type, handler, false);
     else
       target.attachEvent("on" + type, handler);
+
+    // YOURNAME:
+    // YOURCOMMENT
     _teardownActions.push(function() {
       unbindEventHandler(target, type, func);
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function unbindEventHandler(target, type, func) {
     var handler = func._wrapper;
     if (target.removeEventListener)
@@ -3994,11 +4903,20 @@ function OUTER(gscope) {
       target.detachEvent("on" + type, handler);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSelectionPointX(point) {
     // doesn't work in wrap-mode
     var node = point.node;
     var index = point.index;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function leftOf(n) { return n.offsetLeft; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function rightOf(n) { return n.offsetLeft + n.offsetWidth; }
     if (! isNodeText(node)) {
       if (index == 0) return leftOf(node);
@@ -4022,6 +4940,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getPageHeight() {
     var win = outerWin;
     var odoc = win.document;
@@ -4030,6 +4951,9 @@ function OUTER(gscope) {
     else return odoc.body.offsetHeight;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getPageWidth() {
     var win = outerWin;
     var odoc = win.document;
@@ -4038,6 +4962,9 @@ function OUTER(gscope) {
     else return odoc.body.offsetWidth;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getInnerHeight() {
     var win = outerWin;
     var odoc = win.document;
@@ -4052,12 +4979,18 @@ function OUTER(gscope) {
 		  || 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getInnerWidth() {
     var win = outerWin;
     var odoc = win.document;
     return odoc.documentElement.clientWidth;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function scrollNodeVerticallyIntoView(node) {
     // requires element (non-text) node;
     // if node extends above top of viewport or below bottom of viewport (or top of scrollbar),
@@ -4076,6 +5009,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function scrollXHorizontallyIntoView(pixelX) {
     var win = outerWin;
     var odoc = outerWin.document;
@@ -4090,6 +5026,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function scrollSelectionIntoView() {
     if (! rep.selStart) return;
     fixView();
@@ -4107,6 +5046,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineListType(lineNum) {
     // get "list" attribute of first char of line
     var aline = rep.alines[lineNum];
@@ -4119,10 +5061,16 @@ function OUTER(gscope) {
     return '';
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setLineListType(lineNum, listType) {
     setLineListTypes([[lineNum, listType]]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setLineListTypes(lineNumTypePairsInOrder) {
     var loc = [0,0];
     var builder = Changeset.builder(rep.lines.totalWidth());
@@ -4160,6 +5108,9 @@ function OUTER(gscope) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doInsertUnorderedList() {
     if (! (rep.selStart && rep.selEnd)) {
       return;
@@ -4187,6 +5138,9 @@ function OUTER(gscope) {
   }
   editorInfo.ace_doInsertUnorderedList = doInsertUnorderedList;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var mozillaFakeArrows = (browser.mozilla && (function() {
     // In Firefox 2, arrow keys are unstable while DOM-manipulating
     // operations are going on.  Specifically, if an operation
@@ -4235,6 +5189,9 @@ function OUTER(gscope) {
     var savedFocusColumn = 0; // a value of 0 has no effect
     var updatingSelectionNow = false;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getVirtualLineView(lineNum) {
       var lineNode = rep.lines.atIndex(lineNum).lineNode;
       while (lineNode.firstChild && isBlockElement(lineNode.firstChild)) {
@@ -4243,19 +5200,31 @@ function OUTER(gscope) {
       return makeVirtualLineView(lineNode);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function markerlessLineAndChar(line, chr) {
       return [line, chr - rep.lines.atIndex(line).lineMarker];
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function markerfulLineAndChar(line, chr) {
       return [line, chr + rep.lines.atIndex(line).lineMarker];
     }
 
     return {
+
+      // YOURNAME:
+      // YOURCOMMENT
       notifySelectionChanged: function() {
 	if (! updatingSelectionNow) {
 	  savedFocusColumn = 0;
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       handleKeyEvent: function(evt) {
 	// returns "true" if handled
 	if (evt.type != "keypress") return false;
@@ -4304,10 +5273,16 @@ function OUTER(gscope) {
 	  }
 	}
 	if (! dontMove) {
+
+// YOURNAME:
+// YOURCOMMENT
 	  function lineLength(i) {
             var entry = rep.lines.atIndex(i);
             return entry.text.length - entry.lineMarker;
           }
+
+// YOURNAME:
+// YOURCOMMENT
 	  function lineText(i) {
             var entry = rep.lines.atIndex(i);
             return entry.text.substring(entry.lineMarker);
@@ -4472,6 +5447,9 @@ function OUTER(gscope) {
 
 
   // stolen from jquery-1.2.1
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fixEvent(event) {
     // store a copy of the original event object
     // and clone to set read-only properties
@@ -4480,6 +5458,9 @@ function OUTER(gscope) {
 
     // add preventDefault and stopPropagation since
     // they will not work on the clone
+
+    // YOURNAME:
+    // YOURCOMMENT
     event.preventDefault = function() {
       // if preventDefault exists run it on the original event
       if (originalEvent.preventDefault)
@@ -4487,6 +5468,9 @@ function OUTER(gscope) {
       // otherwise set the returnValue property of the original event to false (IE)
       originalEvent.returnValue = false;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     event.stopPropagation = function() {
       // if stopPropagation exists run it on the original event
       if (originalEvent.stopPropagation)
@@ -4532,6 +5516,9 @@ function OUTER(gscope) {
 
   var lineNumbersShown;
   var sideDivInner;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function initLineNumbers() {
     lineNumbersShown = 1;
     sideDiv.innerHTML =
@@ -4540,6 +5527,9 @@ function OUTER(gscope) {
     sideDivInner = outerWin.document.getElementById("sidedivinner");
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateLineNumbers() {
     var newNumLines = rep.lines.length();
     if (newNumLines < 1) newNumLines = 1;

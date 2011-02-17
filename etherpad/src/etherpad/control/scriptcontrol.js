@@ -18,6 +18,9 @@ import("etherpad.pad.dbwriter");
 import("etherpad.utils.*");
 import("etherpad.globals.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (!isProduction()) {
     return;
@@ -27,6 +30,9 @@ function onRequest() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_setdbwritable() {
   var dbwritable = (String(request.params.value).toLowerCase() != 'false'); // default to true
 
@@ -35,12 +41,18 @@ function render_setdbwritable() {
   response.write("OK, set to "+dbwritable);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_getdbwritable() {
   var state = dbwriter.getWritableState();
 
   response.write(String(dbwriter.getWritableStateDescription(state)));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pausedbwriter() {
   var seconds = request.params.seconds;
   var seconds = Number(seconds || 0);
@@ -52,6 +64,9 @@ function render_pausedbwriter() {
   response.write("Paused dbwriter for "+seconds+" seconds.");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_fake_pne_on() {
   if (isProduction()) {
     response.write("has no effect in production.");
@@ -61,6 +76,9 @@ function render_fake_pne_on() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_fake_pne_off() {
   if (isProduction()) {
     response.write("has no effect in production.");

@@ -1,6 +1,12 @@
+
+// YOURNAME:
+// YOURCOMMENT
 function getTestCode() {
   var testCode = [
 '/* appjet:version 0.1 */',
+
+// YOURNAME:
+// YOURCOMMENT
 '(function(){',
 '/*',
 ' * jQuery 1.2.1 - New Wave Javascript',
@@ -17,6 +23,9 @@ function getTestCode() {
 'if ( typeof jQuery != "undefined" )',
 '	var _jQuery = jQuery;',
 '',
+
+// YOURNAME:
+// YOURCOMMENT
 'var jQuery = window.jQuery = function(selector, context) {',
 '	// If the context is a namespace object, return a new object',
 '	return this instanceof jQuery ?',

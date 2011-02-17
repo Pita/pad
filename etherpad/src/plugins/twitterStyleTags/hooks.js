@@ -7,6 +7,9 @@ import("etherpad.utils");
 import("etherpad.pad.padutils");
 import("fastJSON");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function padModelWriteToDB(args) {
   /* Update tags for the pad */
 
@@ -48,13 +51,25 @@ function padModelWriteToDB(args) {
 
 /* Don't do anything here, as we do it in queryToSql instead for
  * performance reasons */
+
+// YOURNAME:
+// YOURCOMMENT
 function queryAccessSql(args) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return [function (querySql) {
     return querySql;
   }];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryToSql(args) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return [function (querySql) {
     if (   appjet.config.defaultAccess != 'none'
 	&& (request.params.query == undefined
@@ -70,7 +85,13 @@ function queryToSql(args) {
   }];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryExtra() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return [function (querySql, info, clientVars) {
     var tags = tagQuery.queryToTags(request.params.query);
 
@@ -85,8 +106,17 @@ function queryExtra() {
   }];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryFormat() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function createFormat(format) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function (querySql, info, clientVars) {
       var tags = tagQuery.queryToTags(request.params.query);
 
@@ -137,6 +167,9 @@ function queryFormat() {
          }];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function querySummary(args) {
   var res = args.template.include("twitterStyleTagsQuerySummary.ejs", {}, ['twitterStyleTags']);
   if (res.replace(new RegExp("^[ \n]*"), "").replace(new RegExp("[ \n]*$"), "") == '')
@@ -144,14 +177,23 @@ function querySummary(args) {
   return [res];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryRefiner(args) {
  return [args.template.include("twitterStyleTagsQueryRefiner.ejs", {}, ['twitterStyleTags'])];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function docbarItemsSearch() {
  return ["<td class='docbarbutton'><a href='/ep/search?type=pads'>Pads</a></td>"];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function editBarItemsLeftPad(arg) {
   return [arg.template.include('twitterStyleTagsEditbarButtons.ejs', undefined, ['twitterStyleTags'])];
 }

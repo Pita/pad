@@ -16,35 +16,56 @@
 
 
 if (!("console" in window) || !("firebug" in console)) {
+
+// YOURNAME:
+// YOURCOMMENT
 (function()
 {
     window.console = 
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         log: function()
         {
             logFormatted(arguments, "");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         debug: function()
         {
             logFormatted(arguments, "debug");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         info: function()
         {
             logFormatted(arguments, "info");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         warn: function()
         {
             logFormatted(arguments, "warning");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         error: function()
         {
             logFormatted(arguments, "error");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         assert: function(truth, message)
         {
             if (!truth)
@@ -58,6 +79,9 @@ if (!("console" in window) || !("firebug" in console)) {
             }
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         dir: function(object)
         {
             var html = [];
@@ -74,6 +98,9 @@ if (!("console" in window) || !("firebug" in console)) {
                 }
             }
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             pairs.sort(function(a, b) { return a[0] < b[0] ? -1 : 1; });
             
             html.push('<table>');
@@ -92,6 +119,9 @@ if (!("console" in window) || !("firebug" in console)) {
             logRow(html, "dir");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         dirxml: function(node)
         {
             var html = [];
@@ -100,21 +130,33 @@ if (!("console" in window) || !("firebug" in console)) {
             logRow(html, "dirxml");
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         group: function()
         {
             logRow(arguments, "group", pushGroup);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         groupEnd: function()
         {
             logRow(arguments, "", popGroup);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         time: function(name)
         {
             timeMap[name] = (new Date()).getTime();
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         timeEnd: function(name)
         {
             if (name in timeMap)
@@ -125,35 +167,56 @@ if (!("console" in window) || !("firebug" in console)) {
             }
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         count: function()
         {
             this.warn(["count() not supported."]);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         trace: function()
         {
             this.warn(["trace() not supported."]);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         profile: function()
         {
             this.warn(["profile() not supported."]);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         profileEnd: function()
         {
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         clear: function()
         {
             consoleBody.innerHTML = "";
         },
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         open: function()
         {
             toggleConsole(true);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         close: function()
         {
             if (frameVisible)
@@ -181,6 +244,9 @@ if (!("console" in window) || !("firebug" in console)) {
 
     // ********************************************************************************************
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function toggleConsole(forceOpen)
     {
         frameVisible = forceOpen || !frameVisible;
@@ -190,6 +256,9 @@ if (!("console" in window) || !("firebug" in console)) {
             waitForBody();
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function focusCommandLine()
     {
         toggleConsole(true);
@@ -197,6 +266,9 @@ if (!("console" in window) || !("firebug" in console)) {
             commandLine.focus();
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function waitForBody()
     {
         if (document.body)
@@ -205,11 +277,17 @@ if (!("console" in window) || !("firebug" in console)) {
             setTimeout(waitForBody, 200);
     }    
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function createFrame()
     {
         if (consoleFrame)
             return;
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.onFirebugReady = function(doc)
         {
             window.onFirebugReady = null;
@@ -242,6 +320,9 @@ if (!("console" in window) || !("firebug" in console)) {
         document.body.appendChild(consoleFrame);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getFirebugURL()
     {
         var scripts = document.getElementsByTagName("script");
@@ -255,6 +336,9 @@ if (!("console" in window) || !("firebug" in console)) {
         }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function evalCommandLine()
     {
         var text = commandLine.value;
@@ -274,6 +358,9 @@ if (!("console" in window) || !("firebug" in console)) {
         console.log(value);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function layout()
     {
         var toolbar = consoleBody.ownerDocument.getElementById("toolbar");
@@ -284,6 +371,9 @@ if (!("console" in window) || !("firebug" in console)) {
         commandLine.style.top = (consoleFrame.offsetHeight - commandLine.offsetHeight) + "px";
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function logRow(message, className, handler)
     {
         if (consoleBody)
@@ -295,6 +385,9 @@ if (!("console" in window) || !("firebug" in console)) {
         }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function flush()
     {
         var queue = messageQueue;
@@ -304,6 +397,9 @@ if (!("console" in window) || !("firebug" in console)) {
             writeMessage(queue[i][0], queue[i][1], queue[i][2]);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function writeMessage(message, className, handler)
     {
         var isScrolledToBottom =
@@ -318,12 +414,18 @@ if (!("console" in window) || !("firebug" in console)) {
             consoleBody.scrollTop = consoleBody.scrollHeight - consoleBody.offsetHeight;
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendRow(row)
     {
         var container = groupStack.length ? groupStack[groupStack.length-1] : consoleBody;
         container.appendChild(row);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function writeRow(message, className)
     {
         var row = consoleBody.ownerDocument.createElement("div");
@@ -332,6 +434,9 @@ if (!("console" in window) || !("firebug" in console)) {
         appendRow(row);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function pushGroup(message, className)
     {
         logFormatted(message, className);
@@ -345,6 +450,9 @@ if (!("console" in window) || !("firebug" in console)) {
         groupStack.push(groupRowBox);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function popGroup()
     {
         groupStack.pop();
@@ -352,6 +460,9 @@ if (!("console" in window) || !("firebug" in console)) {
     
     // ********************************************************************************************
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function logFormatted(objects, className)
     {
         var html = [];
@@ -392,6 +503,9 @@ if (!("console" in window) || !("firebug" in console)) {
         logRow(html, className);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function parseFormat(format)
     {
         var parts = [];
@@ -416,8 +530,14 @@ if (!("console" in window) || !("firebug" in console)) {
         return parts;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function escapeHTML(value)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function replaceChars(ch)
         {
             switch (ch)
@@ -438,6 +558,9 @@ if (!("console" in window) || !("firebug" in console)) {
         return String(value).replace(/[<>&"']/g, replaceChars);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function objectToString(object)
     {
         try
@@ -452,40 +575,67 @@ if (!("console" in window) || !("firebug" in console)) {
 
     // ********************************************************************************************
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendText(object, html)
     {
         html.push(escapeHTML(objectToString(object)));
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendNull(object, html)
     {
         html.push('<span class="objectBox-null">', escapeHTML(objectToString(object)), '</span>');
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendString(object, html)
     {
         html.push('<span class="objectBox-string">&quot;', escapeHTML(objectToString(object)),
             '&quot;</span>');
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendInteger(object, html)
     {
         html.push('<span class="objectBox-number">', escapeHTML(objectToString(object)), '</span>');
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendFloat(object, html)
     {
         html.push('<span class="objectBox-number">', escapeHTML(objectToString(object)), '</span>');
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendFunction(object, html)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var reName = /function ?(.*?)\(/;
         var m = reName.exec(objectToString(object));
         var name = m ? m[1] : "function";
+
+        // YOURNAME:
+        // YOURCOMMENT
         html.push('<span class="objectBox-function">', escapeHTML(name), '()</span>');
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendObject(object, html)
     {
         try
@@ -512,6 +662,9 @@ if (!("console" in window) || !("firebug" in console)) {
         }
     }
         
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendObjectFormatted(object, html)
     {
         var text = objectToString(object);
@@ -521,6 +674,9 @@ if (!("console" in window) || !("firebug" in console)) {
         html.push('<span class="objectBox-object">', m ? m[1] : text, '</span>')
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendSelector(object, html)
     {
         html.push('<span class="objectBox-selector">');
@@ -534,6 +690,9 @@ if (!("console" in window) || !("firebug" in console)) {
         html.push('</span>');
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendNode(node, html)
     {
         if (node.nodeType == 1)
@@ -575,6 +734,9 @@ if (!("console" in window) || !("firebug" in console)) {
 
     // ********************************************************************************************
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function addEvent(object, name, handler)
     {
         if (document.all)
@@ -583,6 +745,9 @@ if (!("console" in window) || !("firebug" in console)) {
             object.addEventListener(name, handler, false);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function removeEvent(object, name, handler)
     {
         if (document.all)
@@ -591,6 +756,9 @@ if (!("console" in window) || !("firebug" in console)) {
             object.removeEventListener(name, handler, false);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cancelEvent(event)
     {
         if (document.all)
@@ -599,6 +767,9 @@ if (!("console" in window) || !("firebug" in console)) {
             event.stopPropagation();        
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onError(msg, href, lineNo)
     {
         var html = [];
@@ -614,6 +785,9 @@ if (!("console" in window) || !("firebug" in console)) {
         logRow(html, "error");
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onKeyDown(event)
     {
         if (event.keyCode == 123)
@@ -627,6 +801,9 @@ if (!("console" in window) || !("firebug" in console)) {
         cancelEvent(event);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onSplitterMouseDown(event)
     {
         if (isSafari || isOpera)
@@ -642,6 +819,9 @@ if (!("console" in window) || !("firebug" in console)) {
         }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onSplitterMouseMove(event)
     {
         var win = document.all
@@ -659,6 +839,9 @@ if (!("console" in window) || !("firebug" in console)) {
         layout();
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onSplitterMouseUp(event)
     {
         removeEvent(document, "mousemove", onSplitterMouseMove);
@@ -671,6 +854,9 @@ if (!("console" in window) || !("firebug" in console)) {
         }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     function onCommandLineKeyDown(event)
     {
         if (event.keyCode == 13)

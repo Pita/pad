@@ -15,8 +15,14 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padeditbar = (function(){
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var syncAnimation = (function() {
     var SYNCING = -100;
     var DONE = 100;
@@ -26,6 +32,9 @@ var padeditbar = (function(){
     var T_START = -0.5;
     var T_FADE = 1.0;
     var T_GONE = 1.5;
+
+    // YOURNAME:
+    // YOURCOMMENT
     var animator = padutils.makeAnimationScheduler(function() {
       if (state == SYNCING || state == DONE) {
         return false;
@@ -53,11 +62,17 @@ var padeditbar = (function(){
       }
     }, step*1000);
     return {
+
+      // YOURNAME:
+      // YOURCOMMENT
       syncing: function() {
         state = SYNCING;
         $("#syncstatussyncing").css('display', 'block');
         $("#syncstatusdone").css('display', 'none');
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       done: function() {
         state = T_START;
         animator.scheduleAnimation();
@@ -66,21 +81,36 @@ var padeditbar = (function(){
   }());
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function() {
       $("#editbar .editbarbutton").attr("unselectable", "on"); // for IE
       $("#editbar").removeClass("disabledtoolbar").addClass("enabledtoolbar");
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     isEnabled: function() {
       return ! $("#editbar").hasClass('disabledtoolbar');
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function() {
       $("#editbar").addClass('disabledtoolbar').removeClass("enabledtoolbar");
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     toolbarClick: function(cmd) {
       if (self.isEnabled()) {
         if (cmd == 'save') {
           padsavedrevs.saveNow();
         } else {
+
+// YOURNAME:
+// YOURCOMMENT
 	  padeditor.ace.callWithAce(function (ace) {
 	    if (cmd == 'bold' || cmd == 'italic' || cmd == 'underline' || cmd == 'strikethrough')
 	      ace.ace_toggleAttributeOnSelection(cmd);
@@ -109,6 +139,9 @@ var padeditbar = (function(){
       }
       padeditor.ace.focus();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setSyncStatus: function(status) {
       if (status == "syncing") {
         syncAnimation.syncing();

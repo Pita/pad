@@ -16,6 +16,9 @@
 
 import("exceptionutils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function printSyntaxError() {
   var ex = appjet.context.attributes().apply("error");
 

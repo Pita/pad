@@ -25,6 +25,9 @@ jimport("java.lang.System.out.println");
 // Curently supports:
 //   Strings
 
+
+// YOURNAME:
+// YOURCOMMENT
 function get(name) {
   if (!sqlcommon.doesTableExist('persistent_vars')) {
     return undefined;
@@ -36,6 +39,9 @@ function get(name) {
   return r.stringVal;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function put(name, val) {
   if (typeof(val) != 'string') {
     throw Error("unsupported type for persistent_vars: "+typeof(val));
@@ -49,6 +55,9 @@ function put(name, val) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function remove(name) {
   var r = sqlobj.selectSingle('persistent_vars', {name: name});
   if (r) {

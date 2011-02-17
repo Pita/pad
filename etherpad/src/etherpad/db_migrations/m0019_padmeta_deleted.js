@@ -16,6 +16,9 @@
 
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.addColumns('pro_padmeta', {
     isDeleted: sqlobj.getBoolColspec("NOT NULL DEFAULT 0")

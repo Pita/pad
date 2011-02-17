@@ -18,6 +18,9 @@ import("dateutils");
 import("etherpad.utils.isPrivateNetworkEdition");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (isPrivateNetworkEdition()) {
     return;
@@ -25,6 +28,9 @@ function run() {
   
   var allDomains = sqlobj.selectMulti('pro_domains', {}, {});
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   allDomains.forEach(function(domain) {
     var domainId = domain.id;
     var accounts = sqlobj.selectMulti('pro_accounts', {domainId: domainId}, {});

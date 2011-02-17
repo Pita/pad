@@ -18,6 +18,9 @@ import("etherpad.globals.*");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dmesg(m) {
   if (!isProduction()) {
     println(m);

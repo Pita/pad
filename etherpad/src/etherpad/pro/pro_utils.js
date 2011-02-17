@@ -33,6 +33,9 @@ import("etherpad.control.pro.pro_main_control");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _stripComet(x) {
   if (x.indexOf('.comet.') > 0) {
     x = x.split('.comet.')[1];
@@ -40,11 +43,17 @@ function _stripComet(x) {
   return x;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getProRequestSubdomain() {
   var d = _stripComet(request.domain);
   return d.split('.')[0];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRequestSuperdomain() {
   var parts = request.domain.split('.');
   while (parts.length > 0) {
@@ -57,6 +66,9 @@ function getRequestSuperdomain() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProDomainRequest() {
   if(!isProAccountEnabled())
     return false; 
@@ -68,6 +80,9 @@ function isProDomainRequest() {
   return c.isProDomainRequest;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _computeIsProDomainRequest() {
   if (pne_utils.isPNE()) {
     return true;
@@ -93,6 +108,9 @@ function _computeIsProDomainRequest() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function preDispatchAccountCheck() {
   // if account is not logged in, redirect to /ep/account/login
   //
@@ -115,6 +133,9 @@ function preDispatchAccountCheck() {
   pro_quotas.perRequestBillingCheck();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderFramedMessage(m) {
   renderFramedHtml(
       DIV(
@@ -122,12 +143,18 @@ function renderFramedMessage(m) {
         m));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getFullProDomain() {
   // TODO: have a special config param for this? --etherpad.canonicalDomain
   return request.domain;
 }
 
 // domain, including port if necessary
+
+// YOURNAME:
+// YOURCOMMENT
 function getFullProHost() {
   var h = getFullProDomain();
   var parts = request.host.split(':');
@@ -137,6 +164,9 @@ function getFullProHost() {
   return h;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getFullSuperdomainHost() {
   if (isProDomainRequest()) {
     var h = getRequestSuperdomain()
@@ -150,6 +180,9 @@ function getFullSuperdomainHost() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getEmailFromAddr() {
   var fromDomain = 'etherpad.org';
   if (pne_utils.isPNE()) {
@@ -158,6 +191,9 @@ function getEmailFromAddr() {
   return (appjet.config.customBrandingName +'<'+appjet.config.customEmailAddress+'>');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderGlobalProNotice() {
   if (request.cache.globalProNotice) {
     return DIV({className: 'global-pro-notice'}, 

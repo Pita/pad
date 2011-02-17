@@ -22,14 +22,23 @@ import("etherpad.log");
 jimport("java.lang.System.out.println");
 jimport("java.sql.Statement");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _withCache(name, fn) {
   return syncedWithCache('sqlobj.'+name, fn);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getIdColspec() {
   return ('INT NOT NULL '+autoIncrementClause()+' PRIMARY KEY');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLongtextColspec(extra) {
   var spec = getSqlBase().longTextType();
   if (extra) {
@@ -38,6 +47,9 @@ function getLongtextColspec(extra) {
   return spec;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getBoolColspec(extra) {
   var spec;
   if (isMysql()) {
@@ -51,6 +63,9 @@ function getBoolColspec(extra) {
   return spec;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDateColspec(extra) {
   var spec;
   if (isMysql()) {
@@ -64,11 +79,17 @@ function getDateColspec(extra) {
   return spec;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _bq(x) { return btquote(x); }
 
 /*
  * for debugging queries
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _qdebug(q) {
   if (appjet.config.debugSQL) {
     println(q);
@@ -76,12 +97,21 @@ function _qdebug(q) {
 }
 
 /** executeFn is either "execute" or "executeUpdate" "executeQuery" */
+
+// YOURNAME:
+// YOURCOMMENT
 function _execute(stmnt, executeFn) {
   if (!executeFn) {
     executeFn = 'execute';
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       _qdebug(stmnt);
       return pstmnt[executeFn]();
@@ -89,10 +119,16 @@ function _execute(stmnt, executeFn) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _executeUpdate(stmnt) {
   return _execute(stmnt, 'executeUpdate');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _executeQuery(stmnt) {
   return _execute(stmnt, 'executeQuery');
 }
@@ -100,6 +136,9 @@ function _executeQuery(stmnt) {
 /*
  * Not all SQL/JS types supported.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getJsValFromResultSet(rs, type, colName) {
   var r;
   if (type == java.sql.Types.VARCHAR ||
@@ -132,7 +171,13 @@ function _getJsValFromResultSet(rs, type, colName) {
   return r;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _lookupColumnType(tableName, columnName) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var metadata = conn.getMetaData();
     var rs = metadata.getColumns(null, null, tableName, columnName);
@@ -149,8 +194,14 @@ function _lookupColumnType(tableName, columnName) {
 }
 
 /* cached, on misses calls _lookuParameterType */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getParameterType(tableName, columnName) {
   var key = [tableName, columnName].join(".");
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _withCache('column-types', function(cache) {
     if (!cache[key]) {
       cache[key] = _lookupColumnType(tableName, columnName);
@@ -162,6 +213,9 @@ function _getParameterType(tableName, columnName) {
 /*
  * Not all SQL/JS types supported.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _setPreparedValues(tableName, pstmnt, keyList, obj, indexOffset) {
   if (!indexOffset) { indexOffset = 0; }
 
@@ -191,6 +245,9 @@ function _setPreparedValues(tableName, pstmnt, keyList, obj, indexOffset) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _resultRowToJsObj(resultSet) {
   var resultObj = {};
 
@@ -209,23 +266,41 @@ function _resultRowToJsObj(resultSet) {
 /*
  * Inserts the object into the given table, and returns auto-incremented ID if any.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function insert(tableName, obj) {
   var keyList = keys(obj);
 
   var stmnt = "INSERT INTO "+_bq(tableName)+" (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += keyList.map(function(k) { return _bq(k); }).join(', ');
   stmnt += ") VALUES (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += keyList.map(function(k) { return '?'; }).join(', ');
   stmnt += ")";
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt, Statement.RETURN_GENERATED_KEYS);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       _setPreparedValues(tableName, pstmnt, keyList, obj, 0);
       _qdebug(stmnt);
       pstmnt.executeUpdate();
       var rs = pstmnt.getGeneratedKeys();
       if (rs != null) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         return closing(rs, function() {
           if (rs.next()) {
             return rs.getInt(1);
@@ -244,22 +319,37 @@ function insert(tableName, obj) {
  * constraints is a javascript object of column names to values.
  *  Currently only supports string equality of constraints.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function selectSingle(tableName, constraints) {
   var keyList = keys(constraints);
 
   var stmnt = "SELECT * FROM "+_bq(tableName)+" WHERE (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += keyList.map(function(k) { return '('+_bq(k)+' = '+'?)'; }).join(' AND ');
   stmnt += ')';
   if (isMysql()) {
     stmnt += ' LIMIT 1';
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       _setPreparedValues(tableName, pstmnt, keyList, constraints, 0);
       _qdebug(stmnt);
       var resultSet = pstmnt.executeQuery();
+
+      // YOURNAME:
+      // YOURCOMMENT
       return closing(resultSet, function() {
         if (!resultSet.next()) {
           return null;
@@ -270,6 +360,9 @@ function selectSingle(tableName, constraints) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _makeConstraintString(key, value) {
   if (typeof(value) != 'object' || ! (value instanceof Array)) {
     return '('+_bq(key)+' = ?)';
@@ -279,14 +372,23 @@ function _makeConstraintString(key, value) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _preparedValuesConstraints(constraints) {
   var c = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(constraints, function(k, v) {
     c[k] = (typeof(v) != 'object' || ! (v instanceof Array) ? v : v[1]);
   });
   return c;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function selectMulti(tableName, constraints, options) {
   if (!options) {
     options = {};
@@ -298,6 +400,9 @@ function selectMulti(tableName, constraints, options) {
 
   if (constraintKeys.length > 0) {
     stmnt += "WHERE (";
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmnt += constraintKeys.map(function(key) { 
         return _makeConstraintString(key, constraints[key]);
       }).join(' AND ');
@@ -306,6 +411,9 @@ function selectMulti(tableName, constraints, options) {
 
   if (options.orderBy) {
     var orderEntries = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     options.orderBy.split(",").forEach(function(orderBy) {
       var asc = "ASC";
       if (orderBy.charAt(0) == '-') {
@@ -321,8 +429,14 @@ function selectMulti(tableName, constraints, options) {
     stmnt += " LIMIT "+options.limit;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       _setPreparedValues(
         tableName, pstmnt, constraintKeys, 
@@ -332,6 +446,9 @@ function selectMulti(tableName, constraints, options) {
       var resultSet = pstmnt.executeQuery();
       var resultArray = [];
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       return closing(resultSet, function() {
         while (resultSet.next()) {
           resultArray.push(_resultRowToJsObj(resultSet));
@@ -343,9 +460,18 @@ function selectMulti(tableName, constraints, options) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function executeRaw(stmnt, params) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       for (var i = 0; i < params.length; i++) {
 	var v = params[i];
@@ -373,6 +499,9 @@ function executeRaw(stmnt, params) {
       var resultSet = pstmnt.executeQuery();
       var resultArray = [];
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       return closing(resultSet, function() {
         while (resultSet.next()) {
           resultArray.push(_resultRowToJsObj(resultSet));
@@ -385,18 +514,33 @@ function executeRaw(stmnt, params) {
 }
 
 /* returns number of rows updated */
+
+// YOURNAME:
+// YOURCOMMENT
 function update(tableName, constraints, obj) {
   var objKeys = keys(obj);
   var constraintKeys = keys(constraints);
 
   var stmnt = "UPDATE "+_bq(tableName)+" SET ";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += objKeys.map(function(k) { return ''+_bq(k)+' = ?'; }).join(', ');
   stmnt += " WHERE (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += constraintKeys.map(function(k) { return '('+_bq(k)+' = ?)'; }).join(' AND ');
   stmnt += ')';
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(pstmnt, function() {
       _setPreparedValues(tableName, pstmnt, objKeys, obj, 0);
       _setPreparedValues(tableName, pstmnt, constraintKeys, constraints, objKeys.length);
@@ -406,6 +550,9 @@ function update(tableName, constraints, obj) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateSingle(tableName, constraints, obj) {
   var count = update(tableName, constraints, obj);
   if (count != 1) {
@@ -413,13 +560,25 @@ function updateSingle(tableName, constraints, obj) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function deleteRows(tableName, constraints) {
   var constraintKeys = keys(constraints);
   var stmnt = "DELETE FROM "+_bq(tableName)+" WHERE (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += constraintKeys.map(function(k) { return '('+_bq(k)+' = ?)'; }).join(' AND ');
   stmnt += ')';
+
+  // YOURNAME:
+  // YOURCOMMENT
   withConnection(function(conn) {
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     closing(pstmnt, function() {
       _setPreparedValues(tableName, pstmnt, constraintKeys, constraints);
       _qdebug(stmnt);
@@ -436,24 +595,39 @@ function deleteRows(tableName, constraints) {
  * Create a SQL table, specifying column names and types with a
  * javascript object.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function createTable(tableName, colspec, indices) {
   if (doesTableExist(tableName)) {
     return;
   }
 
   var stmnt = "CREATE TABLE "+_bq(tableName)+ " (";
+
+  // YOURNAME:
+  // YOURCOMMENT
   stmnt += keys(colspec).map(function(k) { return (_bq(k) + ' ' + colspec[k]); }).join(', ');
   if (indices) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmnt += ', ' + keys(indices).map(function(k) { return 'INDEX (' + _bq(k) + ')'; }).join(', ');
   }
   stmnt += ')'+createTableOptions();
   _execute(stmnt);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dropTable(tableName) {
   _execute("DROP TABLE "+_bq(tableName));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dropAndCreateTable(tableName, colspec, indices) {
   if (doesTableExist(tableName)) {
     dropTable(tableName);
@@ -462,27 +636,48 @@ function dropAndCreateTable(tableName, colspec, indices) {
   return createTable(tableName, colspec, indices);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renameTable(oldName, newName) {
   _executeUpdate("RENAME TABLE "+_bq(oldName)+" TO "+_bq(newName));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function modifyColumn(tableName, columnName, newSpec) {
   _executeUpdate("ALTER TABLE "+_bq(tableName)+" MODIFY "+_bq(columnName)+" "+newSpec);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function alterColumn(tableName, columnName, alteration) {
   var q = "ALTER TABLE "+_bq(tableName)+" ALTER COLUMN "+_bq(columnName)+" "+alteration;
   _executeUpdate(q);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function changeColumn(tableName, columnName, newSpec) {
   var q = ("ALTER TABLE "+_bq(tableName)+" CHANGE COLUMN "+_bq(columnName)
            +" "+newSpec);
   _executeUpdate(q);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addColumns(tableName, colspec) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   inTransaction(function(conn) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(colspec, function(name, definition) {
       var stmnt = "ALTER TABLE "+_bq(tableName)+" ADD COLUMN "+_bq(name)+" "+definition;
       _executeUpdate(stmnt);
@@ -490,17 +685,29 @@ function addColumns(tableName, colspec) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dropColumn(tableName, columnName) {
   var stmnt = "ALTER TABLE "+_bq(tableName)+" DROP COLUMN "+_bq(columnName);
   _executeUpdate(stmnt);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function listTables() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     var metadata = conn.getMetaData();
     var resultSet = metadata.getTables(null, null, null, null);
     var resultArray = [];
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     return closing(resultSet, function() {
       while (resultSet.next()) {
         resultArray.push(resultSet.getString("TABLE_NAME"));
@@ -510,11 +717,17 @@ function listTables() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setTableEngine(tableName, engineName) {
   var stmnt = "ALTER TABLE "+_bq(tableName)+" ENGINE="+_bq(engineName);
   _executeUpdate(stmnt);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTableEngine(tableName) {
   if (!isMysql()) {
     throw Error("getTableEngine() only supported by MySQL database type.");
@@ -522,12 +735,21 @@ function getTableEngine(tableName) {
 
   var tableEngines = {};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   withConnection(function(conn) {
     var stmnt = "show table status";
     var pstmnt = conn.prepareStatement(stmnt);
+
+    // YOURNAME:
+    // YOURCOMMENT
     closing(pstmnt, function() {
       _qdebug(stmnt);
       var resultSet = pstmnt.executeQuery();
+
+      // YOURNAME:
+      // YOURCOMMENT
       closing(resultSet, function() {
         while (resultSet.next()) {
           var n = resultSet.getString("Name");
@@ -541,6 +763,9 @@ function getTableEngine(tableName) {
   return tableEngines[tableName];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createIndex(tableName, columns) {
   var indexName = "idx_"+(columns.join("_"));
   var stmnt = "CREATE INDEX "+_bq(indexName)+" on "+_bq(tableName)+" (";

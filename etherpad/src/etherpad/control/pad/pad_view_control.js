@@ -38,6 +38,9 @@ import("etherpad.collab.ace.domline.domline");
 // view (viewing a static revision of a pad)
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var parts = request.path.split('/');
   // TODO(kroo): create a mapping between padId and read-only id
@@ -56,6 +59,9 @@ function onRequest() {
   }
 
   if (request.params.pt == 1) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var padText = padutils.accessPadLocal(localPadId, function(pad) {
       return pad.getRevisionText(rev.revNum);
     }, 'r');
@@ -65,6 +71,9 @@ function onRequest() {
   } else {
     var padContents, totalRevs, atextForWire, savedRevisions;
     var supportsSlider;
+
+    // YOURNAME:
+    // YOURCOMMENT
     padutils.accessPadLocal(localPadId, function(pad) {
       padContents = [_getPadHTML(pad, rev.revNum),
                      pad.getRevisionText(rev.revNum)];
@@ -74,6 +83,9 @@ function onRequest() {
       supportsSlider = pad.getSupportsTimeSlider();
     }, 'r');
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var _add = function(dict, anotherdict) {
       for(var key in anotherdict) {
         dict[key] = anotherdict[key];
@@ -81,6 +93,9 @@ function onRequest() {
       return dict;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var getAdaptiveChangesetsArray = function(array, start, granularity) {
       array = array || [];
       start = start || 0;
@@ -113,12 +128,18 @@ function onRequest() {
       );
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var zpad = function(str, length) {
       str = str+"";
       while(str.length < length)
         str = '0'+str;
       return str;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     var dateFormat = function(savedWhen) {
       var date = new Date(savedWhen);
       var month = zpad(date.getMonth()+1,2);
@@ -133,6 +154,9 @@ function onRequest() {
     var proTitle = null;
     var initialPassword = null;
     if (isProDomainRequest()) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       pro_padmeta.accessProPadLocal(localPadId, function(propad) {
         proTitle = propad.getDisplayTitle();
         initialPassword = propad.getPassword();
@@ -143,6 +167,9 @@ function onRequest() {
     var padHTML = padContents[0];
     var padText = padContents[1];
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var historicalAuthorData = padutils.accessPadLocal(localPadId, function(pad) {
       return buildHistoricalAuthorDataMapForPadHistory(pad);
     }, 'r');
@@ -200,7 +227,13 @@ function onRequest() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRevisionInfo(localPadId, revisionId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var rev = padutils.accessPadLocal(localPadId, function(pad) {
     if (!pad.exists()) {
       return null;
@@ -249,21 +282,36 @@ function getRevisionInfo(localPadId, revisionId) {
   return rev;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _findLastGoodRevisionInPad(pad) {
   var revNum = pad.getHeadRevisionNumber();
+
+  // YOURNAME:
+  // YOURCOMMENT
   function valueOrNullOnError(f) {
     try { return f(); } catch (e) { return null; }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isAcceptable(strOrNull) {
     return (strOrNull && strOrNull.length > 20);
   }
   while (revNum > 0 &&
+
+         // YOURNAME:
+         // YOURCOMMENT
          ! isAcceptable(valueOrNullOnError(function() { return pad.getRevisionText(revNum); }))) {
     revNum--;
   }
   return revNum;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadHTML(pad, revNum) {
   var atext = pad.getInternalRevisionAText(revNum);
   var textlines = Changeset.splitTextLines(atext.text);

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(window).bind("load", function() {
   getCollabClient.windowLoaded = true;
 });
@@ -21,6 +24,9 @@ $(window).bind("load", function() {
 /** Call this when the document is ready, and a new Ace2Editor() has been created and inited.
     ACE's ready callback does not need to have fired yet.
     "serverVars" are from calling doc.getCollabClientVars() on the server. */
+
+// YOURNAME:
+// YOURCOMMENT
 function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   var editor = ace2editor;
 
@@ -53,19 +59,52 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   tellAceActiveAuthorInfo(initialUserInfo);
 
   var callbacks = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     onUserJoin: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onUserLeave: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onUpdateUserInfo: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onChannelStateChange: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClientMessage: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInternalAction: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onConnectionTrouble: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     onServerMessage: function() {}
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   $(window).bind("unload", function() {
     if (socket) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       socket.onclosed = function() {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       socket.onhiccup = function() {};
       socket.disconnect(true);
     }
@@ -73,6 +112,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   if ($.browser.mozilla) {
     // Prevent "escape" from taking effect and canceling a comet connection;
     // doesn't work if focus is on an iframe.
+
+    // YOURNAME:
+    // YOURCOMMENT
     $(window).bind("keydown", function(evt) { if (evt.which == 27) { evt.preventDefault() } });
   }
 
@@ -80,9 +122,18 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   editor.setBaseAttributedText(serverVars.initialAttributedText, serverVars.apool);
   editor.setUserChangeNotificationCallback(wrapRecordingErrors("handleUserChanges", handleUserChanges));
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function abandonConnection(reason) {
     if (socket) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       socket.onclosed = function() {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       socket.onhiccup = function() {};
       socket.disconnect();
     }
@@ -90,11 +141,17 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     setChannelState("DISCONNECTED", reason);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dmesg(str) {
     if (typeof window.ajlog == "string") window.ajlog += str+'\n';
     debugMessages.push(str);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleUserChanges() {
     if ((! socket) || channelState == "CONNECTING") {
       if (channelState == "CONNECTING" && (((+new Date()) - initialStartConnectTime) > 20000)) {
@@ -155,6 +212,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getStats() {
     var stats = {};
 
@@ -167,8 +227,14 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     return stats;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setUpSocket() {
     var success = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     callCatchingErrors("setUpSocket", function() {
       appLevelDisconnectReason = null;
 
@@ -177,6 +243,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       socket = new WebSocket(socketId);
       socket.onmessage = wrapRecordingErrors("socket.onmessage", handleMessageFromServer);
       socket.onclosed = wrapRecordingErrors("socket.onclosed", handleSocketClosed);
+
+      // YOURNAME:
+      // YOURCOMMENT
       socket.onopen = wrapRecordingErrors("socket.onopen", function() {
         hiccupCount = 0;
         setChannelState("CONNECTED");
@@ -205,6 +274,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       abandonConnection("initsocketfail");
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setUpSocketWhenWindowLoaded() {
     if (getCollabClient.windowLoaded) {
       setUpSocket();
@@ -216,6 +288,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   setTimeout(setUpSocketWhenWindowLoaded, 0);
 
   var hiccupCount = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleCometHiccup(params) {
     dmesg("HICCUP (connected:"+(!!params.connected)+")");
     var connectedNow = params.connected;
@@ -232,11 +307,20 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function sendMessage(msg) {
     socket.postMessage(JSON.stringify({type: "COLLABROOM", data: msg}));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function wrapRecordingErrors(catcher, func) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function() {
       try {
         return func.apply(this, Array.prototype.slice.call(arguments));
@@ -251,6 +335,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function callCatchingErrors(catcher, func) {
     try {
       wrapRecordingErrors(catcher, func)();
@@ -258,6 +345,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     catch (e) { /*absorb*/ }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleMessageFromServer(evt) {
     if (! socket) return;
     if (! evt.data) return;
@@ -287,9 +377,15 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       rev = newRev;
       editor.applyPreparedChangesetToBase();
       setStateIdle();
+
+      // YOURNAME:
+      // YOURCOMMENT
       callCatchingErrors("onInternalAction", function() {
         callbacks.onInternalAction("commitAcceptedByServer");
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       callCatchingErrors("onConnectionTrouble", function() {
         callbacks.onConnectionTrouble("OK");
       });
@@ -337,6 +433,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       callbacks.onServerMessage(msg.payload);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateUserInfo(userInfo) {
     userInfo.userId = userId;
     userSet[userId] = userInfo;
@@ -345,9 +444,15 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     sendMessage({type: "USERINFO_UPDATE", userInfo:userInfo});
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tellAceActiveAuthorInfo(userInfo) {
     tellAceAuthorInfo(userInfo.userId, userInfo.colorId);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tellAceAuthorInfo(userId, colorId, inactive) {
     if (colorId || (typeof colorId) == "number") {
       colorId = Number(colorId);
@@ -362,14 +467,23 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       }
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fadeAceAuthorInfo(userInfo) {
     tellAceAuthorInfo(userInfo.userId, userInfo.colorId, true);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getConnectedUsers() {
     return valuesArray(userSet);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tellAceAboutHistoricalAuthors(hadata) {
     for(var author in hadata) {
       var data = hadata[author];
@@ -379,13 +493,25 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dmesgUsers() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     //pad.dmesg($.map(getConnectedUsers(), function(u) { return u.userId.slice(-2); }).join(','));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function handleSocketClosed(params) {
     socket = null;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     $.each(keys(userSet), function() {
       var uid = String(this);
       if (uid != userId) {
@@ -420,6 +546,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setChannelState(newChannelState, moreInfo) {
     if (newChannelState != channelState) {
       channelState = newChannelState;
@@ -427,13 +556,25 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function keys(obj) {
     var array = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     $.each(obj, function (k, v) { array.push(k); });
     return array;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function valuesArray(obj) {
     var array = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     $.each(obj, function (k, v) { array.push(v); });
     return array;
   }
@@ -441,10 +582,19 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   // We need to present a working interface even before the socket
   // is connected for the first time.
   var deferredActions = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function defer(func, tag) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function() {
       var that = this;
       var args = arguments;
+
+      // YOURNAME:
+      // YOURCOMMENT
       function action() {
         func.apply(that, args);
       }
@@ -457,6 +607,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
       }
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doDeferredActions(tag) {
     var newArray = [];
     for(var i=0;i<deferredActions.length;i++) {
@@ -471,25 +624,40 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     deferredActions = newArray;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function sendClientMessage(msg) {
     sendMessage({ type: "CLIENT_MESSAGE", payload: msg });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getCurrentRevisionNumber() {
     return rev;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getDiagnosticInfo() {
     var maxCaughtErrors = 3;
     var maxAceErrors = 3;
     var maxDebugMessages = 50;
     var longStringCutoff = 500;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function trunc(str) {
       return String(str).substring(0, longStringCutoff);
     }
 
     var info = { errors: {length: 0} };
+
+    // YOURNAME:
+    // YOURCOMMENT
     function addError(e, catcher, time) {
       var error = {catcher:catcher};
       if (time) error.time = time;
@@ -524,6 +692,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     info.numSocketReconnects = reconnectTimes.length;
     info.userId = userId;
     info.currentRev = rev;
+
+    // YOURNAME:
+    // YOURCOMMENT
     info.participants = (function() {
       var pp = [];
       for(var u in userSet) {
@@ -546,6 +717,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     return info;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getMissedChanges() {
     var obj = {};
     obj.userInfo = userSet[userId];
@@ -564,19 +738,31 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
     return obj;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setStateIdle() {
     state = "IDLE";
     callbacks.onInternalAction("newlyIdle");
     schedulePerhapsCallIdleFuncs();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function callWhenNotCommitting(func) {
     idleFuncs.push(func);
     schedulePerhapsCallIdleFuncs();
   }
 
   var idleFuncs = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function schedulePerhapsCallIdleFuncs() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     setTimeout(function() {
       if (state == "IDLE") {
         while (idleFuncs.length > 0) {
@@ -589,13 +775,37 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
 
   var self;
   return (self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnUserJoin: function(cb) { callbacks.onUserJoin = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnUserLeave: function(cb) { callbacks.onUserLeave = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnUpdateUserInfo: function(cb) { callbacks.onUpdateUserInfo = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnChannelStateChange: function(cb) { callbacks.onChannelStateChange = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnClientMessage: function(cb) { callbacks.onClientMessage = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnInternalAction: function(cb) { callbacks.onInternalAction = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnConnectionTrouble: function(cb) { callbacks.onConnectionTrouble = cb; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setOnServerMessage: function(cb) { callbacks.onServerMessage = cb; },
     updateUserInfo: defer(updateUserInfo),
     getConnectedUsers: getConnectedUsers,
@@ -608,6 +818,9 @@ function getCollabClient(ace2editor, serverVars, initialUserInfo, options) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function selectElementContents(elem) {
   if ($.browser.msie) {
     var range = document.body.createTextRange();

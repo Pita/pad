@@ -42,7 +42,13 @@ var _defaultPrefs = {
   granularity: 1440
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(_defaultPrefs).forEach(function(prefName) {
     if (request.params[prefName]) {
       _prefs()[prefName] = request.params[prefName];
@@ -56,6 +62,9 @@ function onRequest() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _prefs() {
   if (! sessions.getSession().statsPrefs) {
     sessions.getSession().statsPrefs = {}
@@ -63,21 +72,36 @@ function _prefs() {
   return sessions.getSession().statsPrefs;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _pref(pname) {
   return _prefs()[pname] || _defaultPrefs[pname];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _topN() {
   return _pref('topNCount');
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _showLiveStats() {
   return _timescale() < 1440;
   // return _pref('granularity') == 'live';
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _showHistStats() {
   return _timescale() >= 1440
   // return _pref('showLiveOrHistorical') == 'hist';
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _timescale() {
   return Number(_pref('granularity')) || 1;
 }
@@ -286,8 +310,14 @@ var statDisplays = {
   ]
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getUsedStats(statStructure) {
   var stats = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getStructureValues(statStructure) {
     if (typeof(statStructure) == 'string') {
       stats[statStructure] = true;
@@ -299,7 +329,13 @@ function getUsedStats(statStructure) {
   return keys(stats);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStatData(statStructure, values_f) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getStructureValues(statStructure) {
     if (typeof(statStructure) == 'string') {
       return values_f(statStructure);
@@ -316,6 +352,9 @@ function getStatData(statStructure, values_f) {
   
   var mappedStructure = getStructureValues(statStructure);
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function evalStructure(statStructure) {
     if ((typeof(statStructure) == 'number') || (statStructure instanceof Array)) {
       return statStructure;
@@ -324,6 +363,9 @@ function getStatData(statStructure, values_f) {
       if (typeof(merge_f) == 'string') {
         switch (merge_f) {
           case '+':
+
+            // YOURNAME:
+            // YOURCOMMENT
             merge_f = function() {
               var sum = 0;
               for (var i = 0; i < arguments.length; ++i) {
@@ -333,6 +375,9 @@ function getStatData(statStructure, values_f) {
             }
             break;
           case '*':
+
+            // YOURNAME:
+            // YOURCOMMENT
             merge_f = function() {
               var product = 0;
               for (var i = 0; i < arguments.length; ++i) {
@@ -342,20 +387,32 @@ function getStatData(statStructure, values_f) {
             }
             break;
           case '/':
+
+            // YOURNAME:
+            // YOURCOMMENT
             merge_f = function(a, b) { return a / b; }
             break;
           case '-':
+
+            // YOURNAME:
+            // YOURCOMMENT
             merge_f = function(a, b) { return a - b; }
             break;
         }
       }
       var evaluatedArguments = statStructure.args.map(evalStructure);
       var length = -1;
+
+      // YOURNAME:
+      // YOURCOMMENT
       evaluatedArguments.forEach(function(arg) {
         if (typeof(arg) == 'object' && (arg instanceof Array)) {
           length = arg.length;
         }
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       evaluatedArguments = evaluatedArguments.map(function(arg) {
         if (typeof(arg) == 'number') {
           var newArg = new Array(length);
@@ -374,24 +431,42 @@ function getStatData(statStructure, values_f) {
 }
 
 var googleChartSimpleEncoding = "ABCDEFGHIJLKMNOPQRSTUVQXYZabcdefghijklmnopqrstuvwxyz0123456789-.";
+
+// YOURNAME:
+// YOURCOMMENT
 function _enc(value) {
   return googleChartSimpleEncoding[Math.floor(value/64)] + googleChartSimpleEncoding[value%64];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function drawSparkline(dataSets, labels, colors, minutes) {
   var max = 1;
   var maxLength = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   dataSets.forEach(function(dataSet, i) {
     if (dataSet.length > maxLength) {
       maxLength = dataSet.length;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     dataSet.forEach(function(point) {
       if (point > max) {
         max = point;
       }
     });
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   var data = dataSets.map(function(dataSet) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var chars = dataSet.map(function(x) {
       if (x !== undefined) {
         return _enc(Math.round(x/max*4095));
@@ -406,21 +481,33 @@ function drawSparkline(dataSets, labels, colors, minutes) {
   }).join(",");
   var timeLabels;
   if (minutes < 60*24) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     timeLabels = [4,3,2,1,0].map(function(t) {
       var minutesPerTick = minutes/4;
       var d = new Date(Date.now() - minutesPerTick*60000*t);
       return (d.getHours()%12 || 12)+":"+(d.getMinutes() < 10 ? "0" : "")+d.getMinutes()+(d.getHours() < 12 ? "am":"pm");
     }).join("|");
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     timeLabels = [4,3,2,1,0].map(function(t) {
       var daysPerTick = (minutes/(60*24))/4;
       var d = new Date(Date.now() - t*daysPerTick*24*60*60*1000);
       return (d.getMonth()+1)+"/"+d.getDate();
     }).join("|");
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var pointLabels = dataSets.map(function(dataSet, i) {
     return ["t"+dataSet[dataSet.length-1],colors[i],i,maxLength-1,12,0].join(",");
   }).join("|");
+
+  // YOURNAME:
+  // YOURCOMMENT
   labels = labels.map(function(label) {
     return encodeURIComponent((label.length > 73) ? label.slice(0, 70) + "..." : label);
   });
@@ -435,7 +522,13 @@ function drawSparkline(dataSets, labels, colors, minutes) {
 
 var liveDataNumSamples = 20;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extractStatValuesFunction(nameToValues_f) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(statName) {
     var value;
     if (statName.indexOf(":") >= 0) {
@@ -443,6 +536,9 @@ function extractStatValuesFunction(nameToValues_f) {
     }
     var h = nameToValues_f(statName);
     if (value) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       h = h.map(function(topValues) {
         if (! topValues) { return; }
         var tv = topValues.topValues;
@@ -458,17 +554,35 @@ function extractStatValuesFunction(nameToValues_f) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sparkline_compare(history_f, minutesPerSample, stat) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var histories = stat.stats.map(function(stat) {
       var samples = getStatData(stat.stat, extractStatValuesFunction(history_f));
       return [samples, stat.description, stat.color];
     });
+
+  // YOURNAME:
+  // YOURCOMMENT
   return drawSparkline(histories.map(function(history) { return history[0] }),
+
+                       // YOURNAME:
+                       // YOURCOMMENT
                        histories.map(function(history) { return history[1] }),
+
+                       // YOURNAME:
+                       // YOURCOMMENT
                        histories.map(function(history) { return history[2] }),
                        minutesPerSample*histories[0][0].length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sparkline_top(history_f, minutesPerSample, stat) {
   var showOthers = ! stat.options || stat.options.showOthers != false;
   var history = stat.stats.map(history_f)[0]; 
@@ -478,9 +592,15 @@ function sparkline_top(history_f, minutesPerSample, stat) {
   }
   var topRecents = {};
   var topRecents_arr = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   history.forEach(function(tv) {
     if (! tv) { return; }
     if (tv.topValues.length > 0) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       topRecents_arr = tv.topValues.map(function(x) { return x.value; });
     }
   });
@@ -489,6 +609,9 @@ function sparkline_top(history_f, minutesPerSample, stat) {
     return "<b>no data</b>";
   }
   topRecents_arr = topRecents_arr.slice(0, _topN());
+
+  // YOURNAME:
+  // YOURCOMMENT
   topRecents_arr.forEach(function(value, i) {
     topRecents[value] = i;
   });
@@ -497,10 +620,19 @@ function sparkline_top(history_f, minutesPerSample, stat) {
     topRecents_arr.push("Other");    
   }
   var max = 1;
+
+  // YOURNAME:
+  // YOURCOMMENT
   var values = topRecents_arr.map(function() { return history.map(function() { return 0 }); });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   history.forEach(function(tv, i) {
     if (! tv) { return; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     tv.topValues.forEach(function(entry) {
       if (entry.count > max) {
         max = entry.count;
@@ -519,6 +651,9 @@ function sparkline_top(history_f, minutesPerSample, stat) {
     minutesPerSample*history.length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sparkline_histogram(history_f, minutesPerSample, stat) {
   var history = stat.stats.map(history_f)[0]; 
 
@@ -526,25 +661,46 @@ function sparkline_histogram(history_f, minutesPerSample, stat) {
     return "<b>no data</b>";
   }
   var percentiles = [50, 90, 95, 99];
+
+  // YOURNAME:
+  // YOURCOMMENT
   var data = percentiles.map(function() { return []; })
+
+  // YOURNAME:
+  // YOURCOMMENT
   history.forEach(function(hist) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     percentiles.forEach(function(pct, i) {
       data[i].push((hist ? hist[""+pct] : undefined));
     });
   });
   return drawSparkline(
     data,
+
+    // YOURNAME:
+    // YOURCOMMENT
     percentiles.map(function(pct) { return ""+pct+"%"; }),
     ["FF0000","FF00FF","FFA928","00FF00"].reverse(),
     minutesPerSample*history.length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function liveHistoryFunction(minutesPerSample) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(statName) {
     return statistics.liveSnapshot(statName).history(minutesPerSample, liveDataNumSamples);
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _listStats(statName, count) {
   var options = { orderBy: '-timestamp,id' };
   if (count !== undefined) {
@@ -553,15 +709,27 @@ function _listStats(statName, count) {
   return sqlobj.selectMulti('statistics', {name: statName}, options);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function ancientHistoryFunction(time) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(statName) {
     var seenDates = {};
     var samples = _listStats(statName);
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     samples = samples.reverse().map(function(json) {
       if (seenDates[""+json.timestamp]) { return; }
       seenDates[""+json.timestamp] = true;
       return {timestamp: json.timestamp, json: json.value};
+
+    // YOURNAME:
+    // YOURCOMMENT
     }).filter(function(x) { return x !== undefined });
 
     samples = samples.reverse().slice(0, Math.round(time/(24*60)));
@@ -577,6 +745,9 @@ function ancientHistoryFunction(time) {
     if (samples.length > 0) {
       samplesWithEmptyValues.push(samples[samples.length-1].json);      
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     samplesWithEmptyValues = samplesWithEmptyValues.map(function(json) {
       if (! json) { return; }
       var obj = fastJSON.parse(json);
@@ -590,6 +761,9 @@ function ancientHistoryFunction(time) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sparkline(history_f, minutesPerSample, stat) {
   if (this["sparkline_"+stat.type]) {
     return this["sparkline_"+stat.type](history_f, minutesPerSample, stat);
@@ -598,17 +772,32 @@ function sparkline(history_f, minutesPerSample, stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function liveLatestFunction(minutesPerSample) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(statName) {
     return [statistics.liveSnapshot(statName).latest(minutesPerSample)];
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function liveTotal(statName) {
   return [statistics.liveSnapshot(statName).total];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function historyLatest(statName) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _listStats(statName, 1).map(function(x) { 
     var value = fastJSON.parse(x.value);
     if (keys(value).length == 1 && 'value' in value) {
@@ -618,13 +807,22 @@ function historyLatest(statName) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function latest_compare(latest_f, stat) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return stat.stats.map(function(stat) {
     var sample = getStatData(stat.stat, extractStatValuesFunction(latest_f))[0];
     return { value: sample, description: stat.description };
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function latest_top(latest_f, stat) {
   var showOthers = ! stat.options || stat.options.showOthers != false;
   
@@ -634,6 +832,9 @@ function latest_top(latest_f, stat) {
   }
   var total = sample.count;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   var values = sample.topValues.slice(0, _topN()).map(function(v) {
     total -= v.count;
     return { value: v.count, description: v.value };
@@ -644,6 +845,9 @@ function latest_top(latest_f, stat) {
   return values;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function latest_histogram(latest_f, stat) {
   var sample = stat.stats.map(latest_f)[0][0];
 
@@ -651,28 +855,61 @@ function latest_histogram(latest_f, stat) {
     return "<b>no data</b>";
   } 
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   var percentiles = [0, 1, 5, 10, 25, 50, 75, 90, 95, 99, 100].filter(function(pct) { return ((""+pct) in sample) });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var xpos = percentiles.map(function(x, i) { return sample[x] });
   var xMax = 0;
   var xMin = 1e12;
+
+  // YOURNAME:
+  // YOURCOMMENT
   xpos.forEach(function(x) { xMax = (x > xMax ? x : xMax); xMin = (x < xMin ? x : xMin); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   xposNormalized = xpos.map(function(x) { return Math.round((x-xMin)/(xMax-xMin || 1)*100); });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var ypos = percentiles.slice(1).map(function(y, i) { return (y-percentiles[i])/(xpos[i+1] || 1); });
   var yMax = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   ypos.forEach(function(y) { yMax = (y > yMax ? y : yMax); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   yposNormalized = ypos.map(function(y) { return Math.round(y/yMax*100); });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   // var proposedLabels = mergeArrays(function(x, y) { return {pos: x, label: y}; }, xposNormalized, xpos);
   // var keepLabels = [{pos: 0, label: 0}];
+
+  // YOURNAME:
+  // YOURCOMMENT
   // proposedLabels.forEach(function(label) {
   //   if (label.pos - keepLabels[keepLabels.length-1].pos > 10) {
   //     keepLabels.push(label);
   //   }
   // });
   // 
+
+  // YOURNAME:
+  // YOURCOMMENT
   // var labelPos = keepLabels.map(function(x) { return x.pos });
+
+  // YOURNAME:
+  // YOURCOMMENT
   // var labels = keepLabels.map(function(x) { return x.label });
 
   return toHTML(IMG({src: 
@@ -681,6 +918,9 @@ function latest_histogram(latest_f, stat) {
   }));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function latest(latest_f, stat) {
   if (this["latest_"+stat.type]) {
     return this["latest_"+stat.type](latest_f, stat);
@@ -689,6 +929,9 @@ function latest(latest_f, stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dropdown(name, options, selected) {
   var select;
   if (typeof(name) == 'string') {
@@ -697,6 +940,9 @@ function dropdown(name, options, selected) {
     select = SELECT(name);
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addOption(value, content) {
     var opt = OPTION({value: value}, content || value);
     if (value == selected) {
@@ -713,9 +959,15 @@ function dropdown(name, options, selected) {
   return select;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   var categoriesToStats = {};
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(statDisplays, function(catName, statArray) {
     categoriesToStats[catName] = statArray.map(_renderableStat);
   });
@@ -728,6 +980,9 @@ function render_main() {
      optionsForm: _optionsForm() });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _optionsForm() {
   return FORM({id: "statprefs", method: "POST"}, "Show data with granularity: ",
               // dropdown({name: 'showLiveOrHistorical', onchange: 'formChanged();'}, 
@@ -745,6 +1000,9 @@ function _optionsForm() {
               INPUT({type: "hidden", name: "fragment", id: "fragment", value: "health"}));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_main() {
 //   var body = BODY();
 // 
@@ -764,6 +1022,9 @@ function _optionsForm() {
 //   }
 // 
 //   var statNames = statDisplays[cat];
+
+// YOURNAME:
+// YOURCOMMENT
 //   statNames.forEach(function(sn) {
 //     if (!request.params.stat || (request.params.stat == sn)) {
 //       body.push(_renderableStat(sn));
@@ -774,6 +1035,9 @@ function _optionsForm() {
 //   response.write(HTML(HEAD(html(helpers.cssIncludes())), body));
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getLatest(stat) {
   var minutesPerSample = _timescale();
 
@@ -784,6 +1048,9 @@ function _getLatest(stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getGraph(stat) {
   var minutesPerSample = _timescale();
 
@@ -794,13 +1061,22 @@ function _getGraph(stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getDataLinks(stat) {
   if (_showLiveStats()) {
     return;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function listToLinks(list) {
     var links = []; //SPAN({className: "datalink"}, "(data for ");
+
+    // YOURNAME:
+    // YOURCOMMENT
     list.forEach(function(statName) {
       links.push(toHTML(A({href: "/ep/admin/usagestats/data?statName="+statName}, statName)));
     });
@@ -811,6 +1087,9 @@ function _getDataLinks(stat) {
   switch (stat.type) {
     case 'compare':
       var stats = [];
+
+      // YOURNAME:
+      // YOURCOMMENT
       stat.stats.map(function(stat) { return getUsedStats(stat.stat); }).forEach(function(list) {
         stats = stats.concat(list);
       });
@@ -822,6 +1101,9 @@ function _getDataLinks(stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderableStat(stat) {
   var minutesPerSample = _timescale();
 
@@ -856,9 +1138,15 @@ function _renderableStat(stat) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_data() {
   var sn = request.params.statName;
   var t = TABLE({border: 1, cellpadding: 2, style: "font-family: monospace;"});
+
+  // YOURNAME:
+  // YOURCOMMENT
   _listStats(sn).forEach(function(s) {
     var tr = TR();
     tr.push(TD((s.id)));
@@ -870,6 +1158,9 @@ function render_data() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function renderStat(body, statName) {
 //   var div = DIV({className: 'statbox'});
 //   div.push(A({className: "stat-title", href: qpath({stat: statName})},
@@ -891,6 +1182,9 @@ function render_data() {
 //     var displayData = statistics.liveSnapshot(data);
 //     var t = TABLE({border: 0});
 //     var tcount = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 //     ["minute", "hour", "fourHour", "day"].forEach(function(timescale) {
 //       if (! _showTimescale(timescale)) { return; }
 //       var tr = TR();
@@ -918,8 +1212,14 @@ function render_data() {
 //           var pcts = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 //           var max = percentiles["100"] || 1000;
 //           cell.push(IMG({src: "http://chart.apis.google.com/chart?chs=340x100&cht=bvs&chd=t:"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                             pcts.map(function(pct) { return Math.round(percentiles[""+pct]/max*100); }).join(",")+
 //                             "&chxt=x,y&chxl=0:|"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                             pcts.map(function(pct) { return ""+pct+"%"; }).join("|")+
 //                             "&chxr=0,0,100|1,0,"+max+""}))
 //           // td.push("50%: ", B(percentiles["50"]), " ",
@@ -941,10 +1241,16 @@ function render_data() {
 // old output.
 
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function getStatsForCategory(category) {
 //   var statnames = statistics.getAllStatNames();
 //   
 //   var matchingStatNames = [];
+
+// YOURNAME:
+// YOURCOMMENT
 //   statnames.forEach(function(sn) {
 //     if (statistics.getStatData(sn).category == category) {
 //       matchingStatNames.push(sn);
@@ -954,26 +1260,41 @@ function render_data() {
 //   return matchingStatNames;
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function renderCategoryList() {
 //   var body = BODY();
 // 
 //   catNames = getCategoryNames();
 //   body.push(P("Please select a statistics category:"));
+
+// YOURNAME:
+// YOURCOMMENT
 //   catNames.sort().forEach(function(catname) {
 //     body.push(P(A({href: "/ep/admin/usagestats/?cat="+catname}, catname)));
 //   });
 //   response.write(body);
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function getCategoryNames() {
 //   var statnames = statistics.getAllStatNames();
 //   var catNames = {};
+
+// YOURNAME:
+// YOURCOMMENT
 //   statnames.forEach(function(sn) {
 //     catNames[statistics.getStatData(sn).category] = true;
 //   });
 //   return keys(catNames);
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function dropdown(name, options, selected) {
 //   var select;
 //   if (typeof(name) == 'string') {
@@ -982,6 +1303,9 @@ function render_data() {
 //     select = SELECT(name);
 //   }
 //   
+
+// YOURNAME:
+// YOURCOMMENT
 //   function addOption(value, content) {
 //     var opt = OPTION({value: value}, content || value);
 //     if (value == selected) {
@@ -998,9 +1322,15 @@ function render_data() {
 //   return select;
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function getCategorizedStats() {
 //   var statnames = statistics.getAllStatNames();
 //   var categories = {}
+
+// YOURNAME:
+// YOURCOMMENT
 //   statnames.forEach(function(sn) {
 //     var category = statistics.getStatData(sn).category
 //     if (! categories[category]) {
@@ -1011,10 +1341,19 @@ function render_data() {
 //   return categories;
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_ajax() {
 //   var categoriesToStats = getCategorizedStats();
 //   
+
+// YOURNAME:
+// YOURCOMMENT
 //   eachProperty(categoriesToStats, function(catName, statArray) {
+
+// YOURNAME:
+// YOURCOMMENT
 //     categoriesToStats[catName] = statArray.map(function(statObject) {
 //       return {
 //         specialState: "",
@@ -1031,10 +1370,16 @@ function render_data() {
 //      categoriesToStats: categoriesToStats });
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_main() {
 //   var body = BODY();
 //                         
 //   var statNames = statistics.getAllStatNames(); //getStatsForCategory(request.params.cat);
+
+// YOURNAME:
+// YOURCOMMENT
 //   statNames.forEach(function(sn) {
 //     renderStat(body, sn);
 //   });
@@ -1047,6 +1392,9 @@ function render_data() {
 //   pad_startup_times: ", max response time in milliseconds of fastest N% of requests"
 // };
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function liveStatDisplayHtml(statObject) {
 //   var displayData = statistics.liveSnapshot(statObject);
 //   switch (statObject.plotType) {
@@ -1054,6 +1402,9 @@ function render_data() {
 //       return displayData;
 //     case 'topValues':
 //       var data = {}
+
+// YOURNAME:
+// YOURCOMMENT
 //       eachProperty(displayData, function(timescale, tsdata) {
 //         data[timescale] = ""
 //         var top = tsdata.topValues;
@@ -1067,14 +1418,23 @@ function render_data() {
 //       return data;
 //     case 'histogram':
 //       var imgs = {}
+
+// YOURNAME:
+// YOURCOMMENT
 //       eachProperty(displayData, function(timescale, tsdata) {
 //         var percentiles = tsdata;
 //         var pcts = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 //         var max = percentiles["100"] || 1000;
 //         imgs[timescale] = 
 //           toHTML(IMG({src: "http://chart.apis.google.com/chart?chs=400x100&cht=bvs&chd=t:"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                            pcts.map(function(pct) { return Math.round(percentiles[""+pct]/max*100); }).join(",")+
 //                            "&chxt=x,y&chxl=0:|"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                            pcts.map(function(pct) { return ""+pct+"%"; }).join("|")+
 //                            "&chxr=0,0,100|1,0,"+max+""}));
 //       });
@@ -1082,6 +1442,9 @@ function render_data() {
 //   }  
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function renderStat(body, statName) {
 //   var div = DIV({style: 'float: left; text-align: center; margin: 3px; border: 1px solid black;'})
 //   div.push(P(statName, descriptions[statName] || ""));
@@ -1090,6 +1453,9 @@ function render_data() {
 //     var displayData = statistics.liveSnapshot(data);
 //     var t = TABLE();
 //     var tcount = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 //     ["minute", "hour", "fourHour", "day"].forEach(function(timescale) {
 //       if (! _showTimescale(timescale)) { return; }
 //       var tr = TR();
@@ -1115,8 +1481,14 @@ function render_data() {
 //           var pcts = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 //           var max = percentiles["100"] || 1000;
 //           td.push(IMG({src: "http://chart.apis.google.com/chart?chs=340x100&cht=bvs&chd=t:"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                             pcts.map(function(pct) { return Math.round(percentiles[""+pct]/max*100); }).join(",")+
 //                             "&chxt=x,y&chxl=0:|"+
+
+// YOURNAME:
+// YOURCOMMENT
 //                             pcts.map(function(pct) { return ""+pct+"%"; }).join("|")+
 //                             "&chxr=0,0,100|1,0,"+max+""}))
 //           // td.push("50%: ", B(percentiles["50"]), " ",
@@ -1140,6 +1512,9 @@ function render_data() {
 //   body.push(div);
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_graph() {
 //   var sn = request.params.statName;
 //   if (!sn) {
@@ -1149,15 +1524,27 @@ function render_data() {
 // }
 // 
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_exceptions() {
 //   var logNames = ["frontend/exception", "backend/exceptions"];
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_updatehistory() {
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 //   sqlcommon.withConnection(function(conn) {
 //     var stmnt = "delete from statistics;";
 //     var s = conn.createStatement();
+
+// YOURNAME:
+// YOURCOMMENT
 //     sqlcommon.closing(s, function() {
 //       s.execute(stmnt);
 //     });
@@ -1165,6 +1552,9 @@ function render_data() {
 // 
 //   var processed = {};
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 //   function _domonth(y, m) {
 //     for (var i = 0; i < 32; i++) {
 //       _processStatsDay(y, m, i, processed);
@@ -1185,6 +1575,9 @@ function render_data() {
 //   response.redirect('/ep/admin/usagestats');
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function _processStatsDay(year, month, date, processed) {
 //   var now = new Date();
 //   var day = new Date();

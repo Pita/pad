@@ -14,15 +14,27 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padmodals = (function() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   /*var clearFeedbackEmail = function() {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   function clearFeedback() {
     clearFeedbackEmail();
     $("#feedbackbox-message").val('');
   }
 
   var sendingFeedback = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setSendingFeedback(v) {
     v = !! v;
     if (sendingFeedback != v) {
@@ -37,6 +49,9 @@ var padmodals = (function() {
   }*/
 
   var sendingInvite = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setSendingInvite(v) {
     v = !! v;
     if (sendingInvite != v) {
@@ -50,53 +65,95 @@ var padmodals = (function() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var clearShareBoxTo = function() {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   function clearShareBox() {
     clearShareBoxTo();
   }
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function() {
       self.initFeedback();
       self.initShareBox();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     initFeedback: function() {
       /*var emailField = $("#feedbackbox-email");
       clearFeedbackEmail =
         padutils.makeFieldLabeledWhenEmpty(emailField, '(your email address)').clear;
       clearFeedback();*/
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#feedbackbox-hide").click(function() {
         self.hideModal();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       /*$("#feedbackbox-send").click(function() {
         self.sendFeedbackEmail();
       });*/
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#feedbackbutton").click(function() {
         self.showFeedback();
       });
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#uservoicelinks a").click(function() {
         self.hideModal();
         return true;
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#feedbackemails a").each(function() {
         var node = $(this);
         node.attr('href', "mailto:"+node.attr('href')+"@etherpad.com");
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     initShareBox: function() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#sharebutton, #nootherusers a").click(function() {
         self.showShareBox();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#sharebox-hide").click(function() {
         self.hideModal();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#sharebox-send").click(function() {
         self.sendInvite();
       });
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#sharebox-url").click(function() {
         $("#sharebox-url").focus().select();
       });
@@ -109,19 +166,31 @@ var padmodals = (function() {
       $("#sharebox-subject").val(self.getDefaultShareBoxSubjectForName(pad.getUserName()));
       $("#sharebox-message").val(self.getDefaultShareBoxMessageForName(pad.getUserName()));
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#sharebox-stripe .setsecurity").click(function() {
         self.hideModal();
         paddocbar.setShownPanel('security');
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDefaultShareBoxMessageForName: function(name) {
       return (name || "Somebody")+" has shared an EtherPad document with you."+
         "\n\n"+"View it here:\n\n"+
         padutils.escapeHtml($(".sharebox-url").val()+"\n");
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDefaultShareBoxSubjectForName: function(name) {
       return (name || "Somebody")+" invited you to an EtherPad document";
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     relayoutWithBottom: function(px) {
       $("#modaloverlay").height(px);
       $("#sharebox").css('left',
@@ -131,9 +200,15 @@ var padmodals = (function() {
                             Math.floor(($(window).width() -
                                         $("#feedbackbox").outerWidth())/2));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     showFeedback: function() {
       self.showModal("#feedbackbox");
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     showShareBox: function() {
       // when showing the dialog, if it still says "Somebody" invited you
       // then we fill in the updated username if there is one;
@@ -157,30 +232,57 @@ var padmodals = (function() {
       self.showModal("#sharebox", 500);
       $("#sharebox-url").focus().select();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     showModal: function(modalId, duration) {
       $(".modaldialog").hide();
       $(modalId).show().css({'opacity': 0}).animate({'opacity': 1}, duration);
       $("#modaloverlay").show().css({'opacity': 0}).animate({'opacity': 1}, duration);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideModal: function(duration) {
       padutils.cancelActions('hide-feedbackbox');
       padutils.cancelActions('hide-sharebox');
       $("#sharebox-response").hide();
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(".modaldialog").animate({'opacity': 0}, duration, function () { $("#modaloverlay").hide(); });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#modaloverlay").animate({'opacity': 0}, duration, function () { $("#modaloverlay").hide(); });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideFeedbackLaterIfNoOtherInteraction: function() {
       return padutils.getCancellableAction('hide-feedbackbox',
+
+                                           // YOURNAME:
+                                           // YOURCOMMENT
                                            function() {
                                              self.hideModal();
                                            });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideShareboxLaterIfNoOtherInteraction: function() {
       return padutils.getCancellableAction('hide-sharebox',
+
+                                           // YOURNAME:
+                                           // YOURCOMMENT
                                            function() {
                                              self.hideModal();
                                            });
     },
+
+// YOURNAME:
+// YOURCOMMENT
 /*    sendFeedbackEmail: function() {
       if (sendingFeedback) {
         return;
@@ -209,23 +311,38 @@ var padmodals = (function() {
         error: error
       });
       var hideCall = self.hideFeedbackLaterIfNoOtherInteraction();
+
+      // YOURNAME:
+      // YOURCOMMENT
       function success(msg) {
         setSendingFeedback(false);
         clearFeedback();
         $("#feedbackbox-response").html("Thanks for your feedback").get(0).className = 'goodresponse';
         $("#feedbackbox-response").show();
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.setTimeout(function() {
+
+          // YOURNAME:
+          // YOURCOMMENT
           $("#feedbackbox-response").fadeOut('slow', function() {
             hideCall();
           });
         }, 1500);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function error(e) {
         setSendingFeedback(false);
         $("#feedbackbox-response").html("Could not send feedback.  Please email us at feedback"+"@"+"etherpad.com instead.").get(0).className = 'badresponse';
         $("#feedbackbox-response").show();
       }
     },*/
+
+    // YOURNAME:
+    // YOURCOMMENT
     sendInvite: function() {
       if (sendingInvite) {
         return;
@@ -281,21 +398,36 @@ var padmodals = (function() {
         error: error
       });
       var hideCall = self.hideShareboxLaterIfNoOtherInteraction();
+
+      // YOURNAME:
+      // YOURCOMMENT
       function success(msg) {
         setSendingInvite(false);
         $("#sharebox-response").html("Email invitation sent!").get(0).className = 'goodresponse';
         $("#sharebox-response").show();
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.setTimeout(function() {
+
+          // YOURNAME:
+          // YOURCOMMENT
           $("#sharebox-response").fadeOut('slow', function() {
             hideCall();
           });
         }, 1500);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function error(e) {
         setSendingFeedback(false);
         $("#sharebox-response").html("An error occurred; no email was sent.").get(0).className = 'badresponse';
         $("#sharebox-response").show();
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function displayErrorMessage(msgHtml) {
         $("#sharebox-response").html(msgHtml).get(0).className = 'badresponse';
         $("#sharebox-response").show();

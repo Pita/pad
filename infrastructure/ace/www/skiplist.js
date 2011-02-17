@@ -18,11 +18,20 @@
 
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function newSkipList() {
   var PROFILER = window.PROFILER;
   if (!PROFILER) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     PROFILER = function() { return {start:noop, mark:noop, literal:noop, end:noop, cancel:noop}; };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function noop() {}
 
   // if there are N elements in the skiplist, "start" is element -1 and "end" is element N
@@ -38,6 +47,9 @@ function newSkipList() {
   // After an insert or delete using point P, the point is still valid and points
   // to the same index in the skiplist.  Other operations with other points invalidate
   // this point.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getPoint(targetLoc) {
     var numLevels = start.levels;
     var lvl = numLevels-1;
@@ -64,9 +76,15 @@ function newSkipList() {
 	nodes[lvl] = n;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     return {nodes:nodes, idxs:idxs, loc:targetLoc, widthSkips:widthSkips, toString: function() {
       return "getPoint("+targetLoc+")"; } };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getNodeAtOffset(targetOffset) {
     var i = 0;
     var n = start;
@@ -82,7 +100,13 @@ function newSkipList() {
     else if (n === end) return (targetOffset == totalWidth ? (end.upPtrs[0] || null) : null);
     return n;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _entryWidth(e) { return (e && e.width) || 0; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _insertKeyAtPoint(point, newKey, entry) {
     var p = PROFILER("insertKey", false);
     var newNode = {key:newKey, levels: 0, upPtrs:[], downPtrs:[], downSkips:[], downSkipWidths:[]};
@@ -138,9 +162,15 @@ function newSkipList() {
     totalWidth += newWidth;
     p.end();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getNodeAtPoint(point) {
     return point.nodes[0].downPtrs[0];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _incrementPoint(point) {
     point.loc++;
     for(var i=0;i<point.nodes.length;i++) {
@@ -151,6 +181,9 @@ function newSkipList() {
       }
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _deleteKeyAtPoint(point) {
     var elem = point.nodes[0].downPtrs[0];
     var elemWidth = _entryWidth(elem.entry);
@@ -176,6 +209,9 @@ function newSkipList() {
     numNodes--;
     totalWidth -= elemWidth;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _propagateWidthChange(node) {
     var oldWidth = node.downSkipWidths[0];
     var newWidth = _entryWidth(node.entry);
@@ -191,6 +227,9 @@ function newSkipList() {
     }
     totalWidth += widthChange;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getNodeIndex(node, byWidth) {
     var dist = (byWidth ? 0 : -1);
     var n = node;
@@ -202,11 +241,17 @@ function newSkipList() {
     }
     return dist;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   /*function _debugToString() {
     var array = [start];
     while (array[array.length-1] !== end) {
       array[array.length] = array[array.length-1].downPtrs[0];
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getIndex(node) {
       if (!node) return null;
       for(var i=0;i<array.length;i++) {
@@ -215,15 +260,24 @@ function newSkipList() {
       }
       return false;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     var processedArray = map(array, function(node) {
       var x = {key:node.key, levels: node.levels, downSkips: node.downSkips,
 	upPtrs: map(node.upPtrs, getIndex), downPtrs: map(node.downPtrs, getIndex),
 	downSkipWidths: node.downSkipWidths};
       return x;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     return map(processedArray, function (x) { return x.toSource(); }).join("\n");
   }*/
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getNodeByKey(key) {
     return keyToNodeMap['$KEY$'+key];
   }
@@ -231,10 +285,16 @@ function newSkipList() {
   // Returns index of first entry such that entryFunc(entry) is truthy,
   // or length() if no such entry.  Assumes all falsy entries come before
   // all truthy entries.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _search(entryFunc) {
     var low = start;
     var lvl = start.levels-1;
     var lowIndex = -1;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function f(node) {
       if (node === start) return false;
       else if (node === end) return true;
@@ -257,13 +317,22 @@ The skip-list contains "entries", JavaScript objects that each must have a uniqu
 that is a string.
 */
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     length: function() { return numNodes; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     atIndex: function(i) {
       if (i < 0) console.warn("atIndex("+i+")");
       if (i >= numNodes) console.warn("atIndex("+i+">="+numNodes+")");
       return _getNodeAtPoint(_getPoint(i)).entry;
     },
     // differs from Array.splice() in that new elements are in an array, not varargs
+
+    // YOURNAME:
+    // YOURCOMMENT
     splice: function(start, deleteCount, newEntryArray) {
       if (start < 0) console.warn("splice("+start+", ...)");
       if (start + deleteCount > numNodes) {
@@ -284,15 +353,27 @@ that is a string.
 	node.entry = entry;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     next: function (entry) {
       return _getNodeByKey(entry.key).downPtrs[0].entry || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     prev: function (entry) {
       return _getNodeByKey(entry.key).upPtrs[0].entry || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     push: function(entry) {
       self.splice(numNodes, 0, [entry]);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     slice: function(start, end) {
       // act like Array.slice()
       if (start === undefined) start = 0;
@@ -315,32 +396,74 @@ that is a string.
       }
       return array;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     atKey: function(key) { return _getNodeByKey(key).entry; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfKey: function(key) { return _getNodeIndex(_getNodeByKey(key)); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfEntry: function (entry) { return self.indexOfKey(entry.key); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     containsKey: function(key) { return !!(_getNodeByKey(key)); },
     // gets the last entry starting at or before the offset
+
+    // YOURNAME:
+    // YOURCOMMENT
     atOffset: function(offset) { return _getNodeAtOffset(offset).entry; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyAtOffset: function(offset) { return self.atOffset(offset).key; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfKey: function(key) { return _getNodeIndex(_getNodeByKey(key), true); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfEntry: function(entry) { return self.offsetOfKey(entry.key); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setEntryWidth: function(entry, width) { entry.width = width; _propagateWidthChange(_getNodeByKey(entry.key)); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     totalWidth: function() { return totalWidth; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfIndex: function(i) {
       if (i < 0) return 0;
       if (i >= numNodes) return totalWidth;
       return self.offsetOfEntry(self.atIndex(i));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfOffset: function(offset) {
       if (offset <= 0) return 0;
       if (offset >= totalWidth) return numNodes;
       return self.indexOfEntry(self.atOffset(offset));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(entryFunc) {
       return _search(entryFunc);
     },
     //debugToString: _debugToString,
     debugGetPoint: _getPoint,
+
+    // YOURNAME:
+    // YOURCOMMENT
     debugDepth: function() { return start.levels; }
   }
   return self;

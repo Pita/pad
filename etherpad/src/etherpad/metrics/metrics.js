@@ -23,17 +23,29 @@ jimport("java.lang.System.out.println");
 
 var _idleTime = 5*60*1000 // 5 minutes?
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _isPadUrl(url) {
   return url != '/' && ! startsWith(url, '/ep/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function VisitData(url, referer) {
   this.url = url;
   this.referer = referer;
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__('isPadVisit', function() { 
     return _isPadUrl(this.url);
   });
 }
+
+// YOURNAME:
+// YOURCOMMENT
 VisitData.prototype.toString = function() {
   var re = new RegExp("^https?://"+request.host);
   if (this.referer && ! re.test(this.referer)) {
@@ -43,21 +55,33 @@ VisitData.prototype.toString = function() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Event(time, type, data) {
   this.time = time;
   this.type = type;
   this.data = data;
 }
+
+// YOURNAME:
+// YOURCOMMENT
 Event.prototype.toString = function() {
   return "("+this.type+" "+this.data+" @ "+this.time.getTime()+")";  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Flow(sessionKey, startEvent) {
   this.sessionKey = sessionKey;
   this.events = [];
   this.visitedPaths = {};
   var visitCount = 0;
   var visitsCache;
+
+  // YOURNAME:
+  // YOURCOMMENT
   this._updateVisitedPaths = function(url) {
     if (! this.visitedPaths[url]) {
       this.visitedPaths[url] = [visitCount];
@@ -66,6 +90,9 @@ function Flow(sessionKey, startEvent) {
     }    
   }
   var isInPad = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.push = function(evt) {
     evt.flow = this;
     this.events.push(evt);
@@ -82,12 +109,24 @@ function Flow(sessionKey, startEvent) {
       isInPad--;
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("isInPad", function() { return isInPad > 0; });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("lastEvent", function() { 
     return this.events[this.events.length-1]; 
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("visits", function() {
     if (! visitsCache) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       visitsCache = this.events.filter(function(x) { return x.type == "visit" });
     }
     return visitsCache;
@@ -95,12 +134,24 @@ function Flow(sessionKey, startEvent) {
   startEvent.flow = this;
   this.push(startEvent);
 }
+
+// YOURNAME:
+// YOURCOMMENT
 Flow.prototype.toString = function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return "["+this.events.map(function(x) { return x.toString(); }).join(", ")+"]";
 }
+
+// YOURNAME:
+// YOURCOMMENT
 Flow.prototype.includesVisit = function(path, index, useExactIndexMatch) {
   if (! this.visitedPaths[path]) return false;
   if (useExactIndexMatch) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return this.visitedPaths[path].some(function(x) { return x == index });
   } else {
     if (index) {
@@ -114,19 +165,31 @@ Flow.prototype.includesVisit = function(path, index, useExactIndexMatch) {
     }
   }
 }
+
+// YOURNAME:
+// YOURCOMMENT
 Flow.prototype.visitIndices = function(path) {
   return this.visitedPaths[path] || [];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getKeyForDate(date) {
   return date.getYear()+":"+date.getMonth()+":"+date.getDay();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseEvents(dates) {
   if (! appjet.cache["metrics-events"]) {
     appjet.cache["metrics-events"] = {};
   }
   var events = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   function eventArray(key) {
     if (! events[key]) {
       events[key] = [];
@@ -134,10 +197,19 @@ function parseEvents(dates) {
     return events[key];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   dates.sort(function(a, b) { return a.getTime() - b.getTime(); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   dates.forEach(function(day) {
     if (! appjet.cache["metrics-events"][getKeyForDate(day)]) {
       var daysEvents = {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       function daysEventArray(key) {
         if (! daysEvents[key]) {
           daysEvents[key] = [];
@@ -146,6 +218,9 @@ function parseEvents(dates) {
       }
       var requestLog = frontendLogFileName("request", day);
       if (requestLog) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         eachFileLine(requestLog, function(line) {
           var s = line.split("\t");
           var sessionKey = s[3];
@@ -167,6 +242,9 @@ function parseEvents(dates) {
       }
       var padEventLog = frontendLogFileName("padevents", day);
       if (padEventLog) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         eachFileLine(padEventLog, function(line) {
           var s = line.split("\t");
           var sessionKey = s[7];
@@ -179,6 +257,9 @@ function parseEvents(dates) {
       }
       var chatLog = frontendLogFileName("chat", day);
       if (chatLog) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         eachFileLine(chatLog, function(line) {
           var s = line.split("\t");
           var sessionKey = s[4];
@@ -188,11 +269,20 @@ function parseEvents(dates) {
           daysEventArray(sessionKey).push(new Event(time, "chat", padId));
         });
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       eachProperty(daysEvents, function(k, v) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         v.sort(function(a, b) { return a.time.getTime() - b.time.getTime()});
       });
       appjet.cache["metrics-events"][getKeyForDate(day)] = daysEvents;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(appjet.cache["metrics-events"][getKeyForDate(day)], function(k, v) {
       Array.prototype.push.apply(eventArray(k), v);
     });
@@ -201,6 +291,9 @@ function parseEvents(dates) {
   return events;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getFlows(startDate, endDate) {
   if (! endDate) { endDate = startDate; }
   if (! appjet.cache.flows || request.params.clearCache == "1") {
@@ -218,8 +311,14 @@ function getFlows(startDate, endDate) {
   var events = parseEvents(datesForEvents);
   var flows = {};
     
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(events, function(k, eventArray) {
     flows[k] = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     function lastFlow() {
       var f = flows[k];
       if (f.length > 0) {
@@ -227,6 +326,9 @@ function getFlows(startDate, endDate) {
       }
     }
     var lastTime = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     eventArray.forEach(function(evt) {
       var l = lastFlow();
       
@@ -241,8 +343,14 @@ function getFlows(startDate, endDate) {
   return flows;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _uniq(array) {
   var seen = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   return array.filter(function(x) {
     if (seen[x]) {
       return false;
@@ -252,11 +360,23 @@ function _uniq(array) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getFunnel(startDate, endDate, pathsArray, useConsecutivePaths) {
   var flows = getFlows(startDate, endDate)
     
+
+  // YOURNAME:
+  // YOURCOMMENT
   var flowsAtStep = pathsArray.map(function() { return []; });
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(flows, function(k, flowArray) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     flowArray.forEach(function(flow) {
       if (flow.includesVisit(pathsArray[0])) {
         flowsAtStep[0].push({f: flow, i: flow.visitIndices(pathsArray[0])});
@@ -264,13 +384,22 @@ function getFunnel(startDate, endDate, pathsArray, useConsecutivePaths) {
     });
   });
   for (var i = 0; i < pathsArray.length-1; ++i) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     flowsAtStep[i].forEach(function(fobj) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       var newIndices = fobj.i.map(function(index) { 
         var nextIndex = 
           fobj.f.includesVisit(pathsArray[i+1], index+1, useConsecutivePaths);
         if (nextIndex !== false) {
           return (useConsecutivePaths ? index+1 : nextIndex);
         }
+
+      // YOURNAME:
+      // YOURCOMMENT
       }).filter(function(x) { return x !== undefined; });
       if (newIndices.length > 0) {
         flowsAtStep[i+1].push({f: fobj.f, i: newIndices});
@@ -278,14 +407,29 @@ function getFunnel(startDate, endDate, pathsArray, useConsecutivePaths) {
     });
   }
   return {
+
+    // YOURNAME:
+    // YOURCOMMENT
     flows: flowsAtStep.map(function(x) { return x.map(function(y) { return y.f; }); }),
+
+    // YOURNAME:
+    // YOURCOMMENT
     visitCounts: flowsAtStep.map(function(x) { return x.length; }),
+
+    // YOURNAME:
+    // YOURCOMMENT
     visitorCounts: flowsAtStep.map(function(x) { 
+
+      // YOURNAME:
+      // YOURCOMMENT
       return _uniq(x.map(function(y) { return y.f.sessionKey; })).length 
     })
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeHistogram(array) {
   var counts = {};
   for (var i = 0; i < array.length; ++i) {
@@ -296,19 +440,31 @@ function makeHistogram(array) {
     counts[value]++;
   }
   var histogram = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(counts, function(k, v) {
     histogram.push({value: k, count: v, fraction: (v / array.length)});
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   histogram.sort(function(a, b) { return b.count - a.count; });
   return histogram;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getOrigins(startDate, endDate, useReferer, shouldAggregatePads) {
   var key = (useReferer ? "referer" : "url");
   var flows = getFlows(startDate, endDate);
   
   var sessionKeyFirsts = [];
   var flowFirsts = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(flows, function(k, flowArray) {
     if (flowArray[0].visits[0] && flowArray[0].visits[0].data &&
         flowArray[0].visits[0].data[key]) {
@@ -317,6 +473,9 @@ function getOrigins(startDate, endDate, useReferer, shouldAggregatePads) {
         (shouldAggregatePads && ! useReferer && _isPadUrl(path) ?
          "(pad)" : path));
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     flowArray.forEach(function(flow) {
       if (flow.visits[0] && flow.visits[0].data &&
           flow.visits[0].data[key]) {
@@ -329,7 +488,13 @@ function getOrigins(startDate, endDate, useReferer, shouldAggregatePads) {
   });
   
   if (useReferer) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     flowFirsts = flowFirsts.filter(function(x) { return ! startsWith(x, "http://etherpad.com"); });
+
+    // YOURNAME:
+    // YOURCOMMENT
     sessionKeyFirsts = sessionKeyFirsts.filter(function(x) { return ! startsWith(x, "http://etherpad.com"); });
   }
   
@@ -339,12 +504,21 @@ function getOrigins(startDate, endDate, useReferer, shouldAggregatePads) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getExits(startDate, endDate, src, shouldAggregatePads) {
   var flows = getFlows(startDate, endDate);
   
   var exits = [];
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(flows, function(k, flowArray) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     flowArray.forEach(function(flow) {
       var indices = flow.visitIndices(src);
       for (var i = 0; i < indices.length; ++i) {
@@ -360,6 +534,9 @@ function getExits(startDate, endDate, src, shouldAggregatePads) {
   });
   return {
     nextVisits: exits,
+
+    // YOURNAME:
+    // YOURCOMMENT
     histogram: makeHistogram(exits.map(function(x) { 
       if (typeof(x) == 'string') return x;
       return ((! shouldAggregatePads) || ! _isPadUrl(x.data.url) ?
@@ -373,10 +550,16 @@ jimport("org.jfree.chart.plot.PiePlot");
 jimport("org.jfree.chart.ChartUtilities");
 jimport("org.jfree.chart.JFreeChart");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _fToPct(f) {
   return Math.round(f*10000)/100;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _shorten(str) {
   if (startsWith(str, "http://")) {
     str = str.substring("http://".length);
@@ -389,6 +572,9 @@ function _shorten(str) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function respondWithPieChart(name, histogram) {
   var width = 900;
   var height = 300;
@@ -398,6 +584,9 @@ function respondWithPieChart(name, histogram) {
   var cumulative = 0;
   var other = 0;
   var otherCount = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   histogram.forEach(function(x, i) {
     cumulative += x.fraction;
     if (cumulative < 0.98 && x.fraction > .01) {

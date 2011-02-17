@@ -29,6 +29,9 @@ import("sqlbase.sqlbase");
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {  
   var isPro = pro_utils.isProDomainRequest();
   var userId = padusers.getUserId();

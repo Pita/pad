@@ -26,6 +26,9 @@ var _legacyURLs = {
   '/ep/blog/posts/back-online-until-open-sourced': '/ep/blog/posts/etherpad-back-online-until-open-sourced'
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkPath() {
   var p = request.path;
   var match = _legacyURLs[p];

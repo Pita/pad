@@ -1,14 +1,23 @@
 /* Inspired by JUITTER 1.0.0 BY RODRIGO FANTE -- Thanks Mr. Juitter :)*/
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function RTRCrunMainLoop(){
   setTimeout('RTRCrunMainLoop()', 5000);
   $.getJSON("http://" + host + "/ep/search?format=json",
+
+      // YOURNAME:
+      // YOURCOMMENT
       function(data){
         RTRCdoSomethingWithJSON(data);
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function RTRCdoSomethingWithJSON(json){
   if (json != undefined && json != ""){
     var msgNb = 0;
@@ -17,6 +26,9 @@ function RTRCdoSomethingWithJSON(json){
     $("div.realtimedata").append('<ul class="allmatches">')
 
     /* Mark up each of the matching pads. */
+
+    // YOURNAME:
+    // YOURCOMMENT
     jQuery.each(json.matchingPads, function(i,item){
             /* Inserting and marking up the items we obtained. */
             if (item.ID != undefined) {
@@ -56,6 +68,9 @@ function RTRCdoSomethingWithJSON(json){
 
     if(msgNb>=maxNumMessages){
         jQuery(".matchingpad").each(
+
+            // YOURNAME:
+            // YOURCOMMENT
             function(k,elemLI){
                 if(k >= maxNumMessages)
                     jQuery(this).hide("slow");

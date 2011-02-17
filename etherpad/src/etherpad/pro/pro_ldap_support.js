@@ -11,6 +11,9 @@ jimport("javax.naming.NamingEnumeration");
 jimport("javax.naming.Context");
 jimport("java.util.Hashtable");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function LDAP(config, errortext) {
   if(!config)
     this.error = errortext;
@@ -20,6 +23,9 @@ function LDAP(config, errortext) {
   this.ldapConfig = config;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dmesg(m) {
   // if (!isProduction()) {
     println(new String(m));
@@ -32,6 +38,9 @@ function _dmesg(m) {
  * will either have error = true, with a corrisponding error message,
  * or will have error = false, with a corrisponding results object message
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function LDAPResult(msg, error, ldap) {
   if(!ldap) ldap = getLDAP();
   if(!error) error = false;
@@ -44,6 +53,9 @@ function LDAPResult(msg, error, ldap) {
  * returns the full name attribute, as specified by the 'nameAttribute' config
  * value.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 LDAPResult.prototype.getFullName = function() {
   return this.message[this.ldap.ldapConfig['nameAttribute']][0];
 }
@@ -51,6 +63,9 @@ LDAPResult.prototype.getFullName = function() {
 /**
  * Handy function for creating an LDAPResult object
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function ldapMessage(success, msg) {
   var message = msg;
   if(typeof(msg) == String) {
@@ -65,13 +80,22 @@ function ldapMessage(success, msg) {
 
 // returns the associated ldap results object, with an error flag of false
 var ldapSuccess = 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function(msg) { return ldapMessage.apply(this, [true,  msg]); };
 
 // returns a helpful error message
 var ldapError = 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function(msg) { return ldapMessage.apply(this, [false, msg]); };
 
 /* build an LDAP Query (searches for an objectClass and uid) */
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.prototype.buildLDAPQuery = function(queryUser) {
   if(queryUser && queryUser.match(/[\w_-]+/)) {
     return "(&(objectClass=" +
@@ -80,6 +104,9 @@ LDAP.prototype.buildLDAPQuery = function(queryUser) {
   } else return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.prototype.login = function(queryUser, queryPass) {
     var query = this.buildLDAPQuery(queryUser);
     if(!query) { return ldapError("invalid LDAP username"); }
@@ -122,16 +149,25 @@ LDAP.prototype.login = function(queryUser, queryPass) {
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.prototype.isLDAPSuffix = function(email) {
   return email.indexOf(this.ldapConfig['ldapSuffix']) == 
          (email.length-this.ldapConfig['ldapSuffix'].length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.prototype.getLDAPSuffix = function() {
   return this.ldapConfig['ldapSuffix'];
 }
 
 /* static function returns a DirContext, or undefined upon authentation err */
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.authenticate = function(url, user, pass) {
   var context = null;
   try {
@@ -149,6 +185,9 @@ LDAP.authenticate = function(url, user, pass) {
 }
 
 /* turn a res */
+
+// YOURNAME:
+// YOURCOMMENT
 LDAP.parse = function(result) {
     var resultobj = {};
     try {
@@ -176,6 +215,9 @@ LDAP.parse = function(result) {
 LDAP.ldapSingleton = false;
 
 // load in ldap configuration from a file...
+
+// YOURNAME:
+// YOURCOMMENT
 function readLdapConfig(file) {
   var fileContents = BetterFile.getFileContents(file);
 
@@ -201,6 +243,9 @@ function readLdapConfig(file) {
 // }
 
 // appjet.config['etherpad.useLdapConfiguration'] = "/Users/kroo/Documents/Projects/active/AppJet/ldapConfig.json";
+
+// YOURNAME:
+// YOURCOMMENT
 function getLDAP() {
   if (!  LDAP.ldapSingleton &&
       appjet.config['etherpad.useLdapConfiguration']) {

@@ -17,8 +17,14 @@
 
 store = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
   if ($('#downloadpage').size() > 0) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     $("#license_agree, #license_agree_label").click(function() {
       if ($("#license_agree").attr("checked")) {
 	$("a.downloadbutton_disabled").removeClass("downloadbutton_disabled")
@@ -38,6 +44,9 @@ $(document).ready(function() {
 
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 store.mustAgree = function() {
   alert("You must first click 'Accept License' before downloading this software.");
 };
@@ -48,16 +57,28 @@ store.mustAgree = function() {
 
 store.eepnetTrial = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 store.eepnetTrial.init = function() {
   $("#submit").attr("disabled", false);
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("input.signupData").keydown(function() {
     $("#submit").attr("disabled", false);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("input.signupData").change(function() {
     $("#submit").attr("disabled", false);
   });
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 store.eepnetTrial.handleError = function(msg) {
   $('#processingmsg').hide();
   $('#dlsignup').show();
@@ -68,6 +89,9 @@ store.eepnetTrial.handleError = function(msg) {
   $('#submit').attr('disabled', false);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 store.eepnetTrial.submit = function() {
 
   $("#errormsg").hide();
@@ -76,6 +100,9 @@ store.eepnetTrial.submit = function() {
   
   // first submit...
   var data = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   $(".signupData").each(function() {
     data[$(this).attr("id")] = $(this).val();
   });
@@ -91,6 +118,9 @@ store.eepnetTrial.submit = function() {
     error: error
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function success(text) {
     var responseData = eval("("+text+")");
     if (responseData.error) {
@@ -101,15 +131,24 @@ store.eepnetTrial.submit = function() {
     store.eepnetTrial.submitWebToLead(responseData);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function error(e) {
     store.eepnetTrial.handleError("Oops!  There was an error processing your request.");
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 store.eepnetTrial.submitWebToLead = function(data) {
   for (k in data) {
     $('#wl_'+k).val(data[k]);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   setTimeout(function() { $('#wlform').submit(); }, 50);
 };
 

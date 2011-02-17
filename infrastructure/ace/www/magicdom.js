@@ -15,7 +15,13 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeMagicDom(rootDomNode, contentWindow){
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nodeToString(node) {
     if (isNodeText(node)) return '"'+node.nodeValue+'"';
     else return '&lt;'+node.tagName+'&gt;';
@@ -23,6 +29,9 @@ function makeMagicDom(rootDomNode, contentWindow){
   
   var doc = rootDomNode.ownerDocument || rootDomNode.document;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function childIndex(dnode) {
     var idx = 0;
     var n = dnode;
@@ -33,7 +42,13 @@ function makeMagicDom(rootDomNode, contentWindow){
     return idx;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ensureNormalized(dnode) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function mergePair(text1, text2) {
       var theParent = text1.parentNode;
       var newTextNode = mdom.doc.createTextNode(text1.nodeValue+""+text2.nodeValue);
@@ -53,6 +68,9 @@ function makeMagicDom(rootDomNode, contentWindow){
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nextUniqueId() {
     // returns new unique identifier string;
     // not actually checked for uniqueness, but unique
@@ -66,21 +84,39 @@ function makeMagicDom(rootDomNode, contentWindow){
   }
 
   var nodeProto = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     parent: function() {
       return wrapDom(((! this.isRoot) && this.dom.parentNode) || null);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     index: function() {
       return childIndex(this.dom);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     equals: function (otherNode) {
       return otherNode && otherNode.dom && (this.dom == otherNode.dom);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     prev: function() {
       return wrapDom(this.dom.previousSibling || null);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     next: function() {
       return wrapDom(this.dom.nextSibling || null);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     remove: function() {
       if (! this.isRoot) {
 	var dnode = this.dom;
@@ -94,6 +130,9 @@ function makeMagicDom(rootDomNode, contentWindow){
 	}
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     addNext: function (newNode) {
       var dnode = this.dom;
       var nextSib = dnode.nextSibling;
@@ -105,22 +144,37 @@ function makeMagicDom(rootDomNode, contentWindow){
       }
       if (newNode.isText) ensureNormalized(newNode.dom);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     addPrev: function (newNode) {
       var dnode = this.dom;
       dnode.parentNode.insertBefore(newNode.dom, dnode);
       if (newNode.isText) ensureNormalized(newNode.dom);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     replaceWith: function (newNodes) { // var-args
       this.replaceWithArray(arguments);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     replaceWithArray: function (newNodes) {
       var addFunc;
       if (this.next()) {
 	var next = this.next();
+
+// YOURNAME:
+// YOURCOMMENT
 	addFunc = function (n) { next.addPrev(n); };
       }
       else {
 	var parent = this.parent();
+
+// YOURNAME:
+// YOURCOMMENT
 	addFunc = function (n) { parent.appendChild(n); };
       }
       // when using "this" functions, have to keep text
@@ -128,18 +182,30 @@ function makeMagicDom(rootDomNode, contentWindow){
       var tempNode = mdom.newElement("span");
       this.addNext(tempNode);
       this.remove();      
+
+      // YOURNAME:
+      // YOURCOMMENT
       forEach(newNodes, function (n) {
 	addFunc(n);
       });
       tempNode.remove();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getProp: function (propName) {
       return getAssoc(this.dom, propName);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setProp: function (propName, value) {
       setAssoc(this.dom, propName, value);
     },
     // not consistent between browsers in how line-breaks are handled
+
+    // YOURNAME:
+    // YOURCOMMENT
     innerText: function() {
       var dnode = this.dom;
       if ((typeof dnode.innerText) == "string") return dnode.innerText;
@@ -147,6 +213,9 @@ function makeMagicDom(rootDomNode, contentWindow){
       if ((typeof dnode.nodeValue) == "string") return dnode.nodeValue;
       return "";
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     depth: function() {
       try { // ZZZ
 	var d = 0;
@@ -166,13 +235,28 @@ function makeMagicDom(rootDomNode, contentWindow){
   
   var textNodeProto = extend(object(nodeProto), {
     isText: true,
+
+    // YOURNAME:
+    // YOURCOMMENT
     text: function() {
       return this.dom.nodeValue;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachChild: function() {},
+
+    // YOURNAME:
+    // YOURCOMMENT
     childCount: function() { return 0; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachDescendant: function() {},
     // precondition: 0 <= start < end <= length
+
+    // YOURNAME:
+    // YOURCOMMENT
     wrapRange: function(start, end, newNode) {
       var origText = this.text();
       var text1 = null;
@@ -196,24 +280,42 @@ function makeMagicDom(rootDomNode, contentWindow){
   
   var elementNodeProto = extend(object(nodeProto), {
     isText: false,
+
+    // YOURNAME:
+    // YOURCOMMENT
     childCount: function() {
       return this.dom.childNodes.length;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     child: function (i) {
       return wrapDom(this.dom.childNodes.item(i));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     firstChild: function() {
       return ((this.childCount() > 0) && this.child(0)) || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     lastChild: function() {
       return ((this.childCount() > 0) && this.child(this.childCount()-1)) || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendChild: function (newNode) {
       this.dom.appendChild(newNode.dom);
       if (newNode.isText) {
 	ensureNormalized(newNode.dom);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     prependChild: function (newNode) {
       if (this.childCount() > 0) {
 	this.child(0).addPrev(newNode);
@@ -222,18 +324,30 @@ function makeMagicDom(rootDomNode, contentWindow){
 	this.appendChild(newNode);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachChild: function (func) {
       for(var i=0;i<this.childCount();i++) {
 	var result = func(this.child(i), i);
 	if (result) break;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachDescendant: function (func) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       this.eachChild(function (n) {
 	var result = func(n);
 	if (! result) n.eachDescendant(func);
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     dumpContents: function() {
       var mnode = this, dnode = this.dom;
       if (mnode.childCount() < 1) {
@@ -250,6 +364,9 @@ function makeMagicDom(rootDomNode, contentWindow){
 	mnode.remove();
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     uniqueId: function() {
       // not actually guaranteed to be unique, e.g. if user copy-pastes
       // nodes with ids
@@ -260,6 +377,9 @@ function makeMagicDom(rootDomNode, contentWindow){
     }
   });
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function wrapDom(dnode) {
     if (! dnode) return dnode;
     var mnode;
@@ -278,12 +398,21 @@ function makeMagicDom(rootDomNode, contentWindow){
   mdom.root = wrapDom(rootDomNode);
   mdom.doc = doc;
   mdom.win = contentWindow;
+
+  // YOURNAME:
+  // YOURCOMMENT
   mdom.byId = function (id) {
     return wrapDom(mdom.doc.getElementById(id));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   mdom.newText = function (txt) {
     return wrapDom(mdom.doc.createTextNode(txt));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   mdom.newElement = function (tagName) {
     return wrapDom(mdom.doc.createElement(tagName));
   }

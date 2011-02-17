@@ -23,8 +23,14 @@ if (!window.etherpad.pro) {
 
 etherpad.pro.padlist = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getTargetPadId(target) {
     var padmetaId = $(target).attr('id').split('-')[2];
     //console.log("padmetaId = "+padmetaId);
@@ -33,6 +39,9 @@ $(document).ready(function() {
 
   var padActionsMenu = [
     {"View Read-Only": {
+
+        // YOURNAME:
+        // YOURCOMMENT
         onclick: function(menuItem, menu) {
           var localPadId = getTargetPadId(menu.target);
           window.location.href = ("/ep/pad/view/"+localPadId+"/latest");
@@ -42,6 +51,9 @@ $(document).ready(function() {
     },
     $.contextMenu.separator,
     {"Archive": {
+
+        // YOURNAME:
+        // YOURCOMMENT
         onclick: function(menuItem, menu) {
           var localPadId = getTargetPadId(menu.target);
           etherpad.pro.padlist.toggleArchivePad(localPadId);
@@ -49,6 +61,9 @@ $(document).ready(function() {
       }
     },
     {"Delete": {
+
+        // YOURNAME:
+        // YOURCOMMENT
         onclick: function(menuItem, menu) {
           var localPadId = getTargetPadId(menu.target);
           etherpad.pro.padlist.deletePad(localPadId);
@@ -66,12 +81,18 @@ $(document).ready(function() {
   $('.gear-drop').contextMenu(padActionsMenu, {
     theme: 'gloss,gloss-cyan',
     bindTarget: 'click',
+
+    // YOURNAME:
+    // YOURCOMMENT
     beforeShow: function() {
       var localPadId = getTargetPadId(this.target);
       $('tr.selected').removeClass('selected');
       $('tr#pad-row-'+localPadId).addClass('selected');
       return true;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideCallback: function() {
       var localPadId = getTargetPadId(this.target);
       $('tr#pad-row-'+localPadId).removeClass('selected');
@@ -79,6 +100,9 @@ $(document).ready(function() {
   });
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.pro.padlist.deletePad = function(localPadId) {
   if (!confirm("Are you sure you want to delete the pad \""+clientVars.padTitles[localPadId]+"\"?")) {
     return;
@@ -96,6 +120,9 @@ etherpad.pro.padlist.deletePad = function(localPadId) {
   $("#delete-pad").submit();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.pro.padlist.toggleArchivePad = function(localPadId) {
   var inp = $("#padIdToToggleArchive");
   inp.val(localPadId);

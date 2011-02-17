@@ -11,6 +11,9 @@ import("etherpad.log");
 import("plugins.navigateByImageContent.static.js.main");
 import("plugins.navigateByImageContent.hooks");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function navigateByImageContentInit() {
  this.hooks = ['renderNavigation','padModelWriteToDB'];
  this.client = new main.navigateByImageContentInit(); 
@@ -21,10 +24,16 @@ function navigateByImageContentInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing navigateByImageContent");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling navigateByImageContent");
 }

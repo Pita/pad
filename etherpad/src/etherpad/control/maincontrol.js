@@ -33,6 +33,9 @@ jimport("java.lang.System.out.println");
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   if (request.path == '/ep/') {
     response.redirect('/');
@@ -43,10 +46,16 @@ function render_main() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_support() {
   renderFramed("main/support_body.ejs");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_changelog_get() {
   renderFramed("main/changelog.ejs");
 }

@@ -21,6 +21,9 @@ import("etherpad.collab.collab_server");
 import("etherpad.collab.ace.easysync2.*");
 import("jsutils.eachProperty");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _urlCache() {
   if (!appjet.cache.historyUrlCache) {
     appjet.cache.historyUrlCache = {};
@@ -28,6 +31,9 @@ function _urlCache() {
   return appjet.cache.historyUrlCache;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _replyWithJSONAndCache(obj) {
   obj.apiversion = _VERSION;
   var output = fastJSON.stringify(obj);
@@ -36,12 +42,18 @@ function _replyWithJSONAndCache(obj) {
   response.stop();  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _replyWithJSON(obj) {
   obj.apiversion = _VERSION;
   response.write(fastJSON.stringify(obj));
   response.stop();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _error(msg, num) {
   _replyWithJSON({error: String(msg), errornum: num});
 }
@@ -50,8 +62,14 @@ var _VERSION = 1;
 
 var _ERROR_REVISION_NUMBER_TOO_LARGE = 14;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _do_text(padId, r) {
   if (! padId) render404();
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
     if (! pad.exists()) {
       render404();
@@ -65,12 +83,18 @@ function _do_text(padId, r) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _do_stat(padId) {
   var obj = {};
   if (! padId) {
     obj.exists = false;
   }
   else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     model.accessPadGlobal(padId, function(pad) {
       if (! pad.exists()) {
         obj.exists = false;
@@ -84,24 +108,39 @@ function _do_stat(padId) {
   _replyWithJSON(obj);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _censorText(text) {
   // may not change length of text
+
+  // YOURNAME:
+  // YOURCOMMENT
   return text.replace(/(http:\/\/etherpad.com\/)(\w+)/g, function(url, u1, u2) {
     return u1 + u2.replace(/\w/g, '-');
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _do_changes(padId, first, last) {
   if (! padId) render404();
   
   var charPool = [];
   var changeList = [];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function charPoolText(txt) {
     charPool.push(txt);
     return _encodeVarInt(txt.length);
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
 
     if (first > pad.getHeadRevisionNumber() || last > pad.getHeadRevisionNumber()) {
@@ -123,6 +162,9 @@ function _do_changes(padId, first, last) {
       
       var c = pad.getRevisionChangeset(r);
       var splices = Changeset.toSplices(c);
+
+      // YOURNAME:
+      // YOURCOMMENT
       splices.forEach(function (splice) {
         var startChar = splice[0];
         var endChar = splice[1];
@@ -156,6 +198,9 @@ function _do_changes(padId, first, last) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_history(padOpaqueRef, rest) {
   if (_urlCache()[request.path]) {
     response.write(_urlCache()[request.path]);
@@ -190,6 +235,9 @@ function render_history(padOpaqueRef, rest) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _encodeVarInt(num) {
   var n = +num;
   if (isNaN(n)) {
@@ -211,6 +259,9 @@ function _encodeVarInt(num) {
 }
 var _BASE64_DIGITS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _encodeTimeStamp(tMillis, baseMillis) {
   var t = Math.floor(tMillis/1000);
   var base = Math.floor(baseMillis/1000);

@@ -24,9 +24,15 @@ import("stringutils.trim");
 import("etherpad.sessions.getSession");
 import("etherpad.utils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _splitCommand(cmd) {
   var parts = [[], []];
   var importing = true;
+
+  // YOURNAME:
+  // YOURCOMMENT
   cmd.split("\n").forEach(function(l) {
     if ((trim(l).length > 0) &&
         (trim(l).indexOf("import") != 0)) {
@@ -45,7 +51,13 @@ function _splitCommand(cmd) {
   return parts;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getResult(cmd) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   var resultString = (function() {
     try {
       var parts = _splitCommand(cmd);
@@ -70,6 +82,9 @@ function getResult(cmd) {
   return resultString;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderCommandShell() {
   // run command if necessary
   if (request.params.cmd) {
@@ -118,6 +133,9 @@ function _renderCommandShell() {
   return div;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handleRequest() {
   var body = DIV();
   body.push(_renderCommandShell());

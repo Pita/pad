@@ -32,7 +32,13 @@ linestylefilter.ATTRIB_CLASSES = {
   'strikethrough':'tag:s'
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.getAuthorClassName = function(author) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return "author-"+author.replace(/[^a-y0-9]/g, function(c) {
     if (c == ".") return "-";
     return 'z'+c.charCodeAt(0)+'z';
@@ -41,6 +47,9 @@ linestylefilter.getAuthorClassName = function(author) {
 
 // lineLength is without newline; aline includes newline,
 // but may be falsy if lineLength == 0
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.getLineStyleFilter = function(lineLength, aline,
                                               textAndClassFunc, apool) {
 
@@ -55,14 +64,23 @@ linestylefilter.getLineStyleFilter = function(lineLength, aline,
 
   var nextAfterAuthorColors = textAndClassFunc;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var authorColorFunc = (function() {
     var lineEnd = lineLength;
     var curIndex = 0;
     var extraClasses;
     var leftInAuthor;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function attribsToClasses(attribs) {
       var classes = '';
+
+      // YOURNAME:
+      // YOURCOMMENT
       Changeset.eachAttribNumber(attribs, function(n) {
 	var key = apool.getAttribKey(n);
 	if (key) {
@@ -87,11 +105,17 @@ linestylefilter.getLineStyleFilter = function(lineLength, aline,
 
     var attributionIter = Changeset.opIterator(aline);
     var nextOp, nextOpClasses;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function goNextOp() {
       nextOp = attributionIter.next();
       nextOpClasses = (nextOp.opcode && attribsToClasses(nextOp.attribs));
     }
     goNextOp();
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextClasses() {
       if (curIndex < lineEnd) {
 	extraClasses = nextOpClasses;
@@ -105,6 +129,9 @@ linestylefilter.getLineStyleFilter = function(lineLength, aline,
     }
     nextClasses();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(txt, cls) {
       while (txt.length > 0) {
 	if (leftInAuthor <= 0) {
@@ -129,6 +156,9 @@ linestylefilter.getLineStyleFilter = function(lineLength, aline,
   return authorColorFunc;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.getAtSignSplitterFilter = function(lineText,
                                                    textAndClassFunc) {
   var at = /@/g;
@@ -148,7 +178,13 @@ linestylefilter.getAtSignSplitterFilter = function(lineText,
                                                   splitPoints);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.getRegexpFilter = function (regExp, tag) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (lineText, textAndClassFunc) {
     regExp.lastIndex = 0;
     var regExpMatchs = null;
@@ -167,6 +203,9 @@ linestylefilter.getRegexpFilter = function (regExp, tag) {
 
     if (! regExpMatchs) return textAndClassFunc;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function regExpMatchForIndex(idx) {
       for(var k=0; k<regExpMatchs.length; k++) {
 	var u = regExpMatchs[k];
@@ -177,8 +216,14 @@ linestylefilter.getRegexpFilter = function (regExp, tag) {
       return false;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var handleRegExpMatchsAfterSplit = (function() {
       var curIndex = 0;
+
+      // YOURNAME:
+      // YOURCOMMENT
       return function(txt, cls) {
 	var txtlen = txt.length;
 	var newCls = cls;
@@ -203,6 +248,9 @@ linestylefilter.REGEX_URL = new RegExp(/(?:(?:https?|s?ftp|ftps|file|smb|afp|nfs
 linestylefilter.getURLFilter = linestylefilter.getRegexpFilter(
   linestylefilter.REGEX_URL, 'url');
 
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.textAndClassFuncSplitter = function(func, splitPointsOpt) {
   var nextPointIndex = 0;
   var idx = 0;
@@ -214,6 +262,9 @@ linestylefilter.textAndClassFuncSplitter = function(func, splitPointsOpt) {
     nextPointIndex++;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function spanHandler(txt, cls) {
     if ((! splitPointsOpt) || nextPointIndex >= splitPointsOpt.length) {
       func(txt, cls);
@@ -244,6 +295,9 @@ linestylefilter.textAndClassFuncSplitter = function(func, splitPointsOpt) {
   return spanHandler;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.getFilterStack = function(lineText, textAndClassFunc, browser) {
   var func = linestylefilter.getURLFilter(lineText, textAndClassFunc);  
 
@@ -256,6 +310,9 @@ linestylefilter.getFilterStack = function(lineText, textAndClassFunc, browser) {
 
   var hookFilters = plugins_.callHook(
     "aceGetFilterStack", {linestylefilter:linestylefilter, browser:browser});
+
+  // YOURNAME:
+  // YOURCOMMENT
   hookFilters.map(function (hookFilter) {
     func = hookFilter(lineText, func);
   });
@@ -271,6 +328,9 @@ linestylefilter.getFilterStack = function(lineText, textAndClassFunc, browser) {
 };
 
 // domLineObj is like that returned by domline.createDomLine
+
+// YOURNAME:
+// YOURCOMMENT
 linestylefilter.populateDomLine = function(textLine, aline, apool,
                                            domLineObj) {
   // remove final newline from text if any
@@ -279,6 +339,9 @@ linestylefilter.populateDomLine = function(textLine, aline, apool,
     text = text.substring(0, text.length-1);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function textAndClassFunc(tokenText, tokenClass) {
     domLineObj.appendSpan(tokenText, tokenClass);
   }

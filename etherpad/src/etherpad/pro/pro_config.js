@@ -23,12 +23,18 @@ import("etherpad.utils.*");
 import("etherpad.pro.domains");
 import("etherpad.pro.pro_utils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _guessSiteName() {
   var x = request.host.split('.')[0];
   x = (x.charAt(0).toUpperCase() + x.slice(1));
   return x;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getDefaultConfig() {
   return {
     siteName: _guessSiteName(),
@@ -38,6 +44,9 @@ function _getDefaultConfig() {
 }
 
 // must be fast! gets called per request, on every request.
+
+// YOURNAME:
+// YOURCOMMENT
 function getConfig() {
   if (!pro_utils.isProDomainRequest()) {
     return null;
@@ -55,11 +64,17 @@ function getConfig() {
   return appjet.cache.pro_config[domainId];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function reloadConfig() {
   var domainId = domains.getRequestDomainId();
   var config = _getDefaultConfig();
   var records = sqlobj.selectMulti('pro_config', {domainId: domainId}, {});
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   records.forEach(function(r) {
     var name = r.name;
     var val = fastJSON.parse(r.jsonVal).x;
@@ -73,6 +88,9 @@ function reloadConfig() {
   appjet.cache.pro_config[domainId] = config;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setConfigVal(name, val) {
   var domainId = domains.getRequestDomainId();
   var jsonVal = fastJSON.stringify({x: val});

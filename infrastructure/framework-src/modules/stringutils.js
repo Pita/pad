@@ -34,6 +34,9 @@ jimport("java.lang.System.currentTimeMillis");
  * @param {string} str
  * @return {string} The trimmed string.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function trim(str) {
   return str.replace(/^\s+|\s+$/g, "");
 }
@@ -42,21 +45,39 @@ function trim(str) {
 // String prototype enhancements.
 // TODO: should we move this to a new library "enhancedstring"?
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 startsWith = function(s, prefix) {
   return (s.indexOf(prefix) == 0);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 endsWith = function(s, suffix) {
   return (s.substr(s.length - suffix.length) == suffix);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 contains = function(s, x) {
   return (s.indexOf(x) != -1);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 makeTitle = function(s) {
   if (! s) return;
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.split(" ").map(function(x) { 
       return x[0].toUpperCase() + x.substr(1) 
     }).join(" ");
 }
+
+// YOURNAME:
+// YOURCOMMENT
 repeat = function(s, n) {
   var out = [];
   while (n-- > 0) {
@@ -70,12 +91,18 @@ repeat = function(s, n) {
  * character entities replaced by appropriate HTML codes, and newlines
  * rentered as BRs.
  *
+
+ // YOURNAME:
+ // YOURCOMMENT
  * <p>A more general version of this function is toHTML(), which can operate
  * on not just strings, but any object.
  *
  * @param {string} str the raw string
  * @return {string} HTML-formatted string
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _stringToHTML(str) {
   return String(net.appjet.oui.Util.stringToHTML(str));
 }
@@ -83,8 +110,14 @@ function _stringToHTML(str) {
 // used to convert an object to HTML when the object does not have a
 // toHTML method.
 //
+
+// YOURNAME:
+// YOURCOMMENT
 function _coerceObjectToHTML(obj) {
   var t = TABLE({border: 1, cellpadding: 2, cellspacing: 0});
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj, function(name, value) {
     t.push(TR(TH(String(name)), TD(String(value))));
   });
@@ -94,23 +127,38 @@ function _coerceObjectToHTML(obj) {
 // Converts an array to an HTML list by listing its properties and
 // recursively converting the values to HTML by calling toHTML() on
 // each of them.
+
+// YOURNAME:
+// YOURCOMMENT
 function _objectToOL(obj) {
   var l = OL();
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj, function(name, value) {
       l.push(LI({value: name}, value));
     });
   return l;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sameProperties(obj1, obj2) {
   if (typeof(obj1) != 'object' || typeof(obj2) != 'object')
     return typeof(obj1) == typeof(obj2);
 
   var mismatch = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj1, function(name) {
     if (! obj2.hasOwnProperty(name)) {
       mismatch++;
     }});
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj2, function(name) {
     if (! obj1.hasOwnProperty(name)) {
       mismatch++;
@@ -121,6 +169,9 @@ function _sameProperties(obj1, obj2) {
 //
 // for pretty-printing arrays.  needs a lot of work.
 //
+
+// YOURNAME:
+// YOURCOMMENT
 function _arrayToHTML(a) {
   if (a.length === 0) {
     return "";
@@ -130,7 +181,13 @@ function _arrayToHTML(a) {
   } else if (! _sameProperties(a[0], a[1])) {
     return toHTML(_objectToOL(a));
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return _likeObjectsToHTML(function (f) {
+
+// YOURNAME:
+// YOURCOMMENT
 	a.forEach(function(value, i) {
 	    f({index: i}, value, {});
 	  });}, null);
@@ -142,6 +199,9 @@ function _arrayToHTML(a) {
 // a foreaching function that takes three arguments: properties to put first,
 // properties to put in the middle, and properties to put at the end.
 // and a table header (with large colspan)
+
+// YOURNAME:
+// YOURCOMMENT
 function _likeObjectsToHTML(forEachFunction, tophead) {
   objs = [];
   prepnames = new StringSet();
@@ -158,6 +218,9 @@ function _likeObjectsToHTML(forEachFunction, tophead) {
   var butWaitTheresMore = false;
   var howManyMore = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   forEachFunction(function(pre, o, post) {
     if (objs.length >= 10) {
       butWaitTheresMore = true;
@@ -169,12 +232,27 @@ function _likeObjectsToHTML(forEachFunction, tophead) {
     rows.push(tr);
     t.push(tr);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(pre, function(name) { prepnames.add(name); });
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(o, function(name) { objpnames.add(name); });
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(post, function(name) { postpnames.add(name); });
   });
   var numpnames = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   var appendTDsForPropName = function (where) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(name) {
       numpnames++;
       head.push(TH(name));
@@ -221,6 +299,9 @@ response.write(sprintf("Two strings: [%s] and [%s].", "string one", "string two"
  * @param {*} arg2
  * @param {*} arg3 ...
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function sprintf(formatString, arg1, arg2, etc) {
   if (typeof(formatString) != 'string') {
     throw new Error('printf takes a string as the first argument.');
@@ -252,9 +333,15 @@ print(supplant(data, """
  * @param {string} str
  * @return {string} str with keys of data replaced by their values
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function supplant(data, str) {
   var s = str;
   var o = data;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function rep(a, b) {
     var r = o[b];
     if (typeof(r) != 'undefined') {
@@ -298,10 +385,19 @@ print(html("""
  * @param {string} text the raw text
  * @return {object} an object which, when printed, prints the raw html text
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function html(text) {
   if (!_raw_prototype) {
     _raw_prototype = object(Object.prototype);
+
+    // YOURNAME:
+    // YOURCOMMENT
     _raw_prototype.toString = function() { return this._text; };
+
+    // YOURNAME:
+    // YOURCOMMENT
     _raw_prototype.toHTML = function() { return this._text; };
   }
   var rawObj = object(_raw_prototype);
@@ -310,6 +406,9 @@ function html(text) {
 }
 
 /**
+
+ // YOURNAME:
+ // YOURCOMMENT
  * This function is used by print(...) to convert a string or object
  * into nice-looking printable HTML.  It may be useful in conjunction
  * with html(...) if you wish to work directly with HTML.
@@ -320,6 +419,9 @@ function html(text) {
  * @param {*} x any javascript variable
  * @return {string} html-formatted string
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function toHTML(x) {
   if (typeof(x) == 'undefined') {
     return 'undefined';
@@ -358,6 +460,9 @@ function toHTML(x) {
 
 var _jrand = new Random(currentTimeMillis());
 
+
+// YOURNAME:
+// YOURCOMMENT
 function randomString(nchars) {
   var result = '';
 
@@ -376,10 +481,16 @@ function randomString(nchars) {
   return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function md5(x) {
   return net.appjet.ajstdlib.md5.md5(x);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function randomHash(len) {
   var x = md5(""+_jrand.nextDouble()*1e12+_jrand.nextDouble()*1e12);
   if (len) {
@@ -389,10 +500,16 @@ function randomHash(len) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function gzip(x) {
   return net.appjet.oui.Util.gzip(x)
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isNumeric(x) {
   return !!(/^\d+$/.test(x));
 }

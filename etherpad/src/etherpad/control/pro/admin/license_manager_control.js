@@ -30,10 +30,16 @@ jimport("java.lang.System.out.println");
 // license manager
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPath() {
   return '/ep/admin/pne-license-manager/';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getTemplateData(data) {
   var licenseInfo = licensing.getLicense();
   data.licenseInfo = licenseInfo;
@@ -47,6 +53,9 @@ function _getTemplateData(data) {
   return data;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   licensing.reloadLicense();
   var licenseInfo = licensing.getLicense();
@@ -58,6 +67,9 @@ function render_main_get() {
                                     _getTemplateData({edit: false}));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_edit_get() {
   licensing.reloadLicense();
   
@@ -79,13 +91,22 @@ function render_edit_get() {
   delete getSession().errorMessage;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_edit_post() {
   pne_utils.enableTrackingAgain();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _trim(s) {
     if (!s) { return ''; }
     return stringutils.trim(s);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _clean(s) {
     s = s.replace(/\W/g, '');
     s = s.replace(/\+/g, '');

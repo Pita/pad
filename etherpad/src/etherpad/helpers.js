@@ -30,16 +30,25 @@ jimport("java.lang.System.out.println");
 //----------------------------------------------------------------
 // array that supports contains() in O(1)
 
+
+// YOURNAME:
+// YOURCOMMENT
 var _UniqueArray = function() {
   this._a = [];
   this._m = {};
 };
+
+// YOURNAME:
+// YOURCOMMENT
 _UniqueArray.prototype.add = function(x) {
   if (!this._m[x]) {
     this._a.push(x);
     this._m[x] = true;
   }
 };
+
+// YOURNAME:
+// YOURCOMMENT
 _UniqueArray.prototype.asArray = function() {
   return this._a;
 };
@@ -48,6 +57,9 @@ _UniqueArray.prototype.asArray = function() {
 // EJS template helpers
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _hd() {
   if (!appjet.requestCache.helperData) {
     appjet.requestCache.helperData = {
@@ -67,52 +79,91 @@ function _hd() {
   return appjet.requestCache.helperData;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addBodyClass(c) {
   _hd().bodyClasses.add(c);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addClientVars(vars) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(vars, function(k,v) {
     _hd().clientVars[k] = v;
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getClientVar(name) {
   return _hd().clientVars[name];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addToHead(stuff) {
   _hd().headExtra += stuff;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setHtmlTitle(t) {
   _hd().htmlTitle = t;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setBodyId(id) {
   _hd().bodyId = id;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function includeJs(relpath) {
   _hd().jsIncludes.add(relpath);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function includeJQuery() {
   includeJs("jquery-1.3.2.js");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function includeCss(relpath) {
   _hd().cssIncludes.add(relpath);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function includeCometJs() {
   _hd().includeCometJs = true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function suppressGA() {
   _hd().suppressGA = true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function hideHeader() {
   _hd().showHeader = false;
 }
@@ -121,10 +172,16 @@ function hideHeader() {
 // for rendering HTML
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bodyClasses() {
   return _hd().bodyClasses.asArray().join(' ');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clientVarsScript() {
   var x = _hd().clientVars;
   x = fastJSON.stringify(x);
@@ -141,29 +198,53 @@ function clientVarsScript() {
   ].join('\n');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function htmlTitle() {
   return _hd().htmlTitle;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bodyId() {
   return _hd().bodyId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function baseHref() {
   return request.scheme + "://"+ request.host + "/";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function headExtra() {
   return _hd().headExtra;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function jsIncludes() {
   if (isProduction()) {
     var jsincludes = _hd().jsIncludes.asArray();
     if (_hd().includeCometJs) {
       jsincludes.splice(0, 0, {
+
+        // YOURNAME:
+        // YOURCOMMENT
         getPath: function() { return 'comet-client.js'; },
+
+        // YOURNAME:
+        // YOURCOMMENT
         getContents: function() { return comet.clientCode(); },
+
+        // YOURNAME:
+        // YOURCOMMENT
         getMTime: function() { return comet.clientMTime(); }
       });
     }
@@ -176,6 +257,9 @@ function jsIncludes() {
     if (_hd().includeCometJs) {
       r.push('<script type="text/javascript" src="'+COMETPATH+'/js/client.js?'+ts+'"></script>');
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     _hd().jsIncludes.asArray().forEach(function(relpath) {
       r.push('<script type="text/javascript" src="/static/js/'+relpath+'?'+ts+'"></script>');
     });
@@ -183,6 +267,9 @@ function jsIncludes() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function cssIncludes() {
   if (isProduction()) {
     var key = faststatic.getCompressedFilesKey('css', '/static/css', _hd().cssIncludes.asArray());
@@ -190,6 +277,9 @@ function cssIncludes() {
   } else {
     var ts = +(new Date);
     var r = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     _hd().cssIncludes.asArray().forEach(function(relpath) {
       r.push('<link href="/static/css/'+relpath+'?'+ts+'" rel="stylesheet" type="text/css" />');
     });
@@ -197,11 +287,17 @@ function cssIncludes() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function oemail(username) {
   return '&lt;<a class="obfuscemail" href="mailto:'+username+'@e***rp*d.com">'+
     username+'@e***rp*d.com</a>&gt;';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function googleAnalytics() {
   // GA disabled always now.
   return '';
@@ -221,13 +317,22 @@ function googleAnalytics() {
   ].join('\n');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isHeaderVisible() {
   return _hd().showHeader;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setRobotsPolicy(policy) {
   _hd().robotsPolicy = policy;
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function robotsMeta() {
   if (!_hd().robotsPolicy) { return ''; }
   var content = "";
@@ -237,6 +342,9 @@ function robotsMeta() {
   return META({name: "ROBOTS", content: content});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function thawteSiteSeal() {
   return [
     '<div>',
@@ -260,24 +368,39 @@ function thawteSiteSeal() {
   ].join('\n');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clearFloats() {
   return '<div style="clear: both;"><!-- --></div>';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function rafterBlogUrl() {
   return '/ep/blog/posts/google-acquires-appjet';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function rafterNote() {
   return """<div style='border: 1px solid #ccc; background: #fee; padding: 1em; margin: 1em 0;'>
     <b>Note: </b>We are no longer accepting new accounts. <a href='"""+rafterBlogUrl()+"""'>Read more</a>.
   </div>""";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function rafterTerminationDate() {
   return "March 31, 2010";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateToUrl(setParams, deleteParams, setPath) {
   var params = {};
 

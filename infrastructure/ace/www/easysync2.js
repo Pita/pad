@@ -20,12 +20,18 @@
 //var _opt = (this.Easysync2Support || null);
 var _opt = null; // disable optimization for now
 
+
+// YOURNAME:
+// YOURCOMMENT
 function AttribPool() {
   var p = {};
   p.numToAttrib = {}; // e.g. {0: ['foo','bar']}
   p.attribToNum = {}; // e.g. {'foo,bar': 0}
   p.nextNum = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.putAttrib = function(attrib, dontAddIfAbsent) {
     var str = String(attrib);
     if (str in p.attribToNum) {
@@ -41,24 +47,36 @@ function AttribPool() {
     return num;
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.getAttrib = function(num) {
     var pair = p.numToAttrib[num];
     if (! pair) return pair;
     return [pair[0], pair[1]]; // return a mutable copy
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.getAttribKey = function(num) {
     var pair = p.numToAttrib[num];
     if (! pair) return '';
     return pair[0];
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.getAttribValue = function(num) {
     var pair = p.numToAttrib[num];
     if (! pair) return '';
     return pair[1];
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.eachAttrib = function(func) {
     for(var n in p.numToAttrib) {
       var pair = p.numToAttrib[n];
@@ -66,10 +84,16 @@ function AttribPool() {
     }
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.toJsonable = function() {
     return {numToAttrib: p.numToAttrib, nextNum: p.nextNum};
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.fromJsonable = function(obj) {
     p.numToAttrib = obj.numToAttrib;
     p.nextNum = obj.nextNum;
@@ -85,7 +109,13 @@ function AttribPool() {
 
 var Changeset = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.error = function error(msg) { var e = new Error(msg); e.easysync = true; throw e; };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.assert = function assert(b, msgParts) {
   if (! b) {
     var msg = Array.prototype.slice.call(arguments, 1).join('');
@@ -93,29 +123,53 @@ Changeset.assert = function assert(b, msgParts) {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.parseNum = function(str) { return parseInt(str, 36); };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.numToString = function(num) { return num.toString(36).toLowerCase(); };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.toBaseTen = function(cs) {
   var dollarIndex = cs.indexOf('$');
   var beforeDollar = cs.substring(0, dollarIndex);
   var fromDollar = cs.substring(dollarIndex);
+
+  // YOURNAME:
+  // YOURCOMMENT
   return beforeDollar.replace(/[0-9a-z]+/g, function(s) {
     return String(Changeset.parseNum(s)); }) + fromDollar;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.oldLen = function(cs) {
   return Changeset.unpack(cs).oldLen;
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.newLen = function(cs) {
   return Changeset.unpack(cs).newLen;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.opIterator = function(opsStr, optStartIndex) {
   //print(opsStr);
   var regex = /((?:\*[0-9a-z]+)*)(?:\|([0-9a-z]+))?([-+=])([0-9a-z]+)|\?|/g;
   var startIndex = (optStartIndex || 0);
   var curIndex = startIndex;
   var prevIndex = curIndex;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nextRegexMatch() {
     prevIndex = curIndex;
     var result;
@@ -140,6 +194,9 @@ Changeset.opIterator = function(opsStr, optStartIndex) {
   }
   var regexResult = nextRegexMatch();
   var obj = Changeset.newOp();
+
+  // YOURNAME:
+  // YOURCOMMENT
   function next(optObj) {
     var op = (optObj || obj);
     if (_opt && regexResult) {
@@ -161,29 +218,50 @@ Changeset.opIterator = function(opsStr, optStartIndex) {
     }
     return op;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function hasNext() { return !! (_opt ? regexResult : regexResult[0]); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lastIndex() { return prevIndex; }
   return {next: next, hasNext: hasNext, lastIndex: lastIndex};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.clearOp = function(op) {
   op.opcode = '';
   op.chars = 0;
   op.lines = 0;
   op.attribs = '';
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.newOp = function(optOpcode) {
   return {opcode:(optOpcode || ''), chars:0, lines:0, attribs:''};
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.cloneOp = function(op) {
   return {opcode: op.opcode, chars: op.chars, lines: op.lines, attribs: op.attribs};
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.copyOp = function(op1, op2) {
   op2.opcode = op1.opcode;
   op2.chars = op1.chars;
   op2.lines = op1.lines;
   op2.attribs = op1.attribs;
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.opString = function(op) {
   // just for debugging
   if (! op.opcode) return 'null';
@@ -191,11 +269,17 @@ Changeset.opString = function(op) {
   assem.append(op);
   return assem.toString();
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.stringOp = function(str) {
   // just for debugging
   return Changeset.opIterator(str).next();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.checkRep = function(cs) {
   // doesn't check things that require access to attrib pool (e.g. attribute order)
   // or original string (e.g. newline positions)
@@ -237,6 +321,9 @@ Changeset.checkRep = function(cs) {
   return cs;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.smartOpAssembler = function() {
   // Like opAssembler but able to produce conforming changesets
   // from slightly looser input, at the cost of speed.
@@ -253,11 +340,17 @@ Changeset.smartOpAssembler = function() {
   var lastOpcode = '';
   var lengthChange = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function flushKeeps() {
     assem.append(keepAssem.toString());
     keepAssem.clear();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function flushPlusMinus() {
     assem.append(minusAssem.toString());
     minusAssem.clear();
@@ -265,6 +358,9 @@ Changeset.smartOpAssembler = function() {
     plusAssem.clear();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function append(op) {
     if (! op.opcode) return;
     if (! op.chars) return;
@@ -292,6 +388,9 @@ Changeset.smartOpAssembler = function() {
     lastOpcode = op.opcode;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function appendOpWithText(opcode, text, attribs, pool) {
     var op = Changeset.newOp(opcode);
     op.attribs = Changeset.makeAttribsString(opcode, attribs, pool);
@@ -311,12 +410,18 @@ Changeset.smartOpAssembler = function() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function toString() {
     flushPlusMinus();
     flushKeeps();
     return assem.toString();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function clear() {
     minusAssem.clear();
     plusAssem.clear();
@@ -325,10 +430,16 @@ Changeset.smartOpAssembler = function() {
     lengthChange = 0;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function endDocument() {
     keepAssem.endDocument();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLengthChange() {
     return lengthChange;
   }
@@ -338,18 +449,33 @@ Changeset.smartOpAssembler = function() {
 };
 
 if (_opt) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.mergingOpAssembler = function() {
     var assem = _opt.mergingOpAssembler();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function append(op) {
       assem.append(op.opcode, op.chars, op.lines, op.attribs);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function toString() {
       return assem.toString();
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clear() {
       assem.clear();
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function endDocument() {
       assem.endDocument();
     }
@@ -358,6 +484,9 @@ if (_opt) {
   };
 }
 else {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.mergingOpAssembler = function() {
     // This assembler can be used in production; it efficiently
     // merges consecutive operations that are mergeable, ignores
@@ -372,6 +501,9 @@ else {
     // ops immediately after it.
     var bufOpAdditionalCharsAfterNewline = 0;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function flush(isEndDocument) {
       if (bufOp.opcode) {
         if (isEndDocument && bufOp.opcode == '=' && ! bufOp.attribs) {
@@ -389,6 +521,9 @@ else {
         bufOp.opcode = '';
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function append(op) {
       if (op.chars > 0) {
         if (bufOp.opcode == op.opcode && bufOp.attribs == op.attribs) {
@@ -413,13 +548,22 @@ else {
         }
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function endDocument() {
       flush(true);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function toString() {
       flush();
       return assem.toString();
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clear() {
       assem.clear();
       Changeset.clearOp(bufOp);
@@ -429,15 +573,30 @@ else {
 }
 
 if (_opt) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.opAssembler = function() {
     var assem = _opt.opAssembler();
+
+    // YOURNAME:
+    // YOURCOMMENT
     // this function allows op to be mutated later (doesn't keep a ref)
+
+    // YOURNAME:
+    // YOURCOMMENT
     function append(op) {
       assem.append(op.opcode, op.chars, op.lines, op.attribs);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function toString() {
       return assem.toString();
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clear() {
       assem.clear();
     }
@@ -445,9 +604,18 @@ if (_opt) {
   };
 }
 else {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.opAssembler = function() {
     var pieces = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     // this function allows op to be mutated later (doesn't keep a ref)
+
+    // YOURNAME:
+    // YOURCOMMENT
     function append(op) {
       pieces.push(op.attribs);
       if (op.lines) {
@@ -456,9 +624,15 @@ else {
       pieces.push(op.opcode);
       pieces.push(Changeset.numToString(op.chars));
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function toString() {
       return pieces.join('');
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function clear() {
       pieces.length = 0;
     }
@@ -466,37 +640,64 @@ else {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.stringIterator = function(str) {
   var curIndex = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function assertRemaining(n) {
     Changeset.assert(n <= remaining(), "!(",n," <= ",remaining(),")");
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function take(n) {
     assertRemaining(n);
     var s = str.substr(curIndex, n);
     curIndex += n;
     return s;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function peek(n) {
     assertRemaining(n);
     var s = str.substr(curIndex, n);
     return s;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function skip(n) {
     assertRemaining(n);
     curIndex += n;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function remaining() {
     return str.length - curIndex;
   }
   return {take:take, skip:skip, remaining:remaining, peek:peek};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.stringAssembler = function() {
   var pieces = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function append(x) {
     pieces.push(String(x));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function toString() {
     return pieces.join('');
   }
@@ -504,6 +705,9 @@ Changeset.stringAssembler = function() {
 };
 
 // "lines" need not be an array as long as it supports certain calls (lines_foo inside).
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.textLinesMutator = function(lines) {
   // Mutates lines, an array of strings, in place.
   // Mutation operations have the same constraints as changeset operations
@@ -523,12 +727,21 @@ Changeset.textLinesMutator = function(lines) {
   // invariant: if (inSplice && (curLine >= curSplice[0] + curSplice.length - 2)) then
   //            curCol == 0
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_applySplice(s) {
     lines.splice.apply(lines, s);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_toSource() {
     return lines.toSource();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_get(idx) {
     if (lines.get) {
       return lines.get(idx);
@@ -538,6 +751,9 @@ Changeset.textLinesMutator = function(lines) {
     }
   }
   // can be unimplemented if removeLines's return value not needed
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_slice(start, end) {
     if (lines.slice) {
       return lines.slice(start, end);
@@ -546,6 +762,9 @@ Changeset.textLinesMutator = function(lines) {
       return [];
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_length() {
     if ((typeof lines.length) == "number") {
       return lines.length;
@@ -555,6 +774,9 @@ Changeset.textLinesMutator = function(lines) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function enterSplice() {
     curSplice[0] = curLine;
     curSplice[1] = 0;
@@ -563,18 +785,30 @@ Changeset.textLinesMutator = function(lines) {
     }
     inSplice = true;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function leaveSplice() {
     lines_applySplice(curSplice);
     curSplice.length = 2;
     curSplice[0] = curSplice[1] = 0;
     inSplice = false;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isCurLineInSplice() {
     return (curLine - curSplice[0] < (curSplice.length - 2));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function debugPrint(typ) {
     print(typ+": "+curSplice.toSource()+" / "+curLine+","+curCol+" / "+lines_toSource());
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function putCurLineInSplice() {
     if (! isCurLineInSplice()) {
       curSplice.push(lines_get(curSplice[0] + curSplice[1]));
@@ -583,6 +817,9 @@ Changeset.textLinesMutator = function(lines) {
     return 2 + curLine - curSplice[0];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function skipLines(L, includeInSplice) {
     if (L) {
       if (includeInSplice) {
@@ -616,6 +853,9 @@ Changeset.textLinesMutator = function(lines) {
     //debugPrint("skip");
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function skip(N, L, includeInSplice) {
     if (N) {
       if (L) {
@@ -634,12 +874,18 @@ Changeset.textLinesMutator = function(lines) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeLines(L) {
     var removed = '';
     if (L) {
       if (! inSplice) {
 	enterSplice();
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function nextKLinesText(k) {
 	var m = curSplice[0] + curSplice[1];
 	return lines_slice(m, m+k).join('');
@@ -672,6 +918,9 @@ Changeset.textLinesMutator = function(lines) {
     return removed;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function remove(N, L) {
     var removed = '';
     if (N) {
@@ -692,6 +941,9 @@ Changeset.textLinesMutator = function(lines) {
     return removed;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function insert(text, L) {
     if (text) {
       if (! inSplice) {
@@ -734,6 +986,9 @@ Changeset.textLinesMutator = function(lines) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function hasMore() {
     //print(lines.length+" / "+inSplice+" / "+(curSplice.length - 2)+" / "+curSplice[1]);
     var docLines = lines_length();
@@ -743,6 +998,9 @@ Changeset.textLinesMutator = function(lines) {
     return curLine < docLines;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function close() {
     if (inSplice) {
       leaveSplice();
@@ -755,6 +1013,9 @@ Changeset.textLinesMutator = function(lines) {
   return self;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.applyZip = function(in1, idx1, in2, idx2, func) {
   var iter1 = Changeset.opIterator(in1, idx1);
   var iter2 = Changeset.opIterator(in2, idx2);
@@ -776,6 +1037,9 @@ Changeset.applyZip = function(in1, idx1, in2, idx2, func) {
   return assem.toString();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.unpack = function(cs) {
   var headerRegex = /Z:([0-9a-z]+)([><])([0-9a-z]+)|/;
   var headerMatch = headerRegex.exec(cs);
@@ -793,6 +1057,9 @@ Changeset.unpack = function(cs) {
 	  charBank: cs.substring(opsEnd+1)};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.pack = function(oldLen, newLen, opsStr, bank) {
   var lenDiff = newLen - oldLen;
   var lenDiffStr = (lenDiff >= 0 ?
@@ -803,6 +1070,9 @@ Changeset.pack = function(oldLen, newLen, opsStr, bank) {
   return a.join('');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.applyToText = function(cs, str) {
   var unpacked = Changeset.unpack(cs);
   Changeset.assert(str.length == unpacked.oldLen,
@@ -823,6 +1093,9 @@ Changeset.applyToText = function(cs, str) {
   return assem.toString();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.mutateTextLines = function(cs, lines) {
   var unpacked = Changeset.unpack(cs);
   var csIter = Changeset.opIterator(unpacked.ops);
@@ -839,6 +1112,9 @@ Changeset.mutateTextLines = function(cs, lines) {
   mut.close();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.composeAttributes = function(att1, att2, resultIsMutation, pool) {
   // att1 and att2 are strings like "*3*f*1c", asMutation is a boolean.
 
@@ -865,10 +1141,16 @@ Changeset.composeAttributes = function(att1, att2, resultIsMutation, pool) {
   }
   if (! att2) return att1;
   var atts = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   att1.replace(/\*([0-9a-z]+)/g, function(_, a) {
     atts.push(pool.getAttrib(Changeset.parseNum(a)));
     return '';
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   att2.replace(/\*([0-9a-z]+)/g, function(_, a) {
     var pair = pool.getAttrib(Changeset.parseNum(a));
     var found = false;
@@ -900,6 +1182,9 @@ Changeset.composeAttributes = function(att1, att2, resultIsMutation, pool) {
   return buf.toString();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset._slicerZipperFunc = function(attOp, csOp, opOut, pool) {
   // attOp is the op from the sequence that is being operated on, either an
   // attribution string or the earlier of two changesets being composed.
@@ -989,20 +1274,32 @@ Changeset._slicerZipperFunc = function(attOp, csOp, opOut, pool) {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.applyToAttribution = function(cs, astr, pool) {
   var unpacked = Changeset.unpack(cs);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return Changeset.applyZip(astr, 0, unpacked.ops, 0, function(op1, op2, opOut) {
     return Changeset._slicerZipperFunc(op1, op2, opOut, pool);
   });
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*Changeset.oneInsertedLineAtATimeOpIterator = function(opsStr, optStartIndex, charBank) {
   var iter = Changeset.opIterator(opsStr, optStartIndex);
   var bankIndex = 0;
 
 };*/
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.mutateAttributionLines = function(cs, lines, pool) {
   //dmesg(cs);
   //dmesg(lines.toSource()+" ->");
@@ -1015,9 +1312,15 @@ Changeset.mutateAttributionLines = function(cs, lines, pool) {
   var mut = Changeset.textLinesMutator(lines);
 
   var lineIter = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isNextMutOp() {
     return (lineIter && lineIter.hasNext()) || mut.hasMore();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nextMutOp(destOp) {
     if ((!(lineIter && lineIter.hasNext())) && mut.hasMore()) {
       var line = mut.removeLines(1);
@@ -1031,6 +1334,9 @@ Changeset.mutateAttributionLines = function(cs, lines, pool) {
     }
   }
   var lineAssem = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function outputMutOp(op) {
     //print("outputMutOp: "+op.toSource());
     if (! lineAssem) {
@@ -1102,6 +1408,9 @@ Changeset.mutateAttributionLines = function(cs, lines, pool) {
   //dmesg("-> "+lines.toSource());
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.joinAttributionLines = function(theAlines) {
   var assem = Changeset.mergingOpAssembler();
   for(var i=0;i<theAlines.length;i++) {
@@ -1114,12 +1423,18 @@ Changeset.joinAttributionLines = function(theAlines) {
   return assem.toString();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.splitAttributionLines = function(attrOps, text) {
   var iter = Changeset.opIterator(attrOps);
   var assem = Changeset.mergingOpAssembler();
   var lines = [];
   var pos = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function appendOp(op) {
     assem.append(op);
     if (op.lines > 0) {
@@ -1152,10 +1467,16 @@ Changeset.splitAttributionLines = function(attrOps, text) {
   return lines;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.splitTextLines = function(text) {
   return text.match(/[^\n]*(?:\n|[^\n]$)/g);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.compose = function(cs1, cs2, pool) {
   var unpacked1 = Changeset.unpack(cs1);
   var unpacked2 = Changeset.unpack(cs2);
@@ -1167,6 +1488,9 @@ Changeset.compose = function(cs1, cs2, pool) {
   var bankIter2 = Changeset.stringIterator(unpacked2.charBank);
   var bankAssem = Changeset.stringAssembler();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var newOps = Changeset.applyZip(unpacked1.ops, 0, unpacked2.ops, 0, function(op1, op2, opOut) {
     //var debugBuilder = Changeset.stringAssembler();
     //debugBuilder.append(Changeset.opString(op1));
@@ -1200,6 +1524,9 @@ Changeset.compose = function(cs1, cs2, pool) {
   return Changeset.pack(len1, len3, newOps, bankAssem.toString());
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.attributeTester = function(attribPair, pool) {
   // returns a function that tests if a string of attributes
   // (e.g. *3*4) contains a given attribute key,value that
@@ -1214,17 +1541,29 @@ Changeset.attributeTester = function(attribPair, pool) {
   else {
     var re = new RegExp('\\*'+Changeset.numToString(attribNum)+
                         '(?!\\w)');
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(attribs) {
       return re.test(attribs);
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function never(attribs) { return false; }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.identity = function(N) {
   return Changeset.pack(N, N, "", "");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.makeSplice = function(oldFullText, spliceStart, numRemoved, newText, optNewTextAPairs, pool) {
   var oldLen = oldFullText.length;
 
@@ -1245,6 +1584,9 @@ Changeset.makeSplice = function(oldFullText, spliceStart, numRemoved, newText, o
   return Changeset.pack(oldLen, newLen, assem.toString(), newText);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.toSplices = function(cs) {
   // get a list of splices, [startChar, endChar, newText]
 
@@ -1279,6 +1621,9 @@ Changeset.toSplices = function(cs) {
   return splices;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.characterRangeFollow = function(cs, startChar, endChar, insertionsAfter) {
   var newStartChar = startChar;
   var newEndChar = endChar;
@@ -1329,6 +1674,9 @@ Changeset.characterRangeFollow = function(cs, startChar, endChar, insertionsAfte
   return [newStartChar, newEndChar];
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.moveOpsToNewPool = function(cs, oldPool, newPool) {
   // works on changeset or attribution string
   var dollarPos = cs.indexOf('$');
@@ -1338,6 +1686,9 @@ Changeset.moveOpsToNewPool = function(cs, oldPool, newPool) {
   var upToDollar = cs.substring(0, dollarPos);
   var fromDollar = cs.substring(dollarPos);
   // order of attribs stays the same
+
+  // YOURNAME:
+  // YOURCOMMENT
   return upToDollar.replace(/\*([0-9a-z]+)/g, function(_, a) {
     var oldNum = Changeset.parseNum(a);
     var pair = oldPool.getAttrib(oldNum);
@@ -1346,6 +1697,9 @@ Changeset.moveOpsToNewPool = function(cs, oldPool, newPool) {
   }) + fromDollar;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.makeAttribution = function(text) {
   var assem = Changeset.smartOpAssembler();
   assem.appendOpWithText('+', text);
@@ -1353,6 +1707,9 @@ Changeset.makeAttribution = function(text) {
 };
 
 // callable on a changeset, attribution string, or attribs property of an op
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.eachAttribNumber = function(cs, func) {
   var dollarPos = cs.indexOf('$');
   if (dollarPos < 0) {
@@ -1360,6 +1717,9 @@ Changeset.eachAttribNumber = function(cs, func) {
   }
   var upToDollar = cs.substring(0, dollarPos);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   upToDollar.replace(/\*([0-9a-z]+)/g, function(_, a) {
     func(Changeset.parseNum(a));
     return '';
@@ -1368,10 +1728,16 @@ Changeset.eachAttribNumber = function(cs, func) {
 
 // callable on a changeset, attribution string, or attribs property of an op,
 // though it may easily create adjacent ops that can be merged.
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.filterAttribNumbers = function(cs, filter) {
   return Changeset.mapAttribNumbers(cs, filter);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.mapAttribNumbers = function(cs, func) {
   var dollarPos = cs.indexOf('$');
   if (dollarPos < 0) {
@@ -1379,6 +1745,9 @@ Changeset.mapAttribNumbers = function(cs, func) {
   }
   var upToDollar = cs.substring(0, dollarPos);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var newUpToDollar = upToDollar.replace(/\*([0-9a-z]+)/g, function(s, a) {
     var n = func(Changeset.parseNum(a));
     if (n === true) {
@@ -1395,24 +1764,39 @@ Changeset.mapAttribNumbers = function(cs, func) {
   return newUpToDollar + cs.substring(dollarPos);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.makeAText = function(text, attribs) {
   return { text: text, attribs: (attribs || Changeset.makeAttribution(text)) };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.applyToAText = function(cs, atext, pool) {
   return { text: Changeset.applyToText(cs, atext.text),
 	   attribs: Changeset.applyToAttribution(cs, atext.attribs, pool) };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.cloneAText = function(atext) {
   return { text: atext.text, attribs: atext.attribs };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.copyAText = function(atext1, atext2) {
   atext2.text = atext1.text;
   atext2.attribs = atext1.attribs;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.appendATextToAssembler = function(atext, assem) {
   // intentionally skips last newline char of atext
   var iter = Changeset.opIterator(atext.attribs);
@@ -1448,24 +1832,39 @@ Changeset.appendATextToAssembler = function(atext, assem) {
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.prepareForWire = function(cs, pool) {
   var newPool = new AttribPool();
   var newCs = Changeset.moveOpsToNewPool(cs, pool, newPool);
   return {translated: newCs, pool: newPool};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.isIdentity = function(cs) {
   var unpacked = Changeset.unpack(cs);
   return unpacked.ops == "" && unpacked.oldLen == unpacked.newLen;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.opAttributeValue = function(op, key, pool) {
   return Changeset.attribsAttributeValue(op.attribs, key, pool);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.attribsAttributeValue = function(attribs, key, pool) {
   var value = '';
   if (attribs) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     Changeset.eachAttribNumber(attribs, function(n) {
       if (pool.getAttribKey(n) == key) {
         value = pool.getAttribValue(n);
@@ -1475,6 +1874,9 @@ Changeset.attribsAttributeValue = function(attribs, key, pool) {
   return value;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.builder = function(oldLen) {
   var assem = Changeset.smartOpAssembler();
   var o = Changeset.newOp();
@@ -1482,6 +1884,9 @@ Changeset.builder = function(oldLen) {
 
   var self = {
     // attribs are [[key1,value1],[key2,value2],...] or '*0*1...' (no pool needed in latter case)
+
+    // YOURNAME:
+    // YOURCOMMENT
     keep: function(N, L, attribs, pool) {
       o.opcode = '=';
       o.attribs = (attribs &&
@@ -1491,15 +1896,24 @@ Changeset.builder = function(oldLen) {
       assem.append(o);
       return self;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     keepText: function(text, attribs, pool) {
       assem.appendOpWithText('=', text, attribs, pool);
       return self;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     insert: function(text, attribs, pool) {
       assem.appendOpWithText('+', text, attribs, pool);
       charBank.append(text);
       return self;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     remove: function(N, L) {
       o.opcode = '-';
       o.attribs = '';
@@ -1508,6 +1922,9 @@ Changeset.builder = function(oldLen) {
       assem.append(o);
       return self;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     toString: function() {
       assem.endDocument();
       var newLen = oldLen + assem.getLengthChange();
@@ -1519,6 +1936,9 @@ Changeset.builder = function(oldLen) {
   return self;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.makeAttribsString = function(opcode, attribs, pool) {
   // makeAttribsString(opcode, '*3') or makeAttribsString(opcode, [['foo','bar']], myPool) work
   if (! attribs) {
@@ -1544,6 +1964,9 @@ Changeset.makeAttribsString = function(opcode, attribs, pool) {
 };
 
 // like "substring" but on a single-line attribution string
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.subattribution = function(astr, start, optEnd) {
   var iter = Changeset.opIterator(astr, 0);
   var assem = Changeset.smartOpAssembler();
@@ -1551,6 +1974,9 @@ Changeset.subattribution = function(astr, start, optEnd) {
   var csOp = Changeset.newOp();
   var opOut = Changeset.newOp();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doCsOp() {
     if (csOp.chars) {
       while (csOp.opcode && (attOp.opcode || iter.hasNext())) {
@@ -1593,10 +2019,16 @@ Changeset.subattribution = function(astr, start, optEnd) {
   return assem.toString();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.inverse = function(cs, lines, alines, pool) {
   // lines and alines are what the changeset is meant to apply to.
   // They may be arrays or objects with .get(i) and .length methods.
   // They include final newlines on lines.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_get(idx) {
     if (lines.get) {
       return lines.get(idx);
@@ -1605,6 +2037,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
       return lines[idx];
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lines_length() {
     if ((typeof lines.length) == "number") {
       return lines.length;
@@ -1613,6 +2048,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
       return lines.length();
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function alines_get(idx) {
     if (alines.get) {
       return alines.get(idx);
@@ -1621,6 +2059,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
       return alines[idx];
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function alines_length() {
     if ((typeof alines.length) == "number") {
       return alines.length;
@@ -1640,6 +2081,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
   var csIter = Changeset.opIterator(unpacked.ops);
   var builder = Changeset.builder(unpacked.newLen);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function consumeAttribRuns(numChars, func/*(len, attribs, endsLine)*/) {
 
     if ((! curLineOpIter) || (curLineOpIterLine != curLine)) {
@@ -1685,6 +2129,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function skip(N, L) {
     if (L) {
       curLine += L;
@@ -1692,6 +2139,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
     }
     else {
       if (curLineOpIter && curLineOpIterLine == curLine) {
+
+// YOURNAME:
+// YOURCOMMENT
 	consumeAttribRuns(N, function() {});
       }
       else {
@@ -1700,6 +2150,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nextText(numChars) {
     var len = 0;
     var assem = Changeset.stringAssembler();
@@ -1718,8 +2171,14 @@ Changeset.inverse = function(cs, lines, alines, pool) {
     return assem.toString().substring(0, numChars);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cachedStrFunc(func) {
     var cache = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(s) {
       if (! cache[s]) {
 	cache[s] = func(s);
@@ -1736,10 +2195,16 @@ Changeset.inverse = function(cs, lines, alines, pool) {
       if (csOp.attribs) {
 	attribKeys.length = 0;
 	attribValues.length = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 	Changeset.eachAttribNumber(csOp.attribs, function(n) {
 	  attribKeys.push(pool.getAttribKey(n));
 	  attribValues.push(pool.getAttribValue(n));
 	});
+
+// YOURNAME:
+// YOURCOMMENT
 	var undoBackToAttribs = cachedStrFunc(function(attribs) {
 	  var backAttribs = [];
 	  for(var i=0;i<attribKeys.length;i++) {
@@ -1752,6 +2217,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
 	  }
 	  return Changeset.makeAttribsString('=', backAttribs, pool);
 	});
+
+// YOURNAME:
+// YOURCOMMENT
 	consumeAttribRuns(csOp.chars, function(len, attribs, endsLine) {
 	  builder.keep(len, endsLine ? 1 : 0, undoBackToAttribs(attribs));
 	});
@@ -1767,6 +2235,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
     else if (csOp.opcode == '-') {
       var textBank = nextText(csOp.chars);
       var textBankIndex = 0;
+
+      // YOURNAME:
+      // YOURCOMMENT
       consumeAttribRuns(csOp.chars, function(len, attribs, endsLine) {
 	builder.insert(textBank.substr(textBankIndex, len), attribs);
 	textBankIndex += len;
@@ -1779,6 +2250,9 @@ Changeset.inverse = function(cs, lines, alines, pool) {
 
 // %CLIENT FILE ENDS HERE%
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.follow = function(cs1, cs2, reverseInsertOrder, pool) {
   var unpacked1 = Changeset.unpack(cs1);
   var unpacked2 = Changeset.unpack(cs2);
@@ -1795,6 +2269,9 @@ Changeset.follow = function(cs1, cs2, reverseInsertOrder, pool) {
   var hasInsertFirst = Changeset.attributeTester(['insertorder','first'],
                                                  pool);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var newOps = Changeset.applyZip(unpacked1.ops, 0, unpacked2.ops, 0, function(op1, op2, opOut) {
     if (op1.opcode == '+' || op2.opcode == '+') {
       var whichToDo;
@@ -1930,6 +2407,9 @@ Changeset.follow = function(cs1, cs2, reverseInsertOrder, pool) {
   return Changeset.pack(oldLen, newLen, newOps, unpacked2.charBank);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.followAttributes = function(att1, att2, pool) {
   // The merge of two sets of attribute changes to the same text
   // takes the lexically-earlier value if there are two values
@@ -1940,10 +2420,16 @@ Changeset.followAttributes = function(att1, att2, pool) {
   if ((! att2) || (! pool)) return '';
   if (! att1) return att2;
   var atts = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   att2.replace(/\*([0-9a-z]+)/g, function(_, a) {
     atts.push(pool.getAttrib(Changeset.parseNum(a)));
     return '';
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   att1.replace(/\*([0-9a-z]+)/g, function(_, a) {
     var pair1 = pool.getAttrib(Changeset.parseNum(a));
     for(var i=0;i<atts.length;i++) {

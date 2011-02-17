@@ -20,6 +20,9 @@ import("etherpad.sessions.getSession");
 import("etherpad.control.pro.admin.pro_admin_control");
 import("etherpad.pro.pro_config");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderTopDiv(mid, htmlId) {
   var m = getSession()[mid];
   if (m) {
@@ -30,10 +33,16 @@ function _renderTopDiv(mid, htmlId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _messageDiv() { 
   return _renderTopDiv('proConfigMessage', 'pro-config-message');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   pro_config.reloadConfig();
   var config = pro_config.getConfig();
@@ -43,6 +52,9 @@ function render_main_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_post() {
   pro_config.setConfigVal('siteName', request.params.siteName);
   pro_config.setConfigVal('alwaysHttps', !!request.params.alwaysHttps);

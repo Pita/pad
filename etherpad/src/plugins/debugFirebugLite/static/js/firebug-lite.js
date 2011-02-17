@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
 
 /*!*************************************************************
@@ -24,6 +27,9 @@ var FBL = {};
 
 /** @name ns @namespace */
 
+
+// YOURNAME:
+// YOURCOMMENT
 ( /** @scope ns-lib @this FBL */ function() {
 // ************************************************************************************************
 
@@ -64,6 +70,9 @@ var namespaces = [];
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.ns = function(fn)
 {
     var ns = {};
@@ -73,6 +82,9 @@ this.ns = function(fn)
 
 var FBTrace = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.initialize = function()
 {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -202,6 +214,9 @@ this.initialize = function()
         var channelEvent = document.createEvent("Event");
         channelEvent.initEvent("FirebugChannelEvent", true, true);
             
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.chromeExtensionDispatch = function(data)
         {
             channel.innerText = data;
@@ -213,6 +228,9 @@ this.initialize = function()
     waitForDocument();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var waitForDocument = function waitForDocument()
 {
     // document.body not available in XML+XSL documents in Firefox
@@ -228,6 +246,9 @@ var waitForDocument = function waitForDocument()
         setTimeout(waitForDocument, 50);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onDocumentLoad = function onDocumentLoad()
 {
     if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("FBL onDocumentLoad", "document loaded");
@@ -314,8 +335,14 @@ this.Env =
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 var destroyEnvironment = function destroyEnvironment()
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     setTimeout(function()
     {
         FBL = null;
@@ -325,6 +352,9 @@ var destroyEnvironment = function destroyEnvironment()
 // ************************************************************************************************
 // Library location
 
+
+// YOURNAME:
+// YOURCOMMENT
 var findLocation =  function findLocation() 
 {
     var reFirebugFile = /(firebug-lite(?:-\w+)?(?:\.js|\.jgz))(?:#(.+))?$/;
@@ -538,18 +568,33 @@ var findLocation =  function findLocation()
 // ************************************************************************************************
 // Basics
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.bind = function()  // fn, thisObject, args => thisObject.fn(args, arguments);
 {
    var args = cloneArray(arguments), fn = args.shift(), object = args.shift();
+
+   // YOURNAME:
+   // YOURCOMMENT
    return function() { return fn.apply(object, arrayInsert(cloneArray(args), 0, arguments)); };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.bindFixed = function() // fn, thisObject, args => thisObject.fn(args);
 {
     var args = cloneArray(arguments), fn = args.shift(), object = args.shift();
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function() { return fn.apply(object, args); };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.extend = function(l, r)
 {
     var newOb = {};
@@ -560,6 +605,9 @@ this.extend = function(l, r)
     return newOb;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.append = function(l, r)
 {
     for (var n in r)
@@ -568,6 +616,9 @@ this.append = function(l, r)
     return l;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.keys = function(map)  // At least sometimes the keys will be on user-level window objects
 {
     var keys = [];
@@ -584,6 +635,9 @@ this.keys = function(map)  // At least sometimes the keys will be on user-level 
     return keys;  // return is safe
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.values = function(map)
 {
     var values = [];
@@ -614,6 +668,9 @@ this.values = function(map)
     return values;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.remove = function(list, item)
 {
     for (var i = 0; i < list.length; ++i)
@@ -626,6 +683,9 @@ this.remove = function(list, item)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.sliceArray = function(array, index)
 {
     var slice = [];
@@ -635,6 +695,9 @@ this.sliceArray = function(array, index)
     return slice;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function cloneArray(array, fn)
 {
    var newArray = [];
@@ -649,6 +712,9 @@ function cloneArray(array, fn)
    return newArray;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extendArray(array, array2)
 {
    var newArray = [];
@@ -660,6 +726,9 @@ function extendArray(array, array2)
 this.extendArray = extendArray;
 this.cloneArray = cloneArray;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function arrayInsert(array, index, other)
 {
    for (var i = 0; i < other.length; ++i)
@@ -670,6 +739,9 @@ function arrayInsert(array, index, other)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.createStyleSheet = function(doc, url)
 {
     //TODO: xxxpedro
@@ -686,6 +758,9 @@ this.createStyleSheet = function(doc, url)
     return style;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.addStyleSheet = function(doc, style)
 {
     var heads = doc.getElementsByTagName("head");
@@ -698,11 +773,17 @@ this.addStyleSheet = function(doc, style)
 // ************************************************************************************************
 
 this.getStyle = this.isIE ? 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(el, name)
     {
         return el.currentStyle[name] || el.style[name] || undefined;
     }
     :
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(el, name)
     {
         return el.ownerDocument.defaultView.getComputedStyle(el,null)[name] 
@@ -737,6 +818,9 @@ var entityConversionLists = this.entityConversionLists = {
 var normal = entityConversionLists.normal,
     reverse = entityConversionLists.reverse;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addEntityMapToList(ccode, entity)
 {
     var lists = Array.prototype.slice.call(arguments, 2),
@@ -793,6 +877,9 @@ var entityConversionRegexes = {
     };
 
 var escapeEntitiesRegEx = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     normal : function(list)
     {
         var chars = [];
@@ -802,6 +889,9 @@ var escapeEntitiesRegEx = {
         }
         return new RegExp('([' + chars.join('') + '])', 'gm');
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     reverse : function(list)
     {
         var chars = [];
@@ -813,6 +903,9 @@ var escapeEntitiesRegEx = {
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getEscapeRegexp(direction, lists)
 {
     var name = '', re;
@@ -844,8 +937,14 @@ function getEscapeRegexp(direction, lists)
     return re;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createSimpleEscape(name, direction)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(value)
     {
         var list = entityConversionLists[direction][name];
@@ -854,6 +953,9 @@ function createSimpleEscape(name, direction)
                     group : name,
                     list : list
                 }),
+
+                // YOURNAME:
+                // YOURCOMMENT
                 function(ch)
                 {
                     return list[ch];
@@ -862,6 +964,9 @@ function createSimpleEscape(name, direction)
     };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeGroupsForEntities(str, lists)
 {
     lists = [].concat(lists);
@@ -913,6 +1018,9 @@ function escapeGroupsForEntities(str, lists)
 this.escapeGroupsForEntities = escapeGroupsForEntities;
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function unescapeEntities(str, lists)
 {
     var re = getEscapeRegexp('reverse', lists),
@@ -964,6 +1072,9 @@ var escapeForSourceLine = this.escapeForSourceLine = createSimpleEscape('text', 
 
 var unescapeWhitespace = createSimpleEscape('whitespace', 'reverse');
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.unescapeForTextNode = function(str)
 {
     if (Firebug.showTextNodesWithWhitespace)
@@ -973,23 +1084,38 @@ this.unescapeForTextNode = function(str)
     return str;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.escapeNewLines = function(value)
 {
     return value.replace(/\r/g, "\\r").replace(/\n/g, "\\n");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.stripNewLines = function(value)
 {
     return typeof(value) == "string" ? value.replace(/[\r\n]/g, " ") : value;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.escapeJS = function(value)
 {
     return value.replace(/\r/g, "\\r").replace(/\n/g, "\\n").replace('"', '\\"', "g");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTMLAttribute(value)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function replaceChars(ch)
     {
         switch (ch)
@@ -1015,8 +1141,14 @@ function escapeHTMLAttribute(value)
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTML(value)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function replaceChars(ch)
     {
         switch (ch)
@@ -1039,6 +1171,9 @@ function escapeHTML(value)
 
 this.escapeHTML = escapeHTML;
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.cropString = function(text, limit)
 {
     text = text + "";
@@ -1054,6 +1189,9 @@ this.cropString = function(text, limit)
         return this.escapeNewLines(text);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isWhitespace = function(text)
 {
     return !reNotWhitespace.exec(text);
@@ -1062,6 +1200,9 @@ this.isWhitespace = function(text)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.safeToString = function(ob)
 {
     if (this.isIE)
@@ -1082,6 +1223,9 @@ this.safeToString = function(ob)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.hasProperties = function(ob)
 {
     try
@@ -1096,6 +1240,9 @@ this.hasProperties = function(ob)
 // String Util
 
 var reTrim = /^\s+|\s+$/g;
+
+// YOURNAME:
+// YOURCOMMENT
 this.trim = function(s)
 {
     return s.replace(reTrim, "");
@@ -1105,6 +1252,9 @@ this.trim = function(s)
 // ************************************************************************************************
 // Empty
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.emptyFn = function(){};
 
 
@@ -1112,6 +1262,9 @@ this.emptyFn = function(){};
 // ************************************************************************************************
 // Visibility
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isVisible = function(elt)
 {
     /*
@@ -1129,6 +1282,9 @@ this.isVisible = function(elt)
         || elt.namespaceURI == "http://www.w3.org/1998/Math/MathML" );
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.collapse = function(elt, collapsed)
 {
     // IE6 doesn't support the [collapsed] CSS selector. IE7 does support the selector, 
@@ -1146,6 +1302,9 @@ this.collapse = function(elt, collapsed)
         elt.setAttribute("collapsed", collapsed ? "true" : "false");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.obscure = function(elt, obscured)
 {
     if (obscured)
@@ -1154,11 +1313,17 @@ this.obscure = function(elt, obscured)
         this.removeClass(elt, "obscured");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.hide = function(elt, hidden)
 {
     elt.style.visibility = hidden ? "hidden" : "visible";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.clearNode = function(node)
 {
     var nodeName = " " + node.nodeName.toLowerCase() + " ";
@@ -1171,6 +1336,9 @@ this.clearNode = function(node)
         node.innerHTML = "";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.eraseNode = function(node)
 {
     while (node.lastChild)
@@ -1180,6 +1348,9 @@ this.eraseNode = function(node)
 // ************************************************************************************************
 // Window iteration
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.iterateWindows = function(win, handler)
 {
     if (!win || !win.document)
@@ -1197,6 +1368,9 @@ this.iterateWindows = function(win, handler)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getRootWindow = function(win)
 {
     for (; win; win = win.parent)
@@ -1210,8 +1384,14 @@ this.getRootWindow = function(win)
 // ************************************************************************************************
 // Graphics
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getClientOffset = function(elt)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var addOffset = function addOffset(elt, coords, view)
     {
         var p = elt.offsetParent;
@@ -1247,8 +1427,14 @@ this.getClientOffset = function(elt)
     return coords;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getViewOffset = function(elt, singleFrame)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function addOffset(elt, coords, view)
     {
         var p = elt.offsetParent;
@@ -1325,6 +1511,9 @@ this.getViewOffset = function(elt, singleFrame)
     return coords;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getLTRBWH = function(elt)
 {
     var bcrect,
@@ -1352,6 +1541,9 @@ this.getLTRBWH = function(elt)
     return dims;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.applyBodyOffsets = function(elt, clientRect)
 {
     var od = elt.ownerDocument;
@@ -1382,11 +1574,17 @@ this.applyBodyOffsets = function(elt, clientRect)
     return clientRect;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getOffsetSize = function(elt)
 {
     return {width: elt.offsetWidth, height: elt.offsetHeight};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getOverflowParent = function(element)
 {
     for (var scrollParent = element.parentNode; scrollParent; scrollParent = scrollParent.offsetParent)
@@ -1396,6 +1594,9 @@ this.getOverflowParent = function(element)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isScrolledToBottom = function(element)
 {
     var onBottom = (element.scrollTop + element.offsetHeight) == element.scrollHeight;
@@ -1404,6 +1605,9 @@ this.isScrolledToBottom = function(element)
     return onBottom;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.scrollToBottom = function(element)
 {
         element.scrollTop = element.scrollHeight;
@@ -1418,18 +1622,27 @@ this.scrollToBottom = function(element)
         return (element.scrollTop == element.scrollHeight);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.move = function(element, x, y)
 {
     element.style.left = x + "px";
     element.style.top = y + "px";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.resize = function(element, w, h)
 {
     element.style.width = w + "px";
     element.style.height = h + "px";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.linesIntoCenterView = function(element, scrollBox)  // {before: int, after: int}
 {
     if (!scrollBox)
@@ -1457,6 +1670,9 @@ this.linesIntoCenterView = function(element, scrollBox)  // {before: int, after:
             after: Math.round((bottomSpace/element.offsetHeight) + 0.5) };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.scrollIntoCenterView = function(element, scrollBox, notX, notY)
 {
     if (!element)
@@ -1508,6 +1724,9 @@ var cssPropNames = null;
 var cssColorNames = null;
 var imageRules = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getCSSKeywordsByProperty = function(propName)
 {
     if (!cssKeywordMap)
@@ -1533,6 +1752,9 @@ this.getCSSKeywordsByProperty = function(propName)
     return propName in cssKeywordMap ? cssKeywordMap[propName] : [];
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getCSSPropertyNames = function()
 {
     if (!cssPropNames)
@@ -1546,6 +1768,9 @@ this.getCSSPropertyNames = function()
     return cssPropNames;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isColorKeyword = function(keyword)
 {
     if (keyword == "transparent")
@@ -1567,6 +1792,9 @@ this.isColorKeyword = function(keyword)
     return cssColorNames.indexOf(keyword.toLowerCase()) != -1;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isImageRule = function(rule)
 {
     if (!imageRules)
@@ -1585,6 +1813,9 @@ this.isImageRule = function(rule)
     return imageRules.indexOf(rule.toLowerCase()) != -1;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.copyTextStyles = function(fromNode, toNode, style)
 {
     var view = this.isIE ?
@@ -1610,6 +1841,9 @@ this.copyTextStyles = function(fromNode, toNode, style)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.copyBoxStyles = function(fromNode, toNode, style)
 {
     var view = this.isIE ?
@@ -1634,6 +1868,9 @@ this.copyBoxStyles = function(fromNode, toNode, style)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.readBoxStyles = function(style)
 {
     var styleNames = {
@@ -1654,6 +1891,9 @@ this.readBoxStyles = function(style)
     return styles;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getBoxFromStyles = function(style, element)
 {
     var args = this.readBoxStyles(style);
@@ -1664,6 +1904,9 @@ this.getBoxFromStyles = function(style, element)
     return args;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementCSSSelector = function(element)
 {
     var label = element.localName.toLowerCase();
@@ -1675,12 +1918,18 @@ this.getElementCSSSelector = function(element)
     return label;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getURLForStyleSheet= function(styleSheet)
 {
     //http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html#StyleSheets-StyleSheet. For inline style sheets, the value of this attribute is null.
     return (styleSheet.href ? styleSheet.href : styleSheet.ownerNode.ownerDocument.URL);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getDocumentForStyleSheet = function(styleSheet)
 {
     while (styleSheet.parentStyleSheet && !styleSheet.ownerNode)
@@ -1695,6 +1944,9 @@ this.getDocumentForStyleSheet = function(styleSheet)
  * Retrieves the instance number for a given style sheet. The instance number
  * is sheet's index within the set of all other sheets whose URL is the same.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 this.getInstanceForStyleSheet = function(styleSheet, ownerDocument)
 {
     // System URLs are always unique (or at least we are making this assumption)
@@ -1725,6 +1977,9 @@ this.getInstanceForStyleSheet = function(styleSheet, ownerDocument)
 // ************************************************************************************************
 // CSS classes
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.hasClass = function(node, name) // className, className, ...
 {
     if (!node || node.nodeType != 1)
@@ -1743,12 +1998,18 @@ this.hasClass = function(node, name) // className, className, ...
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.setClass = function(node, name)
 {
     if (node && !this.hasClass(node, name))
         node.className += " " + name;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getClassValue = function(node, name)
 {
     var re = new RegExp(name+"-([^ ]+)");
@@ -1756,6 +2017,9 @@ this.getClassValue = function(node, name)
     return m ? m[1] : "";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.removeClass = function(node, name)
 {
     if (node && node.className)
@@ -1769,6 +2033,9 @@ this.removeClass = function(node, name)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.toggleClass = function(elt, name)
 {
     if (this.hasClass(elt, name))
@@ -1777,6 +2044,9 @@ this.toggleClass = function(elt, name)
         this.setClass(elt, name);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.setClassTimed = function(elt, name, context, timeout)
 {
     if (!timeout)
@@ -1787,6 +2057,9 @@ this.setClassTimed = function(elt, name, context, timeout)
     else
         this.setClass(elt, name);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     elt.__setClassTimeout = context.setTimeout(function()
     {
         delete elt.__setClassTimeout;
@@ -1795,6 +2068,9 @@ this.setClassTimed = function(elt, name, context, timeout)
     }, timeout);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.cancelClassTimed = function(elt, name, context)
 {
     if (elt.__setClassTimeout)
@@ -1809,6 +2085,9 @@ this.cancelClassTimed = function(elt, name, context)
 // ************************************************************************************************
 // DOM queries
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.$ = function(id, doc)
 {
     if (doc)
@@ -1819,6 +2098,9 @@ this.$ = function(id, doc)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.$$ = function(selector, doc)
 {
     if (doc || !FBL.Firebug.chrome)
@@ -1829,6 +2111,9 @@ this.$$ = function(selector, doc)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getChildByClass = function(node) // ,classname, classname, classname...
 {
     for (var i = 1; i < arguments.length; ++i)
@@ -1849,6 +2134,9 @@ this.getChildByClass = function(node) // ,classname, classname, classname...
     return node;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getAncestorByClass = function(node, className)
 {
     for (var parent = node; parent; parent = parent.parentNode)
@@ -1861,6 +2149,9 @@ this.getAncestorByClass = function(node, className)
 };
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementsByClass = function(node, className)
 {
     var result = [];
@@ -1874,6 +2165,9 @@ this.getElementsByClass = function(node, className)
     return result;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementByClass = function(node, className)  // className, className, ...
 {
     var args = cloneArray(arguments); args.splice(0, 1);
@@ -1893,6 +2187,9 @@ this.getElementByClass = function(node, className)  // className, className, ...
     return null;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isAncestor = function(node, potentialAncestor)
 {
     for (var parent = node; parent; parent = parent.parentNode)
@@ -1904,6 +2201,9 @@ this.isAncestor = function(node, potentialAncestor)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getNextElement = function(node)
 {
     while (node && node.nodeType != 1)
@@ -1912,6 +2212,9 @@ this.getNextElement = function(node)
     return node;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getPreviousElement = function(node)
 {
     while (node && node.nodeType != 1)
@@ -1920,6 +2223,9 @@ this.getPreviousElement = function(node)
     return node;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getBody = function(doc)
 {
     if (doc.body)
@@ -1932,6 +2238,9 @@ this.getBody = function(doc)
     return doc.firstChild;  // For non-HTML docs
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.findNextDown = function(node, criteria)
 {
     if (!node)
@@ -1948,6 +2257,9 @@ this.findNextDown = function(node, criteria)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.findPreviousUp = function(node, criteria)
 {
     if (!node)
@@ -1964,6 +2276,9 @@ this.findPreviousUp = function(node, criteria)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.findNext = function(node, criteria, upOnly, maxRoot)
 {
     if (!node)
@@ -1990,6 +2305,9 @@ this.findNext = function(node, criteria, upOnly, maxRoot)
         return this.findNext(node.parentNode, criteria, true);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.findPrevious = function(node, criteria, downOnly, maxRoot)
 {
     if (!node)
@@ -2021,18 +2339,33 @@ this.findPrevious = function(node, criteria, downOnly, maxRoot)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getNextByClass = function(root, state)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var iter = function iter(node) { return node.nodeType == 1 && FBL.hasClass(node, state); };
     return this.findNext(root, iter);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getPreviousByClass = function(root, state)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var iter = function iter(node) { return node.nodeType == 1 && FBL.hasClass(node, state); };
     return this.findPrevious(root, iter);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isElement = function(o)
 {
     try {
@@ -2047,6 +2380,9 @@ this.isElement = function(o)
 // ************************************************************************************************
 // DOM creation
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.createElement = function(tagName, properties)
 {
     properties = properties || {};
@@ -2065,6 +2401,9 @@ this.createElement = function(tagName, properties)
     return element;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.createGlobalElement = function(tagName, properties)
 {
     properties = properties || {};
@@ -2091,6 +2430,9 @@ this.createGlobalElement = function(tagName, properties)
 // ************************************************************************************************
 // Events
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isLeftClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2099,6 +2441,9 @@ this.isLeftClick = function(event)
         this.noKeyModifiers(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isMiddleClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2107,6 +2452,9 @@ this.isMiddleClick = function(event)
         this.noKeyModifiers(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isRightClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2115,11 +2463,17 @@ this.isRightClick = function(event)
         this.noKeyModifiers(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.noKeyModifiers = function(event)
 {
     return !event.ctrlKey && !event.shiftKey && !event.altKey && !event.metaKey;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isControlClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2128,6 +2482,9 @@ this.isControlClick = function(event)
         this.isControl(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isShiftClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2136,16 +2493,25 @@ this.isShiftClick = function(event)
         this.isShift(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isControl = function(event)
 {
     return (event.metaKey || event.ctrlKey) && !event.shiftKey && !event.altKey;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isAlt = function(event)
 {
     return event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isAltClick = function(event)
 {
     return (this.isIE && event.type != "click" && event.type != "dblclick" ? 
@@ -2154,16 +2520,25 @@ this.isAltClick = function(event)
         this.isAlt(event);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isControlShift = function(event)
 {
     return (event.metaKey || event.ctrlKey) && event.shiftKey && !event.altKey;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isShift = function(event)
 {
     return event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.addEvent = function(object, name, handler)
 {
     if (object.addEventListener)
@@ -2172,6 +2547,9 @@ this.addEvent = function(object, name, handler)
         object.attachEvent("on"+name, handler);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.removeEvent = function(object, name, handler)
 {
     try
@@ -2188,6 +2566,9 @@ this.removeEvent = function(object, name, handler)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.cancelEvent = function(e, preventDefault)
 {
     if (!e) return;
@@ -2208,6 +2589,9 @@ this.cancelEvent = function(e, preventDefault)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.addGlobalEvent = function(name, handler)
 {
     var doc = this.Firebug.browser.document;
@@ -2231,6 +2615,9 @@ this.addGlobalEvent = function(name, handler)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.removeGlobalEvent = function(name, handler)
 {
     var doc = this.Firebug.browser.document;
@@ -2256,6 +2643,9 @@ this.removeGlobalEvent = function(name, handler)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.dispatch = function(listeners, name, args)
 {
     if (!listeners) return;
@@ -2298,6 +2688,9 @@ this.dispatch = function(listeners, name, args)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 var disableTextSelectionHandler = function(event)
 {
     FBL.cancelEvent(event, true);
@@ -2305,6 +2698,9 @@ var disableTextSelectionHandler = function(event)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.disableTextSelection = function(e)
 {
     if (typeof e.onselectstart != "undefined") // IE
@@ -2323,6 +2719,9 @@ this.disableTextSelection = function(e)
     e.style.cursor = "default";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.restoreTextSelection = function(e)
 {
     if (typeof e.onselectstart != "undefined") // IE
@@ -2416,6 +2815,9 @@ var eventTypes =
         "commandupdate" ]
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getEventFamily = function(eventType)
 {
     if (!this.families)
@@ -2437,12 +2839,18 @@ this.getEventFamily = function(eventType)
 // ************************************************************************************************
 // URLs
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getFileName = function(url)
 {
     var split = this.splitURLBase(url);
     return split.name;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.splitURLBase = function(url)
 {
     if (this.isDataURL(url))
@@ -2450,6 +2858,9 @@ this.splitURLBase = function(url)
     return this.splitURLTrue(url);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.splitDataURL = function(url)
 {
     var mark = url.indexOf(':', 3);
@@ -2501,6 +2912,9 @@ this.splitDataURL = function(url)
     return props;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.splitURLTrue = function(url)
 {
     var m = reSplitFile.exec(url);
@@ -2512,12 +2926,18 @@ this.splitURLTrue = function(url)
         return {path: m[1], name: m[2]+m[3]};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getFileExtension = function(url)
 {
     var lastDot = url.lastIndexOf(".");
     return url.substr(lastDot+1);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isSystemURL = function(url)
 {
     if (!url) return true;
@@ -2537,6 +2957,9 @@ this.isSystemURL = function(url)
         return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isSystemPage = function(win)
 {
     try
@@ -2563,12 +2986,18 @@ this.isSystemPage = function(win)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isSystemStyleSheet = function(sheet)
 {
     var href = sheet && sheet.href;
     return href && FBL.isSystemURL(href);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getURIHost = function(uri)
 {
     try
@@ -2584,6 +3013,9 @@ this.getURIHost = function(uri)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isLocalURL = function(url)
 {
     if (url.substr(0, 5) == "file:")
@@ -2594,11 +3026,17 @@ this.isLocalURL = function(url)
         return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isDataURL = function(url)
 {
     return (url && url.substr(0,5) == "data:");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getLocalPath = function(url)
 {
     if (this.isLocalURL(url))
@@ -2609,6 +3047,9 @@ this.getLocalPath = function(url)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getURLFromLocalFile = function(file)
 {
     var fileHandler = ioService.getProtocolHandler("file").QueryInterface(Ci.nsIFileProtocolHandler);
@@ -2616,6 +3057,9 @@ this.getURLFromLocalFile = function(file)
     return URL;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getDataURLForContent = function(content, url)
 {
     // data:text/javascript;fileName=x%2Cy.js;baseLineNumber=10,<the-url-encoded-data>
@@ -2625,29 +3069,44 @@ this.getDataURLForContent = function(content, url)
     return uri;
 },
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getDomain = function(url)
 {
     var m = /[^:]+:\/{1,3}([^\/]+)/.exec(url);
     return m ? m[1] : "";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getURLPath = function(url)
 {
     var m = /[^:]+:\/{1,3}[^\/]+(\/.*?)$/.exec(url);
     return m ? m[1] : "";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getPrettyDomain = function(url)
 {
     var m = /[^:]+:\/{1,3}(www\.)?([^\/]+)/.exec(url);
     return m ? m[2] : "";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.absoluteURL = function(url, baseURL)
 {
     return this.absoluteURLWithDots(url, baseURL).replace("/./", "/", "g");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.absoluteURLWithDots = function(url, baseURL)
 {
     if (url[0] == "?")
@@ -2679,6 +3138,9 @@ this.absoluteURLWithDots = function(url, baseURL)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.normalizeURL = function(url)  // this gets called a lot, any performance improvement welcome
 {
     if (!url)
@@ -2705,11 +3167,17 @@ this.normalizeURL = function(url)  // this gets called a lot, any performance im
     return url;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.denormalizeURL = function(url)
 {
     return url.replace(/file:\/\/\//g, "file:/");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.parseURLParams = function(url)
 {
     var q = url ? url.indexOf("?") : -1;
@@ -2727,6 +3195,9 @@ this.parseURLParams = function(url)
     return this.parseURLEncodedText(search);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.parseURLEncodedText = function(text)
 {
     var maxValueLength = 25000;
@@ -2762,6 +3233,9 @@ this.parseURLEncodedText = function(text)
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     params.sort(function(a, b) { return a.name <= b.name ? -1 : 1; });
 
     return params;
@@ -2769,6 +3243,9 @@ this.parseURLEncodedText = function(text)
 
 // TODO: xxxpedro lib. why loops in domplate are requiring array in parameters
 // as in response/request headers and get/post parameters in Net module?
+
+// YOURNAME:
+// YOURCOMMENT
 this.parseURLParamsArray = function(url)
 {
     var q = url ? url.indexOf("?") : -1;
@@ -2786,6 +3263,9 @@ this.parseURLParamsArray = function(url)
     return this.parseURLEncodedTextArray(search);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.parseURLEncodedTextArray = function(text)
 {
     var maxValueLength = 25000;
@@ -2821,11 +3301,17 @@ this.parseURLEncodedTextArray = function(text)
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     params.sort(function(a, b) { return a.name <= b.name ? -1 : 1; });
 
     return params;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.reEncodeURL = function(file, text)
 {
     var lines = text.split("\n");
@@ -2841,6 +3327,9 @@ this.reEncodeURL = function(file, text)
     return url;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getResource = function(aURL)
 {
     try
@@ -2856,6 +3345,9 @@ this.getResource = function(aURL)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.parseJSONString = function(jsonString, originURL)
 {
     // See if this is a Prototype style *-secure request.
@@ -2892,6 +3384,9 @@ this.parseJSONString = function(jsonString, originURL)
         ///jsonObject = Components.utils.evalInSandbox(jsonString, s);
         
         //jsonObject = Firebug.context.eval(jsonString);
+
+        // YOURNAME:
+        // YOURCOMMENT
         jsonObject = Firebug.context.evaluate(jsonString, null, null, function(){return null;});
     }
     catch(e)
@@ -2900,6 +3395,9 @@ this.parseJSONString = function(jsonString, originURL)
         if (e.message.indexOf("is not defined"))
         {
             var parts = e.message.split(" ");
+
+            // YOURNAME:
+            // YOURCOMMENT
             s[parts[0]] = function(str){ return str; };
             try {
                 jsonObject = Components.utils.evalInSandbox(jsonString, s);
@@ -2922,6 +3420,9 @@ this.parseJSONString = function(jsonString, originURL)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.objectToString = function(object)
 {
     try
@@ -2937,6 +3438,9 @@ this.objectToString = function(object)
 // ************************************************************************************************
 // Input Caret Position
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.setSelectionRange = function(input, start, length)
 {
     if (input.createTextRange)
@@ -2956,6 +3460,9 @@ this.setSelectionRange = function(input, start, length)
 // ************************************************************************************************
 // Input Selection Start / Caret Position
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getInputSelectionStart = function(input)
 {
     if (document.selection)
@@ -2987,22 +3494,34 @@ this.getInputSelectionStart = function(input)
 // ************************************************************************************************
 // Opera Tab Fix
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onOperaTabBlur(e)
 {
     if (this.lastKey == 9)
       this.focus();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onOperaTabKeyDown(e)
 {
     this.lastKey = e.keyCode;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onOperaTabFocus(e)
 {
     this.lastKey = null;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.fixOperaTabKey = function(el)
 {
     el.onfocus = onOperaTabFocus;
@@ -3012,22 +3531,34 @@ this.fixOperaTabKey = function(el)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.Property = function(object, name)
 {
     this.object = object;
     this.name = name;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.getObject = function()
     {
         return object[name];
     };
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.ErrorCopy = function(message)
 {
     this.message = message;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function EventCopy(event)
 {
     // Because event objects are destroyed arbitrarily by Gecko, we must make a copy of them to
@@ -3047,12 +3578,21 @@ this.EventCopy = EventCopy;
 // Type Checking
 
 var toString = Object.prototype.toString;
+
+// YOURNAME:
+// YOURCOMMENT
 var reFunction = /^\s*function(\s+[\w_$][\w\d_$]*)?\s*\(/; 
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isArray = function(object) {
     return toString.call(object) === '[object Array]'; 
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isFunction = function(object) {
     if (!object) return false;
     
@@ -3064,6 +3604,9 @@ this.isFunction = function(object) {
 // ************************************************************************************************
 // Instance Checking
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.instanceOf = function(object, className)
 {
     if (!object || typeof object != "object")
@@ -3235,6 +3778,9 @@ var domMemberMap2 = {};
 
 var domMemberMap2Sandbox = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getDomMemberMap2 = function(name)
 {
     if (!domMemberMap2Sandbox)
@@ -3291,6 +3837,9 @@ var getDomMemberMap2 = function(name)
 };
 
 // xxxpedro experimental get DOM members
+
+// YOURNAME:
+// YOURCOMMENT
 this.getDOMMembers = function(object)
 {
     if (!domMemberCache)
@@ -3375,6 +3924,9 @@ this.getDOMMembers = function(object)
 
 
 /*
+
+// YOURNAME:
+// YOURCOMMENT
 this.getDOMMembers = function(object)
 {
     if (!domMemberCache)
@@ -3447,6 +3999,9 @@ this.getDOMMembers = function(object)
 };
 /**/
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.isDOMMember = function(object, propName)
 {
     var members = this.getDOMMembers(object);
@@ -5354,11 +5909,17 @@ this.Ajax =
     transport: null,
     states: ["Uninitialized","Loading","Loaded","Interactive","Complete"],
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         this.transport = this.getXHRObject();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getXHRObject: function()
     {
         var xhrObj = false;
@@ -5410,6 +5971,9 @@ this.Ajax =
      * @param {Function} options.onSuccess     FunÃ§Ã£o a ser executada ao completar a requisiÃ§Ã£o com sucesso.
      * @param {Function} options.onFailure     FunÃ§Ã£o a ser executada ao completar a requisiÃ§Ã£o com erro.
      */      
+
+    // YOURNAME:
+    // YOURCOMMENT
     request: function(options)
     {
         var o = options || {};
@@ -5427,6 +5991,9 @@ this.Ajax =
             this.sendRequest();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     serialize: function(data)
     {
         var r = [""], rl = 0;
@@ -5453,6 +6020,9 @@ this.Ajax =
         return r.join("").replace(/&$/, "");
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     sendRequest: function()
     {
         var t = FBL.Ajax.transport, r = FBL.Ajax.requests.shift(), data;
@@ -5471,6 +6041,9 @@ this.Ajax =
     
         /** @ignore */
         // Tratamento de evento de mudanÃ§a de estado
+
+        // YOURNAME:
+        // YOURCOMMENT
         t.onreadystatechange = function()
         { 
             FBL.Ajax.onStateChange(r); 
@@ -5483,6 +6056,9 @@ this.Ajax =
     /**
      * FunÃ§Ã£o de tratamento da mudanÃ§a de estado da requisiÃ§Ã£o ajax.
      */     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onStateChange: function(options)
     {
         var fn, o = options, t = this.transport;
@@ -5510,6 +6086,9 @@ this.Ajax =
     /**
      * Retorna a resposta de acordo com o tipo de dado requisitado.
      */  
+
+    // YOURNAME:
+    // YOURCOMMENT
     getResponse: function(options)
     {
         var t = this.transport, type = options.dataType;
@@ -5524,6 +6103,9 @@ this.Ajax =
     /**
      * Retorna o atual estado da requisiÃ§Ã£o ajax.
      */     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getState: function()
     {
         return this.states[this.transport.readyState];
@@ -5535,6 +6117,9 @@ this.Ajax =
 // ************************************************************************************************
 // Cookie, from http://www.quirksmode.org/js/cookies.html
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.createCookie = function(name,value,days)
 {
     if ('cookie' in document)
@@ -5552,6 +6137,9 @@ this.createCookie = function(name,value,days)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.readCookie = function (name)
 {
     if ('cookie' in document)
@@ -5570,6 +6158,9 @@ this.readCookie = function (name)
     return null;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.removeCookie = function(name)
 {
     this.createCookie(name, "", -1);
@@ -5578,6 +6169,9 @@ this.removeCookie = function(name)
 
 // ************************************************************************************************
 // http://www.mister-pixel.com/#Content__state=is_that_simple
+
+// YOURNAME:
+// YOURCOMMENT
 var fixIE6BackgroundImageCache = function(doc)
 {
     doc = doc || document;
@@ -5596,6 +6190,9 @@ var fixIE6BackgroundImageCache = function(doc)
 
 var resetStyle = "margin:0; padding:0; border:0; position:absolute; overflow:hidden; display:block;";
 
+
+// YOURNAME:
+// YOURCOMMENT
 var calculatePixelsPerInch = function calculatePixelsPerInch(doc, body)
 {
     var inch = FBL.createGlobalElement("div");
@@ -5613,6 +6210,9 @@ var calculatePixelsPerInch = function calculatePixelsPerInch(doc, body)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.SourceLink = function(url, line, type, object, instance)
 {
     this.href = url;
@@ -5624,10 +6224,16 @@ this.SourceLink = function(url, line, type, object, instance)
 
 this.SourceLink.prototype =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     toString: function()
     {
         return this.href;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     toJSON: function() // until 3.1...
     {
         return "{\"href\":\""+this.href+"\", "+
@@ -5640,12 +6246,18 @@ this.SourceLink.prototype =
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.SourceText = function(lines, owner)
 {
     this.lines = lines;
     this.owner = owner;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.SourceText.getLineAsHTML = function(lineNo)
 {
     return escapeForSourceLine(this.lines[lineNo-1]);
@@ -5657,6 +6269,9 @@ this.SourceText.getLineAsHTML = function(lineNo)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /** @scope ns-i18n */ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -5684,11 +6299,17 @@ var oSTR =
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.$STR = function(name)
 {
     return oSTR.hasOwnProperty(name) ? oSTR[name] : name;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.$STRF = function(name, args)
 {
     if (!oSTR.hasOwnProperty(name)) return name;
@@ -5733,6 +6354,9 @@ FBL.$STRF = function(name, args)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 var parseFormat = function parseFormat(format)
 {
     var parts = [];
@@ -5784,6 +6408,9 @@ var parseFormat = function parseFormat(format)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /** @scope ns-firebug */ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -5826,6 +6453,9 @@ window.Firebug = FBL.Firebug =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Initialization
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.initialize", "initializing application");
@@ -5855,6 +6485,9 @@ window.Firebug = FBL.Firebug =
         }
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         if (Firebug.Inspector)
@@ -5889,6 +6522,9 @@ window.Firebug = FBL.Firebug =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Registration
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     registerModule: function()
     {
         modules.push.apply(modules, arguments);
@@ -5896,6 +6532,9 @@ window.Firebug = FBL.Firebug =
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.registerModule");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     registerPanel: function()
     {
         panelTypes.push.apply(panelTypes, arguments);
@@ -5913,17 +6552,26 @@ window.Firebug = FBL.Firebug =
                 FBTrace.sysout("Firebug.registerPanel", arguments[i].prototype.name);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     registerRep: function()
     {
         reps.push.apply(reps, arguments);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     unregisterRep: function()
     {
         for (var i = 0; i < arguments.length; ++i)
             remove(reps, arguments[i]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setDefaultReps: function(funcRep, rep)
     {
         FBL.defaultRep = rep;
@@ -5933,6 +6581,9 @@ window.Firebug = FBL.Firebug =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Reps
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRep: function(object)
     {
         var type = typeof object;
@@ -5964,6 +6615,9 @@ window.Firebug = FBL.Firebug =
         return (type == 'function') ? defaultFuncRep : defaultRep;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRepObject: function(node)
     {
         var target = null;
@@ -5982,6 +6636,9 @@ window.Firebug = FBL.Firebug =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRepNode: function(node)
     {
         for (var child = node; child; child = child.parentNode)
@@ -5991,6 +6648,9 @@ window.Firebug = FBL.Firebug =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementByRepObject: function(element, object)
     {
         for (var child = element.firstChild; child; child = child.nextSibling)
@@ -6003,11 +6663,17 @@ window.Firebug = FBL.Firebug =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Preferences
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPref: function(name)
     {
         return Firebug[name];
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     setPref: function(name, value)
     {
         Firebug[name] = value;
@@ -6015,6 +6681,9 @@ window.Firebug = FBL.Firebug =
         this.savePrefs();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     setPrefs: function(prefs)
     {
         for (var name in prefs)
@@ -6026,6 +6695,9 @@ window.Firebug = FBL.Firebug =
         this.savePrefs();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     restorePrefs: function()
     {
         var Options = Env.Options;
@@ -6036,6 +6708,9 @@ window.Firebug = FBL.Firebug =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadPrefs: function(prefs)
     {
         this.restorePrefs();
@@ -6049,6 +6724,9 @@ window.Firebug = FBL.Firebug =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     savePrefs: function()
     {
         var json = ['{'], jl = 0;
@@ -6085,6 +6763,9 @@ window.Firebug = FBL.Firebug =
         createCookie("FirebugLite", json.join(""));
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     erasePrefs: function()
     {
         removeCookie("FirebugLite");
@@ -6102,6 +6783,9 @@ if (!Env.Options.enablePersistent ||
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // Other methods
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.cacheDocument = function cacheDocument()
 {
     var els = Firebug.browser.document.getElementsByTagName("*");
@@ -6124,6 +6808,9 @@ FBL.cacheDocument = function cacheDocument()
  * module classes must ensure that Firebug.Module.initialize method is called for the
  * super class.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.Listener = function()
 {
     // The array is created when the first listeners is added.
@@ -6133,6 +6820,9 @@ Firebug.Listener = function()
 }
 Firebug.Listener.prototype =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     addListener: function(listener)
     {
         if (!this.fbListeners)
@@ -6141,6 +6831,9 @@ Firebug.Listener.prototype =
         this.fbListeners.push(listener);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeListener: function(listener)
     {
         remove(this.fbListeners, listener);  // if this.fbListeners is null, remove is being called with no add
@@ -6165,6 +6858,9 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called when the window is opened.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
     },
@@ -6172,6 +6868,9 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called when the window is closed.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
     },
@@ -6181,6 +6880,9 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called when a new context is created but before the page is loaded.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     initContext: function(context)
     {
     },
@@ -6188,6 +6890,9 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called after a context is detached to a separate window;
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattachContext: function(browser, context)
     {
     },
@@ -6195,12 +6900,18 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called when a context is destroyed. Module may store info on persistedState for reloaded pages.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyContext: function(context, persistedState)
     {
     },
   
     // Called when a FF tab is create or activated (user changes FF tab)
     // Called after context is created or with context == null (to abort?)
+
+    // YOURNAME:
+    // YOURCOMMENT
     showContext: function(browser, context)
     {
     },
@@ -6208,26 +6919,41 @@ Firebug.Module = extend(new Firebug.Listener(),
     /**
      * Called after a context's page gets DOMContentLoaded
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadedContext: function(context)
     {
     },
   
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     showPanel: function(browser, panel)
     {
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     showSidePanel: function(browser, panel)
     {
     },
   
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     getObjectByURL: function(context, url)
     {
     }
@@ -6293,6 +7019,9 @@ Firebug.Panel =
     order: 2147483647,
     statusSeparator: "<",
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(context, doc)
     {
         this.hasSidePanel = parentPanelMap.hasOwnProperty(this.name); 
@@ -6420,6 +7149,9 @@ Firebug.Panel =
         /**/
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function(state) // Panel may store info on state
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.Panel.destroy", this.name);
@@ -6449,6 +7181,9 @@ Firebug.Panel =
         //this.destroyNode();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.Panel.initialize", this.name);
@@ -6488,6 +7223,9 @@ Firebug.Panel =
         addEvent(this.containerNode, "contextmenu", this.onContextMenu);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.Panel.shutdown", this.name);
@@ -6512,23 +7250,35 @@ Firebug.Panel =
         removeEvent(this.containerNode, "contextmenu", this.onContextMenu);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     detach: function(oldChrome, newChrome)
     {
         if (oldChrome.selectedPanel.name == this.name)
             this.lastScrollTop = oldChrome.selectedPanel.containerNode.scrollTop;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattach: function(doc)
     {
         if (this.options.innerHTMLSync)
             this.synchronizeUI();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     synchronizeUI: function()
     {
         this.containerNode.scrollTop = this.lastScrollTop || 0;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(state)
     {
         var options = this.options;
@@ -6552,6 +7302,9 @@ Firebug.Panel =
             Firebug.chrome.layout(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function(state)
     {
         var options = this.options;
@@ -6572,14 +7325,23 @@ Firebug.Panel =
         this.visible = false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     watchWindow: function(win)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     unwatchWindow: function(win)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
     },
@@ -6589,6 +7351,9 @@ Firebug.Panel =
     /**
      * Toolbar helpers
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     showToolbarButtons: function(buttonsId, show)
     {
         try
@@ -6621,16 +7386,25 @@ Firebug.Panel =
      *
      * Zero means not supported, and higher numbers indicate specificity.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return 0;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hasObject: function(object)  // beyond type testing, is this object selectable?
     {
         return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     select: function(object, forceUpdate)
     {
         if (!object)
@@ -6652,10 +7426,16 @@ Firebug.Panel =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateSelection: function(object)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     markChange: function(skipSelf)
     {
         if (this.dependents)
@@ -6676,16 +7456,25 @@ Firebug.Panel =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     startInspecting: function()
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stopInspecting: function(object, cancelled)
     {
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDefaultSelection: function(context)
     {
         return null;
@@ -6693,6 +7482,9 @@ Firebug.Panel =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(text)
     {
     },
@@ -6700,6 +7492,9 @@ Firebug.Panel =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
     // xxxpedro contextMenu
+
+    // YOURNAME:
+    // YOURCOMMENT
     onContextMenu: function(event)
     {
         if (!this.getContextMenuItems)
@@ -6769,6 +7564,9 @@ Firebug.Panel =
  */
 Firebug.MeasureBox =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     startMeasuring: function(target)
     {
         if (!this.measureBox)
@@ -6781,17 +7579,26 @@ Firebug.MeasureBox =
         target.ownerDocument.body.appendChild(this.measureBox);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMeasuringElement: function()
     {
         return this.measureBox;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     measureText: function(value)
     {
         this.measureBox.innerHTML = value ? escapeForSourceLine(value) : "m";
         return {width: this.measureBox.offsetWidth, height: this.measureBox.offsetHeight-1};
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     measureInputText: function(value)
     {
         value = value ? escapeForTextNode(value) : "m";
@@ -6801,6 +7608,9 @@ Firebug.MeasureBox =
         return {width: this.measureBox.offsetWidth, height: this.measureBox.offsetHeight-1};
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getBox: function(target)
     {
         var style = this.measureBox.ownerDocument.defaultView.getComputedStyle(this.measureBox, "");
@@ -6808,6 +7618,9 @@ Firebug.MeasureBox =
         return box;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stopMeasuring: function()
     {
         this.measureBox.parentNode.removeChild(this.measureBox);
@@ -6821,29 +7634,47 @@ if (FBL.domplate) Firebug.Rep = domplate(
     className: "",
     inspectable: true,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(object, context)
     {
         Firebug.chrome.select(object);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(object, context)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(object, context)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(object, context)
     {
         return object;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(object)
     {
         var label = safeToString(object);
@@ -6876,11 +7707,17 @@ if (FBL.domplate) Firebug.Rep = domplate(
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(object)
     {
         return null;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(object, target, context)
     {
         return [];
@@ -6889,26 +7726,41 @@ if (FBL.domplate) Firebug.Rep = domplate(
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Convenience for domplates
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     STR: function(name)
     {
         return $STR(name);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     cropString: function(text)
     {
         return cropString(text);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     cropMultipleLines: function(text, limit)
     {
         return cropMultipleLines(text, limit);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     toLowerCase: function(text)
     {
         return text ? text.toLowerCase() : text;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     plural: function(n)
     {
         return n == 1 ? "" : "s";
@@ -6923,6 +7775,9 @@ if (FBL.domplate) Firebug.Rep = domplate(
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /** @scope ns-gui */ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -6935,12 +7790,18 @@ FBL.Controller = {
     controllers: null,
     controllerContext: null,
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(context)
     {
         this.controllers = [];
         this.controllerContext = context || Firebug.chrome;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         this.removeControllers();
@@ -6949,6 +7810,9 @@ FBL.Controller = {
         //this.controllerContext = null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     addController: function()
     {
         for (var i=0, arg; arg=arguments[i]; i++)
@@ -6972,6 +7836,9 @@ FBL.Controller = {
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeController: function()
     {
         for (var i=0, arg; arg=arguments[i]; i++)
@@ -6984,6 +7851,9 @@ FBL.Controller = {
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeControllers: function()
     {
         for (var i=0, c; c=this.controllers[i]; i++)
@@ -7011,6 +7881,9 @@ FBL.PanelBar =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(ownerPanel)
     {
         this.panelMap = {};
@@ -7037,6 +7910,9 @@ FBL.PanelBar =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         PanelBar.shutdown.call(this);
@@ -7056,6 +7932,9 @@ FBL.PanelBar =
         this.ownerPanel = null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         if (this.ownerPanel)
@@ -7063,9 +7942,15 @@ FBL.PanelBar =
         
         for(var name in this.panelMap)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             (function(self, name){
                 
                 // tab click handler
+
+                // YOURNAME:
+                // YOURCOMMENT
                 var onTabClick = function onTabClick()
                 { 
                     self.selectPanel(name);
@@ -7078,6 +7963,9 @@ FBL.PanelBar =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         var selectedPanel = this.selectedPanel;
@@ -7097,6 +7985,9 @@ FBL.PanelBar =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addPanel: function(panelName, parentPanel)
     {
         var PanelType = Firebug.panelTypeMap[panelName];
@@ -7105,6 +7996,9 @@ FBL.PanelBar =
         panel.create();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     removePanel: function(panelName)
     {
         var panel = this.panelMap[panelName];
@@ -7112,6 +8006,9 @@ FBL.PanelBar =
             panel.destroy();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectPanel: function(panelName)
     {
         var selectedPanel = this.selectedPanel;
@@ -7137,6 +8034,9 @@ FBL.PanelBar =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPanel: function(panelName)
     {
         var panel = this.panelMap[panelName];
@@ -7167,6 +8067,9 @@ FBL.PanelBar =
  *  
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.Button = function(options)
 {
     options = options || {};
@@ -7218,6 +8121,9 @@ Button.prototype = extend(Controller,
     state: null,
     display: null,
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         this.shutdown();
@@ -7231,6 +8137,9 @@ Button.prototype = extend(Controller,
         this.owner = null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Controller.initialize.apply(this);
@@ -7247,22 +8156,34 @@ Button.prototype = extend(Controller,
             );
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         Controller.shutdown.apply(this);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     restore: function()
     {
         this.changeState("unpressed");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     changeState: function(state)
     {
         this.state = state;
         this.changeDisplay(state);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     changeDisplay: function(display)
     {
         if (display != this.display)
@@ -7279,6 +8200,9 @@ Button.prototype = extend(Controller,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     handlePress: function(event)
     {
         cancelEvent(event, true);
@@ -7312,6 +8236,9 @@ Button.prototype = extend(Controller,
         return false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleUnpress: function(event)
     {
         cancelEvent(event, true);
@@ -7322,6 +8249,9 @@ Button.prototype = extend(Controller,
         return false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleClick: function(event)
     {
         cancelEvent(event, true);
@@ -7346,6 +8276,9 @@ Button.prototype = extend(Controller,
  * @class
  * @extends FBL.Button 
  */
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.IconButton = function()
 {
     Button.apply(this, arguments);
@@ -7414,6 +8347,9 @@ var MenuPlate = domplate(Firebug.Rep,
     separatorTag:
         SPAN({"class": "fbMenuSeparator"}),
         
+
+    // YOURNAME:
+    // YOURCOMMENT
     memberIterator: function(items)
     {
         var result = [];
@@ -7507,6 +8443,9 @@ var MenuPlate = domplate(Firebug.Rep,
  * @extends FBL.Controller
  *   
  */
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.Menu = function(options)
 {
     // if element is not pre-rendered, we must render it now
@@ -7556,6 +8495,9 @@ var menuMap = {};
 Menu.prototype =  extend(Controller,
 /**@extend FBL.Menu.prototype*/
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         //if (this.element) console.log("destroy", this.element.id);
@@ -7576,6 +8518,9 @@ Menu.prototype =  extend(Controller,
         this.parentTarget = null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Controller.initialize.call(this);
@@ -7586,11 +8531,17 @@ Menu.prototype =  extend(Controller,
              );
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         Controller.shutdown.call(this);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(x, y)
     {
         this.initialize();
@@ -7637,6 +8588,9 @@ Menu.prototype =  extend(Controller,
             this.onShow.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function()
     {
         this.clearHideTimeout();
@@ -7665,6 +8619,9 @@ Menu.prototype =  extend(Controller,
             this.onHide.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     showChildMenu: function(target)
     {
         var id = target.getAttribute("child");
@@ -7672,6 +8629,9 @@ Menu.prototype =  extend(Controller,
         var parent = this;
         var target = target;
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.showChildTimeout = Firebug.chrome.window.setTimeout(function(){
             
             //if (!parent.isVisible) return;
@@ -7694,6 +8654,9 @@ Menu.prototype =  extend(Controller,
         },350);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearHideTimeout: function()
     {
         if (this.hideTimeout)
@@ -7703,6 +8666,9 @@ Menu.prototype =  extend(Controller,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearShowChildTimeout: function()
     {
         if(this.showChildTimeout)
@@ -7712,6 +8678,9 @@ Menu.prototype =  extend(Controller,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleMouseDown: function(event)
     {
         cancelEvent(event, true);
@@ -7798,6 +8767,9 @@ Menu.prototype =  extend(Controller,
         return false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleWindowMouseDown: function(event)
     {
         //console.log("handleWindowMouseDown");
@@ -7813,6 +8785,9 @@ Menu.prototype =  extend(Controller,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleMouseOver: function(event)
     {
         //console.log("handleMouseOver", this.element.id);
@@ -7835,6 +8810,9 @@ Menu.prototype =  extend(Controller,
             if (childMenu.parentTarget != target && childMenu.isVisible)
             {
                 childMenu.clearHideTimeout(); 
+
+                // YOURNAME:
+                // YOURCOMMENT
                 childMenu.hideTimeout = Firebug.chrome.window.setTimeout(function(){
                     childMenu.destroy();
                 },300);
@@ -7853,28 +8831,43 @@ Menu.prototype =  extend(Controller,
 append(Menu,
 /**@extend FBL.Menu*/
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     register: function(object)
     {
         menuMap[object.id] = object;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     check: function(element)
     {
         setClass(element, "fbMenuChecked");
         element.setAttribute("checked", "true");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     uncheck: function(element)
     {
         removeClass(element, "fbMenuChecked");
         element.setAttribute("checked", "");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function(element)
     {
         setClass(element, "fbMenuDisabled");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     enable: function(element)
     {
         removeClass(element, "fbMenuDisabled");
@@ -7886,6 +8879,9 @@ append(Menu,
 // Status Bar
 
 /**@class*/
+
+// YOURNAME:
+// YOURCOMMENT
 function StatusBar(){};
 
 StatusBar.prototype = extend(Controller, {
@@ -7900,6 +8896,9 @@ StatusBar.prototype = extend(Controller, {
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /**@scope ns-context*/ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -7909,6 +8908,9 @@ FBL.ns( /**@scope ns-context*/ function() { with (FBL) {
 var refreshDelay = 300;
 
 // Opera and some versions of webkit returns the wrong value of document.elementFromPoint()
+
+// YOURNAME:
+// YOURCOMMENT
 // function, without taking into account the scroll position. Safari 4 (webkit/531.21.8) 
 // still have this issue. Google Chrome 4 (webkit/532.5) does not. So, we're assuming this 
 // issue was fixed in the 532 version
@@ -7925,6 +8927,9 @@ var offscreenStyle = resetStyle + "top:-1234px; left:-1234px;";
 // Context
 
 /** @class */
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.Context = function(win)
 {
     this.window = win.window;
@@ -7958,6 +8963,9 @@ FBL.Context.prototype =
     browser: null,
     loaded: true,
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     setTimeout: function(fn, delay)
     {
         var win = this.window;
@@ -7977,6 +8985,9 @@ FBL.Context.prototype =
         return timeout;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearTimeout: function(timeout)
     {
         clearTimeout(timeout);
@@ -7985,6 +8996,9 @@ FBL.Context.prototype =
             delete this.timeouts[timeout];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setInterval: function(fn, delay)
     {
         var win = this.window;
@@ -8001,6 +9015,9 @@ FBL.Context.prototype =
         return timeout;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearInterval: function(timeout)
     {
         clearInterval(timeout);
@@ -8009,6 +9026,9 @@ FBL.Context.prototype =
             delete this.intervals[timeout];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     invalidatePanels: function()
     {
         if (!this.invalidPanels)
@@ -8040,6 +9060,9 @@ FBL.Context.prototype =
             delete this.refreshTimeout;
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.refreshTimeout = this.setTimeout(bindFixed(function()
         {
             var invalids = [];
@@ -8100,6 +9123,9 @@ FBL.Context.prototype =
      * @param {Function} errorHandler(message) error handler to be called
      *                                         if the evaluation fails.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     evaluate: function(expr, context, api, errorHandler)
     {
         // Need to remove line breaks otherwise only the first line will be executed
@@ -8139,11 +9165,17 @@ FBL.Context.prototype =
             // try to execute the command using a "return" statement in the evaluation closure.
             cmd = api ?
                 // with API and context, trying to get the return value
+
+                // YOURNAME:
+                // YOURCOMMENT
                 "(function(arguments){ with(" + api + "){ return (" + 
                     expr + 
                 ") } }).call(" + context + ",undefined)"
                 :
                 // with context only, trying to get the return value
+
+                // YOURNAME:
+                // YOURCOMMENT
                 "(function(arguments){ return (" +
                     expr +
                 ") }).call(" +context + ",undefined)";
@@ -8155,11 +9187,17 @@ FBL.Context.prototype =
             {
                 cmd = api ?
                     // with API and context, no return value
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     "(function(arguments){ with(" + api + "){ " +
                         expr + 
                     " } }).call(" + context + ",undefined)"
                     :
                     // with context only, no return value
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     "(function(arguments){ " + 
                         expr + 
                     " }).call(" + context + ",undefined)";
@@ -8186,6 +9224,9 @@ FBL.Context.prototype =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Window Methods
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getWindowSize: function()
     {
         var width=0, height=0, el;
@@ -8209,6 +9250,9 @@ FBL.Context.prototype =
         return {width: width, height: height};
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getWindowScrollSize: function()
     {
         var width=0, height=0, el;
@@ -8234,6 +9278,9 @@ FBL.Context.prototype =
         return {width: width, height: height};
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getWindowScrollPosition: function()
     {
         var top=0, left=0, el;
@@ -8261,6 +9308,9 @@ FBL.Context.prototype =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Element Methods
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementFromPoint: function(x, y)
     {
         if (shouldFixElementFromPoint)
@@ -8272,6 +9322,9 @@ FBL.Context.prototype =
             return this.document.elementFromPoint(x, y);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementPosition: function(el)
     {
         var left = 0
@@ -8287,6 +9340,9 @@ FBL.Context.prototype =
         return {left:left, top:top};      
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementBox: function(el)
     {
         var result = {};
@@ -8322,6 +9378,9 @@ FBL.Context.prototype =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Measurement Methods
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMeasurement: function(el, name)
     {
         var result = {value: 0, unit: "px"};
@@ -8343,6 +9402,9 @@ FBL.Context.prototype =
         return result;        
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMeasurementInPixels: function(el, name)
     {
         if (!el) return null;
@@ -8364,6 +9426,9 @@ FBL.Context.prototype =
             return this.percentToPixels(el, value);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMeasurementBox1: function(el, name)
     {
         var sufixes = ["Top", "Left", "Bottom", "Right"];
@@ -8375,6 +9440,9 @@ FBL.Context.prototype =
         return {top:result[0], left:result[1], bottom:result[2], right:result[3]};
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMeasurementBox: function(el, name)
     {
         var result = [];
@@ -8415,6 +9483,9 @@ FBL.Context.prototype =
         return {top:result[0], left:result[1], bottom:result[2], right:result[3]};
     }, 
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getCSSAutoMarginBox: function(el)
     {
         if (isIE && " meta title input script link a ".indexOf(" "+el.nodeName.toLowerCase()+" ") != -1)
@@ -8455,6 +9526,9 @@ FBL.Context.prototype =
         return {top:marginTop+offsetTop, left:marginLeft, bottom:marginBottom-offsetTop, right:marginRight};
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getFontSizeInPixels: function(el)
     {
         var size = this.getMeasurement(el, "fontSize");
@@ -8462,6 +9536,9 @@ FBL.Context.prototype =
         if (size.unit == "px") return size.value;
         
         // get font size, the dirty way
+
+        // YOURNAME:
+        // YOURCOMMENT
         var computeDirtyFontSize = function(el, calibration)
         {
             var div = this.document.createElement("div");
@@ -8498,6 +9575,9 @@ FBL.Context.prototype =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Unit Funtions
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     pointsToPixels: function(name, value, returnFloat)
     {
         var axis = /Top$|Bottom$/.test(name) ? "y" : "x";
@@ -8507,6 +9587,9 @@ FBL.Context.prototype =
         return returnFloat ? result : Math.round(result);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     emToPixels: function(el, value)
     {
         if (!el) return null;
@@ -8516,6 +9599,9 @@ FBL.Context.prototype =
         return Math.round(value * fontSize);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     exToPixels: function(el, value)
     {
         if (!el) return null;
@@ -8531,6 +9617,9 @@ FBL.Context.prototype =
         return value;
     },
       
+
+    // YOURNAME:
+    // YOURCOMMENT
     percentToPixels: function(el, value)
     {
         if (!el) return null;
@@ -8548,10 +9637,16 @@ FBL.Context.prototype =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStyle: isIE ? function(el, name)
     {
         return el.currentStyle[name] || el.style[name] || undefined;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     : function(el, name)
     {
         return this.document.defaultView.getComputedStyle(el,null)[name] 
@@ -8566,6 +9661,9 @@ FBL.Context.prototype =
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /**@scope ns-chrome*/ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -8676,6 +9774,9 @@ FBL.FirebugChrome =
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("FirebugChrome.create", "creating chrome window");
@@ -8683,6 +9784,9 @@ FBL.FirebugChrome =
         createChromeWindow();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("FirebugChrome.initialize", "initializing chrome window");
@@ -8708,6 +9812,9 @@ FBL.FirebugChrome =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clone: function(FBChrome)
     {
         for (var name in FBChrome)
@@ -8726,6 +9833,9 @@ FBL.FirebugChrome =
 // ************************************************************************************************
 // Chrome Window Creation
 
+
+// YOURNAME:
+// YOURCOMMENT
 var createChromeWindow = function(options)
 {
     options = extend(WindowDefaultOptions, options || {});
@@ -8752,6 +9862,9 @@ var createChromeWindow = function(options)
         // document.body not available in XML+XSL documents in Firefox
         body = context.document.getElementsByTagName("body")[0],
                 
+
+        // YOURNAME:
+        // YOURCOMMENT
         formatNode = function(node)
         {
             if (!Env.isDebugMode)
@@ -8773,6 +9886,9 @@ var createChromeWindow = function(options)
                 node.style.display = "none";
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         createChromeDiv = function()
         {
             //Firebug.Console.warn("Firebug Lite GUI is working in 'windowless mode'. It may behave slower and receive interferences from the page in which it is installed.");
@@ -8815,6 +9931,9 @@ var createChromeWindow = function(options)
             if (isIE)
             {
                 // IE7 CSS bug (FbChrome table bigger than its parent div)
+
+                // YOURNAME:
+                // YOURCOMMENT
                 setTimeout(function(){
                 node.firstChild.style.height = "1px";
                 node.firstChild.style.position = "static";
@@ -8923,6 +10042,9 @@ var createChromeWindow = function(options)
         
             waitDelay = useLocalSkin ? isChromeFrame ? 200 : 300 : 100,
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             waitForWindow = function()
             {
                 if ( // Frame loaded... OR
@@ -8937,6 +10059,9 @@ var createChromeWindow = function(options)
                     chrome.document = win.document;
                     
                     // Prevent getting the wrong chrome height in FF when opening a popup 
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     setTimeout(function(){
                         onChromeLoad(chrome);
                     },0);
@@ -8974,6 +10099,9 @@ var createChromeWindow = function(options)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onChromeLoad = function onChromeLoad(chrome)
 {
     Env.chrome = chrome;
@@ -9005,6 +10133,9 @@ var onChromeLoad = function onChromeLoad(chrome)
         if (chrome.type == "frame" || chrome.type == "div")
         {
             // initialize the chrome application
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function(){
                 FBL.Firebug.initialize();
             },0);
@@ -9028,11 +10159,17 @@ var onChromeLoad = function onChromeLoad(chrome)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getChromeDivTemplate = function()
 {
     return FirebugChrome.Skin.HTML;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getChromeTemplate = function(isPopup)
 {
     var tpl = FirebugChrome.Skin; 
@@ -9065,6 +10202,9 @@ var getChromeTemplate = function(isPopup)
 // Chrome Class
     
 /**@class*/
+
+// YOURNAME:
+// YOURCOMMENT
 var Chrome = function Chrome(chrome)
 {
     var type = chrome.type;
@@ -9129,6 +10269,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         PanelBar.create.call(this);
@@ -9144,6 +10287,9 @@ append(ChromeBase,
             });
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         if(Firebug.Inspector)
@@ -9154,6 +10300,9 @@ append(ChromeBase,
         this.shutdown();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     testMenu: function()
     {
         var firebugMenu = new Menu(
@@ -9208,46 +10357,73 @@ append(ChromeBase,
                 }
             ],
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             onHide: function()
             {
                 iconButton.restore();
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             toggleChrome: function()
             {
                 Firebug.chrome.toggle();
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             openPopup: function()
             {
                 Firebug.chrome.toggle(true, true);
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             toggleInspect: function()
             {
                 Firebug.Inspector.toggleInspect();
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             focusCommandLine: function()
             {
                 Firebug.chrome.focusCommandLine();
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             visitWebsite: function()
             {
                 this.visit("http://getfirebug.com/lite.html");
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             visitDiscussionGroup: function()
             {
                 this.visit("http://groups.google.com/group/firebug");
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             visitIssueTracker: function()
             {
                 this.visit("http://code.google.com/p/fbug/issues/list");
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             visit: function(url)
             {
                 window.open(url);
@@ -9260,6 +10436,9 @@ append(ChromeBase,
         {
             id: "fbFirebugOptionsMenu",
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             getItems: function()
             {
                 var cookiesDisabled = !Firebug.saveCookies;
@@ -9340,11 +10519,17 @@ append(ChromeBase,
                 ];
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             onCheck: function(target, value, checked)
             {
                 Firebug.setPref(value, checked);
             },           
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             saveOptions: function(target)
             {
                 var saveEnabled = target.getAttribute("checked");
@@ -9356,6 +10541,9 @@ append(ChromeBase,
                 return false;
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             restorePrefs: function(target)
             {
                 Firebug.restorePrefs();
@@ -9371,6 +10559,9 @@ append(ChromeBase,
                 return false;
             },
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             updateMenu: function(target)
             {
                 var options = getElementsByClass(target.parentNode, "fbMenuOption");
@@ -9411,6 +10602,9 @@ append(ChromeBase,
         
         var menu = firebugMenu;
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var testMenuClick = function(event)
         {
             //console.log("testMenuClick");
@@ -9453,6 +10647,9 @@ append(ChromeBase,
         //addEvent($("fbToolbarIcon"), "click", testMenuClick);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -9571,6 +10768,9 @@ append(ChromeBase,
         // Select the first registered panel
         // TODO: BUG IE7
         var self = this;
+
+        // YOURNAME:
+        // YOURCOMMENT
         setTimeout(function(){
             self.selectPanel(FirebugChrome.selectedPanelName);
             
@@ -9595,6 +10795,9 @@ append(ChromeBase,
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
         // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         var onPanelMouseDown = function onPanelMouseDown(event)
         {
             //console.log("onPanelMouseDown", event.target || event.srcElement, event);
@@ -9625,6 +10828,9 @@ append(ChromeBase,
             }
         }
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         Firebug.getElementPanel = function(element)
         {
             var panelNode = getAncestorByClass(element, "fbPanel");
@@ -9651,6 +10857,9 @@ append(ChromeBase,
         // to the window, and the onKeyCodeListen() function will delegate which listeners
         // should be called according to the event.keyCode fired.
         var onKeyCodeListenersMap = [];
+
+        // YOURNAME:
+        // YOURCOMMENT
         var onKeyCodeListen = function(event)
         {
             for (var keyCode in onKeyCodeListenersMap)
@@ -9677,6 +10886,9 @@ append(ChromeBase,
          * @name keyCodeListen
          * @memberOf FBL.FirebugChrome
          */
+
+        // YOURNAME:
+        // YOURCOMMENT
         Firebug.chrome.keyCodeListen = function(key, filter, listener, capture)
         {
             var keyCode = KeyEvent["DOM_VK_"+key];
@@ -9696,6 +10908,9 @@ append(ChromeBase,
          * @name keyIgnore
          * @memberOf FBL.FirebugChrome
          */
+
+        // YOURNAME:
+        // YOURCOMMENT
         Firebug.chrome.keyIgnore = function(keyCode)
         {
             onKeyCodeListenersMap[keyCode] = null;
@@ -9710,6 +10925,9 @@ append(ChromeBase,
 
 
         /*
+
+        // YOURNAME:
+        // YOURCOMMENT
         Firebug.chrome.keyCodeListen = function(key, filter, listener, capture)
         {
             if (!filter)
@@ -9717,6 +10935,9 @@ append(ChromeBase,
     
             var keyCode = KeyEvent["DOM_VK_"+key];
     
+
+            // YOURNAME:
+            // YOURCOMMENT
             var fn = function fn(event)
             {
                 if (event.keyCode == keyCode && (!filter || filter(event)))
@@ -9732,6 +10953,9 @@ append(ChromeBase,
             return [fn, capture];
         };
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         Firebug.chrome.keyIgnore = function(listener)
         {
             removeEvent(Firebug.chrome.document, "keydown", listener[0]);
@@ -9759,6 +10983,9 @@ append(ChromeBase,
         
         //test XHR
         /*
+
+        // YOURNAME:
+        // YOURCOMMENT
         setTimeout(function(){
         
         FBL.Ajax.request({url: "../content/firebug/boot.js"});
@@ -9768,6 +10995,9 @@ append(ChromeBase,
         /**/
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         // ************************************************************************************************
@@ -9840,6 +11070,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     toggle: function(forceOpen, popup)
     {
         if(popup)
@@ -9874,6 +11107,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     detach: function()
     {
         if(!FirebugChrome.chromeMap.popup)
@@ -9882,6 +11118,9 @@ append(ChromeBase,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattach: function(oldChrome, newChrome)
     {
         Firebug.browser.window.Firebug = Firebug;
@@ -9922,6 +11161,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     draw: function()
     {
         var size = this.getSize();
@@ -9996,6 +11238,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSize: function()
     {
         return this.type == "div" ?
@@ -10007,11 +11252,17 @@ append(ChromeBase,
             this.getWindowSize();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     resize: function()
     {
         var self = this;
         
         // avoid partial resize when maximizing window
+
+        // YOURNAME:
+        // YOURCOMMENT
         setTimeout(function(){
             self.draw();
             
@@ -10022,6 +11273,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     layout: function(panel)
     {
         if (FBTrace.DBG_CHROME) FBTrace.sysout("Chrome.layout", "");
@@ -10034,6 +11288,9 @@ append(ChromeBase,
         Firebug.chrome.draw();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     showLargeCommandLine: function(hideToggleIcon)
     {
         var chrome = Firebug.chrome;
@@ -10067,6 +11324,9 @@ append(ChromeBase,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideLargeCommandLine: function()
     {
         if (Firebug.chrome.largeCommandLineVisible)
@@ -10096,6 +11356,9 @@ append(ChromeBase,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     focusCommandLine: function()
     {
         var selectedPanelName = this.selectedPanel.name, panelToSelect;
@@ -10144,6 +11407,9 @@ append(ChromeBase,
 var ChromeFrameBase = extend(ChromeBase,
 /**@extend ns-chrome-ChromeFrameBase*/
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         ChromeBase.create.call(this);
@@ -10165,6 +11431,9 @@ var ChromeFrameBase = extend(ChromeBase,
             this.close();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         removeGlobalEvent("keydown", onGlobalKeyDown);
@@ -10182,6 +11451,9 @@ var ChromeFrameBase = extend(ChromeBase,
         delete this.node;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         //FBTrace.sysout("Frame", "initialize();")
@@ -10210,6 +11482,9 @@ var ChromeFrameBase = extend(ChromeBase,
         this.isInitialized = true;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         fbVSplitter.onmousedown = null;
@@ -10220,6 +11495,9 @@ var ChromeFrameBase = extend(ChromeBase,
         this.isInitialized = false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattach: function()
     {
         var frame = FirebugChrome.chromeMap.frame;
@@ -10227,6 +11505,9 @@ var ChromeFrameBase = extend(ChromeBase,
         ChromeBase.reattach(FirebugChrome.chromeMap.popup, this);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     open: function()
     {
         if (!FirebugChrome.isOpen)
@@ -10255,6 +11536,9 @@ var ChromeFrameBase = extend(ChromeBase,
             main.style.display = "block";
             
             var self = this;
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function(){
                 node.style.visibility = "visible";
                 
@@ -10270,6 +11554,9 @@ var ChromeFrameBase = extend(ChromeBase,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     close: function()
     {
         if (FirebugChrome.isOpen || !this.isInitialized)
@@ -10304,6 +11591,9 @@ var ChromeFrameBase = extend(ChromeBase,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     deactivate: function()
     {
         Firebug.shutdown();
@@ -10317,6 +11607,9 @@ var ChromeFrameBase = extend(ChromeBase,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     fixIEPosition: function()
     {
         // fix IE problem with offset when not in fullscreen mode
@@ -10357,12 +11650,18 @@ var ChromeFrameBase = extend(ChromeBase,
 var ChromeMini = extend(Controller,
 /**@extend ns-chrome-ChromeMini*/ 
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(chrome)
     {
         append(this, chrome);
         this.type = "mini";
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Controller.initialize.apply(this);
@@ -10411,6 +11710,9 @@ var ChromeMini = extend(Controller,
         this.isInitialized = true;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         var node = this.node;
@@ -10440,6 +11742,9 @@ var ChromeMini = extend(Controller,
         this.isInitialized = false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     draw: function()
     {
     
@@ -10461,6 +11766,9 @@ var ChromePopupBase = extend(ChromeBase,
 /**@extend ns-chrome-ChromePopupBase*/
 {
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         setClass(this.document.body, "FirebugPopup");
@@ -10485,6 +11793,9 @@ var ChromePopupBase = extend(ChromeBase,
         fbVSplitter.onmousedown = onVSplitterMouseDown;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         // TODO: xxxpedro sync detach reattach attach
@@ -10509,6 +11820,9 @@ var ChromePopupBase = extend(ChromeBase,
         this.node.close();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     persist: function()
     {
         persistTimeStart = new Date().getTime();
@@ -10520,6 +11834,9 @@ var ChromePopupBase = extend(ChromeBase,
         
         var persistTimeStart = new Date().getTime();
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var waitMainWindow = function()
         {
             var doc, head;
@@ -10580,6 +11897,9 @@ var ChromePopupBase = extend(ChromeBase,
         waitMainWindow();    
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     close: function()
     {
         this.destroy();
@@ -10591,6 +11911,9 @@ var ChromePopupBase = extend(ChromeBase,
 //************************************************************************************************
 // UI helpers
 
+
+// YOURNAME:
+// YOURCOMMENT
 var changeCommandLineVisibility = function changeCommandLineVisibility(visibility)
 {
     var last = Firebug.chrome.commandLineVisible;
@@ -10616,6 +11939,9 @@ var changeCommandLineVisibility = function changeCommandLineVisibility(visibilit
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var changeSidePanelVisibility = function changeSidePanelVisibility(visibility)
 {
     var last = Firebug.chrome.sidePanelVisible;
@@ -10633,6 +11959,9 @@ var changeSidePanelVisibility = function changeSidePanelVisibility(visibility)
 // ************************************************************************************************
 // F12 Handler
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onGlobalKeyDown = function onGlobalKeyDown(event)
 {
     var keyCode = event.keyCode;
@@ -10656,6 +11985,9 @@ var onGlobalKeyDown = function onGlobalKeyDown(event)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onMiniIconClick = function onMiniIconClick(event)
 {
     Firebug.chrome.toggle(false, event.ctrlKey);
@@ -10666,6 +11998,9 @@ var onMiniIconClick = function onMiniIconClick(event)
 // ************************************************************************************************
 // Horizontal Splitter Handling
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onHSplitterMouseDown = function onHSplitterMouseDown(event)
 {
     addGlobalEvent("mousemove", onHSplitterMouseMove);
@@ -10679,6 +12014,9 @@ var onHSplitterMouseDown = function onHSplitterMouseDown(event)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onHSplitterMouseMove = function onHSplitterMouseMove(event)
 {
     cancelEvent(event, true);
@@ -10734,6 +12072,9 @@ var onHSplitterMouseMove = function onHSplitterMouseMove(event)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var handleHSplitterMouseMove = function()
 {
     if (onHSplitterMouseMoveTimer)
@@ -10770,6 +12111,9 @@ var handleHSplitterMouseMove = function()
     Firebug.chrome.draw();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onHSplitterMouseUp = function onHSplitterMouseUp(event)
 {
     removeGlobalEvent("mousemove", onHSplitterMouseMove);
@@ -10791,6 +12135,9 @@ var onHSplitterMouseUp = function onHSplitterMouseUp(event)
 // ************************************************************************************************
 // Vertical Splitter Handling
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onVSplitterMouseDown = function onVSplitterMouseDown(event)
 {
     addGlobalEvent("mousemove", onVSplitterMouseMove);
@@ -10799,6 +12146,9 @@ var onVSplitterMouseDown = function onVSplitterMouseDown(event)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onVSplitterMouseMove = function onVSplitterMouseMove(event)
 {
     if (new Date().getTime() - lastVSplitterMouseMove > chromeRedrawSkipRate) // frame skipping
@@ -10828,6 +12178,9 @@ var onVSplitterMouseMove = function onVSplitterMouseMove(event)
     return false;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var onVSplitterMouseUp = function onVSplitterMouseUp(event)
 {
     removeGlobalEvent("mousemove", onVSplitterMouseMove);
@@ -10842,6 +12195,9 @@ var onVSplitterMouseUp = function onVSplitterMouseUp(event)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns( /**@scope ns-selector*/ function() { with (FBL) {
 // ************************************************************************************************
 
@@ -10862,6 +12218,9 @@ var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]*['"]|[^
 // optimization where it does not always call our comparision
 // function. If that is the case, discard the hasDuplicate value.
 //   Thus far that includes Google Chrome.
+
+// YOURNAME:
+// YOURCOMMENT
 [0, 0].sort(function(){
     baseHasDuplicate = false;
     return 0;
@@ -10875,6 +12234,9 @@ var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]*['"]|[^
 /**
  * @exports Sizzle as Firebug.Selector
  */ 
+
+// YOURNAME:
+// YOURCOMMENT
 var Sizzle = function(selector, context, results, seed) {
     results = results || [];
     var origContext = context = context || document;
@@ -10996,6 +12358,9 @@ var Sizzle = function(selector, context, results, seed) {
     return results;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Sizzle.uniqueSort = function(results){
     if ( sortOrder ) {
         hasDuplicate = baseHasDuplicate;
@@ -11013,10 +12378,16 @@ Sizzle.uniqueSort = function(results){
     return results;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Sizzle.matches = function(expr, set){
     return Sizzle(expr, null, null, set);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Sizzle.find = function(expr, context, isXML){
     var set, match;
 
@@ -11049,6 +12420,9 @@ Sizzle.find = function(expr, context, isXML){
     return {set: set, expr: expr};
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Sizzle.filter = function(expr, set, inplace, not){
     var old = expr, result = [], curLoop = set, match, anyFound,
         isXMLFilter = set && set[0] && isXML(set[0]);
@@ -11143,11 +12517,17 @@ var Expr = Sizzle.selectors = {
         "for": "htmlFor"
     },
     attrHandle: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         href: function(elem){
             return elem.getAttribute("href");
         }
     },
     relative: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         "+": function(checkSet, part, isXML){
             var isPartStr = typeof part === "string",
                 isTag = isPartStr && !/\W/.test(part),
@@ -11171,6 +12551,9 @@ var Expr = Sizzle.selectors = {
                 Sizzle.filter( part, checkSet, true );
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         ">": function(checkSet, part, isXML){
             var isPartStr = typeof part === "string";
 
@@ -11199,6 +12582,9 @@ var Expr = Sizzle.selectors = {
                 }
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         "": function(checkSet, part, isXML){
             var doneName = done++, checkFn = dirCheck;
 
@@ -11209,6 +12595,9 @@ var Expr = Sizzle.selectors = {
 
             checkFn("parentNode", part, doneName, checkSet, nodeCheck, isXML);
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         "~": function(checkSet, part, isXML){
             var doneName = done++, checkFn = dirCheck;
 
@@ -11221,12 +12610,18 @@ var Expr = Sizzle.selectors = {
         }
     },
     find: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         ID: function(match, context, isXML){
             if ( typeof context.getElementById !== "undefined" && !isXML ) {
                 var m = context.getElementById(match[1]);
                 return m ? [m] : [];
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         NAME: function(match, context, isXML){
             if ( typeof context.getElementsByName !== "undefined" ) {
                 var ret = [], results = context.getElementsByName(match[1]);
@@ -11240,11 +12635,17 @@ var Expr = Sizzle.selectors = {
                 return ret.length === 0 ? null : ret;
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         TAG: function(match, context){
             return context.getElementsByTagName(match[1]);
         }
     },
     preFilter: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         CLASS: function(match, curLoop, inplace, result, not, isXML){
             match = " " + match[1].replace(/\\/g, "") + " ";
 
@@ -11265,13 +12666,22 @@ var Expr = Sizzle.selectors = {
 
             return false;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         ID: function(match){
             return match[1].replace(/\\/g, "");
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         TAG: function(match, curLoop){
             for ( var i = 0; curLoop[i] === false; i++ ){}
             return curLoop[i] && isXML(curLoop[i]) ? match[1] : match[1].toUpperCase();
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         CHILD: function(match){
             if ( match[1] == "nth" ) {
                 // parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-1', '-n+6'
@@ -11289,6 +12699,9 @@ var Expr = Sizzle.selectors = {
 
             return match;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         ATTR: function(match, curLoop, inplace, result, not, isXML){
             var name = match[1].replace(/\\/g, "");
             
@@ -11302,6 +12715,9 @@ var Expr = Sizzle.selectors = {
 
             return match;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         PSEUDO: function(match, curLoop, inplace, result, not){
             if ( match[1] === "not" ) {
                 // If we're dealing with a complex expression, or a simple one
@@ -11320,97 +12736,181 @@ var Expr = Sizzle.selectors = {
             
             return match;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         POS: function(match){
             match.unshift( true );
             return match;
         }
     },
     filters: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         enabled: function(elem){
             return elem.disabled === false && elem.type !== "hidden";
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         disabled: function(elem){
             return elem.disabled === true;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         checked: function(elem){
             return elem.checked === true;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         selected: function(elem){
             // Accessing this property makes selected-by-default
             // options in Safari work properly
             elem.parentNode.selectedIndex;
             return elem.selected === true;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         parent: function(elem){
             return !!elem.firstChild;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         empty: function(elem){
             return !elem.firstChild;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         has: function(elem, i, match){
             return !!Sizzle( match[3], elem ).length;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         header: function(elem){
             return /h\d/i.test( elem.nodeName );
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         text: function(elem){
             return "text" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         radio: function(elem){
             return "radio" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         checkbox: function(elem){
             return "checkbox" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         file: function(elem){
             return "file" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         password: function(elem){
             return "password" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         submit: function(elem){
             return "submit" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         image: function(elem){
             return "image" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         reset: function(elem){
             return "reset" === elem.type;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         button: function(elem){
             return "button" === elem.type || elem.nodeName.toUpperCase() === "BUTTON";
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         input: function(elem){
             return /input|select|textarea|button/i.test(elem.nodeName);
         }
     },
     setFilters: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         first: function(elem, i){
             return i === 0;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         last: function(elem, i, match, array){
             return i === array.length - 1;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         even: function(elem, i){
             return i % 2 === 0;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         odd: function(elem, i){
             return i % 2 === 1;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         lt: function(elem, i, match){
             return i < match[3] - 0;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         gt: function(elem, i, match){
             return i > match[3] - 0;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         nth: function(elem, i, match){
             return match[3] - 0 == i;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         eq: function(elem, i, match){
             return match[3] - 0 == i;
         }
     },
     filter: {
+
+        // YOURNAME:
+        // YOURCOMMENT
         PSEUDO: function(elem, match, i, array){
             var name = match[1], filter = Expr.filters[ name ];
 
@@ -11430,6 +12930,9 @@ var Expr = Sizzle.selectors = {
                 return true;
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         CHILD: function(elem, match){
             var type = match[1], node = elem;
             switch (type) {
@@ -11473,16 +12976,28 @@ var Expr = Sizzle.selectors = {
                     }
             }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         ID: function(elem, match){
             return elem.nodeType === 1 && elem.getAttribute("id") === match;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         TAG: function(elem, match){
             return (match === "*" && elem.nodeType === 1) || elem.nodeName === match;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         CLASS: function(elem, match){
             return (" " + (elem.className || elem.getAttribute("class")) + " ")
                 .indexOf( match ) > -1;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         ATTR: function(elem, match){
             var name = match[1],
                 result = Expr.attrHandle[ name ] ?
@@ -11514,6 +13029,9 @@ var Expr = Sizzle.selectors = {
                 value === check || value.substr(0, check.length + 1) === check + "-" :
                 false;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         POS: function(elem, match, i, array){
             var name = match[2], filter = Expr.setFilters[ name ];
 
@@ -11531,6 +13049,9 @@ for ( var type in Expr.match ) {
     Expr.leftMatch[ type ] = new RegExp( /(^(?:.|\r|\n)*?)/.source + Expr.match[ type ].source );
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var makeArray = function(array, results) {
     array = Array.prototype.slice.call( array, 0 );
 
@@ -11549,6 +13070,9 @@ try {
 
 // Provide a fallback method if it does not work
 } catch(e){
+
+    // YOURNAME:
+    // YOURCOMMENT
     makeArray = function(array, results) {
         var ret = results || [];
 
@@ -11573,6 +13097,9 @@ try {
 var sortOrder;
 
 if ( document.documentElement.compareDocumentPosition ) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortOrder = function( a, b ) {
         if ( !a.compareDocumentPosition || !b.compareDocumentPosition ) {
             if ( a == b ) {
@@ -11588,6 +13115,9 @@ if ( document.documentElement.compareDocumentPosition ) {
         return ret;
     };
 } else if ( "sourceIndex" in document.documentElement ) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortOrder = function( a, b ) {
         if ( !a.sourceIndex || !b.sourceIndex ) {
             if ( a == b ) {
@@ -11603,6 +13133,9 @@ if ( document.documentElement.compareDocumentPosition ) {
         return ret;
     };
 } else if ( document.createRange ) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sortOrder = function( a, b ) {
         if ( !a.ownerDocument || !b.ownerDocument ) {
             if ( a == b ) {
@@ -11626,6 +13159,9 @@ if ( document.documentElement.compareDocumentPosition ) {
 
 // Check to see if the browser returns elements by name when
 // querying by getElementById (and provide a workaround)
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
     // We're going to inject a fake input element with a specified name
     var form = document.createElement("div"),
@@ -11639,6 +13175,9 @@ if ( document.documentElement.compareDocumentPosition ) {
     // The workaround has to do additional checks after a getElementById
     // Which slows things down for other browsers (hence the branching)
     if ( !!document.getElementById( id ) ) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Expr.find.ID = function(match, context, isXML){
             if ( typeof context.getElementById !== "undefined" && !isXML ) {
                 var m = context.getElementById(match[1]);
@@ -11646,6 +13185,9 @@ if ( document.documentElement.compareDocumentPosition ) {
             }
         };
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         Expr.filter.ID = function(elem, match){
             var node = typeof elem.getAttributeNode !== "undefined" && elem.getAttributeNode("id");
             return elem.nodeType === 1 && node && node.nodeValue === match;
@@ -11656,6 +13198,9 @@ if ( document.documentElement.compareDocumentPosition ) {
     root = form = null; // release memory in IE
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
     // Check to see if the browser returns only elements
     // when doing getElementsByTagName("*")
@@ -11666,6 +13211,9 @@ if ( document.documentElement.compareDocumentPosition ) {
 
     // Make sure no comments are found
     if ( div.getElementsByTagName("*").length > 0 ) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Expr.find.TAG = function(match, context){
             var results = context.getElementsByTagName(match[1]);
 
@@ -11690,6 +13238,9 @@ if ( document.documentElement.compareDocumentPosition ) {
     div.innerHTML = "<a href='#'></a>";
     if ( div.firstChild && typeof div.firstChild.getAttribute !== "undefined" &&
             div.firstChild.getAttribute("href") !== "#" ) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Expr.attrHandle.href = function(elem){
             return elem.getAttribute("href", 2);
         };
@@ -11698,6 +13249,9 @@ if ( document.documentElement.compareDocumentPosition ) {
     div = null; // release memory in IE
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 if ( document.querySelectorAll ) (function(){
     var oldSizzle = Sizzle, div = document.createElement("div");
     div.innerHTML = "<p class='TEST'></p>";
@@ -11708,6 +13262,9 @@ if ( document.querySelectorAll ) (function(){
         return;
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     Sizzle = function(query, context, extra, seed){
         context = context || document;
 
@@ -11729,6 +13286,9 @@ if ( document.querySelectorAll ) (function(){
     div = null; // release memory in IE
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 if ( document.getElementsByClassName && document.documentElement.getElementsByClassName ) (function(){
     var div = document.createElement("div");
     div.innerHTML = "<div class='test e'></div><div class='test'></div>";
@@ -11744,6 +13304,9 @@ if ( document.getElementsByClassName && document.documentElement.getElementsByCl
         return;
 
     Expr.order.splice(1, 0, "CLASS");
+
+    // YOURNAME:
+    // YOURCOMMENT
     Expr.find.CLASS = function(match, context, isXML) {
         if ( typeof context.getElementsByClassName !== "undefined" && !isXML ) {
             return context.getElementsByClassName(match[1]);
@@ -11753,6 +13316,9 @@ if ( document.getElementsByClassName && document.documentElement.getElementsByCl
     div = null; // release memory in IE
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dirNodeCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
     var sibDir = dir == "previousSibling" && !isXML;
     for ( var i = 0, l = checkSet.length; i < l; i++ ) {
@@ -11789,6 +13355,9 @@ function dirNodeCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dirCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
     var sibDir = dir == "previousSibling" && !isXML;
     for ( var i = 0, l = checkSet.length; i < l; i++ ) {
@@ -11832,17 +13401,29 @@ function dirCheck( dir, cur, doneName, checkSet, nodeCheck, isXML ) {
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var contains = document.compareDocumentPosition ?  function(a, b){
     return a.compareDocumentPosition(b) & 16;
+
+// YOURNAME:
+// YOURCOMMENT
 } : function(a, b){
     return a !== b && (a.contains ? a.contains(b) : true);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var isXML = function(elem){
     return elem.nodeType === 9 && elem.documentElement.nodeName !== "HTML" ||
         !!elem.ownerDocument && elem.ownerDocument.documentElement.nodeName !== "HTML";
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var posProcess = function(selector, context){
     var tmpSet = [], later = "", match,
         root = context.nodeType ? [context] : context;
@@ -11885,25 +13466,40 @@ Firebug.Selector = Sizzle;
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 function DomplateTag(tagName)
 {
     this.tagName = tagName;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function DomplateEmbed()
 {
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function DomplateLoop()
 {
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 ( /** @scope ns-domplate */ function() {
 
 var womb = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var domplate = FBL.domplate = function()
 {
     var lastSubject;
@@ -11920,6 +13516,9 @@ var domplate = FBL.domplate = function()
     return lastSubject;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 domplate.context = function(context, fn)
 {
     var lastContext = domplate.lastContext;
@@ -11928,12 +13527,18 @@ domplate.context = function(context, fn)
     domplate.topContext = lastContext;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.TAG = function()
 {
     var embed = new DomplateEmbed();
     return embed.merge(arguments);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.FOR = function()
 {
     var loop = new DomplateLoop();
@@ -11942,6 +13547,9 @@ FBL.FOR = function()
 
 DomplateTag.prototype =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     merge: function(args, oldTag)
     {
         if (oldTag)
@@ -11973,6 +13581,9 @@ DomplateTag.prototype =
         return creator(this, DomplateTag);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     parseAttrs: function(args)
     {
         for (var name in args)
@@ -12011,6 +13622,9 @@ DomplateTag.prototype =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     compile: function()
     {
         if (this.renderMarkup)
@@ -12024,6 +13638,9 @@ DomplateTag.prototype =
         //if (FBTrace.DBG_DOM) FBTrace.sysout("domplate domArgs:", this.domArgs);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     compileMarkup: function()
     {
         this.markupArgs = [];
@@ -12032,6 +13649,9 @@ DomplateTag.prototype =
         this.generateMarkup(topBlock, topOuts, blocks, info);
         this.addCode(topBlock, topOuts, blocks);
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fnBlock = ['r=(function (__code__, __context__, __in__, __out__'];
         for (var i = 0; i < info.argIndex; ++i)
             fnBlock.push(', s', i);
@@ -12052,6 +13672,9 @@ DomplateTag.prototype =
 
         fnBlock.push('}})');
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __link__(tag, code, outputs, args)
         {
             if (!tag || !tag.tag)
@@ -12068,8 +13691,14 @@ DomplateTag.prototype =
             outputs.push(tagOutputs);
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __escape__(value)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             function replaceChars(ch)
             {
                 switch (ch)
@@ -12090,6 +13719,9 @@ DomplateTag.prototype =
             return String(value).replace(/[<>&"']/g, replaceChars);
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __loop__(iter, outputs, fn)
         {
             var iterOuts = [];
@@ -12121,6 +13753,9 @@ DomplateTag.prototype =
         this.renderMarkup = r;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getVarNames: function(args)
     {
         if (this.vars)
@@ -12146,6 +13781,9 @@ DomplateTag.prototype =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateMarkup: function(topBlock, topOuts, blocks, info)
     {
         topBlock.push(',"<', this.tagName, '"');
@@ -12193,6 +13831,9 @@ DomplateTag.prototype =
         topBlock.push(',"</', this.tagName, '>"');
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateChildMarkup: function(topBlock, topOuts, blocks, info)
     {
         for (var i = 0; i < this.children.length; ++i)
@@ -12205,6 +13846,9 @@ DomplateTag.prototype =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addCode: function(topBlock, topOuts, blocks)
     {
         if (topBlock.length)
@@ -12215,6 +13859,9 @@ DomplateTag.prototype =
         topOuts.splice(0, topOuts.length);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addLocals: function(blocks)
     {
         var varNames = [];
@@ -12233,6 +13880,9 @@ DomplateTag.prototype =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     compileDOM: function()
     {
         var path = [];
@@ -12244,6 +13894,9 @@ DomplateTag.prototype =
         path.renderIndex = 0;
         var nodeCount = this.generateDOM(path, blocks, this.domArgs);
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fnBlock = ['r=(function (root, context, o'];
 
         for (var i = 0; i < path.staticIndex; ++i)
@@ -12273,11 +13926,20 @@ DomplateTag.prototype =
         fnBlock.push('return ', nodeCount, ';');
         fnBlock.push('})');
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __bind__(object, fn)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             return function(event) { return fn.apply(object, [event]); };
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __link__(node, tag, args)
         {
             if (!tag || !tag.tag)
@@ -12293,6 +13955,9 @@ DomplateTag.prototype =
         }
 
         var self = this;
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __loop__(iter, fn)
         {
             var nodeCount = 0;
@@ -12306,6 +13971,9 @@ DomplateTag.prototype =
             return nodeCount;
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function __path__(parent, offset)
         {
             //if (FBTrace.DBG_DOM) FBTrace.sysout("domplate __path__ offset: "+ offset+"\n");
@@ -12334,6 +14002,9 @@ DomplateTag.prototype =
         this.renderDOM = r;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateDOM: function(path, blocks, args)
     {
         if (this.listeners || this.props)
@@ -12364,6 +14035,9 @@ DomplateTag.prototype =
         return 1;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateNodePath: function(path, blocks)
     {
         blocks.push("var node = __path__(root, o");
@@ -12372,6 +14046,9 @@ DomplateTag.prototype =
         blocks.push(");");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateChildDOM: function(path, blocks, args)
     {
         path.push(0);
@@ -12391,6 +14068,9 @@ DomplateTag.prototype =
 
 DomplateEmbed.prototype = copyObject(DomplateTag.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     merge: function(args, oldTag)
     {
         this.value = oldTag ? oldTag.value : parseValue(args[0]);
@@ -12408,6 +14088,9 @@ DomplateEmbed.prototype = copyObject(DomplateTag.prototype,
         return creator(this, DomplateEmbed);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getVarNames: function(names)
     {
         if (this.value instanceof Parts)
@@ -12417,6 +14100,9 @@ DomplateEmbed.prototype = copyObject(DomplateTag.prototype,
             names.push.apply(names, this.vars);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateMarkup: function(topBlock, topOuts, blocks, info)
     {
         this.addCode(topBlock, topOuts, blocks);
@@ -12441,6 +14127,9 @@ DomplateEmbed.prototype = copyObject(DomplateTag.prototype,
         //this.generateChildMarkup(topBlock, topOuts, blocks, info);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateDOM: function(path, blocks, args)
     {
         var embedName = 'e'+path.embedIndex++;
@@ -12459,6 +14148,9 @@ DomplateEmbed.prototype = copyObject(DomplateTag.prototype,
 
 DomplateLoop.prototype = copyObject(DomplateTag.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     merge: function(args, oldTag)
     {
         this.varName = oldTag ? oldTag.varName : args[0];
@@ -12473,6 +14165,9 @@ DomplateLoop.prototype = copyObject(DomplateTag.prototype,
         return creator(this, DomplateLoop);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getVarNames: function(names)
     {
         if (this.iter instanceof Parts)
@@ -12481,6 +14176,9 @@ DomplateLoop.prototype = copyObject(DomplateTag.prototype,
         DomplateTag.prototype.getVarNames.apply(this, [names]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateMarkup: function(topBlock, topOuts, blocks, info)
     {
         this.addCode(topBlock, topOuts, blocks);
@@ -12500,12 +14198,18 @@ DomplateLoop.prototype = copyObject(DomplateTag.prototype,
         else
             iterName = this.iter;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         blocks.push('__loop__.apply(this, [', iterName, ', __out__, function(', this.varName, ', __out__) {');
         this.generateChildMarkup(topBlock, topOuts, blocks, info);
         this.addCode(topBlock, topOuts, blocks);
         blocks.push('}]);');
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     generateDOM: function(path, blocks, args)
     {
         var iterName = 'd'+path.renderIndex++;
@@ -12535,6 +14239,9 @@ DomplateLoop.prototype = copyObject(DomplateTag.prototype,
 
         path[path.length-1] = basePath+'+'+loopName;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         blocks.push(loopName,' = __loop__.apply(this, [', iterName, ', function(', counterName,',',loopName);
         for (var i = 0; i < path.renderIndex; ++i)
             blocks.push(',d'+i);
@@ -12551,12 +14258,18 @@ DomplateLoop.prototype = copyObject(DomplateTag.prototype,
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Variable(name, format)
 {
     this.name = name;
     this.format = format;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Parts(parts)
 {
     this.parts = parts;
@@ -12564,6 +14277,9 @@ function Parts(parts)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseParts(str)
 {
     var re = /\$([_A-Za-z][_A-Za-z0-9.|]*)/g;
@@ -12592,11 +14308,17 @@ function parseParts(str)
     return new Parts(parts);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseValue(val)
 {
     return typeof(val) == 'string' ? parseParts(val) : val;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseChildren(args, offset, vars, children)
 {
     for (var i = offset; i < args.length; ++i)
@@ -12607,6 +14329,9 @@ function parseChildren(args, offset, vars, children)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readPartNames(val, vars)
 {
     if (val instanceof Parts)
@@ -12620,6 +14345,9 @@ function readPartNames(val, vars)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function generateArg(val, path, args)
 {
     if (val instanceof Parts)
@@ -12652,6 +14380,9 @@ function generateArg(val, path, args)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addParts(val, delim, block, info, escapeIt)
 {
     var vals = [];
@@ -12691,11 +14422,17 @@ function addParts(val, delim, block, info, escapeIt)
         block.push(delim, parts);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isTag(obj)
 {
     return (typeof(obj) == "function" || obj instanceof Function) && !!obj.tag;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function creator(tag, cons)
 {
     var fn = new Function(
@@ -12713,6 +14450,9 @@ function creator(tag, cons)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 function copyArray(oldArray)
 {
     var ary = [];
@@ -12722,6 +14462,9 @@ function copyArray(oldArray)
    return ary;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function copyObject(l, r)
 {
     var m = {};
@@ -12730,12 +14473,18 @@ function copyObject(l, r)
     return m;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extend(l, r)
 {
     for (var n in r)
         l[n] = r[n];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addEvent(object, name, handler)
 {
     if (document.all)
@@ -12746,10 +14495,16 @@ function addEvent(object, name, handler)
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 function ArrayIterator(array)
 {
     var index = -1;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.next = function()
     {
         if (++index >= array.length)
@@ -12759,8 +14514,14 @@ function ArrayIterator(array)
     };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function StopIteration() {}
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.$break = function()
 {
     throw StopIteration;
@@ -12770,6 +14531,9 @@ FBL.$break = function()
 
 var Renderer =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderHTML: function(args, outputs, self)
     {
         var code = [];
@@ -12779,6 +14543,9 @@ var Renderer =
         return code.join("");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertRows: function(args, before, self)
     {
         this.tag.compile();
@@ -12820,16 +14587,25 @@ var Renderer =
         return [firstRow, lastRow];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertBefore: function(args, before, self)
     {
         return this.insertNode(args, before.ownerDocument, before, false, self);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertAfter: function(args, after, self)
     {
         return this.insertNode(args, after.ownerDocument, after, true, self);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertNode: function(args, doc, element, isAfter, self)
     {
         if (!args)
@@ -12877,6 +14653,9 @@ var Renderer =
     /**/
 
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertAfter: function(args, before, self)
     {
         this.tag.compile();
@@ -12908,6 +14687,9 @@ var Renderer =
     },
     /**/
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     replace: function(args, parent, self)
     {
         this.tag.compile();
@@ -12942,6 +14724,9 @@ var Renderer =
         return root;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     append: function(args, parent, self)
     {
         this.tag.compile();
@@ -12975,6 +14760,9 @@ var Renderer =
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function defineTags()
 {
     for (var i = 0; i < arguments.length; ++i)
@@ -12999,6 +14787,9 @@ defineTags(
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 var FirebugReps = FBL.ns(function() { with (FBL) {
 
 
@@ -13034,6 +14825,9 @@ this.Undefined = domplate(Firebug.Rep,
 
     className: "undefined",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return type == "undefined";
@@ -13050,6 +14844,9 @@ this.Null = domplate(Firebug.Rep,
 
     className: "null",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return object == null;
@@ -13077,6 +14874,9 @@ this.Number = domplate(Firebug.Rep,
 
     className: "number",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return type == "boolean" || type == "number";
@@ -13095,6 +14895,9 @@ this.String = domplate(Firebug.Rep,
 
     className: "string",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return type == "string";
@@ -13135,22 +14938,37 @@ this.Func = domplate(Firebug.Rep,
     tag:
         OBJECTLINK("$object|summarizeFunction"),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     summarizeFunction: function(fn)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fnRegex = /function ([^(]+\([^)]*\)) \{/;
         var fnText = safeToString(fn);
 
         var m = fnRegex.exec(fnText);
+
+        // YOURNAME:
+        // YOURCOMMENT
         return m ? m[1] : "function()";
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copySource: function(fn)
     {
         copyToClipboard(safeToString(fn));
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     monitor: function(fn, script, monitored)
     {
         if (monitored)
@@ -13163,11 +14981,17 @@ this.Func = domplate(Firebug.Rep,
 
     className: "function",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return isFunction(object);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(fn, context)
     {
         var sourceLink = findSourceForFunction(fn, context);
@@ -13177,6 +15001,9 @@ this.Func = domplate(Firebug.Rep,
             FBTrace.sysout("reps.function.inspectObject selected sourceLink is ", sourceLink);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(fn, context)
     {
         var script = findScriptForFunctionInContext(context, fn);
@@ -13187,12 +15014,18 @@ this.Func = domplate(Firebug.Rep,
                 return fn.toString();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(fn, context)
     {
         var name = fn.name ? fn.name : "function";
         return name + "()";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(fn, target, context, script)
     {
         if (!script)
@@ -13218,14 +15051,26 @@ this.Func = domplate(Firebug.Rep,
 /*
 this.jsdScript = domplate(Firebug.Rep,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     copySource: function(script)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fn = script.functionObject.getWrappedValue();
         return FirebugReps.Func.copySource(fn);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     monitor: function(fn, script, monitored)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         fn = script.functionObject.getWrappedValue();
         return FirebugReps.Func.monitor(fn, script, monitored);
     },
@@ -13235,11 +15080,17 @@ this.jsdScript = domplate(Firebug.Rep,
     className: "jsdScript",
     inspectable: false,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return object instanceof jsdIScript;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(script, context)
     {
         var sourceLink = getSourceLinkForScript(script, context);
@@ -13247,24 +15098,42 @@ this.jsdScript = domplate(Firebug.Rep,
             Firebug.chrome.select(sourceLink);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(script, context)
     {
         return script;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(script)
     {
         return $STRF("jsdIScript", [script.tag]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(script, context)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fn = script.functionObject.getWrappedValue();
         return FirebugReps.Func.getTitle(fn, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(script, target, context)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fn = script.functionObject.getWrappedValue();
 
         var scriptInfo = getSourceFileAndLineByScript(context, script);
@@ -13311,6 +15180,9 @@ this.Obj = domplate(Firebug.Rep,
     propObjectTag:
         SPAN({"class": "objectProp-object"}, "$object"),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     propIterator: function (object)
     {
         ///Firebug.ObjectShortIteratorMax;
@@ -13415,6 +15287,9 @@ this.Obj = domplate(Firebug.Rep,
         return props;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     fb_1_6_propIterator: function (object, max)
     {
         max = max || 3;
@@ -13482,6 +15357,9 @@ this.Obj = domplate(Firebug.Rep,
     },
     
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     propIterator: function (object)
     {
         if (!object)
@@ -13536,6 +15414,9 @@ this.Obj = domplate(Firebug.Rep,
 
     className: "object",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return true;
@@ -13572,6 +15453,9 @@ this.Arr = domplate(Firebug.Rep,
             SPAN({"class": "arrayRightBracket"}, "]")
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     arrayIterator: function(array)
     {
         var items = [];
@@ -13588,6 +15472,9 @@ this.Arr = domplate(Firebug.Rep,
         return items;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shortArrayIterator: function(array)
     {
         var items = [];
@@ -13609,6 +15496,9 @@ this.Arr = domplate(Firebug.Rep,
 
     shortPropIterator:    this.Obj.propIterator,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getItemIndex: function(child)
     {
         var arrayIndex = 0;
@@ -13624,6 +15514,9 @@ this.Arr = domplate(Firebug.Rep,
 
     className: "array",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return this.isArray(object);
@@ -13631,6 +15524,9 @@ this.Arr = domplate(Firebug.Rep,
 
     // http://code.google.com/p/fbug/issues/detail?id=874
     // BEGIN Yahoo BSD Source (modified here)  YAHOO.lang.isArray, YUI 2.2.2 June 2007
+
+    // YOURNAME:
+    // YOURCOMMENT
     isArray: function(obj) {
         try {
             if (!obj)
@@ -13661,6 +15557,9 @@ this.Arr = domplate(Firebug.Rep,
     },
     // END Yahoo BSD SOURCE See license below.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(object, context)
     {
         return "[" + object.length + "]";
@@ -13671,16 +15570,25 @@ this.Arr = domplate(Firebug.Rep,
 
 this.Property = domplate(Firebug.Rep,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof Property;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(prop, context)
     {
         return prop.object[prop.name];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(prop, context)
     {
         return prop.name;
@@ -13691,17 +15599,26 @@ this.Property = domplate(Firebug.Rep,
 
 this.NetFile = domplate(this.Obj,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof Firebug.NetFile;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(file, context)
     {
         openNewTab(file.href);
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(file, context)
     {
         return null;
@@ -13719,6 +15636,9 @@ this.Except = domplate(Firebug.Rep,
 
     className: "exception",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof ErrorCopy;
@@ -13750,26 +15670,41 @@ this.Element = domplate(Firebug.Rep,
             )
          ),
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getVisible: function(elt)
      {
          return isVisible(elt) ? "" : "selectorHidden";
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getSelectorTag: function(elt)
      {
          return elt.nodeName.toLowerCase();
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getSelectorId: function(elt)
      {
          return elt.id ? "#" + elt.id : "";
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getSelectorClass: function(elt)
      {
          return elt.className ? "." + elt.className.split(" ")[0] : "";
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getValue: function(elt)
      {
          // TODO: xxxpedro
@@ -13789,6 +15724,9 @@ this.Element = domplate(Firebug.Rep,
          return value ? " " + cropString(value, 20) : "";
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      attrIterator: function(elt)
      {
          var attrs = [];
@@ -13816,6 +15754,9 @@ this.Element = domplate(Firebug.Rep,
          return attrs;
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      shortAttrIterator: function(elt)
      {
          var attrs = [];
@@ -13832,16 +15773,25 @@ this.Element = domplate(Firebug.Rep,
          return attrs;
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getHidden: function(elt)
      {
          return isVisible(elt) ? "" : "nodeHidden";
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getXPath: function(elt)
      {
          return getElementTreeXPath(elt);
      },
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      getNodeText: function(element)
      {
          var text = element.textContent;
@@ -13853,23 +15803,35 @@ this.Element = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyHTML: function(elt)
     {
         var html = getElementXML(elt);
         copyToClipboard(html);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyInnerHTML: function(elt)
     {
         copyToClipboard(elt.innerHTML);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyXPath: function(elt)
     {
         var xpath = getElementXPath(elt);
         copyToClipboard(xpath);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistor: function(context, xpath)
     {
         var elts = xpath
@@ -13883,12 +15845,18 @@ this.Element = domplate(Firebug.Rep,
 
     className: "element",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         //return object instanceof Element || object.nodeType == 1 && typeof object.nodeName == "string";
         return instanceOf(object, "Element");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(elt, context)
     {
         var tag = elt.nodeName.toLowerCase();
@@ -13904,6 +15872,9 @@ this.Element = domplate(Firebug.Rep,
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(elt, context)
     {
         var xpath = getElementXPath(elt);
@@ -13911,16 +15882,25 @@ this.Element = domplate(Firebug.Rep,
         return bind(this.persistor, top, xpath);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(element, context)
     {
         return getElementCSSSelector(element);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(elt)
     {
         return this.getXPath(elt);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(elt, target, context)
     {
         var monitored = areEventsMonitored(elt, null, context);
@@ -13954,6 +15934,9 @@ this.TextNode = domplate(Firebug.Rep,
 
     className: "textNode",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof Text;
@@ -13967,6 +15950,9 @@ this.Document = domplate(Firebug.Rep,
     tag:
         OBJECTLINK("Document ", SPAN({"class": "objectPropValue"}, "$object|getLocation")),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLocation: function(doc)
     {
         return doc.location ? getFileName(doc.location.href) : "";
@@ -13976,33 +15962,51 @@ this.Document = domplate(Firebug.Rep,
 
     className: "object",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         //return object instanceof Document || object instanceof XMLDocument;
         return instanceOf(object, "Document");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(doc, context)
     {
         openNewTab(doc.location.href);
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(doc, context)
     {
         return this.persistor;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistor: function(context)
     {
         return context.window.document;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(win, context)
     {
         return "document";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(doc)
     {
         return doc.location.href;
@@ -14016,6 +16020,9 @@ this.StyleSheet = domplate(Firebug.Rep,
     tag:
         OBJECTLINK("StyleSheet ", SPAN({"class": "objectPropValue"}, "$object|getLocation")),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLocation: function(styleSheet)
     {
         return getFileName(styleSheet.href);
@@ -14023,11 +16030,17 @@ this.StyleSheet = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyURL: function(styleSheet)
     {
         copyToClipboard(styleSheet.href);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     openInTab: function(styleSheet)
     {
         openNewTab(styleSheet.href);
@@ -14037,28 +16050,43 @@ this.StyleSheet = domplate(Firebug.Rep,
 
     className: "object",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         //return object instanceof CSSStyleSheet;
         return instanceOf(object, "CSSStyleSheet");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(styleSheet, context)
     {
         openNewTab(styleSheet.href);
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(styleSheet, context)
     {
         return bind(this.persistor, top, styleSheet.href);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(styleSheet)
     {
         return styleSheet.href;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(styleSheet, target, context)
     {
         return [
@@ -14068,6 +16096,9 @@ this.StyleSheet = domplate(Firebug.Rep,
         ];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistor: function(context, href)
     {
         return getStyleSheetByHref(href, context);
@@ -14081,6 +16112,9 @@ this.Window = domplate(Firebug.Rep,
     tag:
         OBJECTLINK("Window ", SPAN({"class": "objectPropValue"}, "$object|getLocation")),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLocation: function(win)
     {
         try
@@ -14098,32 +16132,50 @@ this.Window = domplate(Firebug.Rep,
 
     className: "object",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return instanceOf(object, "Window");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(win, context)
     {
         openNewTab(win.location.href);
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(win, context)
     {
         return this.persistor;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistor: function(context)
     {
         return context.window;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(win, context)
     {
         return "window";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(win)
     {
         if (win && !win.closed)
@@ -14140,6 +16192,9 @@ this.Event = domplate(Firebug.Rep,
     copyEventTag:
         OBJECTLINK("$object|summarizeEvent"),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     summarizeEvent: function(event)
     {
         var info = [event.type, ' '];
@@ -14153,6 +16208,9 @@ this.Event = domplate(Firebug.Rep,
         return info.join("");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyEvent: function(event)
     {
         return new EventCopy(event);
@@ -14162,12 +16220,18 @@ this.Event = domplate(Firebug.Rep,
 
     className: "object",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         //return object instanceof Event || object instanceof EventCopy;
         return instanceOf(object, "Event") || instanceOf(object, "EventCopy");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(event, context)
     {
         return "Event " + event.type;
@@ -14181,11 +16245,17 @@ this.SourceLink = domplate(Firebug.Rep,
     tag:
         OBJECTLINK({$collapsed: "$object|hideSourceLink"}, "$object|getSourceLinkTitle"),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideSourceLink: function(sourceLink)
     {
         return sourceLink ? sourceLink.href.indexOf("XPCSafeJSObjectWrapper") != -1 : true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSourceLinkTitle: function(sourceLink)
     {
         if (!sourceLink)
@@ -14211,11 +16281,17 @@ this.SourceLink = domplate(Firebug.Rep,
         //return $STRF("Line", [fileName, sourceLink.line]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyLink: function(sourceLink)
     {
         copyToClipboard(sourceLink.href);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     openInTab: function(sourceLink)
     {
         openNewTab(sourceLink.href);
@@ -14225,16 +16301,25 @@ this.SourceLink = domplate(Firebug.Rep,
 
     className: "sourceLink",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof SourceLink;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(sourceLink)
     {
         return decodeURI(sourceLink.href);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(sourceLink, context)
     {
         if (sourceLink.type == "js")
@@ -14272,12 +16357,18 @@ this.SourceLink = domplate(Firebug.Rep,
         viewSource(sourceLink.href, sourceLink.line);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(sourceLink, context)
     {
         openNewTab(sourceLink.href);
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(sourceLink, target, context)
     {
         return [
@@ -14295,6 +16386,9 @@ this.SourceFile = domplate(this.SourceLink,
     tag:
         OBJECTLINK({$collapsed: "$object|hideSourceLink"}, "$object|getSourceLinkTitle"),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistor: function(context, href)
     {
         return getSourceFileByHref(href, context);
@@ -14304,20 +16398,32 @@ this.SourceFile = domplate(this.SourceLink,
 
     className: "sourceFile",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof SourceFile;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     persistObject: function(sourceFile)
     {
         return bind(this.persistor, top, sourceFile.href);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(sourceLink, context)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(sourceFile)
     {
         return sourceFile.href;
@@ -14340,6 +16446,9 @@ this.StackFrame = domplate(Firebug.Rep,  // XXXjjb Since the repObject is fn the
             SPAN({"class": "objectLink-sourceLink objectLink"}, "$object|getSourceLinkTitle")
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getCallName: function(frame)
     {
         //TODO: xxxpedro reps StackFrame
@@ -14348,6 +16457,9 @@ this.StackFrame = domplate(Firebug.Rep,  // XXXjjb Since the repObject is fn the
         //return getFunctionName(frame.script, frame.context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSourceLinkTitle: function(frame)
     {
         //TODO: xxxpedro reps StackFrame
@@ -14358,6 +16470,9 @@ this.StackFrame = domplate(Firebug.Rep,  // XXXjjb Since the repObject is fn the
         return $STRF("Line", [fileName, frame.lineNo]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     argIterator: function(frame)
     {
         if (!frame.args)
@@ -14387,17 +16502,26 @@ this.StackFrame = domplate(Firebug.Rep,  // XXXjjb Since the repObject is fn the
 
     className: "stackFrame",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof StackFrame;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(stackFrame, context)
     {
         var sourceLink = new SourceLink(stackFrame.href, stackFrame.lineNo, "js");
         Firebug.chrome.select(sourceLink);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(stackFrame, context)
     {
         return $STRF("Line", [stackFrame.href, stackFrame.lineNo]);
@@ -14418,6 +16542,9 @@ this.StackTrace = domplate(Firebug.Rep,
 
     className: "stackTrace",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof StackTrace;
@@ -14430,17 +16557,26 @@ this.jsdStackFrame = domplate(Firebug.Rep,
 {
     inspectable: false,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return (object instanceof jsdIStackFrame) && (object.isValid);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTitle: function(frame, context)
     {
         if (!frame.isValid) return "(invalid frame)"; // XXXjjb avoid frame.script == null
         return getFunctionName(frame.script, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTooltip: function(frame, context)
     {
         if (!frame.isValid) return "(invalid frame)";  // XXXjjb avoid frame.script == null
@@ -14451,8 +16587,14 @@ this.jsdStackFrame = domplate(Firebug.Rep,
             return $STRF("Line", [frame.script.fileName, frame.line]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(frame, target, context)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var fn = frame.script.functionObject.getWrappedValue();
         return FirebugReps.Func.getContextMenuItems(fn, target, context, frame.script);
     }
@@ -14482,11 +16624,17 @@ this.ErrorMessage = domplate(Firebug.Rep,
             TAG(this.SourceLink.tag, {object: "$object|getSourceLink"})
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLastErrorStackTrace: function(error)
     {
         return error.trace;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hasStackTrace: function(error)
     {
         var url = error.href.toString();
@@ -14494,16 +16642,25 @@ this.ErrorMessage = domplate(Firebug.Rep,
         return !fromCommandLine && error.trace;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hasBreakSwitch: function(error)
     {
         return error.href && error.lineNo > 0;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hasErrorBreak: function(error)
     {
         return fbs.hasErrorBreakpoint(error.href, error.lineNo);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMessage: function(message)
     {
         var re = /\[Exception... "(.*?)" nsresult:/;
@@ -14511,6 +16668,9 @@ this.ErrorMessage = domplate(Firebug.Rep,
         return m ? m[1] : message;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLine: function(error)
     {
         if (error.category == "js")
@@ -14522,12 +16682,18 @@ this.ErrorMessage = domplate(Firebug.Rep,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSourceLink: function(error)
     {
         var ext = error.category == "css" ? "css" : "js";
         return error.lineNo ? new SourceLink(error.href, error.lineNo, ext) : null;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSourceType: function(error)
     {
         // Errors occurring inside of HTML event handlers look like "foo.html (line 1)"
@@ -14544,6 +16710,9 @@ this.ErrorMessage = domplate(Firebug.Rep,
             return "exec";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onToggleError: function(event)
     {
         var target = event.currentTarget;
@@ -14578,6 +16747,9 @@ this.ErrorMessage = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyError: function(error)
     {
         var message = [
@@ -14588,6 +16760,9 @@ this.ErrorMessage = domplate(Firebug.Rep,
         copyToClipboard(message.join("\n"));
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     breakOnThisError: function(error)
     {
         if (this.hasErrorBreak(error))
@@ -14601,17 +16776,26 @@ this.ErrorMessage = domplate(Firebug.Rep,
     className: "errorMessage",
     inspectable: false,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof ErrorMessage;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(error, context)
     {
         var sourceLink = this.getSourceLink(error);
         FirebugReps.SourceLink.inspectObject(sourceLink, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(error, target, context)
     {
         var breakOnThisError = this.hasErrorBreak(error);
@@ -14649,12 +16833,18 @@ this.Assert = domplate(Firebug.Rep,
 
     className: "assert",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     inspectObject: function(error, context)
     {
         var sourceLink = this.getSourceLink(error);
         Firebug.chrome.select(sourceLink);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(error, target, context)
     {
         var breakOnThisError = this.hasErrorBreak(error);
@@ -14684,6 +16874,9 @@ this.SourceText = domplate(Firebug.Rep,
             )
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     lineIterator: function(sourceText)
     {
         var maxLineNoChars = (sourceText.lines.length + "").length;
@@ -14702,6 +16895,9 @@ this.SourceText = domplate(Firebug.Rep,
         return list;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getHTML: function(sourceText)
     {
         return getSourceLineRange(sourceText, 1, sourceText.lines.length);
@@ -14717,6 +16913,9 @@ this.nsIDOMHistory = domplate(Firebug.Rep,
 
     className: "nsIDOMHistory",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     summarizeHistory: function(history)
     {
         try
@@ -14730,6 +16929,9 @@ this.nsIDOMHistory = domplate(Firebug.Rep,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showHistory: function(history)
     {
         try
@@ -14744,6 +16946,9 @@ this.nsIDOMHistory = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return (object instanceof Ci.nsIDOMHistory);
@@ -14757,6 +16962,9 @@ this.ApplicationCache = domplate(Firebug.Rep,
             OBJECTLINK("$object|summarizeCache")
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     summarizeCache: function(applicationCache)
     {
         try
@@ -14769,6 +16977,9 @@ this.ApplicationCache = domplate(Firebug.Rep,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showApplicationCache: function(event)
     {
         openNewTab("https://bugzilla.mozilla.org/show_bug.cgi?id=422264");
@@ -14778,6 +16989,9 @@ this.ApplicationCache = domplate(Firebug.Rep,
 
     className: "applicationCache",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         if (Ci.nsIDOMOfflineResourceList)
@@ -14790,10 +17004,16 @@ this.Storage = domplate(Firebug.Rep,
 {
     tag: OBJECTBOX({onclick: "$show"}, OBJECTLINK("$object|summarize")),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     summarize: function(storage)
     {
         return storage.length +" items in Storage";
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(storage)
     {
         openNewTab("http://dev.w3.org/html5/webstorage/#storage-0");
@@ -14802,6 +17022,9 @@ this.Storage = domplate(Firebug.Rep,
 
     className: "Storage",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object, type)
     {
         return (object instanceof Storage);
@@ -14881,6 +17104,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -14917,6 +17143,9 @@ Firebug.Editor = extend(Firebug.Module,
     dispatchName: "editor",
     tabCharacter: "    ",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     startEditing: function(target, value, editor)
     {
         this.stopEditing();
@@ -14970,6 +17199,9 @@ Firebug.Editor = extend(Firebug.Module,
         this.attachListeners(currentEditor, panel.context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stopEditing: function(cancel)
     {
         if (!currentTarget)
@@ -15038,11 +17270,17 @@ Firebug.Editor = extend(Firebug.Module,
         return value;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     cancelEditing: function()
     {
         return this.stopEditing(true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     update: function(saveNow)
     {
         if (this.saveTimeout)
@@ -15063,6 +17301,9 @@ Firebug.Editor = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     save: function(value)
     {
         if (!invalidEditor)
@@ -15086,12 +17327,18 @@ Firebug.Editor = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEditAndNotifyListeners: function(currentTarget, value, previousValue)
     {
         currentEditor.saveEdit(currentTarget, value, previousValue);
         //dispatch(this.fbListeners, "onSaveEdit", [currentPanel, currentEditor, currentTarget, value, previousValue]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setEditTarget: function(element)
     {
         if (!element)
@@ -15107,6 +17354,9 @@ Firebug.Editor = extend(Firebug.Module,
             this.startEditing(element);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     tabNextEditor: function()
     {
         if (!currentTarget)
@@ -15125,6 +17375,9 @@ Firebug.Editor = extend(Firebug.Module,
         this.setEditTarget(nextEditable);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     tabPreviousEditor: function()
     {
         if (!currentTarget)
@@ -15143,6 +17396,9 @@ Firebug.Editor = extend(Firebug.Module,
         this.setEditTarget(prevEditable);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertRow: function(relative, insertWhere)
     {
         var group =
@@ -15167,6 +17423,9 @@ Firebug.Editor = extend(Firebug.Module,
             this.setEditTarget(editable);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertRowForObject: function(relative)
     {
         var container = getAncestorByClass(relative, "insertInto");
@@ -15180,6 +17439,9 @@ Firebug.Editor = extend(Firebug.Module,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attachListeners: function(editor, context)
     {
         var win = isIE ?
@@ -15236,6 +17498,9 @@ Firebug.Editor = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     detachListeners: function(editor, context)
     {
         if (!this.listeners)
@@ -15258,11 +17523,17 @@ Firebug.Editor = extend(Firebug.Module,
         delete this.listeners;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onResize: function(event)
     {
         currentEditor.layout(true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onBlur: function(event)
     {
         if (currentEditor.enterOnBlur && isAncestor(event.target, currentEditor.box))
@@ -15272,6 +17543,9 @@ Firebug.Editor = extend(Firebug.Module,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // extends Module
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Firebug.Module.initialize.apply(this, arguments);
@@ -15280,16 +17554,25 @@ Firebug.Editor = extend(Firebug.Module,
         this.onBlur = bind(this.onBlur, this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function()
     {
         this.stopEditing();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showContext: function(browser, context)
     {
         this.stopEditing();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showPanel: function(browser, panel)
     {
         this.stopEditing();
@@ -15301,22 +17584,37 @@ Firebug.Editor = extend(Firebug.Module,
 
 Firebug.BaseEditor = extend(Firebug.MeasureBox,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getValue: function()
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setValue: function(value)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(target, panel, value, textSize, targetSize)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function()
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     layout: function(forceAll)
     {
     },
@@ -15324,6 +17622,9 @@ Firebug.BaseEditor = extend(Firebug.MeasureBox,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Support for context menus within inline editors.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(target)
     {
         var items = [];
@@ -15336,21 +17637,33 @@ Firebug.BaseEditor = extend(Firebug.MeasureBox,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Editor Module listeners will get "onBeginEditing" just before this call
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     beginEditing: function(target, value)
     {
     },
 
     // Editor Module listeners will get "onSaveEdit" just after this call
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEdit: function(target, value, previousValue)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     endEditing: function(target, value, cancel)
     {
         // Remove empty groups by default
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertNewRow: function(target, insertWhere)
     {
     }
@@ -15388,6 +17701,9 @@ else
     inlineEditorAttributes.oninput = "$onInput";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.InlineEditor = function(doc)
 {
     this.initializeInline(doc);
@@ -15424,6 +17740,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
     expanderTag:
         IMG({"class": "inlineExpander", src: "blank.gif"}),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         this.fixedWidth = false;
@@ -15436,11 +17755,17 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         this.numeric = false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         this.destroyInput();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initializeInline: function(doc)
     {
         if (FBTrace.DBG_EDITOR)
@@ -15461,22 +17786,34 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         this.initialize();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyInput: function()
     {
         // XXXjoe Need to remove input/keypress handlers to avoid leaks
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getValue: function()
     {
         return this.input.value;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setValue: function(value)
     {
         // It's only a one-line editor, so new lines shouldn't be allowed
         return this.input.value = stripNewLines(value);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(target, panel, value, targetSize)
     {
         //dispatch([Firebug.A11yModel], "onInlineEditorShow", [panel, this]);
@@ -15579,12 +17916,18 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         // we need to call input.focus() and input.select() with a timeout, 
         // otherwise it won't work on all browsers due to timing issues 
         var self = this;
+
+        // YOURNAME:
+        // YOURCOMMENT
         setTimeout(function(){
             self.input.focus();
             self.input.select();
         },0);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function()
     {
         this.box.className = this.originalClassName;
@@ -15611,6 +17954,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         delete this.panel;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     layout: function(forceAll)
     {
         if (!this.fixedWidth)
@@ -15624,24 +17970,39 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     beginEditing: function(target, value)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEdit: function(target, value, previousValue)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     endEditing: function(target, value, cancel)
     {
         // Remove empty groups by default
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertNewRow: function(target, insertWhere)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     advanceToNext: function(target, charCode)
     {
         return false;
@@ -15649,16 +18010,25 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAutoCompleteRange: function(value, offset)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAutoCompleteList: function(preExpr, expr, postExpr)
     {
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAutoCompleter: function()
     {
         if (!this.autoCompleter)
@@ -15671,6 +18041,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         return this.autoCompleter;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     completeValue: function(amt)
     {
         //console.log("completeValue");
@@ -15692,6 +18065,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
             this.incrementValue(amt);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     incrementValue: function(amt)
     {
         var value = this.input.value;
@@ -15733,6 +18109,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onKeyPress: function(event)
     {
         //console.log("onKeyPress", event);
@@ -15760,11 +18139,17 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onOverflow: function()
     {
         this.updateLayout(false, false, 3);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onKeyDown: function(event)
     {
         //console.log("onKeyDown", event.keyCode);
@@ -15774,6 +18159,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInput: function(event)
     {
         //debugger;
@@ -15815,6 +18203,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onContextMenu: function(event)
     {
         cancelEvent(event);
@@ -15839,6 +18230,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateLayout: function(initial, forceAll, extraWidth)
     {
         if (this.fixedWidth)
@@ -15927,6 +18321,9 @@ Firebug.InlineEditor.prototype = domplate(Firebug.BaseEditor,
 // ************************************************************************************************
 // Autocompletion
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode, caseSensitive)
 {
     var candidates = null;
@@ -15940,6 +18337,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
     var preExpr = null;
     var postExpr = null;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.revert = function(textBox)
     {
         if (originalOffset != -1)
@@ -15958,6 +18358,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
         }
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.reset = function()
     {
         candidates = null;
@@ -15968,6 +18371,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
         exprOffset = 0;
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.complete = function(context, textBox, cycle, reverse)
     {
         //console.log("complete", context, textBox, cycle, reverse);
@@ -16152,6 +18558,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
             // we must select the range with a timeout, otherwise the text won't
             // be properly selected (because after this function executes, the editor's
             // input will be resized to fit the whole text)
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function(){
                 if (selectMode)
                     textBox.setSelectionRange(offset, offsetEnd);
@@ -16165,6 +18574,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
         // be properly selected (because after this function executes, the editor's
         // input will be resized to fit the whole text)
         /*
+
+        // YOURNAME:
+        // YOURCOMMENT
         setTimeout(function(){
             if (selectMode)
                 setSelectionRange(textBox, offset, offsetEnd);
@@ -16177,11 +18589,20 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
         
         // The editor text should be selected only after calling the editor.update() 
         // in Safari/Chrome, otherwise the text won't be selected. So, we're returning
+
+        // YOURNAME:
+        // YOURCOMMENT
         // a function to be called later (in the proper time for all browsers).
         //
         // TODO: xxxpedro see if we can move the editor.update() calls to here, and avoid
         // returning a closure. the complete() function seems to be called only twice in
+
+        // YOURNAME:
+        // YOURCOMMENT
         // editor.js. See if this function is called anywhere else (like css.js for example).
+
+        // YOURNAME:
+        // YOURCOMMENT
         return function(){
             //console.log("autocomplete ", textBox, offset, offsetEnd);
             
@@ -16197,6 +18618,9 @@ Firebug.AutoCompleter = function(getExprOffset, getRange, evaluator, selectMode,
 // ************************************************************************************************
 // Local Helpers
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getDefaultEditor = function getDefaultEditor(panel)
 {
     if (!defaultEditor)
@@ -16215,6 +18639,9 @@ var getDefaultEditor = function getDefaultEditor(panel)
  * of group, relative to group's parent editGroup. This allows for the proper insertion
  * rows when groups are nested.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 var getOutsider = function getOutsider(element, group, stepper)
 {
     var parentGroup = getAncestorByClass(group.parentNode, "editGroup");
@@ -16228,22 +18655,34 @@ var getOutsider = function getOutsider(element, group, stepper)
     return next;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var isGroupInsert = function isGroupInsert(next, group)
 {
     return (!group || isAncestor(next, group))
         && (hasClass(next, "insertBefore") || hasClass(next, "insertAfter"));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getNextOutsider = function getNextOutsider(element, group)
 {
     return getOutsider(element, group, bind(getNextByClass, FBL, "editable"));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getPreviousOutsider = function getPreviousOutsider(element, group)
 {
     return getOutsider(element, group, bind(getPreviousByClass, FBL, "editable"));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getInlineParent = function getInlineParent(element)
 {
     var lastInline = element;
@@ -16262,6 +18701,9 @@ var getInlineParent = function getInlineParent(element)
     return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var insertTab = function insertTab()
 {
     insertTextIntoElement(currentEditor.input, Firebug.Editor.tabCharacter);
@@ -16278,6 +18720,9 @@ Firebug.registerModule(Firebug.Editor);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -16288,6 +18733,9 @@ var inspectorTS, inspectorTimer, isInspecting;
 
 Firebug.Inspector =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         offlineFragment = Env.browser.document.createDocumentFragment();
@@ -16296,6 +18744,9 @@ Firebug.Inspector =
         createOutlineInspector();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         destroyBoxModelInspector();
@@ -16307,6 +18758,9 @@ Firebug.Inspector =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Inspect functions
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     toggleInspect: function()
     {
         if (isInspecting)
@@ -16320,6 +18774,9 @@ Firebug.Inspector =
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     startInspecting: function()
     {
         isInspecting = true;
@@ -16339,6 +18796,9 @@ Firebug.Inspector =
         addEvent(fbInspectFrame, "mousedown", Firebug.Inspector.onInspectingClick);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     stopInspecting: function()
     {
         isInspecting = false;
@@ -16355,6 +18815,9 @@ Firebug.Inspector =
             Firebug.chrome.node.focus();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInspectingClick: function(e)
     {
         fbInspectFrame.style.display = "none";
@@ -16373,6 +18836,9 @@ Firebug.Inspector =
         Firebug.Inspector.stopInspecting();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInspecting: function(e)
     {
         if (new Date().getTime() - lastInspecting > 30)
@@ -16397,6 +18863,9 @@ Firebug.Inspector =
             if (targ[cacheID])
             {
                 var target = ""+targ[cacheID];
+
+                // YOURNAME:
+                // YOURCOMMENT
                 var lazySelect = function()
                 {
                     inspectorTS = new Date().getTime();
@@ -16421,6 +18890,9 @@ Firebug.Inspector =
     },
     
     // TODO: xxxpedro remove this?
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInspectingBody: function(e)
     {
         if (new Date().getTime() - lastInspecting > 30)
@@ -16456,6 +18928,9 @@ Firebug.Inspector =
      *   llbbbbbbrr
      *   llbbbbbbrr
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     drawOutline: function(el)
     {
         var border = 2;
@@ -16532,6 +19007,9 @@ Firebug.Inspector =
         if (!outlineVisible) this.showOutline();        
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideOutline: function()
     {
         if (!outlineVisible) return;
@@ -16542,6 +19020,9 @@ Firebug.Inspector =
         outlineVisible = false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     showOutline: function()
     {
         if (outlineVisible) return;
@@ -16557,6 +19038,9 @@ Firebug.Inspector =
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Box Model
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     drawBoxModel: function(el)
     {
         // avoid error when the element is not attached a document
@@ -16610,6 +19094,9 @@ Firebug.Inspector =
         if (!boxModelVisible) this.showBoxModel();
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideBoxModel: function()
     {
         if (!boxModelVisible) return;
@@ -16618,6 +19105,9 @@ Firebug.Inspector =
         boxModelVisible = false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     showBoxModel: function()
     {
         if (boxModelVisible) return;
@@ -16694,6 +19184,9 @@ var outline = {
 };
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getInspectingTarget = function()
 {
     
@@ -16702,6 +19195,9 @@ var getInspectingTarget = function()
 // ************************************************************************************************
 // Section
 
+
+// YOURNAME:
+// YOURCOMMENT
 var createInspectorFrame = function createInspectorFrame()
 {
     fbInspectFrame = createGlobalElement("div");
@@ -16711,6 +19207,9 @@ var createInspectorFrame = function createInspectorFrame()
     Firebug.browser.document.getElementsByTagName("body")[0].appendChild(fbInspectFrame);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var destroyInspectorFrame = function destroyInspectorFrame()
 {
     if (fbInspectFrame)
@@ -16720,6 +19219,9 @@ var destroyInspectorFrame = function destroyInspectorFrame()
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var createOutlineInspector = function createOutlineInspector()
 {
     for (var name in outline)
@@ -16732,6 +19234,9 @@ var createOutlineInspector = function createOutlineInspector()
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var destroyOutlineInspector = function destroyOutlineInspector()
 {
     for (var name in outline)
@@ -16741,6 +19246,9 @@ var destroyOutlineInspector = function destroyOutlineInspector()
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var createBoxModelInspector = function createBoxModelInspector()
 {
     boxModel = createGlobalElement("div");
@@ -16776,6 +19284,9 @@ var createBoxModelInspector = function createBoxModelInspector()
     offlineFragment.appendChild(boxModel);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var destroyBoxModelInspector = function destroyBoxModelInspector()
 {
     boxModel.parentNode.removeChild(boxModel);
@@ -16793,6 +19304,9 @@ var destroyBoxModelInspector = function destroyBoxModelInspector()
 /* See license.txt for terms of usage */
 
 // next-generation Console Panel (will override consoje.js)
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -16843,28 +19357,43 @@ var maxQueueRequests = 500;
 
 Firebug.ConsoleBase =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     log: function(object, context, className, rep, noThrottle, sourceLink)
     {
         //dispatch(this.fbListeners,"log",[context, object, className, sourceLink]);
         return this.logRow(appendObject, object, context, className, rep, sourceLink, noThrottle);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     logFormatted: function(objects, context, className, noThrottle, sourceLink)
     {
         //dispatch(this.fbListeners,"logFormatted",[context, objects, className, sourceLink]);
         return this.logRow(appendFormatted, objects, context, className, null, sourceLink, noThrottle);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     openGroup: function(objects, context, className, rep, noThrottle, sourceLink, noPush)
     {
         return this.logRow(appendOpenGroup, objects, context, className, rep, sourceLink, noThrottle);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     closeGroup: function(context, noThrottle)
     {
         return this.logRow(appendCloseGroup, null, context, null, null, null, noThrottle, true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     logRow: function(appender, objects, context, className, rep, sourceLink, noThrottle, noRow)
     {
         // TODO: xxxpedro console console2
@@ -16919,6 +19448,9 @@ Firebug.ConsoleBase =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendFormatted: function(args, row, context)
     {
         if (!context)
@@ -16928,6 +19460,9 @@ Firebug.ConsoleBase =
         panel.appendFormatted(args, row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clear: function(context)
     {
         if (!context)
@@ -16947,6 +19482,9 @@ Firebug.ConsoleBase =
     },
 
     // Override to direct output to your panel
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPanel: function(context, noCreate)
     {
         //return context.getPanel("console", noCreate);
@@ -16962,6 +19500,9 @@ Firebug.ConsoleBase =
 //var ActivableConsole = extend(Firebug.ActivableModule, Firebug.ConsoleBase);
 var ActivableConsole = extend(Firebug.ConsoleBase, 
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isAlwaysEnabled: function()
     {
         return true;
@@ -16973,11 +19514,17 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
 {
     dispatchName: "console",
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     error: function()
     {
         Firebug.Console.logFormatted(arguments, Firebug.browser, "error");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     flush: function()
     {
         for (var i=0, length=consoleQueue.length; i<length; i++)
@@ -16990,10 +19537,16 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // extends Module
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showPanel: function(browser, panel)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getFirebugConsoleElement: function(context, win)
     {
         var element = win.document.getElementById("_firebugConsole");
@@ -17001,6 +19554,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         {
             if (FBTrace.DBG_CONSOLE)
                 FBTrace.sysout("getFirebugConsoleElement forcing element");
+
+            // YOURNAME:
+            // YOURCOMMENT
             var elementForcer = "(function(){var r=null; try { r = window._getFirebugConsoleElement();}catch(exc){r=exc;} return r;})();";  // we could just add the elements here
 
             if (context.stopped)
@@ -17022,6 +19578,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         return element;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isReadyElsePreparing: function(context, win) // this is the only code that should call injector.attachIfNeeded
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17048,6 +19607,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // extends ActivableModule
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         this.panelName = "console";
@@ -17057,24 +19619,36 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         //Firebug.Debugger.addListener(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     enable: function()
     {
         if (Firebug.Console.isAlwaysEnabled())
             this.watchForErrors();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function()
     {
         if (Firebug.Console.isAlwaysEnabled())
             this.unwatchForErrors();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initContext: function(context, persistedState)
     {
         Firebug.ActivableModule.initContext.apply(this, arguments);
         context.consoleReloadWarning = true;  // mark as need to warn.
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadedContext: function(context)
     {
         for (var url in context.sourceFileMap)
@@ -17084,6 +19658,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         this.clearReloadWarning(context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearReloadWarning: function(context) // remove the warning about reloading.
     {
          if (context.consoleReloadWarning)
@@ -17094,6 +19671,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
          }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     togglePersist: function(context)
     {
         var panel = context.getPanel(this.panelName);
@@ -17101,6 +19681,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         Firebug.chrome.setGlobalAttribute("cmd_togglePersistConsole", "checked", panel.persistContent);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showContext: function(browser, context)
     {
         Firebug.chrome.setGlobalAttribute("cmd_clearConsole", "disabled", !context);
@@ -17108,6 +19691,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         Firebug.ActivableModule.showContext.apply(this, arguments);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyContext: function(context, persistedState)
     {
         Firebug.Console.injector.detachConsole(context, context.window);  // TODO iterate windows?
@@ -17115,6 +19701,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onPanelEnable: function(panelName)
     {
         if (panelName != this.panelName)  // we don't care about other panels
@@ -17127,6 +19716,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         Firebug.Debugger.addDependentModule(this); // we inject the console during JS compiles so we need jsd
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onPanelDisable: function(panelName)
     {
         if (panelName != this.panelName)  // we don't care about other panels
@@ -17143,6 +19735,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
         this.clear();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onSuspendFirebug: function()
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17151,6 +19746,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
             this.unwatchForErrors();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onResumeFirebug: function()
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17159,12 +19757,18 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
             this.watchForErrors();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     watchForErrors: function()
     {
         Firebug.Errors.checkEnabled();
         $('fbStatusIcon').setAttribute("console", "on");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     unwatchForErrors: function()
     {
         Firebug.Errors.checkEnabled();
@@ -17174,11 +19778,17 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Firebug.Debugger listener
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMonitorScript: function(context, frame)
     {
         Firebug.Console.log(frame, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onFunctionCall: function(context, frame, depth, calling)
     {
         if (calling)
@@ -17189,6 +19799,9 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     logRow: function(appender, objects, context, className, rep, sourceLink, noThrottle, noRow)
     {
         if (!context)
@@ -17203,10 +19816,16 @@ Firebug.Console = Firebug.Console = extend(ActivableConsole,
 
 Firebug.ConsoleListener =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     log: function(context, object, className, sourceLink)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     logFormatted: function(context, objects, className, sourceLink)
     {
     }
@@ -17214,6 +19833,9 @@ Firebug.ConsoleListener =
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.ConsolePanel = function () {} // XXjjb attach Firebug so this panel can be extended.
 
 //TODO: xxxpedro
@@ -17226,6 +19848,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
     groups: null,
     limit: null,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     append: function(appender, objects, className, rep, sourceLink, noRow)
     {
         var container = this.getTopContainer();
@@ -17259,6 +19884,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clear: function()
     {
         if (this.panelNode)
@@ -17270,6 +19898,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertLogLimit: function()
     {
         // Create limit row. This row is the first in the list of entries
@@ -17293,12 +19924,18 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         container.insertBefore(nodes[0], container.firstChild);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertReloadWarning: function()
     {
         // put the message in, we will clear if the window console is injected.
         this.warningRow = this.append(appendObject, $STR("message.Reload to activate window console"), "info");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearReloadWarning: function()
     {
         if (this.warningRow)
@@ -17310,6 +19947,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendObject: function(object, row, rep)
     {
         if (!rep)
@@ -17317,11 +19957,17 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         return rep.tag.append({object: object}, row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendFormatted: function(objects, row, rep)
     {
         if (!objects || !objects.length)
             return;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function logText(text, row)
         {
             var node = row.ownerDocument.createTextNode(text);
@@ -17390,6 +20036,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendOpenGroup: function(objects, row, rep)
     {
         if (!this.groups)
@@ -17411,6 +20060,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         groupBody.setAttribute('role', 'group');
         this.groups.push(groupBody);
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         addEvent(innerRow, "mousedown", function(event)
         {
             if (isLeftClick(event))
@@ -17437,6 +20089,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         });
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendCloseGroup: function(object, row, rep)
     {
         if (this.groups)
@@ -17447,6 +20102,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // TODO: xxxpedro console2
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMouseMove: function(event)
     {
         var target = event.srcElement || event.target;
@@ -17467,6 +20125,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMouseDown: function(event)
     {
         var target = event.srcElement || event.target;
@@ -17524,6 +20185,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         isPreRendered: true
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         Firebug.Panel.create.apply(this, arguments);
@@ -17540,6 +20204,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         });
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Firebug.Panel.initialize.apply(this, arguments);  // loads persisted content
@@ -17576,6 +20243,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         //prefs.addObserver(Firebug.prefDomain, this, false);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initializeNode : function()
     {
         //dispatch([Firebug.A11yModel], 'onInitializeNode', [this]);
@@ -17590,6 +20260,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         addEvent(this.resizeEventTarget, "resize", this.onResizer);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyNode : function()
     {
         //dispatch([Firebug.A11yModel], 'onDestroyNode', [this]);
@@ -17599,6 +20272,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         //removeEvent(this.resizeEventTarget, "resize", this.onResizer);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         //TODO: xxxpedro console console2
@@ -17615,6 +20291,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         //prefs.removeObserver(Firebug.prefDomain, this, false);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     ishow: function(state)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17648,6 +20327,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     ihide: function(state)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17661,6 +20343,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
                 this.wasScrolledToBottom + ", " + this.context.getName());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function(state)
     {
         if (this.panelNode.offsetHeight)
@@ -17674,6 +20359,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
                 this.wasScrolledToBottom + ", " + this.context.getName());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shouldBreakOnNext: function()
     {
         // xxxHonza: shouldn't the breakOnErrors be context related?
@@ -17682,12 +20370,18 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         return Firebug.getPref(Firebug.servicePrefDomain, "breakOnErrors");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getBreakOnNextTooltip: function(enabled)
     {
         return (enabled ? $STR("console.Disable Break On All Errors") :
             $STR("console.Break On All Errors"));
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     enablePanel: function(module)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17701,6 +20395,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
             scrollToBottom(this.panelNode);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     disablePanel: function(module)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17711,6 +20408,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         this.showCommandLine(false);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getOptionsMenuItems: function()
     {
         return [
@@ -17730,6 +20430,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         ];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getShowStackTraceMenuItem: function()
     {
         var menuItem = serviceOptionMenu("ShowStackTrace", "showStackTrace");
@@ -17738,6 +20441,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         return menuItem;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStrictOptionMenuItem: function()
     {
         var strictDomain = "javascript.options";
@@ -17747,6 +20453,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
             command: bindFixed(Firebug.setPref, Firebug, strictDomain, strictName, !strictValue) };
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getBreakOnMenuItems: function()
     {
         //xxxHonza: no BON options for now.
@@ -17756,6 +20465,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
        return [];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(text)
     {
         if (!text)
@@ -17770,6 +20482,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
 
         this.matchSet = [];
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function findRow(node) { return getAncestorByClass(node, "logRow"); }
         var search = new TextSearch(this.panelNode, findRow);
 
@@ -17788,6 +20503,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     breakOnNext: function(breaking)
     {
         Firebug.setPref(Firebug.servicePrefDomain, "breakOnErrors", breaking);
@@ -17796,6 +20514,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // private
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     createRow: function(rowName, className)
     {
         var elt = this.document.createElement("div");
@@ -17803,6 +20524,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         return elt;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getTopContainer: function()
     {
         if (this.groups && this.groups.length)
@@ -17811,6 +20535,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
             return this.panelNode;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     filterLogRow: function(logRow, scrolledToBottom)
     {
         if (this.searchText)
@@ -17820,6 +20547,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
 
             // Search after a delay because we must wait for a frame to be created for
             // the new logRow so that the finder will be able to locate it
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(bindFixed(function()
             {
                 if (this.searchFilter(this.searchText, logRow))
@@ -17835,6 +20565,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     searchFilter: function(text, logRow)
     {
         var count = this.panelNode.childNodes.length;
@@ -17852,6 +20585,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
     },
 
     // nsIPrefObserver
+
+    // YOURNAME:
+    // YOURCOMMENT
     observe: function(subject, topic, data)
     {
         // We're observing preferences only.
@@ -17865,6 +20601,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
             this.updateMaxLimit();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateMaxLimit: function()
     {
         var value = 1000;
@@ -17873,6 +20612,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         maxQueueRequests =  value ? value : maxQueueRequests;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showCommandLine: function(shouldShow)
     {
         //TODO: xxxpedro show command line important
@@ -17892,6 +20634,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onScroll: function(event)
     {
         // Update the scroll position flag if the position changes.
@@ -17903,6 +20648,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
                 this.context.getName(), event);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onResize: function(event)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -17918,6 +20666,9 @@ Firebug.ConsolePanel.prototype = extend(Firebug.Panel,
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseFormat(format)
 {
     var parts = [];
@@ -17983,6 +20734,9 @@ Firebug.registerPanel(Firebug.ConsolePanel);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -17995,6 +20749,9 @@ var frameCounters = {};
 
 Firebug.Console.injector =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     install: function(context)
     {
         var win = context.window;
@@ -18025,13 +20782,22 @@ Firebug.Console.injector =
             "close"
         ];
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var Handler = function(name)
         {
             var c = consoleHandler;
             var f = consoleHandler[name];
+
+            // YOURNAME:
+            // YOURCOMMENT
             return function(){return f.apply(c,arguments)};
         };
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var installer = function(c)
         {
             for (var i=0, l=properties.length; i<l; i++)
@@ -18048,6 +20814,9 @@ Firebug.Console.injector =
         sandbox();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     isAttached: function(context, win)
     {
         if (win.wrappedJSObject)
@@ -18066,6 +20835,9 @@ Firebug.Console.injector =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attachIfNeeded: function(context, win)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -18089,6 +20861,9 @@ Firebug.Console.injector =
         return attached;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attachConsoleInjector: function(context, win)
     {
         var consoleInjection = this.getConsoleInjectionScript();  // Do it all here.
@@ -18102,13 +20877,22 @@ Firebug.Console.injector =
             FBTrace.sysout("attachConsoleInjector evaluation completed for "+win.location);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getConsoleInjectionScript: function() {
         if (!this.consoleInjectionScript)
         {
             var script = "";
+
+            // YOURNAME:
+            // YOURCOMMENT
             script += "window.__defineGetter__('console', function() {\n";
             script += " return (window._firebug ? window._firebug : window.loadFirebugConsole()); })\n\n";
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             script += "window.loadFirebugConsole = function() {\n";
             script += "window._firebug =  new _FirebugConsole();";
 
@@ -18126,6 +20910,9 @@ Firebug.Console.injector =
         return this.consoleInjectionScript;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     forceConsoleCompilationInPage: function(context, win)
     {
         if (!win)
@@ -18146,12 +20933,18 @@ Firebug.Console.injector =
             FBTrace.sysout("forceConsoleCompilationInPage "+win.location, consoleForcer);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     evaluateConsoleScript: function(context)
     {
         var scriptSource = this.getConsoleInjectionScript(); // TODO XXXjjb this should be getConsoleInjectionScript
         Firebug.Debugger.evaluate(scriptSource, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addConsoleListener: function(context, win)
     {
         if (!context.activeConsoleHandlers)  // then we have not been this way before
@@ -18187,6 +20980,9 @@ Firebug.Console.injector =
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     detachConsole: function(context, win)
     {
         if (win && win.document)
@@ -18199,10 +20995,16 @@ Firebug.Console.injector =
 }
 
 var total_handlers = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
 {
     this.window = win;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.attachTo = function(element)
     {
         this.element = element;
@@ -18211,12 +21013,18 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         this.element.addEventListener('firebugAppendConsole', this.boundHandler, true); // capturing
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.detach = function()
     {
         this.element.removeEventListener('firebugAppendConsole', this.boundHandler, true);
     };
 
     this.handler_name = ++total_handlers;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.handleEvent = function(event)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -18233,32 +21041,50 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
 
     this.firebuglite = Firebug.version;    
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.init = function()
     {
         var consoleElement = win.document.getElementById('_firebugConsole');
         consoleElement.setAttribute("FirebugVersion", Firebug.version);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.log = function()
     {
         logFormatted(arguments, "log");
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.debug = function()
     {
         logFormatted(arguments, "debug", true);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.info = function()
     {
         logFormatted(arguments, "info", true);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.warn = function()
     {
         logFormatted(arguments, "warn", true);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.error = function()
     {
         //TODO: xxxpedro console error
@@ -18273,11 +21099,17 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         //}
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.exception = function()
     {
         logAssert("error", arguments);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.assert = function(x)
     {
         if (!x)
@@ -18289,11 +21121,17 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         }
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.dir = function(o)
     {
         Firebug.Console.log(o, context, "dir", Firebug.DOMPanel.DirTable);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.dirxml = function(o)
     {
         ///if (o instanceof Window)
@@ -18311,6 +21149,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         div.innerHTML = html.join("");
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.group = function()
     {
         //TODO: xxxpedro;
@@ -18319,11 +21160,17 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         Firebug.Console.openGroup(arguments, null, "group", null, false, sourceLink);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.groupEnd = function()
     {
         Firebug.Console.closeGroup(context);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.groupCollapsed = function()
     {
         var sourceLink = getStackLink();
@@ -18332,6 +21179,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         removeClass(row, "opened");
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.profile = function(title)
     {
         logFormatted(["console.profile() not supported."], "warn", true);
@@ -18339,6 +21189,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         //Firebug.Profiler.startProfiling(context, title);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.profileEnd = function()
     {
         logFormatted(["console.profile() not supported."], "warn", true);
@@ -18346,6 +21199,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         //Firebug.Profiler.stopProfiling(context);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.count = function(key)
     {
         // TODO: xxxpedro console2: is there a better way to find a unique ID for the coun() call?
@@ -18378,8 +21234,14 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         }
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.trace = function()
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var getFuncName = function getFuncName (f)
         {
             if (f.getName instanceof Function)
@@ -18391,10 +21253,16 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
                 return f.name;
             }
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             var name = f.toString().match(/function\s*([_$\w\d]*)/)[1];
             return name || "anonymous";
         };
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var wasVisited = function(fn)
         {
             for (var i=0, l=frames.length; i<l; i++)
@@ -18568,8 +21436,14 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         Firebug.Console.log({frames: frames}, context, "stackTrace", FirebugReps.StackTrace);
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.trace_ok = function()
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var getFuncName = function getFuncName (f)
         {
             if (f.getName instanceof Function)
@@ -18577,10 +21451,16 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
             if (f.name) // in FireFox, Function objects have a name property...
                 return f.name;
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             var name = f.toString().match(/function\s*([_$\w\d]*)/)[1];
             return name || "anonymous";
         };
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var wasVisited = function(fn)
         {
             for (var i=0, l=frames.length; i<l; i++)
@@ -18611,11 +21491,17 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         Firebug.Console.log({frames: frames}, context, "stackTrace", FirebugReps.StackTrace);
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.clear = function()
     {
         Firebug.Console.clear(context);
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.time = function(name, reset)
     {
         if (!name)
@@ -18634,6 +21520,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         this.timeCounters[key] = time;
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.timeEnd = function(name)
     {
         var time = new Date().getTime();
@@ -18657,6 +21546,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
     };
 
     // These functions are over-ridden by commandLine
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.evaluated = function(result, context)
     {
         if (FBTrace.DBG_CONSOLE)
@@ -18664,6 +21556,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
 
         Firebug.Console.log(result, context);
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.evaluateError = function(result, context)
     {
         Firebug.Console.log(result, context, "errorMessage");
@@ -18671,12 +21566,18 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function logFormatted(args, className, linkToSource, noThrottle)
     {
         var sourceLink = linkToSource ? getStackLink() : null;
         return Firebug.Console.logFormatted(args, context, className, noThrottle, sourceLink);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function logAssert(category, args)
     {
         Firebug.Errors.increaseCount(context);
@@ -18726,6 +21627,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         row.scrollIntoView();
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getComponentsStackDump()
     {
         // Starting with our stack, walk back to the user-level code
@@ -18739,6 +21643,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         while (frame && FBL.isSystemURL(frame.filename) )
             frame = frame.caller;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         // Drop two more frames, the injected console function and firebugAppendConsole()
         if (frame)
             frame = frame.caller;
@@ -18751,6 +21658,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         return frame;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getStackLink()
     {
         // TODO: xxxpedro console2
@@ -18758,6 +21668,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
         //return FBL.getFrameSourceLink(getComponentsStackDump());
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getJSDUserStack()
     {
         var trace = FBL.getCurrentStackTrace(context);
@@ -18785,6 +21698,9 @@ var FirebugConsoleHandler = function FirebugConsoleHandler(context, win)
 // ************************************************************************************************
 // Register console namespace
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.registerConsole = function()
 {
     //TODO: xxxpedro console options override
@@ -18800,6 +21716,9 @@ registerConsole();
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -18848,6 +21767,9 @@ var _completion =
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+// YOURNAME:
+// YOURCOMMENT
 var _stack = function(command)
 {
     commandHistory.push(command);
@@ -18869,6 +21791,9 @@ Firebug.CommandLine = extend(Firebug.Module,
   
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(doc)
     {
         this.clear = bind(this.clear, this);
@@ -18882,6 +21807,9 @@ Firebug.CommandLine = extend(Firebug.Module,
         addEvent(Firebug.chrome.window, "error", this.onError);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function(doc)
     {
         this.deactivate();
@@ -18892,6 +21820,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     activate: function(multiLine, hideToggleIcon, onRun)
     {
         defineCommandLineAPI();
@@ -18957,6 +21888,9 @@ Firebug.CommandLine = extend(Firebug.Module,
         this.isActive = true;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     deactivate: function()
     {
         if (!this.isActive) return;
@@ -18991,11 +21925,17 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     focus: function()
     {
         this.element.focus();
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     blur: function()
     {
         this.element.blur();
@@ -19003,6 +21943,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clear: function()
     {
         this.element.value = "";
@@ -19010,6 +21953,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     evaluate: function(expr)
     {
         // TODO: need to register the API in console.firebug.commandLineAPI
@@ -19022,6 +21968,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     enter: function()
     {
         var command = this.element.value;
@@ -19039,12 +21988,18 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     prevCommand: function()
     {
         if (commandPointer > 0 && commandHistory.length > 0)
             this.element.value = commandHistory[--commandPointer];
     },
   
+
+    // YOURNAME:
+    // YOURCOMMENT
     nextCommand: function()
     {
         var element = this.element;
@@ -19064,6 +22019,9 @@ Firebug.CommandLine = extend(Firebug.Module,
   
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     autocomplete: function(reverse)
     {
         var element = this.element;
@@ -19169,6 +22127,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     setMultiLine: function(multiLine)
     {
         if (multiLine == this.isMultiLine) return;
@@ -19178,6 +22139,9 @@ Firebug.CommandLine = extend(Firebug.Module,
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onError: function(msg, href, lineNo)
     {
         var html = [];
@@ -19193,6 +22157,9 @@ Firebug.CommandLine = extend(Firebug.Module,
         Firebug.Console.writeRow(html, "error");
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onKeyDown: function(e)
     {
         e = e || event;
@@ -19233,6 +22200,9 @@ Firebug.CommandLine = extend(Firebug.Module,
         return false;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMultiLineKeyDown: function(e)
     {
         e = e || event;
@@ -19252,6 +22222,9 @@ Firebug.registerModule(Firebug.CommandLine);
 // ************************************************************************************************
 // 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getExpressionOffset(command)
 {
     // XXXjoe This is kind of a poor-man's JavaScript parser - trying
@@ -19285,11 +22258,17 @@ function getExpressionOffset(command)
 
 var CommandLineAPI =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     $: function(id)
     {
         return Firebug.browser.document.getElementById(id)
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     $$: function(selector, context)
     {
         context = context || Firebug.browser.document;
@@ -19302,11 +22281,17 @@ var CommandLineAPI =
     
     $1: null,
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     dir: function(o)
     {
         Firebug.Console.log(o, Firebug.context, "dir", Firebug.DOMPanel.DirTable);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     dirxml: function(o)
     {
         ///if (o instanceof Window)
@@ -19328,6 +22313,9 @@ var CommandLineAPI =
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 var defineCommandLineAPI = function defineCommandLineAPI()
 {
     Firebug.CommandLine.API = {};
@@ -19348,12 +22336,18 @@ var defineCommandLineAPI = function defineCommandLineAPI()
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() { with (FBL) {
 // ************************************************************************************************
 
 // ************************************************************************************************
 // XHRSpy
     
+
+// YOURNAME:
+// YOURCOMMENT
 var XHRSpy = function()
 {
     this.requestHeaders = [];
@@ -19381,6 +22375,9 @@ XHRSpy.prototype =
     
     sourceLink: null, // {href:"file.html", line: 22}
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     getURL: function()
     {
         return this.href;
@@ -19390,6 +22387,9 @@ XHRSpy.prototype =
 // ************************************************************************************************
 // XMLHttpRequestWrapper
 
+
+// YOURNAME:
+// YOURCOMMENT
 var XMLHttpRequestWrapper = function(activeXObject)
 {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -19422,6 +22422,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         setRequestHeader: 1
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var updateSelfProperties = function()
     {
         for (var propName in xhrRequest)
@@ -19455,6 +22458,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         upload: 1
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var updateXHRProperties = function()
     {
         for (var propName in self)
@@ -19478,6 +22484,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         }
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var logXHR = function() 
     {
         var row = Firebug.Console.log(spy, null, "spy", Firebug.Spy.XHR);
@@ -19489,6 +22498,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         }
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var finishXHR = function() 
     {
         var duration = new Date().getTime() - reqStartTS;
@@ -19540,6 +22552,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
             success: success
         })
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function(){
                 
                 spy.responseText = xhrRequest.responseText;
@@ -19567,6 +22582,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         updateSelfProperties();
     };
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var handleStateChange = function()
     {
         //Firebug.Console.log("onreadystatechange");
@@ -19577,6 +22595,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
         {
             finishXHR();
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             xhrRequest.onreadystatechange = function(){};
         }
         
@@ -19586,6 +22607,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     };
     
     // update the XHR representation data
+
+    // YOURNAME:
+    // YOURCOMMENT
     var handleRequestStatus = function(success, status, time)
     {
         var row = spy.logRow;
@@ -19609,11 +22633,17 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     this.readyState = 0;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.onreadystatechange = function(){};
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // XMLHttpRequestWrapper public methods
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.open = function(method, url, async, user, password)
     {
         //Firebug.Console.log("xhrRequest open");
@@ -19646,6 +22676,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.send = function(data)
     {
         //Firebug.Console.log("xhrRequest send");
@@ -19679,6 +22712,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.setRequestHeader = function(header, value)
     {
         spy.requestHeaders.push({name: [header], value: [value]});
@@ -19688,6 +22724,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.abort = function()
     {
         xhrRequest.abort();
@@ -19697,6 +22736,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.getResponseHeader = function(header)
     {
         return xhrRequest.getResponseHeader(header);
@@ -19704,6 +22746,9 @@ var XMLHttpRequestWrapper = function(activeXObject)
     
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.getAllResponseHeaders = function()
     {
         return xhrRequest.getAllResponseHeaders();
@@ -19733,15 +22778,24 @@ var XMLHttpRequestWrapper = function(activeXObject)
             {
                 if (typeof self[propName] == "undefined")
                 {
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     this[propName] = (function(name, xhr){
                     
                         return supportsApply ?
                             // if the browser supports apply 
+
+                            // YOURNAME:
+                            // YOURCOMMENT
                             function()
                             {
                                 return xhr[name].apply(xhr, arguments);
                             }
                             :
+
+                            // YOURNAME:
+                            // YOURCOMMENT
                             function(a,b,c,d,e)
                             {
                                 return xhr[name](a,b,c,d,e);
@@ -19775,6 +22829,9 @@ if (isIE6)
     
     var xhrObjects = " MSXML2.XMLHTTP.5.0 MSXML2.XMLHTTP.4.0 MSXML2.XMLHTTP.3.0 MSXML2.XMLHTTP Microsoft.XMLHTTP ";
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     window.ActiveXObject = function(name)
     {
         var error = null;
@@ -19808,6 +22865,9 @@ if (isIE6)
 if (!isIE6)
 {
     var _XMLHttpRequest = XMLHttpRequest;
+
+    // YOURNAME:
+    // YOURCOMMENT
     window.XMLHttpRequest = function()
     {
         return new XMLHttpRequestWrapper();
@@ -19820,6 +22880,9 @@ if (!isIE6)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -19922,6 +22985,9 @@ Firebug.NetMonitor = extend(Firebug.ActivableModule,
 {
     dispatchName: "netMonitor",
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clear: function(context)
     {
         // The user pressed a Clear button so, remove content of the panel...
@@ -19933,6 +22999,9 @@ Firebug.NetMonitor = extend(Firebug.ActivableModule,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // extends Module
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         return;
@@ -19952,6 +23021,9 @@ Firebug.NetMonitor = extend(Firebug.ActivableModule,
         Firebug.Debugger.addListener(this.DebuggerListener);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         return;
@@ -20068,11 +23140,17 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getNameTag: function(param)
     {
         return (this.getParamName(param) == param.name) ? this.nameTag : this.nameWithTooltipTag;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getParamName: function(param)
     {
         var limit = 25;
@@ -20082,6 +23160,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         return name;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getParamTitle: function(param)
     {
         var limit = 25;
@@ -20093,27 +23174,42 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideParams: function(file)
     {
         return !file.urlParams || !file.urlParams.length;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hidePost: function(file)
     {
         return file.method.toUpperCase() != "POST";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hidePut: function(file)
     {
         return file.method.toUpperCase() != "PUT";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideResponse: function(file)
     {
         return false;
         //return file.category in binaryFileCategories;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideCache: function(file)
     {
         return true;
@@ -20121,16 +23217,25 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         return !file.cacheEntry; // || file.category=="image";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hideHtml: function(file)
     {
         return (file.mimeType != "text/html") && (file.mimeType != "application/xhtml+xml");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClickTab: function(event)
     {
         this.selectTab(event.currentTarget || event.srcElement);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getParamValueIterator: function(param)
     {
         // TODO: xxxpedro console2
@@ -20146,6 +23251,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendTab: function(netInfoBox, tabId, tabTitle)
     {
         // Create new tab and body.
@@ -20156,6 +23264,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         this.customBody.append(args, $$(".netInfoBodies", netInfoBox)[0]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectTabByName: function(netInfoBox, tabName)
     {
         var tab = getChildByClass(netInfoBox, "netInfoTabs", "netInfo"+tabName+"Tab");
@@ -20163,6 +23274,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
             this.selectTab(tab);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectTab: function(tab)
     {
         var view = tab.getAttribute("view");
@@ -20203,6 +23317,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         this.updateInfo(netInfoBox, file, context);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateInfo: function(netInfoBox, file, context)
     {
         if (FBTrace.DBG_NET)
@@ -20319,6 +23436,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         dispatch(NetInfoBody.fbListeners, "updateTabBody", [netInfoBox, file, context]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setResponseText: function(file, netInfoBox, responseTextBox, context)
     {
         //**********************************************
@@ -20359,6 +23479,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
         {
             var object = {
                 text: $STR("net.responseSizeLimitMessage"),
+
+                // YOURNAME:
+                // YOURCOMMENT
                 onClickLink: function() {
                     var panel = context.getPanel("net", true);
                     panel.openResponseInTab(file);
@@ -20373,6 +23496,9 @@ Firebug.NetMonitor.NetInfoBody = domplate(Firebug.Rep, new Firebug.Listener(),
             FBTrace.sysout("net.setResponseText; response text updated");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertHeaderRows: function(netInfoBox, headers, tableName, rowName)
     {
         if (!headers.length)
@@ -20433,6 +23559,9 @@ Firebug.NetMonitor.NetInfoHeaders = domplate(Firebug.Rep, //new Firebug.Listener
             )
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onViewSource: function(event)
     {
         var target = event.target;
@@ -20459,6 +23588,9 @@ Firebug.NetMonitor.NetInfoHeaders = domplate(Firebug.Rep, //new Firebug.Listener
         cancelEvent(event);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertSource: function(netInfoBox, source, rowName)
     {
         // This breaks copy to clipboard.
@@ -20473,6 +23605,9 @@ Firebug.NetMonitor.NetInfoHeaders = domplate(Firebug.Rep, //new Firebug.Listener
         sourceNode.innerHTML = source;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertHeaderRows: function(netInfoBox, headers, rowName)
     {
         var headersTable = $$(".netInfoHeadersTable", netInfoBox)[0];
@@ -20492,6 +23627,9 @@ Firebug.NetMonitor.NetInfoHeaders = domplate(Firebug.Rep, //new Firebug.Listener
         removeClass(titleRow, "collapsed");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(parent)
     {
         var rootNode = this.tag.append({}, parent);
@@ -20512,6 +23650,9 @@ Firebug.NetMonitor.NetInfoHeaders = domplate(Firebug.Rep, //new Firebug.Listener
             removeClass(viewSource, "collapsed");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderHeaders: function(parent, headers, rowName)
     {
         if (!parent.firstChild)
@@ -20623,11 +23764,17 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
             )
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getParamValueIterator: function(param)
     {
         return NetInfoBody.getParamValueIterator(param);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     render: function(context, parentNode, file)
     {
         //debugger;
@@ -20683,6 +23830,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
             this.insertSource(parentNode, postText);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertParameters: function(parentNode, params)
     {
         if (!params || !params.length)
@@ -20698,6 +23848,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
         NetInfoBody.headerDataTag.insertRows({headers: params}, row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertParts: function(parentNode, data)
     {
         if (!data.params || !data.params.length)
@@ -20711,6 +23864,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
         NetInfoBody.headerDataTag.insertRows({headers: data.params}, row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertJSON: function(parentNode, file, context)
     {
         ///var text = Utils.getPostText(file, context);
@@ -20732,6 +23888,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
             {object: data, toggles: this.toggles}, jsonBody);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertXML: function(parentNode, file, context)
     {
         var text = Utils.getPostText(file, context);
@@ -20743,6 +23902,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
         Firebug.XMLViewerModel.insertXML(jsonBody, text);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertSource: function(parentNode, text)
     {
         var sourceTable = this.sourceTable.append({object:{}}, parentNode);
@@ -20754,6 +23916,9 @@ Firebug.NetMonitor.NetInfoPostData = domplate(Firebug.Rep, /*new Firebug.Listene
         this.sourceBodyTag.insertRows({param: param}, row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     parseMultiPartText: function(file, context)
     {
         var text = Utils.getPostText(file, context);
@@ -20796,6 +23961,9 @@ var NetInfoPostData = Firebug.NetMonitor.NetInfoPostData;
 
 
 // TODO: xxxpedro net i18n
+
+// YOURNAME:
+// YOURCOMMENT
 var $STRP = function(a){return a;};
 
 Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
@@ -20834,16 +24002,25 @@ Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
             )
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isCollapsed: function()
     {
         return this.collapsed;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onPreferences: function(event)
     {
         openNewTab("about:config");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateCounter: function(row)
     {
         removeClass(row, "collapsed");
@@ -20853,6 +24030,9 @@ Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
         limitLabel.firstChild.nodeValue = $STRP("plural.Limit_Exceeded", [row.limitInfo.totalCount]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     createTable: function(parent, limitInfo)
     {
         var table = this.tableTag.replace({}, parent);
@@ -20860,6 +24040,9 @@ Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
         return [table, row];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     createRow: function(parent, limitInfo)
     {
         var row = this.limitTag.insertRows(limitInfo, parent, this)[0];
@@ -20868,6 +24051,9 @@ Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
     },
 
     // nsIPrefObserver
+
+    // YOURNAME:
+    // YOURCOMMENT
     observe: function(subject, topic, data)
     {
         // We're observing preferences only.
@@ -20878,6 +24064,9 @@ Firebug.NetMonitor.NetLimit = domplate(Firebug.Rep,
             this.updateMaxLimit();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateMaxLimit: function()
     {
         var value = Firebug.getPref(Firebug.prefDomain, "net.logLimit");
@@ -20901,6 +24090,9 @@ Firebug.NetMonitor.ResponseSizeLimit = domplate(Firebug.Rep,
         ),
 
     reLink: /^(.*)<a>(.*)<\/a>(.*$)/,
+
+    // YOURNAME:
+    // YOURCOMMENT
     append: function(obj, parent)
     {
         var m = obj.text.match(this.reLink);
@@ -20918,6 +24110,9 @@ Firebug.NetMonitor.ResponseSizeLimit = domplate(Firebug.Rep,
 
 Firebug.NetMonitor.Utils =
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     findHeader: function(headers, name)
     {
         if (!headers)
@@ -20932,6 +24127,9 @@ Firebug.NetMonitor.Utils =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     formatPostText: function(text)
     {
         if (text instanceof XMLDocument)
@@ -20940,6 +24138,9 @@ Firebug.NetMonitor.Utils =
             return text;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPostText: function(file, context, noLimit)
     {
         if (!file.postText)
@@ -20963,6 +24164,9 @@ Firebug.NetMonitor.Utils =
         return file.postText;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getResponseText: function(file, context)
     {
         // The response can be also empty string so, check agains "undefined".
@@ -20970,6 +24174,9 @@ Firebug.NetMonitor.Utils =
             context.sourceCache.loadText(file.href, file.method, file);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isURLEncodedRequest: function(file, context)
     {
         var text = Utils.getPostText(file, context);
@@ -20985,6 +24192,9 @@ Firebug.NetMonitor.Utils =
         return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isMultiPartRequest: function(file, context)
     {
         var text = Utils.getPostText(file, context);
@@ -20993,6 +24203,9 @@ Firebug.NetMonitor.Utils =
         return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMimeType: function(mimeType, uri)
     {
         if (!mimeType || !(mimeCategoryMap.hasOwnProperty(mimeType)))
@@ -21010,6 +24223,9 @@ Firebug.NetMonitor.Utils =
             return mimeType;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDateFromSeconds: function(s)
     {
         var d = new Date();
@@ -21017,6 +24233,9 @@ Firebug.NetMonitor.Utils =
         return d;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getHttpHeaders: function(request, file)
     {
         try
@@ -21034,12 +24253,18 @@ Firebug.NetMonitor.Utils =
                 var requestHeaders = [], responseHeaders = [];
 
                 http.visitRequestHeaders({
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     visitHeader: function(name, value)
                     {
                         requestHeaders.push({name: name, value: value});
                     }
                 });
                 http.visitResponseHeaders({
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     visitHeader: function(name, value)
                     {
                         responseHeaders.push({name: name, value: value});
@@ -21059,6 +24284,9 @@ Firebug.NetMonitor.Utils =
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isXHR: function(request)
     {
         try
@@ -21077,6 +24305,9 @@ Firebug.NetMonitor.Utils =
        return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getFileCategory: function(file)
     {
         if (file.category)
@@ -21133,6 +24364,9 @@ Firebug.registerModule(Firebug.NetMonitor);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -21161,6 +24395,9 @@ Firebug.Spy = extend(Firebug.Module,
 {
     dispatchName: "spy",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         if (Firebug.TraceModule)
@@ -21169,6 +24406,9 @@ Firebug.Spy = extend(Firebug.Module,
         Firebug.Module.initialize.apply(this, arguments);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         Firebug.Module.shutdown.apply(this, arguments);
@@ -21177,6 +24417,9 @@ Firebug.Spy = extend(Firebug.Module,
             Firebug.TraceModule.removeListener(this.TraceListener);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initContext: function(context)
     {
         context.spies = [];
@@ -21188,6 +24431,9 @@ Firebug.Spy = extend(Firebug.Module,
             FBTrace.sysout("spy.initContext " + contexts.length + " ", context.getName());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyContext: function(context)
     {
         // For any spies that are in progress, remove our listeners so that they don't leak
@@ -21203,12 +24449,18 @@ Firebug.Spy = extend(Firebug.Module,
             FBTrace.sysout("spy.destroyContext " + contexts.length + " ", context.getName());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     watchWindow: function(context, win)
     {
         if (Firebug.showXMLHttpRequests && Firebug.Console.isAlwaysEnabled())
             this.attachObserver(context, win);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     unwatchWindow: function(context, win)
     {
         try
@@ -21224,6 +24476,9 @@ Firebug.Spy = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
         // XXXjjb Honza, if Console.isEnabled(context) false, then this can't be called,
@@ -21234,6 +24489,9 @@ Firebug.Spy = extend(Firebug.Module,
             for (var i = 0; i < TabWatcher.contexts.length; ++i)
             {
                 var context = TabWatcher.contexts[i];
+
+                // YOURNAME:
+                // YOURCOMMENT
                 iterateWindows(context.window, function(win)
                 {
                     tach.apply(this, [context, win]);
@@ -21248,6 +24506,9 @@ Firebug.Spy = extend(Firebug.Module,
     /**
      * Returns false if Spy should not be attached to XHRs executed by the specified window.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     skipSpy: function(win)
     {
         if (!win)
@@ -21259,6 +24520,9 @@ Firebug.Spy = extend(Firebug.Module,
             return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attachObserver: function(context, win)
     {
         if (Firebug.Spy.skipSpy(win))
@@ -21283,6 +24547,9 @@ Firebug.Spy = extend(Firebug.Module,
             FBTrace.sysout("spy.attachObserver (HTTP) " + contexts.length + " ", context.getName());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     detachObserver: function(context, win)
     {
         for (var i=0; i<contexts.length; ++i)
@@ -21313,6 +24580,9 @@ Firebug.Spy = extend(Firebug.Module,
      * Return XHR object that is associated with specified request <i>nsIHttpChannel</i>.
      * Returns null if the request doesn't represent XHR.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     getXHR: function(request)
     {
         // Does also query-interface for nsIHttpChannel.
@@ -21345,6 +24615,9 @@ Firebug.Spy = extend(Firebug.Module,
 // ************************************************************************************************
 
 /*
+
+// YOURNAME:
+// YOURCOMMENT
 function getSpyForXHR(request, xhrRequest, context, noCreate)
 {
     var spy = null;
@@ -21389,6 +24662,9 @@ function getSpyForXHR(request, xhrRequest, context, noCreate)
  * during the request process (onLoad, onAbort, etc.)
  */
 /*
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.Spy.XMLHttpRequestSpy = function(request, xhrRequest, context)
 {
     this.request = request;
@@ -21409,12 +24685,27 @@ Firebug.Spy.XMLHttpRequestSpy = function(request, xhrRequest, context)
 /** @lends Firebug.Spy.XMLHttpRequestSpy */
 /*
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach: function()
     {
         var spy = this;
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.onReadyStateChange = function(event) { onHTTPSpyReadyStateChange(spy, event); };
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.onLoad = function() { onHTTPSpyLoad(spy); };
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.onError = function() { onHTTPSpyError(spy); };
+
+        // YOURNAME:
+        // YOURCOMMENT
         this.onAbort = function() { onHTTPSpyAbort(spy); };
 
         // xxxHonza: #502959 is still failing on Fx 3.5
@@ -21434,6 +24725,9 @@ Firebug.Spy.XMLHttpRequestSpy = function(request, xhrRequest, context)
             this.context.sourceCache.addListener(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     detach: function()
     {
         // Bubble out if already detached.
@@ -21476,12 +24770,18 @@ Firebug.Spy.XMLHttpRequestSpy = function(request, xhrRequest, context)
             this.context.sourceCache.removeListener(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getURL: function()
     {
         return this.xhrRequest.channel ? this.xhrRequest.channel.name : this.href;
     },
 
     // Cache listener
+
+    // YOURNAME:
+    // YOURCOMMENT
     onStopRequest: function(context, request, responseText)
     {
         if (!responseText)
@@ -21494,6 +24794,9 @@ Firebug.Spy.XMLHttpRequestSpy = function(request, xhrRequest, context)
 /**/
 // ************************************************************************************************
 /*
+
+// YOURNAME:
+// YOURCOMMENT
 function onHTTPSpyReadyStateChange(spy, event)
 {
     if (FBTrace.DBG_SPY)
@@ -21556,6 +24859,9 @@ function onHTTPSpyReadyStateChange(spy, event)
     callPageHandler(spy, event, originalHandler);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onHTTPSpyLoad(spy)
 {
     if (FBTrace.DBG_SPY)
@@ -21570,6 +24876,9 @@ function onHTTPSpyLoad(spy)
         onHTTPSpyReadyStateChange(spy, null);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onHTTPSpyError(spy)
 {
     if (FBTrace.DBG_SPY)
@@ -21585,6 +24894,9 @@ function onHTTPSpyError(spy)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onHTTPSpyAbort(spy)
 {
     if (FBTrace.DBG_SPY)
@@ -21652,16 +24964,25 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
             )
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getCaption: function(spy)
     {
         return spy.method.toUpperCase() + " " + cropString(spy.getURL(), 100);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getFullUri: function(spy)
     {
         return spy.method.toUpperCase() + " " + spy.getURL();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStatus: function(spy)
     {
         var text = "";
@@ -21674,6 +24995,9 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
         return text;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onToggleBody: function(event)
     {
         var target = event.currentTarget || event.srcElement;
@@ -21704,11 +25028,17 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyURL: function(spy)
     {
         copyToClipboard(spy.getURL());
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyParams: function(spy)
     {
         var text = spy.postText;
@@ -21719,11 +25049,17 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
         copyToClipboard(url);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyResponse: function(spy)
     {
         copyToClipboard(spy.responseText);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     openInTab: function(spy)
     {
         openNewTab(spy.getURL(), spy.postText);
@@ -21731,6 +25067,9 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         // TODO: xxxpedro spy xhr
@@ -21739,6 +25078,9 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
         return object instanceof Firebug.Spy.XMLHttpRequestSpy;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(spy, context)
     {
         var url = spy.getURL();
@@ -21746,11 +25088,17 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
         return true;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(spy, context)
     {
         return spy.xhrRequest;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(spy)
     {
         var items = [
@@ -21776,6 +25124,9 @@ Firebug.Spy.XHR = domplate(Firebug.Rep,
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateTime(spy)
 {
     var timeBox = spy.logRow.getElementsByClassName("spyTime").item(0);
@@ -21783,6 +25134,9 @@ function updateTime(spy)
         timeBox.textContent = " " + formatTime(spy.responseTime);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateLogRow(spy)
 {
     updateTime(spy);
@@ -21804,6 +25158,9 @@ function updateLogRow(spy)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var updateHttpSpyInfo = function updateHttpSpyInfo(spy, logRow)
 {
     if (!spy.logRow && logRow)
@@ -21841,6 +25198,9 @@ var updateHttpSpyInfo = function updateHttpSpyInfo(spy, logRow)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRequestHeaders(spy)
 {
     var headers = [];
@@ -21849,6 +25209,9 @@ function getRequestHeaders(spy)
     if (channel instanceof Ci.nsIHttpChannel)
     {
         channel.visitRequestHeaders({
+
+            // YOURNAME:
+            // YOURCOMMENT
             visitHeader: function(name, value)
             {
                 headers.push({name: name, value: value});
@@ -21859,6 +25222,9 @@ function getRequestHeaders(spy)
     return headers;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getResponseHeaders(spy)
 {
     var headers = [];
@@ -21869,6 +25235,9 @@ function getResponseHeaders(spy)
         if (channel instanceof Ci.nsIHttpChannel)
         {
             channel.visitResponseHeaders({
+
+                // YOURNAME:
+                // YOURCOMMENT
                 visitHeader: function(name, value)
                 {
                     headers.push({name: name, value: value});
@@ -21898,6 +25267,9 @@ Firebug.registerModule(Firebug.Spy);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -21923,6 +25295,9 @@ var contentTypes =
 Firebug.JSONViewerModel = extend(Firebug.Module,
 {
     dispatchName: "jsonViewer",
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Firebug.NetMonitor.NetInfoBody.addListener(this);
@@ -21931,11 +25306,17 @@ Firebug.JSONViewerModel = extend(Firebug.Module,
         this.toggles = {};
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         Firebug.NetMonitor.NetInfoBody.removeListener(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initTabBody: function(infoBox, file)
     {
         if (FBTrace.DBG_JSONVIEWER)
@@ -21965,6 +25346,9 @@ Firebug.JSONViewerModel = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isJSON: function(contentType, data)
     {
         // Workaround for JSON responses without proper content type
@@ -21990,6 +25374,9 @@ Firebug.JSONViewerModel = extend(Firebug.Module,
     },
 
     // Update listener for TabView
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateTabBody: function(infoBox, file, context)
     {
         var tab = infoBox.selectedTab;
@@ -22006,6 +25393,9 @@ Firebug.JSONViewerModel = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     parseJSON: function(file)
     {
         var jsonString = new String(file.responseText);
@@ -22025,6 +25415,9 @@ Firebug.registerModule(Firebug.JSONViewerModel);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -22055,6 +25448,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
 {
     dispatchName: "xmlViewer",
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         ///Firebug.ActivableModule.initialize.apply(this, arguments);
@@ -22062,6 +25458,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
         Firebug.NetMonitor.NetInfoBody.addListener(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         ///Firebug.ActivableModule.shutdown.apply(this, arguments);
@@ -22072,6 +25471,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
     /**
      * Check response's content-type and if it's a XML, create a new tab with XML preview.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     initTabBody: function(infoBox, file)
     {
         if (FBTrace.DBG_XMLVIEWER)
@@ -22090,6 +25492,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     isXML: function(contentType)
     {
         if (!contentType)
@@ -22108,6 +25513,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
     /**
      * Parse XML response and render pretty printed preview.
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateTabBody: function(infoBox, file, context)
     {
         var tab = infoBox.selectedTab;
@@ -22121,6 +25529,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
         this.insertXML(tabBody, Firebug.NetMonitor.Utils.getResponseText(file, context));
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertXML: function(parentNode, text)
     {
         var xmlText = text.replace(/^\s*<?.+?>\s*/, "");
@@ -22165,6 +25576,9 @@ Firebug.XMLViewerModel = extend(Firebug.Module,
         for (var i=0; i<templates.length; i++)
         {
             originals[i] = templates[i].getHidden;
+
+            // YOURNAME:
+            // YOURCOMMENT
             templates[i].getHidden = function() {
                 return "";
             }
@@ -22202,6 +25616,9 @@ Firebug.XMLViewerModel.ParseError = domplate(Firebug.Rep,
             PRE({"class": "xmlInfoErrorSource"}, "$error|getSource")
         ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSource: function(error)
     {
         var parts = error.source.split("\n");
@@ -22232,6 +25649,9 @@ Firebug.registerModule(Firebug.XMLViewerModel);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -22257,6 +25677,9 @@ ignoreHTMLProps[cacheID+"b"] = 1;
 
 Firebug.HTML = extend(Firebug.Module, 
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendTreeNode: function(nodeArray, html)
     {
         var reTrim = /^\s+|\s+$/g;
@@ -22424,6 +25847,9 @@ Firebug.HTML = extend(Firebug.Module,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendTreeChildren: function(treeNode)
     {
         var doc = Firebug.chrome.document;
@@ -22456,6 +25882,9 @@ Firebug.HTML = extend(Firebug.Module,
         
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeTreeChildren: function(treeNode)
     {
         var children = treeNode.nextSibling;
@@ -22469,11 +25898,17 @@ Firebug.HTML = extend(Firebug.Module,
         closeTag.parentNode.removeChild(closeTag);  
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     isTreeNodeVisible: function(id)
     {
         return $(id);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     select: function(el)
     {
         var id = el && el[cacheID];
@@ -22481,6 +25916,9 @@ Firebug.HTML = extend(Firebug.Module,
             this.selectTreeNode(id);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectTreeNode: function(id)
     {
         id = ""+id;
@@ -22520,6 +25958,9 @@ Firebug.registerModule(Firebug.HTML);
 // ************************************************************************************************
 // HTML Panel
 
+
+// YOURNAME:
+// YOURCOMMENT
 function HTMLPanel(){};
 
 HTMLPanel.prototype = extend(Firebug.Panel,
@@ -22534,6 +25975,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         innerHTMLSync: true
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(){
         Firebug.Panel.create.apply(this, arguments);
         
@@ -22549,6 +25993,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function()
     {
         selectedElement = null
@@ -22560,6 +26007,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         Firebug.Panel.destroy.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     createUI: function()
     {
         var rootNode = Firebug.browser.document.documentElement;
@@ -22571,6 +26021,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         this.panelNode.appendChild(d);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Firebug.Panel.initialize.apply(this, arguments);
@@ -22589,6 +26042,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         addEvent(Firebug.chrome.node, 'mouseout', Firebug.HTML.onListMouseMove);        
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         // TODO: xxxpedro
@@ -22603,6 +26059,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
         Firebug.Panel.shutdown.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattach: function()
     {
         // TODO: panel reattach
@@ -22610,6 +26069,9 @@ HTMLPanel.prototype = extend(Firebug.Panel,
             Firebug.HTML.selectTreeNode(FirebugChrome.selectedHTMLElementId);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateSelection: function(object)
     {
         var id = object[cacheID];
@@ -22625,10 +26087,16 @@ Firebug.registerPanel(HTMLPanel);
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 var formatStyles = function(styles)
 {
     return isIE ?
         // IE return CSS property names in upper case, so we need to convert them
+
+        // YOURNAME:
+        // YOURCOMMENT
         styles.replace(/([^\s]+)\s*:/g, function(m,g){return g.toLowerCase()+":"}) :
         // other browsers are just fine
         styles;
@@ -22642,6 +26110,9 @@ var fbPanel1 = null;
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  
 var selectedSidePanelTS, selectedSidePanelTimer;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var selectElement= function selectElement(e)
 {
     if (e != selectedElement)
@@ -22671,6 +26142,9 @@ var selectElement= function selectElement(e)
         if (stack.length > 2)
             stack.pop();
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         var lazySelect = function()
         {
             selectedSidePanelTS = new Date().getTime();
@@ -22695,6 +26169,9 @@ var selectElement= function selectElement(e)
 // ************************************************************************************************
 // ***  TODO:  REFACTOR  **************************************************************************
 // ************************************************************************************************
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.HTML.onTreeClick = function (e)
 {
     e = e || event;
@@ -22750,6 +26227,9 @@ Firebug.HTML.onTreeClick = function (e)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onListMouseOut(e)
 {
     e = e || event || window;
@@ -22769,6 +26249,9 @@ function onListMouseOut(e)
 var hoverElement = null;
 var hoverElementTS = 0;
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.HTML.onListMouseMove = function onListMouseMove(e)
 {
     try
@@ -22839,40 +26322,67 @@ Firebug.HTML.onListMouseMove = function onListMouseMove(e)
 
 Firebug.Reps = {
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendText: function(object, html)
     {
         html.push(escapeHTML(objectToString(object)));
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendNull: function(object, html)
     {
         html.push('<span class="objectBox-null">', escapeHTML(objectToString(object)), '</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendString: function(object, html)
     {
         html.push('<span class="objectBox-string">&quot;', escapeHTML(objectToString(object)),
             '&quot;</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendInteger: function(object, html)
     {
         html.push('<span class="objectBox-number">', escapeHTML(objectToString(object)), '</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendFloat: function(object, html)
     {
         html.push('<span class="objectBox-number">', escapeHTML(objectToString(object)), '</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendFunction: function(object, html)
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var reName = /function ?(.*?)\(/;
         var m = reName.exec(objectToString(object));
         var name = m && m[1] ? m[1] : "function";
+
+        // YOURNAME:
+        // YOURCOMMENT
         html.push('<span class="objectBox-function">', escapeHTML(name), '()</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendObject: function(object, html)
     {
         /*
@@ -22917,6 +26427,9 @@ Firebug.Reps = {
         /**/
     },
         
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendObjectFormatted: function(object, html)
     {
         var text = objectToString(object);
@@ -22926,6 +26439,9 @@ Firebug.Reps = {
         html.push('<span class="objectBox-object">', m ? m[1] : text, '</span>')
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendSelector: function(object, html)
     {
         var uid = object[cacheID];
@@ -22942,6 +26458,9 @@ Firebug.Reps = {
         html.push('</span>');
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendNode: function(node, html)
     {
         if (node.nodeType == 1)
@@ -22989,6 +26508,9 @@ Firebug.Reps = {
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     appendArray: function(object, html)
     {
         html.push('<span class="objectBox-array"><b>[</b> ');
@@ -23014,6 +26536,9 @@ Firebug.Reps = {
 /* See license.txt for terms of usage */
 
 // move to FBL
+
+// YOURNAME:
+// YOURCOMMENT
 (function() { 
 
 // ************************************************************************************************
@@ -23022,6 +26547,9 @@ Firebug.Reps = {
 /**
  * Gets an XPath for an element which describes its hierarchical location.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementXPath = function(element)
 {
     if (element && element.id)
@@ -23030,6 +26558,9 @@ this.getElementXPath = function(element)
         return this.getElementTreeXPath(element);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementTreeXPath = function(element)
 {
     var paths = [];
@@ -23051,6 +26582,9 @@ this.getElementTreeXPath = function(element)
     return paths.length ? "/" + paths.join("/") : null;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getElementsByXPath = function(doc, xpath)
 {
     var nodes = [];
@@ -23069,6 +26603,9 @@ this.getElementsByXPath = function(doc, xpath)
     return nodes;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getRuleMatchingElements = function(rule, doc)
 {
     var css = rule.selectorText;
@@ -23082,6 +26619,9 @@ this.getRuleMatchingElements = function(rule, doc)
 
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 
 // ************************************************************************************************
@@ -23090,11 +26630,17 @@ FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 var toCamelCase = function toCamelCase(s)
 {
     return s.replace(reSelectorCase, toCamelCaseReplaceFn);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var toSelectorCase = function toSelectorCase(s)
 {
   return s.replace(reCamelCase, "-$1").toLowerCase();
@@ -23103,6 +26649,9 @@ var toSelectorCase = function toSelectorCase(s)
 
 var reCamelCase = /([A-Z])/g;
 var reSelectorCase = /\-(.)/g; 
+
+// YOURNAME:
+// YOURCOMMENT
 var toCamelCaseReplaceFn = function toCamelCaseReplaceFn(m,g)
 {
     return g.toUpperCase();
@@ -23113,12 +26662,18 @@ var toCamelCaseReplaceFn = function toCamelCaseReplaceFn(m,g)
 
 var cacheUID = -1;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var createCache = function()
 {
     var map = {};
     // TODO: xxxpedro unify the cache system, using a single expando property
     var CID = cacheID+"b";
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var cacheFunction = function(element)
     {
         return cacheAPI.set(element);
@@ -23126,6 +26681,9 @@ var createCache = function()
     
     var cacheAPI =  
     {
+
+        // YOURNAME:
+        // YOURCOMMENT
         get: function(key)
         {
             return map.hasOwnProperty(key) ?
@@ -23133,6 +26691,9 @@ var createCache = function()
                     null;
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         set: function(element)
         {
             var id = element[CID];
@@ -23151,16 +26712,25 @@ var createCache = function()
             return id;
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         key: function(element)
         {
             return element[CID];            
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         has: function(element)
         {
             return map.hasOwnProperty(element[CID]);
         },
         
+
+        // YOURNAME:
+        // YOURCOMMENT
         clear: function()
         {
             for (var name in map)
@@ -23197,6 +26767,9 @@ var externalStyleSheetWarning = domplate(Firebug.Rep,
 });
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.processAllStyleSheets = function(doc, styleSheetIterator)
 {
     styleSheetIterator = styleSheetIterator || processStyleSheet;
@@ -23304,6 +26877,9 @@ var ElementCache = FBL.ElementCache = createCache();
 var CSSRuleMap = {};
 var ElementCSSRulesMap = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 var processStyleSheet = function(doc, styleSheet)
 {
     if (styleSheet.restricted)
@@ -23321,6 +26897,9 @@ var processStyleSheet = function(doc, styleSheet)
         
         if (isIE)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             selector = selector.replace(reSelectorTag, function(s){return s.toLowerCase();});
         }
         
@@ -23375,6 +26954,9 @@ var processStyleSheet = function(doc, styleSheet)
     /**/
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.getElementCSSRules = function(element)
 {
     var eid = ElementCache(element);
@@ -23431,6 +27013,9 @@ FBL.getElementCSSRules = function(element)
     return rules;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var sortElementRules = function(a, b)
 {
     var ruleA = CSSRuleMap[a];
@@ -23449,6 +27034,9 @@ var sortElementRules = function(a, b)
         return ruleA.order > ruleB.order ? 1 : -1;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var solveRulesTied = function(a, b)
 {
     var ruleA = CSSRuleMap[a];
@@ -23464,6 +27052,9 @@ var reSelectorTag = /(^|\s)(?:\w+)/g;
 var reSelectorClass = /\.[\w\d_-]+/g;
 var reSelectorId = /#[\w\d_-]+/g;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getCSSRuleSpecificity = function(selector)
 {
     var match = selector.match(reSelectorTag);
@@ -23516,10 +27107,16 @@ var textContent = isIE ? "innerText" : "textContent";
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 var CSSDomplateBase = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isEditable: function(rule)
     {
         return !rule.isSystemSheet;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     isSelectorEditable: function(rule)
     {
         return rule.isSelectorEditable && this.isEditable(rule);
@@ -23691,6 +27288,9 @@ var styleGroupTitles =
 
 Firebug.CSSModule = extend(Firebug.Module,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     freeEdit: function(styleSheet, value)
     {
         if (!styleSheet.editStyleSheet)
@@ -23729,6 +27329,9 @@ Firebug.CSSModule = extend(Firebug.Module,
         dispatch(this.fbListeners, "onCSSFreeEdit", [styleSheet, value]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertRule: function(styleSheet, cssText, ruleIndex)
     {
         if (FBTrace.DBG_CSS) FBTrace.sysout("Insert: " + ruleIndex + " " + cssText);
@@ -23739,6 +27342,9 @@ Firebug.CSSModule = extend(Firebug.Module,
         return insertIndex;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     deleteRule: function(styleSheet, ruleIndex)
     {
         if (FBTrace.DBG_CSS) FBTrace.sysout("deleteRule: " + ruleIndex + " " + styleSheet.cssRules.length, styleSheet.cssRules);
@@ -23747,6 +27353,9 @@ Firebug.CSSModule = extend(Firebug.Module,
         styleSheet.deleteRule(ruleIndex);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setProperty: function(rule, propName, propValue, propPriority)
     {
         var style = rule.style || rule;
@@ -23780,6 +27389,9 @@ Firebug.CSSModule = extend(Firebug.Module,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeProperty: function(rule, propName, parent)
     {
         var style = rule.style || rule;
@@ -23806,6 +27418,9 @@ Firebug.CSSModule = extend(Firebug.Module,
         }
     }/*,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     cleanupSheets: function(doc, context)
     {
         // Due to the manner in which the layout engine handles multiple
@@ -23843,6 +27458,9 @@ Firebug.CSSModule = extend(Firebug.Module,
             }
         }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     cleanupSheetHandler: function(event, context)
     {
         var target = event.target || event.srcElement,
@@ -23852,6 +27470,9 @@ Firebug.CSSModule = extend(Firebug.Module,
             this.cleanupSheets(target.ownerDocument, context);
         }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     watchWindow: function(context, win)
     {
         var cleanupSheets = bind(this.cleanupSheets, this),
@@ -23861,9 +27482,15 @@ Firebug.CSSModule = extend(Firebug.Module,
         //doc.addEventListener("DOMAttrModified", cleanupSheetHandler, false);
         //doc.addEventListener("DOMNodeInserted", cleanupSheetHandler, false);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadedContext: function(context)
     {
         var self = this;
+
+        // YOURNAME:
+        // YOURCOMMENT
         iterateWindows(context.browser.contentWindow, function(subwin)
         {
             self.cleanupSheets(subwin.document, context);
@@ -23874,6 +27501,9 @@ Firebug.CSSModule = extend(Firebug.Module,
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.CSSStyleSheetPanel = function() {};
 
 Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
@@ -23891,6 +27521,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     refresh: function()
     {
         if (this.location)
@@ -23899,6 +27532,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
             this.updateSelection(this.selection);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     toggleEditing: function()
     {
         if (!this.stylesheetEditor)
@@ -23924,6 +27560,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStylesheetURL: function(rule)
     {
         if (this.location.href)
@@ -23932,6 +27571,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
             return this.context.window.location.href;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRuleByLine: function(styleSheet, line)
     {
         if (!domUtils)
@@ -23950,6 +27592,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     highlightRule: function(rule)
     {
         var ruleElement = Firebug.getElementByRepObject(this.panelNode.firstChild, rule);
@@ -23960,10 +27605,16 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStyleSheetRules: function(context, styleSheet)
     {
         var isSystemSheet = isSystemStyleSheet(styleSheet);
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function appendRules(cssRules)
         {
             for (var i = 0; i < cssRules.length; ++i)
@@ -23985,6 +27636,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
                     if (isIE)
                     {
                         selector = selector.replace(reSelectorTag, 
+
+                                // YOURNAME:
+                                // YOURCOMMENT
                                 function(s){return s.toLowerCase();});
                     }
                     
@@ -24013,6 +27667,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return rules;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     parseCSSProps: function(style, inheritMode)
     {
         var props = [];
@@ -24048,6 +27705,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return props;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRuleProperties: function(context, rule, inheritMode)
     {
         var props = this.parseCSSProps(rule.style, inheritMode);
@@ -24062,6 +27722,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return props;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addOldProperties: function(context, ruleId, inheritMode, props)
     {
         if (context.selectorMap && context.selectorMap.hasOwnProperty(ruleId) )
@@ -24075,6 +27738,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addProperty: function(name, value, important, disabled, inheritMode, props)
     {
         name = name.toLowerCase();
@@ -24093,6 +27759,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     translateName: function(name, value)
     {
         // Don't show these proprietary Mozilla properties
@@ -24131,6 +27800,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     editElementStyle: function()
     {
         ///var rulesBox = this.panelNode.getElementsByClassName("cssElementRuleContainer")[0];
@@ -24160,11 +27832,17 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         Firebug.Editor.insertRowForObject(styleRuleBox);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertPropertyRow: function(row)
     {
         Firebug.Editor.insertRowForObject(row);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertRule: function(row)
     {
         var location = getAncestorByClass(row, "cssRule");
@@ -24179,12 +27857,18 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     editPropertyRow: function(row)
     {
         var propValueBox = getChildByClass(row, "cssPropValue");
         Firebug.Editor.startEditing(propValueBox);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     deletePropertyRow: function(row)
     {
         var rule = Firebug.getRepObject(row);
@@ -24212,6 +27896,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         this.markChange(this.name == "stylesheet");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     disablePropertyRow: function(row)
     {
         toggleClass(row, "disabledStyle");
@@ -24250,6 +27937,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMouseDown: function(event)
     {
         //console.log("onMouseDown", event.target || event.srcElement, event);
@@ -24273,6 +27963,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onDoubleClick: function(event)
     {
         //console.log("onDoubleClick", event.target || event.srcElement, event);
@@ -24314,6 +28007,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         hasToolButtons: true
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         Firebug.Panel.create.apply(this, arguments);
@@ -24328,6 +28024,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
             var doc = Firebug.browser.document;
             var selectNode = this.selectNode = createElement("select");
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             processAllStyleSheets(doc, function(doc, styleSheet)
             {
                 var key = StyleSheetCache.key(styleSheet);
@@ -24343,6 +28042,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         /**/
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onChangeSelect: function(event)
     {
         event = event || window.event;
@@ -24353,6 +28055,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         this.updateLocation(styleSheet);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         Firebug.Panel.initialize.apply(this, arguments);
@@ -24388,6 +28093,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         //Firebug.SourceBoxPanel.initialize.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         // must destroy the editor when we leave the panel to avoid problems (Issue 2981)
@@ -24403,6 +28111,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         Firebug.Panel.shutdown.apply(this, arguments);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function(state)
     {
         //state.scrollTop = this.panelNode.scrollTop ? this.panelNode.scrollTop : this.lastScrollTop;
@@ -24414,6 +28125,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         Firebug.Panel.destroy.apply(this, arguments);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initializeNode: function(oldPanelNode)
     {
         addEvent(this.panelNode, "mousedown", this.onMouseDown);
@@ -24422,6 +28136,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         //dispatch([Firebug.A11yModel], 'onInitializeNode', [this, 'css']);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroyNode: function()
     {
         removeEvent(this.panelNode, "mousedown", this.onMouseDown);
@@ -24430,6 +28147,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         //dispatch([Firebug.A11yModel], 'onDestroyNode', [this, 'css']);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     ishow: function(state)
     {
         Firebug.Inspector.stopInspecting(true);
@@ -24448,6 +28168,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     ihide: function()
     {
         this.showToolbarButtons("fbCSSButtons", false);
@@ -24455,6 +28178,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         this.lastScrollTop = this.panelNode.scrollTop;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         if (object instanceof CSSStyleSheet)
@@ -24469,6 +28195,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
             return 0;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateLocation: function(styleSheet)
     {
         if (!styleSheet)
@@ -24505,6 +28234,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         //dispatch([Firebug.A11yModel], 'onCSSRulesAdded', [this, this.panelNode]);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateSelection: function(object)
     {
         this.selection = null;
@@ -24557,18 +28289,27 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
         if (name == "expandShorthandProps")
             this.refresh();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getLocationList: function()
     {
         var styleSheets = getAllStyleSheets(this.context);
         return styleSheets;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getOptionsMenuItems: function()
     {
         return [
@@ -24579,6 +28320,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         ];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(style, target)
     {
         var items = [];
@@ -24653,6 +28397,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return items;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     browseObject: function(object)
     {
         if (this.infoTipType == "image")
@@ -24662,6 +28409,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showInfoTip: function(infoTip, target, x, y)
     {
         var propValue = getAncestorByClass(target, "cssPropValue");
@@ -24714,6 +28464,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         delete this.infoTipObject;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getEditor: function(target, value)
     {
         if (target == this.panelNode
@@ -24734,6 +28487,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDefaultLocation: function()
     {
         try
@@ -24752,6 +28508,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getObjectDescription: function(styleSheet)
     {
         var url = getURLForStyleSheet(styleSheet);
@@ -24764,6 +28523,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return baseDescription;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(text, reverse)
     {
         var curDoc = this.searchCurrentDoc(!Firebug.searchGlobal, text, reverse);
@@ -24774,9 +28536,15 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         return curDoc;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     searchOtherDocs: function(text, reverse)
     {
         var scanRE = Firebug.Search.getTestingRegex(text);
+
+        // YOURNAME:
+        // YOURCOMMENT
         function scanDoc(styleSheet) {
             // we don't care about reverse here as we are just looking for existence,
             // if we do have a result we will handle the reverse logic on display
@@ -24795,6 +28563,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     searchCurrentDoc: function(wrapSearch, text, reverse)
     {
         if (!text)
@@ -24828,6 +28599,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
             }
             else
             {
+
+                // YOURNAME:
+                // YOURCOMMENT
                 function findRow(node) { return node.nodeType == 1 ? node : node.parentNode; }
                 this.currentSearch = new TextSearch(this.panelNode, findRow);
                 row = this.currentSearch.find(text, reverse, Firebug.Search.isCaseSensitive(text));
@@ -24848,6 +28622,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getSearchOptionsMenuItems: function()
     {
         return [
@@ -24859,6 +28636,9 @@ Firebug.CSSStyleSheetPanel.prototype = extend(Firebug.SourceBoxPanel,
 /**/
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function CSSElementPanel() {}
 
 CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
@@ -24905,6 +28685,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateCascadeView: function(element)
     {
         //dispatch([Firebug.A11yModel], 'onBeforeCSSRulesAdded', [this]);
@@ -24935,6 +28718,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
             }, this.panelNode);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStylesheetURL: function(rule)
     {
         // if the parentStyleSheet.href is null, CSS std says its inline style
@@ -24946,6 +28732,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getInheritedRules: function(element, sections, usedProps)
     {
         var parent = element.parentNode;
@@ -24961,6 +28750,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementRules: function(element, rules, usedProps, inheritMode)
     {
         var inspectedRules, displayedRules = {};
@@ -25023,6 +28815,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
             FBTrace.sysout("getElementRules "+rules.length+" rules for "+getElementXPath(element), rules);
     },
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     getElementRules: function(element, rules, usedProps, inheritMode)
     {
         var inspectedRules, displayedRules = {};
@@ -25071,6 +28866,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
             FBTrace.sysout("getElementRules "+rules.length+" rules for "+getElementXPath(element), rules);
     },
     /**/
+
+    // YOURNAME:
+    // YOURCOMMENT
     markOverridenProps: function(props, usedProps, inheritMode)
     {
         for (var i = 0; i < props.length; ++i)
@@ -25096,6 +28894,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStyleProperties: function(element, rules, usedProps, inheritMode)
     {
         var props = this.parseCSSProps(element.style, inheritMode);
@@ -25118,6 +28919,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
     parentPanel: "HTML",
     order: 0,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         this.context = Firebug.chrome; // TODO: xxxpedro css2
@@ -25140,10 +28944,16 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         /**/
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     ishow: function(state)
     {
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     watchWindow: function(win)
     {
         if (domUtils)
@@ -25155,6 +28965,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
             ///addEvent(doc, "mousedown", this.onActiveChange);
         }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     unwatchWindow: function(win)
     {
         var doc = win.document;
@@ -25167,11 +28980,17 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         return object instanceof Element ? 1 : 0;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateView: function(element)
     {
         this.updateCascadeView(element);
@@ -25182,6 +29001,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateSelection: function(element)
     {
         if ( !instanceOf(element , "Element") ) // html supports SourceLink
@@ -25207,12 +29029,18 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         this.updateView(element);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
         if (name == "showUserAgentCSS" || name == "expandShorthandProps")
             this.refresh();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getOptionsMenuItems: function()
     {
         var ret = [
@@ -25234,12 +29062,18 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         return ret;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateContentState: function(state, remove)
     {
         domUtils.setContentState(remove ? this.selection.ownerDocument.documentElement : this.selection, state);
         this.refresh();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     addStateChangeHandlers: function(el)
     {
       this.removeStateChangeHandlers();
@@ -25256,6 +29090,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
       this.stateChangeEl = el;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeStateChangeHandlers: function()
     {
         var sel = this.stateChangeEl;
@@ -25272,10 +29109,16 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     contentStateCheck: function(state)
     {
         if (!state || this.contentState & state)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             var timeoutRunner = bindFixed(function()
             {
                 var newState = safeGetContentState(this.selection);
@@ -25291,6 +29134,9 @@ CSSElementPanel.prototype = extend(Firebug.CSSStyleSheetPanel.prototype,
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 function safeGetContentState(selection)
 {
     try
@@ -25306,6 +29152,9 @@ function safeGetContentState(selection)
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function CSSComputedElementPanel() {}
 
 CSSComputedElementPanel.prototype = extend(CSSElementPanel.prototype,
@@ -25334,6 +29183,9 @@ CSSComputedElementPanel.prototype = extend(CSSElementPanel.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateComputedView: function(element)
     {
         var win = isIE ?
@@ -25383,11 +29235,17 @@ CSSComputedElementPanel.prototype = extend(CSSElementPanel.prototype,
     parentPanel: "HTML",
     order: 1,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateView: function(element)
     {
         this.updateComputedView(element);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getOptionsMenuItems: function()
     {
         return [
@@ -25399,6 +29257,9 @@ CSSComputedElementPanel.prototype = extend(CSSElementPanel.prototype,
 // ************************************************************************************************
 // CSSEditor
 
+
+// YOURNAME:
+// YOURCOMMENT
 function CSSEditor(doc)
 {
     this.initializeInline(doc);
@@ -25406,6 +29267,9 @@ function CSSEditor(doc)
 
 CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertNewRow: function(target, insertWhere)
     {
         var rule = Firebug.getRepObject(target);
@@ -25425,6 +29289,9 @@ CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
             return CSSPropTag.tag.insertAfter({prop: emptyProp, rule: rule}, target);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEdit: function(target, value, previousValue)
     {
     	// We need to check the value first in order to avoid a problem in IE8 
@@ -25480,6 +29347,9 @@ CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
         this.panel.markChange(this.panel.name == "stylesheet");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     advanceToNext: function(target, charCode)
     {
         if (charCode == 58 /*":"*/ && hasClass(target, "cssPropName"))
@@ -25488,6 +29358,9 @@ CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAutoCompleteRange: function(value, offset)
     {
         if (hasClass(this.target, "cssPropName"))
@@ -25496,6 +29369,9 @@ CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
             return parseCSSValue(value, offset);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getAutoCompleteList: function(preExpr, expr, postExpr)
     {
         if (hasClass(this.target, "cssPropName"))
@@ -25514,6 +29390,9 @@ CSSEditor.prototype = domplate(Firebug.InlineEditor.prototype,
 //************************************************************************************************
 //CSSRuleEditor
 
+
+// YOURNAME:
+// YOURCOMMENT
 function CSSRuleEditor(doc)
 {
     this.initializeInline(doc);
@@ -25522,6 +29401,9 @@ function CSSRuleEditor(doc)
 CSSRuleEditor.uniquifier = 0;
 CSSRuleEditor.prototype = domplate(Firebug.InlineEditor.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     insertNewRow: function(target, insertWhere)
     {
          var emptyRule = {
@@ -25537,6 +29419,9 @@ CSSRuleEditor.prototype = domplate(Firebug.InlineEditor.prototype,
              return CSSStyleRuleTag.tag.insertAfter({rule: emptyRule}, target);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEdit: function(target, value, previousValue)
     {
         if (FBTrace.DBG_CSS)
@@ -25625,6 +29510,9 @@ CSSRuleEditor.prototype = domplate(Firebug.InlineEditor.prototype,
 // ************************************************************************************************
 // StyleSheetEditor
 
+
+// YOURNAME:
+// YOURCOMMENT
 function StyleSheetEditor(doc)
 {
     this.box = this.tag.replace({}, doc, this);
@@ -25639,16 +29527,25 @@ StyleSheetEditor.prototype = domplate(Firebug.BaseEditor,
         TEXTAREA({"class": "styleSheetEditor fullPanelEditor", oninput: "$onInput"})
     ),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getValue: function()
     {
         return this.input.value;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setValue: function(value)
     {
         return this.input.value = value;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     show: function(target, panel, value, textSize, targetSize)
     {
         this.target = target;
@@ -25663,6 +29560,9 @@ StyleSheetEditor.prototype = domplate(Firebug.BaseEditor,
         command.setAttribute("checked", true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function()
     {
         var command = Firebug.chrome.$("cmd_toggleCSSEditing");
@@ -25676,11 +29576,17 @@ StyleSheetEditor.prototype = domplate(Firebug.BaseEditor,
         delete this.styleSheet;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     saveEdit: function(target, value, previousValue)
     {
         Firebug.CSSModule.freeEdit(this.styleSheet, value);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     endEditing: function()
     {
         this.panel.refresh();
@@ -25689,11 +29595,17 @@ StyleSheetEditor.prototype = domplate(Firebug.BaseEditor,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onInput: function()
     {
         Firebug.Editor.update();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     scrollToLine: function(line, offset)
     {
         this.startMeasuring(this.input);
@@ -25707,25 +29619,40 @@ StyleSheetEditor.prototype = domplate(Firebug.BaseEditor,
 // ************************************************************************************************
 // Local Helpers
 
+
+// YOURNAME:
+// YOURCOMMENT
 var rgbToHex = function rgbToHex(value)
 {
     return value.replace(/\brgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)/gi, rgbToHexReplacer);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var rgbToHexReplacer = function(_, r, g, b) {
     return '#' + ((1 << 24) + (r << 16) + (g << 8) + (b << 0)).toString(16).substr(-6).toUpperCase();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var stripUnits = function stripUnits(value)
 {
     // remove units from '0px', '0em' etc. leave non-zero units in-tact.
     return value.replace(/(url\(.*?\)|[^0]\S*\s*)|0(%|em|ex|px|in|cm|mm|pt|pc)(\s|$)/gi, stripUnitsReplacer);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var stripUnitsReplacer = function(_, skip, remove, whitespace) {
     return skip || ('0' + whitespace);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parsePriority(value)
 {
     var rePriority = /(.*?)\s*(!important)?$/;
@@ -25735,18 +29662,27 @@ function parsePriority(value)
     return {value: propValue, priority: priority};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseURLValue(value)
 {
     var m = reURL.exec(value);
     return m ? m[1] : "";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseRepeatValue(value)
 {
     var m = reRepeat.exec(value);
     return m ? m[0] : "";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseCSSValue(value, offset)
 {
     var start = 0;
@@ -25778,6 +29714,9 @@ function parseCSSValue(value, offset)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function findPropByName(props, name)
 {
     for (var i = 0; i < props.length; ++i)
@@ -25787,14 +29726,23 @@ function findPropByName(props, name)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sortProperties(props)
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     props.sort(function(a, b)
     {
         return a.name > b.name ? 1 : -1;
     });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTopmostRuleLine(panelNode)
 {
     for (var child = panelNode.firstChild; child; child = child.nextSibling)
@@ -25812,6 +29760,9 @@ function getTopmostRuleLine(panelNode)
     return 0;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStyleSheetCSS(sheet, context)
 {
     if (sheet.ownerNode instanceof HTMLStyleElement)
@@ -25820,12 +29771,18 @@ function getStyleSheetCSS(sheet, context)
         return context.sourceCache.load(sheet.href).join("");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStyleSheetOwnerNode(sheet) {
     for (; sheet && !sheet.ownerNode; sheet = sheet.parentStyleSheet);
 
     return sheet.ownerNode;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function scrollSelectionIntoView(panel)
 {
     var selCon = getSelectionController(panel);
@@ -25834,6 +29791,9 @@ function scrollSelectionIntoView(panel)
             nsISelectionController.SELECTION_FOCUS_REGION, true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSelectionController(panel)
 {
     var browser = Firebug.chrome.getPanelBrowser(panel);
@@ -25856,6 +29816,9 @@ Firebug.registerPanel(CSSComputedElementPanel);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -25864,11 +29827,17 @@ FBL.ns(function() { with (FBL) {
 
 Firebug.Script = extend(Firebug.Module, 
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPanel: function()
     {
         return Firebug.chrome ? Firebug.chrome.getPanel("Script") : null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectSourceCode: function(index)
     {
         this.getPanel().selectSourceCode(index);
@@ -25881,6 +29850,9 @@ Firebug.registerModule(Firebug.Script);
 // ************************************************************************************************
 // Script Panel
 
+
+// YOURNAME:
+// YOURCOMMENT
 function ScriptPanel(){};
 
 ScriptPanel.prototype = extend(Firebug.Panel,
@@ -25895,6 +29867,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         hasToolButtons: true
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         Firebug.Panel.create.apply(this, arguments);
@@ -25921,6 +29896,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         this.toolButtonsNode.appendChild(selectNode);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function()
     {
         // we must render the code first, so the persistent state can be restore
@@ -25931,6 +29909,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         addEvent(this.selectNode, "change", this.onChangeSelect);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         removeEvent(this.selectNode, "change", this.onChangeSelect);
@@ -25938,6 +29919,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         Firebug.Panel.shutdown.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     detach: function(oldChrome, newChrome)
     {
         Firebug.Panel.detach.apply(this, arguments);
@@ -25950,6 +29934,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         this.sourceIndex = -1;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     onChangeSelect: function(event)
     {
         var select = this.selectNode;
@@ -25965,6 +29952,9 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         this.renderSourceCode(selectedSourceIndex);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectSourceCode: function(index)
     {
         var select = this.selectNode; 
@@ -25979,10 +29969,16 @@ ScriptPanel.prototype = extend(Firebug.Panel,
         this.renderSourceCode(selectedSourceIndex);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     renderSourceCode: function(index)
     {
         if (this.sourceIndex != index)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             var renderProcess = function renderProcess(src)
             {
                 var html = [],
@@ -26019,16 +30015,25 @@ ScriptPanel.prototype = extend(Firebug.Panel,
                 updatePanel(html);
             };
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             var updatePanel = function(html)
             {
                 self.panelNode.innerHTML = html.join("");
                 
                 // IE needs this timeout, otherwise the panel won't scroll
+
+                // YOURNAME:
+                // YOURCOMMENT
                 setTimeout(function(){
                     self.synchronizeUI();
                 },0);                        
             };
             
+
+            // YOURNAME:
+            // YOURCOMMENT
             var onFailure = function()
             {
                 FirebugReps.Warning.tag.replace({object: "AccessRestricted"}, self.panelNode);
@@ -26069,6 +30074,9 @@ Firebug.registerPanel(ScriptPanel);
 // ************************************************************************************************
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getScriptURL = function getScriptURL(script) 
 {
     var reFile = /([^\/\?#]+)(#.+)?$/;
@@ -26139,6 +30147,9 @@ var getScriptURL = function getScriptURL(script)
     }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getFileName = function getFileName(path)
 {
     if (!path) return "";
@@ -26154,6 +30165,9 @@ var getFileName = function getFileName(path)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -26253,6 +30267,9 @@ var DirTablePlate = domplate(Firebug.Rep,
     rowTag:
         FOR("member", "$members", RowTag),
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     memberIterator: function(object, level)
     {
         return getMembers(object, level);
@@ -26260,6 +30277,9 @@ var DirTablePlate = domplate(Firebug.Rep,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClick: function(event)
     {
         if (!isLeftClick(event))
@@ -26301,6 +30321,9 @@ var DirTablePlate = domplate(Firebug.Rep,
         return false;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     toggleRow: function(row)
     {
         var level = parseInt(row.getAttribute("level"));
@@ -26327,6 +30350,9 @@ var DirTablePlate = domplate(Firebug.Rep,
             var rowTag = this.rowTag;
             var tbody = row.parentNode;
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function()
             {
                 for (var firstRow = row.nextSibling; firstRow; firstRow = row.nextSibling)
@@ -26370,6 +30396,9 @@ var DirTablePlate = domplate(Firebug.Rep,
             {
                 with({slice: members.splice(0, insertSliceSize), isLast: !members.length})
                 {
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     setTimeout(function()
                     {
                         if (lastRow.parentNode)
@@ -26396,12 +30425,18 @@ var DirTablePlate = domplate(Firebug.Rep,
 
 // ************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 Firebug.DOMBasePanel = function() {}
 
 Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
 {
     tag: DirTablePlate.tableTag,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRealObject: function(object)
     {
         // TODO: Move this to some global location
@@ -26412,6 +30447,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         return object;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     rebuild: function(update, scrollTop)
     {
         //dispatch([Firebug.A11yModel], 'onBeforeDomUpdateSelection', [this]);
@@ -26425,6 +30463,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
             updateStatusBar(this);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     showMembers: function(members, update, scrollTop)
     {
         // If we are still in the midst of inserting rows, cancel all pending
@@ -26472,6 +30513,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         {
             with({slice: members.splice(0, insertSliceSize), isLast: !members.length})
             {
+
+                // YOURNAME:
+                // YOURCOMMENT
                 timeouts.push(this.context.setTimeout(function()
                 {
                     // TODO: xxxpedro can this be a timing error related to the
@@ -26500,6 +30544,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
 
         if (offscreen)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             timeouts.push(this.context.setTimeout(function()
             {
                 if (panelNode.firstChild)
@@ -26513,6 +30560,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
         else
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             timeouts.push(this.context.setTimeout(function()
             {
                 panelNode.scrollTop = scrollTop == undefined ? 0 : scrollTop;
@@ -26523,6 +30573,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
 
     /*
     // new
+
+    // YOURNAME:
+    // YOURCOMMENT
     showMembers: function(members, update, scrollTop)
     {
         // If we are still in the midst of inserting rows, cancel all pending
@@ -26579,6 +30632,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
                 var _panelNode = panelNode;
                 var _priorScrollTop = priorScrollTop;
                 
+
+                // YOURNAME:
+                // YOURCOMMENT
                 timeouts.push(this.context.setTimeout(function()
                 {
                     // TODO: xxxpedro can this be a timing error related to the
@@ -26609,6 +30665,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
 
         if (offscreen)
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             timeouts.push(this.context.setTimeout(function()
             {
                 if (panelNode.firstChild)
@@ -26622,6 +30681,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
         else
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             timeouts.push(this.context.setTimeout(function()
             {
                 panelNode.scrollTop = scrollTop == undefined ? 0 : scrollTop;
@@ -26631,11 +30693,17 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
     },
     /**/
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     showEmptyMembers: function()
     {
         FirebugReps.Warning.tag.replace({object: "NoMembersWarning"}, this.panelNode);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     findPathObject: function(object)
     {
         var pathIndex = -1;
@@ -26651,6 +30719,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         return -1;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPathObject: function(index)
     {
         var object = this.objectPath[index];
@@ -26661,12 +30732,18 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
             return object;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRowObject: function(row)
     {
         var object = getRowOwnerObject(row);
         return object ? object : this.selection;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getRowPropertyValue: function(row)
     {
         var object = this.getRowObject(row);
@@ -26682,12 +30759,18 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
     },
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     copyProperty: function(row)
     {
         var value = this.getRowPropertyValue(row);
         copyToClipboard(value);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     editProperty: function(row, editValue)
     {
         if (hasClass(row, "watchNewRow"))
@@ -26733,6 +30816,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     deleteProperty: function(row)
     {
         if (hasClass(row, "watchRow"))
@@ -26762,6 +30848,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     setPropertyValue: function(row, value)  // value must be string
     {
         if(FBTrace.DBG_DOM)
@@ -26780,12 +30869,18 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         {
              // unwrappedJSObject.property = unwrappedJSObject
              Firebug.CommandLine.evaluate(value, this.context, object, this.context.getGlobalScope(),
+
+                 // YOURNAME:
+                 // YOURCOMMENT
                  function success(result, context)
                  {
                      if (FBTrace.DBG_DOM)
                          FBTrace.sysout("setPropertyValue evaluate success object["+name+"]="+result+" type "+typeof(result), result);
                      object[name] = result;
                  },
+
+                 // YOURNAME:
+                 // YOURCOMMENT
                  function failed(exc, context)
                  {
                      try
@@ -26828,6 +30923,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         this.markChange();
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     highlightRow: function(row)
     {
         if (this.highlightedRow)
@@ -26839,6 +30937,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
             setClassTimed(row, "jumpHighlight", this.context);
     },/**/
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onMouseMove: function(event)
     {
         var target = event.srcElement || event.target;
@@ -26862,6 +30963,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // extends Panel
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         // TODO: xxxpedro
@@ -26878,12 +30982,18 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         this.panelNode.style.padding = "0 1px";
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(){
         Firebug.Panel.initialize.apply(this, arguments);
         
         addEvent(this.panelNode, "mousemove", this.onMouseMove);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         removeEvent(this.panelNode, "mousemove", this.onMouseMove);
@@ -26892,6 +31002,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
     },
 
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     destroy: function(state)
     {
         var view = this.viewPath[this.pathIndex];
@@ -26912,6 +31025,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
     },
     /**/
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     ishow: function(state)
     {
         if (this.context.loaded && !this.selection)
@@ -26985,6 +31101,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
     },
     /*
+
+    // YOURNAME:
+    // YOURCOMMENT
     hide: function()
     {
         var view = this.viewPath[this.pathIndex];
@@ -26993,6 +31112,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
     },
     /**/
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     supportsObject: function(object)
     {
         if (object == null)
@@ -27006,11 +31128,17 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
             return 1; // just agree to support everything but not agressively.
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     refresh: function()
     {
         this.rebuild(true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateSelection: function(object)
     {
         var previousIndex = this.pathIndex;
@@ -27115,17 +31243,26 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         }
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getObjectPath: function(object)
     {
         return this.objectPath;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getDefaultSelection: function()
     {
         return Firebug.browser.window;
         //return this.context.getGlobalScope();
     }/*,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateOption: function(name, value)
     {
         const optionMap = {showUserProps: 1, showUserFuncs: 1, showDOMProps: 1,
@@ -27134,6 +31271,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
             this.rebuild(true);
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getOptionsMenuItems: function()
     {
         return [
@@ -27147,6 +31287,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         ];
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContextMenuItems: function(object, target)
     {
         var row = getAncestorByClass(target, "memberRow");
@@ -27195,6 +31338,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
         return items;
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     getEditor: function(target, value)
     {
         if (!this.editor)
@@ -27207,6 +31353,9 @@ Firebug.DOMBasePanel.prototype = extend(Firebug.Panel,
 // ************************************************************************************************
 
 // TODO: xxxpedro statusbar
+
+// YOURNAME:
+// YOURCOMMENT
 var updateStatusBar = function(panel)
 {
     var path = panel.propertyPath;
@@ -27234,12 +31383,18 @@ var updateStatusBar = function(panel)
 };
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var DOMMainPanel = Firebug.DOMPanel = function () {};
 
 Firebug.DOMPanel.DirTable = DirTablePlate;
 
 DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClickStatusBar: function(event)
     {
         var target = event.srcElement || event.target;
@@ -27256,6 +31411,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         }
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectRow: function(row, target)
     {
         if (!target)
@@ -27283,6 +31441,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClick: function(event)
     {
         var target = event.srcElement || event.target;
@@ -27311,6 +31472,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         hasStatusBar: true
     },    
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         Firebug.DOMBasePanel.prototype.create.apply(this, arguments);
@@ -27323,6 +31487,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         this.panelNode.style.padding = "0 1px";
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(oldPanelNode)
     {
         //this.panelNode.addEventListener("click", this.onClick, false);
@@ -27339,6 +31506,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         addEvent(this.statusBarNode, "click", this.onClickStatusBar);        
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         //this.panelNode.removeEventListener("click", this.onClick, false);
@@ -27349,6 +31519,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         Firebug.DOMBasePanel.prototype.shutdown.apply(this, arguments);
     }/*,
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(text, reverse)
     {
         if (!text)
@@ -27363,6 +31536,9 @@ DOMMainPanel.prototype = extend(Firebug.DOMBasePanel.prototype,
             row = this.currentSearch.findNext(true, undefined, reverse, Firebug.searchCaseSensitive);
         else
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             function findRow(node) { return getAncestorByClass(node, "memberRow"); }
             this.currentSearch = new TextSearch(this.panelNode, findRow);
             row = this.currentSearch.find(text, reverse, Firebug.searchCaseSensitive);
@@ -27398,6 +31574,9 @@ Firebug.registerPanel(DOMMainPanel);
 // ************************************************************************************************
 // Local Helpers
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getMembers = function getMembers(object, level)  // we expect object to be user-level object wrapped in security blanket
 {
     if (!level)
@@ -27417,6 +31596,9 @@ var getMembers = function getMembers(object, level)  // we expect object to be u
         else
             var insecureObject = object;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         // IE function prototype is not listed in (for..in)
         if (isIE && isFunction(object))
             addMember("user", userProps, "prototype", object.prototype, level);            
@@ -27485,7 +31667,13 @@ var getMembers = function getMembers(object, level)  // we expect object to be u
         //throw exc;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function sortName(a, b) { return a.name > b.name ? 1 : -1; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function sortOrder(a, b) { return a.order > b.order ? 1 : -1; }
 
     var members = [];
@@ -27531,6 +31719,9 @@ var getMembers = function getMembers(object, level)  // we expect object to be u
     return members;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function expandMembers(members, toggles, offset, level)  // recursion starts with offset=0, level=0
 {
     var expanded = 0;
@@ -27571,6 +31762,9 @@ function expandMembers(members, toggles, offset, level)  // recursion starts wit
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isClassFunction(fn)
 {
     try
@@ -27581,6 +31775,9 @@ function isClassFunction(fn)
     return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var hasProperties = function hasProperties(ob)
 {
     try
@@ -27589,22 +31786,34 @@ var hasProperties = function hasProperties(ob)
             return true;
     } catch (exc) {}
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     // IE function prototype is not listed in (for..in)
     if (isFunction(ob)) return true;
     
     return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ErrorCopy = function(message)
 {
     this.message = message;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 var addMember = function addMember(type, props, name, value, level, order)
 {
     var rep = Firebug.getRep(value);    // do this first in case a call to instanceof reveals contents
     var tag = rep.shortTag ? rep.shortTag : rep.tag;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var ErrorCopy = function(){}; //TODO: xxxpedro
     
     var valueType = typeof(value);
@@ -27626,6 +31835,9 @@ var addMember = function addMember(type, props, name, value, level, order)
     });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getWatchRowIndex = function getWatchRowIndex(row)
 {
     var index = -1;
@@ -27634,17 +31846,26 @@ var getWatchRowIndex = function getWatchRowIndex(row)
     return index;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getRowName = function getRowName(row)
 {
     var node = row.firstChild;
     return node.textContent ? node.textContent : node.innerText;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getRowValue = function getRowValue(row)
 {
     return row.lastChild.firstChild.repObject;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getRowOwnerObject = function getRowOwnerObject(row)
 {
     var parentRow = getParentRow(row);
@@ -27652,6 +31873,9 @@ var getRowOwnerObject = function getRowOwnerObject(row)
         return getRowValue(parentRow);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getParentRow = function getParentRow(row)
 {
     var level = parseInt(row.getAttribute("level"))-1;
@@ -27662,6 +31886,9 @@ var getParentRow = function getParentRow(row)
     }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var getPath = function getPath(row)
 {
     var name = getRowName(row);
@@ -27695,6 +31922,9 @@ var getPath = function getPath(row)
 
 Firebug.DOM = extend(Firebug.Module,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPanel: function()
     {
         return Firebug.chrome ? Firebug.chrome.getPanel("DOM") : null;
@@ -27709,10 +31939,16 @@ Firebug.registerModule(Firebug.DOM);
 
 var lastHighlightedObject;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function DOMSidePanel(){};
 
 DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     selectRow: function(row, target)
     {
         if (!target)
@@ -27750,6 +31986,9 @@ DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     onClick: function(event)
     {
         /*
@@ -27799,6 +32038,9 @@ DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
     
     isInitialized: false,
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function()
     {
         Firebug.DOMBasePanel.prototype.create.apply(this, arguments);
@@ -27806,6 +32048,9 @@ DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         this.onClick = bind(this.onClick, this);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(){
         Firebug.DOMBasePanel.prototype.initialize.apply(this, arguments);
         
@@ -27817,6 +32062,9 @@ DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
             this.select(selection, true);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     shutdown: function()
     {
         removeEvent(this.panelNode, "click", this.onClick);
@@ -27824,6 +32072,9 @@ DOMSidePanel.prototype = extend(Firebug.DOMBasePanel.prototype,
         Firebug.DOMBasePanel.prototype.shutdown.apply(this, arguments);
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     reattach: function(oldChrome)
     {
         //this.isInitialized = oldChrome.getPanel("DOM").isInitialized;
@@ -27842,6 +32093,9 @@ Firebug.registerPanel(DOMSidePanel);
 
 FBL.FBTrace = {};
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
 // ************************************************************************************************
 
@@ -27856,6 +32110,9 @@ var traceOptions = {
 
 this.module = null;
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.initialize = function()
 {
     if (!this.messageQueue)
@@ -27868,21 +32125,33 @@ this.initialize = function()
 // ************************************************************************************************
 // FBTrace API
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.sysout = function()
 {
     return this.logFormatted(arguments, "");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.dumpProperties = function(title, object)
 {
     return this.logFormatted("dumpProperties() not supported.", "warning");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.dumpStack = function()
 {
     return this.logFormatted("dumpStack() not supported.", "warning");
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.flush = function(module)
 {
     this.module = module;
@@ -27894,6 +32163,9 @@ this.flush = function(module)
         this.writeMessage(queue[i][0], queue[i][1], queue[i][2]);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.getPanel = function()
 {
     return this.module ? this.module.getPanel() : null;
@@ -27901,6 +32173,9 @@ this.getPanel = function()
 
 //*************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.logFormatted = function(objects, className)
 {
     var html = this.DBG_TIMESTAMP ? [getTimestamp(), " | "] : [];
@@ -27925,6 +32200,9 @@ this.logFormatted = function(objects, className)
     return this.logRow(html, className);    
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.logRow = function(message, className)
 {
     var panel = this.getPanel();
@@ -27939,6 +32217,9 @@ this.logRow = function(message, className)
     return this.LOG_COMMAND;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.writeMessage = function(message, className)
 {
     var container = this.getPanel().containerNode;
@@ -27951,12 +32232,18 @@ this.writeMessage = function(message, className)
         container.scrollTop = container.scrollHeight - container.offsetHeight;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.appendRow = function(row)
 {
     var container = this.getPanel().contentNode;
     container.appendChild(row);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.writeRow = function(message, className)
 {
     var row = this.getPanel().contentNode.ownerDocument.createElement("div");
@@ -27967,11 +32254,17 @@ this.writeRow = function(message, className)
 
 //*************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function appendText(object, html)
 {
     html.push(escapeHTML(objectToString(object)));
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTimestamp()
 {
     var now = new Date();
@@ -27992,11 +32285,17 @@ var HTMLtoEntity =
     '"': "&quot;"
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function replaceChars(ch)
 {
     return HTMLtoEntity[ch];
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTML(value)
 {
     return (value+"").replace(/[<>&"']/g, replaceChars);
@@ -28004,6 +32303,9 @@ function escapeHTML(value)
 
 //*************************************************************************************************
 
+
+// YOURNAME:
+// YOURCOMMENT
 function objectToString(object)
 {
     try
@@ -28021,6 +32323,9 @@ function objectToString(object)
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -28032,11 +32337,17 @@ if (!Env.Options.enableTrace) return;
 
 Firebug.Trace = extend(Firebug.Module,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPanel: function()
     {
         return Firebug.chrome ? Firebug.chrome.getPanel("Trace") : null;
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     clear: function()
     {
         this.getPanel().contentNode.innerHTML = "";
@@ -28049,6 +32360,9 @@ Firebug.registerModule(Firebug.Trace);
 // ************************************************************************************************
 // FBTrace Panel
 
+
+// YOURNAME:
+// YOURCOMMENT
 function TracePanel(){};
 
 TracePanel.prototype = extend(Firebug.Panel,
@@ -28061,6 +32375,9 @@ TracePanel.prototype = extend(Firebug.Panel,
         innerHTMLSync: true
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     create: function(){
         Firebug.Panel.create.apply(this, arguments);
         
@@ -28072,6 +32389,9 @@ TracePanel.prototype = extend(Firebug.Panel,
         });
     },
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     initialize: function(){
         Firebug.Panel.initialize.apply(this, arguments);
         
@@ -28087,6 +32407,9 @@ Firebug.registerPanel(TracePanel);
 
 /* See license.txt for terms of usage */
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
@@ -28106,6 +32429,9 @@ var registerPanel = Firebug.registerPanel;
 // ************************************************************************************************
 append(Firebug,
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     extend: function(fn)
     {
         if (Firebug.chrome && Firebug.chrome.addPanel)
@@ -28115,6 +32441,9 @@ append(Firebug,
         }
         else
         {
+
+            // YOURNAME:
+            // YOURCOMMENT
             setTimeout(function(){Firebug.extend(fn);},100);
         }
     },
@@ -28122,6 +32451,9 @@ append(Firebug,
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Registration
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     registerModule: function()
     {
         registerModule.apply(Firebug, arguments);
@@ -28133,6 +32465,9 @@ append(Firebug,
         if (FBTrace.DBG_INITIALIZE) FBTrace.sysout("Firebug.registerModule");
     },
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     registerPanel: function()
     {
         registerPanel.apply(Firebug, arguments);
@@ -28157,6 +32492,9 @@ append(Firebug,
                 chrome.addPanel(panelName);
                 
                 // tab click handler
+
+                // YOURNAME:
+                // YOURCOMMENT
                 var onTabClick = function onTabClick()
                 { 
                     chrome.selectPanel(panelName);
@@ -28180,11 +32518,17 @@ append(Firebug,
 // ************************************************************************************************
 }});
 
+
+// YOURNAME:
+// YOURCOMMENT
 FBL.ns(function() { with (FBL) {
 // ************************************************************************************************
 
 FirebugChrome.Skin = 
 {
+
+    // YOURNAME:
+    // YOURCOMMENT
     CSS: '.collapsed{display:none;}[collapsed="true"]{display:none;}#fbCSS{padding:0 !important;}.cssPropDisable{float:left;display:block;width:2em;cursor:default;}.infoTip{z-index:2147483647;position:fixed;padding:2px 3px;border:1px solid #CBE087;background:LightYellow;font-family:Monaco,monospace;color:#000000;display:none;white-space:nowrap;pointer-events:none;}.infoTip[active="true"]{display:block;}.infoTipLoading{width:16px;height:16px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/loading_16.gif) no-repeat;}.infoTipImageBox{min-width:100px;text-align:center;}.infoTipCaption{font:message-box;}.infoTipLoading > .infoTipImage,.infoTipLoading > .infoTipCaption{display:none;}h1.groupHeader{padding:2px 4px;margin:0 0 4px 0;border-top:1px solid #CCCCCC;border-bottom:1px solid #CCCCCC;background:#eee url(https://getfirebug.com/releases/lite/latest/skin/xp/group.gif) repeat-x;font-size:11px;font-weight:bold;_position:relative;}.inlineEditor,.fixedWidthEditor{z-index:2147483647;position:absolute;display:none;}.inlineEditor{margin-left:-6px;margin-top:-3px;}.textEditorInner,.fixedWidthEditor{margin:0 0 0 0 !important;padding:0;border:none !important;font:inherit;text-decoration:inherit;background-color:#FFFFFF;}.fixedWidthEditor{border-top:1px solid #888888 !important;border-bottom:1px solid #888888 !important;}.textEditorInner{position:relative;top:-7px;left:-5px;outline:none;resize:none;}.textEditorInner1{padding-left:11px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorBorders.png) repeat-y;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorBorders.gif) repeat-y;_overflow:hidden;}.textEditorInner2{position:relative;padding-right:2px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorBorders.png) repeat-y 100% 0;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorBorders.gif) repeat-y 100% 0;_position:fixed;}.textEditorTop1{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.png) no-repeat 100% 0;margin-left:11px;height:10px;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.gif) no-repeat 100% 0;_overflow:hidden;}.textEditorTop2{position:relative;left:-11px;width:11px;height:10px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.png) no-repeat;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.gif) no-repeat;}.textEditorBottom1{position:relative;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.png) no-repeat 100% 100%;margin-left:11px;height:12px;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.gif) no-repeat 100% 100%;}.textEditorBottom2{position:relative;left:-11px;width:11px;height:12px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.png) no-repeat 0 100%;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/textEditorCorners.gif) no-repeat 0 100%;}.panelNode-css{overflow-x:hidden;}.cssSheet > .insertBefore{height:1.5em;}.cssRule{position:relative;margin:0;padding:1em 0 0 6px;font-family:Monaco,monospace;color:#000000;}.cssRule:first-child{padding-top:6px;}.cssElementRuleContainer{position:relative;}.cssHead{padding-right:150px;}.cssProp{}.cssPropName{color:DarkGreen;}.cssPropValue{margin-left:8px;color:DarkBlue;}.cssOverridden span{text-decoration:line-through;}.cssInheritedRule{}.cssInheritLabel{margin-right:0.5em;font-weight:bold;}.cssRule .objectLink-sourceLink{top:0;}.cssProp.editGroup:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/disable.png) no-repeat 2px 1px;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/disable.gif) no-repeat 2px 1px;}.cssProp.editGroup.editing{background:none;}.cssProp.disabledStyle{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/disableHover.png) no-repeat 2px 1px;_background:url(https://getfirebug.com/releases/lite/latest/skin/xp/disableHover.gif) no-repeat 2px 1px;opacity:1;color:#CCCCCC;}.disabledStyle .cssPropName,.disabledStyle .cssPropValue{color:#CCCCCC;}.cssPropValue.editing + .cssSemi,.inlineExpander + .cssSemi{display:none;}.cssPropValue.editing{white-space:nowrap;}.stylePropName{font-weight:bold;padding:0 4px 4px 4px;width:50%;}.stylePropValue{width:50%;}.panelNode-net{overflow-x:hidden;}.netTable{width:100%;}.hideCategory-undefined .category-undefined,.hideCategory-html .category-html,.hideCategory-css .category-css,.hideCategory-js .category-js,.hideCategory-image .category-image,.hideCategory-xhr .category-xhr,.hideCategory-flash .category-flash,.hideCategory-txt .category-txt,.hideCategory-bin .category-bin{display:none;}.netHeadRow{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/group.gif) repeat-x #FFFFFF;}.netHeadCol{border-bottom:1px solid #CCCCCC;padding:2px 4px 2px 18px;font-weight:bold;}.netHeadLabel{white-space:nowrap;overflow:hidden;}.netHeaderRow{height:16px;}.netHeaderCell{cursor:pointer;-moz-user-select:none;border-bottom:1px solid #9C9C9C;padding:0 !important;font-weight:bold;background:#BBBBBB url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/tableHeader.gif) repeat-x;white-space:nowrap;}.netHeaderRow > .netHeaderCell:first-child > .netHeaderCellBox{padding:2px 14px 2px 18px;}.netHeaderCellBox{padding:2px 14px 2px 10px;border-left:1px solid #D9D9D9;border-right:1px solid #9C9C9C;}.netHeaderCell:hover:active{background:#959595 url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/tableHeaderActive.gif) repeat-x;}.netHeaderSorted{background:#7D93B2 url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/tableHeaderSorted.gif) repeat-x;}.netHeaderSorted > .netHeaderCellBox{border-right-color:#6B7C93;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/arrowDown.png) no-repeat right;}.netHeaderSorted.sortedAscending > .netHeaderCellBox{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/arrowUp.png);}.netHeaderSorted:hover:active{background:#536B90 url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/tableHeaderSortedActive.gif) repeat-x;}.panelNode-net .netRowHeader{display:block;}.netRowHeader{cursor:pointer;display:none;height:15px;margin-right:0 !important;}.netRow .netRowHeader{background-position:5px 1px;}.netRow[breakpoint="true"] .netRowHeader{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/breakpoint.png);}.netRow[breakpoint="true"][disabledBreakpoint="true"] .netRowHeader{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/breakpointDisabled.png);}.netRow.category-xhr:hover .netRowHeader{background-color:#F6F6F6;}#netBreakpointBar{max-width:38px;}#netHrefCol > .netHeaderCellBox{border-left:0px;}.netRow .netRowHeader{width:3px;}.netInfoRow .netRowHeader{display:table-cell;}.netTable[hiddenCols~=netHrefCol] TD[id="netHrefCol"],.netTable[hiddenCols~=netHrefCol] TD.netHrefCol,.netTable[hiddenCols~=netStatusCol] TD[id="netStatusCol"],.netTable[hiddenCols~=netStatusCol] TD.netStatusCol,.netTable[hiddenCols~=netDomainCol] TD[id="netDomainCol"],.netTable[hiddenCols~=netDomainCol] TD.netDomainCol,.netTable[hiddenCols~=netSizeCol] TD[id="netSizeCol"],.netTable[hiddenCols~=netSizeCol] TD.netSizeCol,.netTable[hiddenCols~=netTimeCol] TD[id="netTimeCol"],.netTable[hiddenCols~=netTimeCol] TD.netTimeCol{display:none;}.netRow{background:LightYellow;}.netRow.loaded{background:#FFFFFF;}.netRow.loaded:hover{background:#EFEFEF;}.netCol{padding:0;vertical-align:top;border-bottom:1px solid #EFEFEF;white-space:nowrap;height:17px;}.netLabel{width:100%;}.netStatusCol{padding-left:10px;color:rgb(128,128,128);}.responseError > .netStatusCol{color:red;}.netDomainCol{padding-left:5px;}.netSizeCol{text-align:right;padding-right:10px;}.netHrefLabel{-moz-box-sizing:padding-box;overflow:hidden;z-index:10;position:absolute;padding-left:18px;padding-top:1px;max-width:15%;font-weight:bold;}.netFullHrefLabel{display:none;-moz-user-select:none;padding-right:10px;padding-bottom:3px;max-width:100%;background:#FFFFFF;z-index:200;}.netHrefCol:hover > .netFullHrefLabel{display:block;}.netRow.loaded:hover .netCol > .netFullHrefLabel{background-color:#EFEFEF;}.useA11y .a11yShowFullLabel{display:block;background-image:none !important;border:1px solid #CBE087;background-color:LightYellow;font-family:Monaco,monospace;color:#000000;font-size:10px;z-index:2147483647;}.netSizeLabel{padding-left:6px;}.netStatusLabel,.netDomainLabel,.netSizeLabel,.netBar{padding:1px 0 2px 0 !important;}.responseError{color:red;}.hasHeaders .netHrefLabel:hover{cursor:pointer;color:blue;text-decoration:underline;}.netLoadingIcon{position:absolute;border:0;margin-left:14px;width:16px;height:16px;background:transparent no-repeat 0 0;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/loading_16.gif);display:inline-block;}.loaded .netLoadingIcon{display:none;}.netBar,.netSummaryBar{position:relative;border-right:50px solid transparent;}.netResolvingBar{position:absolute;left:0;top:0;bottom:0;background:#FFFFFF url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarResolving.gif) repeat-x;z-index:60;}.netConnectingBar{position:absolute;left:0;top:0;bottom:0;background:#FFFFFF url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarConnecting.gif) repeat-x;z-index:50;}.netBlockingBar{position:absolute;left:0;top:0;bottom:0;background:#FFFFFF url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarWaiting.gif) repeat-x;z-index:40;}.netSendingBar{position:absolute;left:0;top:0;bottom:0;background:#FFFFFF url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarSending.gif) repeat-x;z-index:30;}.netWaitingBar{position:absolute;left:0;top:0;bottom:0;background:#FFFFFF url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarResponded.gif) repeat-x;z-index:20;min-width:1px;}.netReceivingBar{position:absolute;left:0;top:0;bottom:0;background:#38D63B url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarLoading.gif) repeat-x;z-index:10;}.netWindowLoadBar,.netContentLoadBar{position:absolute;left:0;top:0;bottom:0;width:1px;background-color:red;z-index:70;opacity:0.5;display:none;margin-bottom:-1px;}.netContentLoadBar{background-color:Blue;}.netTimeLabel{-moz-box-sizing:padding-box;position:absolute;top:1px;left:100%;padding-left:6px;color:#444444;min-width:16px;}.loaded .netReceivingBar,.loaded.netReceivingBar{background:#B6B6B6 url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarLoaded.gif) repeat-x;border-color:#B6B6B6;}.fromCache .netReceivingBar,.fromCache.netReceivingBar{background:#D6D6D6 url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/netBarCached.gif) repeat-x;border-color:#D6D6D6;}.netSummaryRow .netTimeLabel,.loaded .netTimeLabel{background:transparent;}.timeInfoTip{width:150px; height:40px}.timeInfoTipBar,.timeInfoTipEventBar{position:relative;display:block;margin:0;opacity:1;height:15px;width:4px;}.timeInfoTipEventBar{width:1px !important;}.timeInfoTipCell.startTime{padding-right:8px;}.timeInfoTipCell.elapsedTime{text-align:right;padding-right:8px;}.sizeInfoLabelCol{font-weight:bold;padding-right:10px;font-family:Lucida Grande,Tahoma,sans-serif;font-size:11px;}.sizeInfoSizeCol{font-weight:bold;}.sizeInfoDetailCol{color:gray;text-align:right;}.sizeInfoDescCol{font-style:italic;}.netSummaryRow .netReceivingBar{background:#BBBBBB;border:none;}.netSummaryLabel{color:#222222;}.netSummaryRow{background:#BBBBBB !important;font-weight:bold;}.netSummaryRow .netBar{border-right-color:#BBBBBB;}.netSummaryRow > .netCol{border-top:1px solid #999999;border-bottom:2px solid;-moz-border-bottom-colors:#EFEFEF #999999;padding-top:1px;padding-bottom:2px;}.netSummaryRow > .netHrefCol:hover{background:transparent !important;}.netCountLabel{padding-left:18px;}.netTotalSizeCol{text-align:right;padding-right:10px;}.netTotalTimeCol{text-align:right;}.netCacheSizeLabel{position:absolute;z-index:1000;left:0;top:0;}.netLimitRow{background:rgb(255,255,225) !important;font-weight:normal;color:black;font-weight:normal;}.netLimitLabel{padding-left:18px;}.netLimitRow > .netCol{border-bottom:2px solid;-moz-border-bottom-colors:#EFEFEF #999999;vertical-align:middle !important;padding-top:2px;padding-bottom:2px;}.netLimitButton{font-size:11px;padding-top:1px;padding-bottom:1px;}.netInfoCol{border-top:1px solid #EEEEEE;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/group.gif) repeat-x #FFFFFF;}.netInfoBody{margin:10px 0 4px 10px;}.netInfoTabs{position:relative;padding-left:17px;}.netInfoTab{position:relative;top:-3px;margin-top:10px;padding:4px 6px;border:1px solid transparent;border-bottom:none;_border:none;font-weight:bold;color:#565656;cursor:pointer;}.netInfoTabSelected{cursor:default !important;border:1px solid #D7D7D7 !important;border-bottom:none !important;-moz-border-radius:4px 4px 0 0;-webkit-border-radius:4px 4px 0 0;border-radius:4px 4px 0 0;background-color:#FFFFFF;}.logRow-netInfo.error .netInfoTitle{color:red;}.logRow-netInfo.loading .netInfoResponseText{font-style:italic;color:#888888;}.loading .netInfoResponseHeadersTitle{display:none;}.netInfoResponseSizeLimit{font-family:Lucida Grande,Tahoma,sans-serif;padding-top:10px;font-size:11px;}.netInfoText{display:none;margin:0;border:1px solid #D7D7D7;border-right:none;padding:8px;background-color:#FFFFFF;font-family:Monaco,monospace;white-space:pre-wrap;}.netInfoTextSelected{display:block;}.netInfoParamName{padding-right:10px;font-family:Lucida Grande,Tahoma,sans-serif;font-weight:bold;vertical-align:top;text-align:right;white-space:nowrap;}.netInfoPostText .netInfoParamName{width:1px;}.netInfoParamValue{width:100%;}.netInfoHeadersText,.netInfoPostText,.netInfoPutText{padding-top:0;}.netInfoHeadersGroup,.netInfoPostParams,.netInfoPostSource{margin-bottom:4px;border-bottom:1px solid #D7D7D7;padding-top:8px;padding-bottom:2px;font-family:Lucida Grande,Tahoma,sans-serif;font-weight:bold;color:#565656;}.netInfoPostParamsTable,.netInfoPostPartsTable,.netInfoPostJSONTable,.netInfoPostXMLTable,.netInfoPostSourceTable{margin-bottom:10px;width:100%;}.netInfoPostContentType{color:#bdbdbd;padding-left:50px;font-weight:normal;}.netInfoHtmlPreview{border:0;width:100%;height:100%;}.netHeadersViewSource{color:#bdbdbd;margin-left:200px;font-weight:normal;}.netHeadersViewSource:hover{color:blue;cursor:pointer;}.netActivationRow,.netPageSeparatorRow{background:rgb(229,229,229) !important;font-weight:normal;color:black;}.netActivationLabel{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/chrome://firebug/skin/infoIcon.png) no-repeat 3px 2px;padding-left:22px;}.netPageSeparatorRow{height:5px !important;}.netPageSeparatorLabel{padding-left:22px;height:5px !important;}.netPageRow{background-color:rgb(255,255,255);}.netPageRow:hover{background:#EFEFEF;}.netPageLabel{padding:1px 0 2px 18px !important;font-weight:bold;}.netActivationRow > .netCol{border-bottom:2px solid;-moz-border-bottom-colors:#EFEFEF #999999;padding-top:2px;padding-bottom:3px;}.twisty,.logRow-errorMessage > .hasTwisty > .errorTitle,.logRow-log > .objectBox-array.hasTwisty,.logRow-spy .spyHead .spyTitle,.logGroup > .logRow,.memberRow.hasChildren > .memberLabelCell > .memberLabel,.hasHeaders .netHrefLabel,.netPageRow > .netCol > .netPageTitle{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_open.gif);background-repeat:no-repeat;background-position:2px 2px;min-height:12px;}.logRow-errorMessage > .hasTwisty.opened > .errorTitle,.logRow-log > .objectBox-array.hasTwisty.opened,.logRow-spy.opened .spyHead .spyTitle,.logGroup.opened > .logRow,.memberRow.hasChildren.opened > .memberLabelCell > .memberLabel,.nodeBox.highlightOpen > .nodeLabel > .twisty,.nodeBox.open > .nodeLabel > .twisty,.netRow.opened > .netCol > .netHrefLabel,.netPageRow.opened > .netCol > .netPageTitle{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_close.gif);}.twisty{background-position:4px 4px;}* html .logRow-spy .spyHead .spyTitle,* html .logGroup .logGroupLabel,* html .hasChildren .memberLabelCell .memberLabel,* html .hasHeaders .netHrefLabel{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_open.gif);background-repeat:no-repeat;background-position:2px 2px;}* html .opened .spyHead .spyTitle,* html .opened .logGroupLabel,* html .opened .memberLabelCell .memberLabel{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_close.gif);background-repeat:no-repeat;background-position:2px 2px;}.panelNode-console{overflow-x:hidden;}.objectLink{text-decoration:none;}.objectLink:hover{cursor:pointer;text-decoration:underline;}.logRow{position:relative;margin:0;border-bottom:1px solid #D7D7D7;padding:2px 4px 1px 6px;background-color:#FFFFFF;overflow:hidden !important;}.useA11y .logRow:focus{border-bottom:1px solid #000000 !important;outline:none !important;background-color:#FFFFAD !important;}.useA11y .logRow:focus a.objectLink-sourceLink{background-color:#FFFFAD;}.useA11y .a11yFocus:focus,.useA11y .objectBox:focus{outline:2px solid #FF9933;background-color:#FFFFAD;}.useA11y .objectBox-null:focus,.useA11y .objectBox-undefined:focus{background-color:#888888 !important;}.useA11y .logGroup.opened > .logRow{border-bottom:1px solid #ffffff;}.logGroup{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/group.gif) repeat-x #FFFFFF;padding:0 !important;border:none !important;}.logGroupBody{display:none;margin-left:16px;border-left:1px solid #D7D7D7;border-top:1px solid #D7D7D7;background:#FFFFFF;}.logGroup > .logRow{background-color:transparent !important;font-weight:bold;}.logGroup.opened > .logRow{border-bottom:none;}.logGroup.opened > .logGroupBody{display:block;}.logRow-command > .objectBox-text{font-family:Monaco,monospace;color:#0000FF;white-space:pre-wrap;}.logRow-info,.logRow-warn,.logRow-error,.logRow-assert,.logRow-warningMessage,.logRow-errorMessage{padding-left:22px;background-repeat:no-repeat;background-position:4px 2px;}.logRow-assert,.logRow-warningMessage,.logRow-errorMessage{padding-top:0;padding-bottom:0;}.logRow-info,.logRow-info .objectLink-sourceLink{background-color:#FFFFFF;}.logRow-warn,.logRow-warningMessage,.logRow-warn .objectLink-sourceLink,.logRow-warningMessage .objectLink-sourceLink{background-color:cyan;}.logRow-error,.logRow-assert,.logRow-errorMessage,.logRow-error .objectLink-sourceLink,.logRow-errorMessage .objectLink-sourceLink{background-color:LightYellow;}.logRow-error,.logRow-assert,.logRow-errorMessage{color:#FF0000;}.logRow-info{}.logRow-warn,.logRow-warningMessage{}.logRow-error,.logRow-assert,.logRow-errorMessage{}.objectBox-string,.objectBox-text,.objectBox-number,.objectLink-element,.objectLink-textNode,.objectLink-function,.objectBox-stackTrace,.objectLink-profile{font-family:Monaco,monospace;}.objectBox-string,.objectBox-text,.objectLink-textNode{white-space:pre-wrap;}.objectBox-number,.objectLink-styleRule,.objectLink-element,.objectLink-textNode{color:#000088;}.objectBox-string{color:#FF0000;}.objectLink-function,.objectBox-stackTrace,.objectLink-profile{color:DarkGreen;}.objectBox-null,.objectBox-undefined{padding:0 2px;border:1px solid #666666;background-color:#888888;color:#FFFFFF;}.objectBox-exception{padding:0 2px 0 18px;color:red;}.objectLink-sourceLink{position:absolute;right:4px;top:2px;padding-left:8px;font-family:Lucida Grande,sans-serif;font-weight:bold;color:#0000FF;}.errorTitle{margin-top:0px;margin-bottom:1px;padding-top:2px;padding-bottom:2px;}.errorTrace{margin-left:17px;}.errorSourceBox{margin:2px 0;}.errorSource-none{display:none;}.errorSource-syntax > .errorBreak{visibility:hidden;}.errorSource{cursor:pointer;font-family:Monaco,monospace;color:DarkGreen;}.errorSource:hover{text-decoration:underline;}.errorBreak{cursor:pointer;display:none;margin:0 6px 0 0;width:13px;height:14px;vertical-align:bottom;opacity:0.1;}.hasBreakSwitch .errorBreak{display:inline;}.breakForError .errorBreak{opacity:1;}.assertDescription{margin:0;}.logRow-profile > .logRow > .objectBox-text{font-family:Lucida Grande,Tahoma,sans-serif;color:#000000;}.logRow-profile > .logRow > .objectBox-text:last-child{color:#555555;font-style:italic;}.logRow-profile.opened > .logRow{padding-bottom:4px;}.profilerRunning > .logRow{padding-left:22px !important;}.profileSizer{width:100%;overflow-x:auto;overflow-y:scroll;}.profileTable{border-bottom:1px solid #D7D7D7;padding:0 0 4px 0;}.profileTable tr[odd="1"]{background-color:#F5F5F5;vertical-align:middle;}.profileTable a{vertical-align:middle;}.profileTable td{padding:1px 4px 0 4px;}.headerCell{cursor:pointer;-moz-user-select:none;border-bottom:1px solid #9C9C9C;padding:0 !important;font-weight:bold;}.headerCellBox{padding:2px 4px;border-left:1px solid #D9D9D9;border-right:1px solid #9C9C9C;}.headerCell:hover:active{}.headerSorted{}.headerSorted > .headerCellBox{border-right-color:#6B7C93;}.headerSorted.sortedAscending > .headerCellBox{}.headerSorted:hover:active{}.linkCell{text-align:right;}.linkCell > .objectLink-sourceLink{position:static;}.logRow-stackTrace{padding-top:0;background:#f8f8f8;}.logRow-stackTrace > .objectBox-stackFrame{position:relative;padding-top:2px;}.objectLink-object{font-family:Lucida Grande,sans-serif;font-weight:bold;color:DarkGreen;white-space:pre-wrap;}.objectProp-object{color:DarkGreen;}.objectProps{color:#000;font-weight:normal;}.objectPropName{color:#777;}.objectProps .objectProp-string{color:#f55;}.objectProps .objectProp-number{color:#55a;}.objectProps .objectProp-object{color:#585;}.selectorTag,.selectorId,.selectorClass{font-family:Monaco,monospace;font-weight:normal;}.selectorTag{color:#0000FF;}.selectorId{color:DarkBlue;}.selectorClass{color:red;}.selectorHidden > .selectorTag{color:#5F82D9;}.selectorHidden > .selectorId{color:#888888;}.selectorHidden > .selectorClass{color:#D86060;}.selectorValue{font-family:Lucida Grande,sans-serif;font-style:italic;color:#555555;}.panelNode.searching .logRow{display:none;}.logRow.matched{display:block !important;}.logRow.matching{position:absolute;left:-1000px;top:-1000px;max-width:0;max-height:0;overflow:hidden;}.objectLeftBrace,.objectRightBrace,.objectEqual,.objectComma,.arrayLeftBracket,.arrayRightBracket,.arrayComma{font-family:Monaco,monospace;}.objectLeftBrace,.objectRightBrace,.arrayLeftBracket,.arrayRightBracket{font-weight:bold;}.objectLeftBrace,.arrayLeftBracket{margin-right:4px;}.objectRightBrace,.arrayRightBracket{margin-left:4px;}.logRow-dir{padding:0;}.logRow-errorMessage .hasTwisty .errorTitle,.logRow-spy .spyHead .spyTitle,.logGroup .logRow{cursor:pointer;padding-left:18px;background-repeat:no-repeat;background-position:3px 3px;}.logRow-errorMessage > .hasTwisty > .errorTitle{background-position:2px 3px;}.logRow-errorMessage > .hasTwisty > .errorTitle:hover,.logRow-spy .spyHead .spyTitle:hover,.logGroup > .logRow:hover{text-decoration:underline;}.logRow-spy{padding:0 !important;}.logRow-spy,.logRow-spy .objectLink-sourceLink{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/group.gif) repeat-x #FFFFFF;padding-right:4px;right:0;}.logRow-spy.opened{padding-bottom:4px;border-bottom:none;}.spyTitle{color:#000000;font-weight:bold;-moz-box-sizing:padding-box;overflow:hidden;z-index:100;padding-left:18px;}.spyCol{padding:0;white-space:nowrap;height:16px;}.spyTitleCol:hover > .objectLink-sourceLink,.spyTitleCol:hover > .spyTime,.spyTitleCol:hover > .spyStatus,.spyTitleCol:hover > .spyTitle{display:none;}.spyFullTitle{display:none;-moz-user-select:none;max-width:100%;background-color:Transparent;}.spyTitleCol:hover > .spyFullTitle{display:block;}.spyStatus{padding-left:10px;color:rgb(128,128,128);}.spyTime{margin-left:4px;margin-right:4px;color:rgb(128,128,128);}.spyIcon{margin-right:4px;margin-left:4px;width:16px;height:16px;vertical-align:middle;background:transparent no-repeat 0 0;display:none;}.loading .spyHead .spyRow .spyIcon{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/loading_16.gif);display:block;}.logRow-spy.loaded:not(.error) .spyHead .spyRow .spyIcon{width:0;margin:0;}.logRow-spy.error .spyHead .spyRow .spyIcon{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/errorIcon-sm.png);display:block;background-position:2px 2px;}.logRow-spy .spyHead .netInfoBody{display:none;}.logRow-spy.opened .spyHead .netInfoBody{margin-top:10px;display:block;}.logRow-spy.error .spyTitle,.logRow-spy.error .spyStatus,.logRow-spy.error .spyTime{color:red;}.logRow-spy.loading .spyResponseText{font-style:italic;color:#888888;}.caption{font-family:Lucida Grande,Tahoma,sans-serif;font-weight:bold;color:#444444;}.warning{padding:10px;font-family:Lucida Grande,Tahoma,sans-serif;font-weight:bold;color:#888888;}.panelNode-dom{overflow-x:hidden !important;}.domTable{font-size:1em;width:100%;table-layout:fixed;background:#fff;}.domTableIE{width:auto;}.memberLabelCell{padding:2px 0 2px 0;vertical-align:top;}.memberValueCell{padding:1px 0 1px 5px;display:block;overflow:hidden;}.memberLabel{display:block;cursor:default;-moz-user-select:none;overflow:hidden;padding-left:18px;background-color:#FFFFFF;text-decoration:none;}.memberRow.hasChildren .memberLabelCell .memberLabel:hover{cursor:pointer;color:blue;text-decoration:underline;}.userLabel{color:#000000;font-weight:bold;}.userClassLabel{color:#E90000;font-weight:bold;}.userFunctionLabel{color:#025E2A;font-weight:bold;}.domLabel{color:#000000;}.domFunctionLabel{color:#025E2A;}.ordinalLabel{color:SlateBlue;font-weight:bold;}.scopesRow{padding:2px 18px;background-color:LightYellow;border-bottom:5px solid #BEBEBE;color:#666666;}.scopesLabel{background-color:LightYellow;}.watchEditCell{padding:2px 18px;background-color:LightYellow;border-bottom:1px solid #BEBEBE;color:#666666;}.editor-watchNewRow,.editor-memberRow{font-family:Monaco,monospace !important;}.editor-memberRow{padding:1px 0 !important;}.editor-watchRow{padding-bottom:0 !important;}.watchRow > .memberLabelCell{font-family:Monaco,monospace;padding-top:1px;padding-bottom:1px;}.watchRow > .memberLabelCell > .memberLabel{background-color:transparent;}.watchRow > .memberValueCell{padding-top:2px;padding-bottom:2px;}.watchRow > .memberLabelCell,.watchRow > .memberValueCell{background-color:#F5F5F5;border-bottom:1px solid #BEBEBE;}.watchToolbox{z-index:2147483647;position:absolute;right:0;padding:1px 2px;}#fbConsole{overflow-x:hidden !important;}#fbCSS{font:1em Monaco,monospace;padding:0 7px;}#fbstylesheetButtons select,#fbScriptButtons select{font:11px Lucida Grande,Tahoma,sans-serif;margin-top:1px;padding-left:3px;background:#fafafa;border:1px inset #fff;width:220px;outline:none;}.Selector{margin-top:10px}.CSSItem{margin-left:4%}.CSSText{padding-left:20px;}.CSSProperty{color:#005500;}.CSSValue{padding-left:5px; color:#000088;}#fbHTMLStatusBar{display:inline;}.fbToolbarButtons{display:none;}.fbStatusSeparator{display:block;float:left;padding-top:4px;}#fbStatusBarBox{display:none;}#fbToolbarContent{display:block;position:absolute;_position:absolute;top:0;padding-top:4px;height:23px;clip:rect(0,2048px,27px,0);}.fbTabMenuTarget{display:none !important;float:left;width:10px;height:10px;margin-top:6px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuTarget.png);}.fbTabMenuTarget:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuTargetHover.png);}.fbShadow{float:left;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/shadowAlpha.png) no-repeat bottom right !important;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/shadow2.gif) no-repeat bottom right;margin:10px 0 0 10px !important;margin:10px 0 0 5px;}.fbShadowContent{display:block;position:relative;background-color:#fff;border:1px solid #a9a9a9;top:-6px;left:-6px;}.fbMenu{display:none;position:absolute;font-size:11px;z-index:2147483647;}.fbMenuContent{padding:2px;}.fbMenuSeparator{display:block;position:relative;padding:1px 18px 0;text-decoration:none;color:#000;cursor:default;background:#ACA899;margin:4px 0;}.fbMenuOption{display:block;position:relative;padding:2px 18px;text-decoration:none;color:#000;cursor:default;}.fbMenuOption:hover{color:#fff;background:#316AC5;}.fbMenuGroup{background:transparent url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuPin.png) no-repeat right 0;}.fbMenuGroup:hover{background:#316AC5 url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuPin.png) no-repeat right -17px;}.fbMenuGroupSelected{color:#fff;background:#316AC5 url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuPin.png) no-repeat right -17px;}.fbMenuChecked{background:transparent url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuCheckbox.png) no-repeat 4px 0;}.fbMenuChecked:hover{background:#316AC5 url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuCheckbox.png) no-repeat 4px -17px;}.fbMenuRadioSelected{background:transparent url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuRadio.png) no-repeat 4px 0;}.fbMenuRadioSelected:hover{background:#316AC5 url(https://getfirebug.com/releases/lite/latest/skin/xp/tabMenuRadio.png) no-repeat 4px -17px;}.fbMenuShortcut{padding-right:85px;}.fbMenuShortcutKey{position:absolute;right:0;top:2px;width:77px;}#fbFirebugMenu{top:22px;left:0;}.fbMenuDisabled{color:#ACA899 !important;}#fbFirebugSettingsMenu{left:245px;top:99px;}#fbConsoleMenu{top:42px;left:48px;}.fbIconButton{display:block;}.fbIconButton{display:block;}.fbIconButton{display:block;float:left;height:20px;width:20px;color:#000;margin-right:2px;text-decoration:none;cursor:default;}.fbIconButton:hover{position:relative;top:-1px;left:-1px;margin-right:0;_margin-right:1px;color:#333;border:1px solid #fff;border-bottom:1px solid #bbb;border-right:1px solid #bbb;}.fbIconPressed{position:relative;margin-right:0;_margin-right:1px;top:0 !important;left:0 !important;height:19px;color:#333 !important;border:1px solid #bbb !important;border-bottom:1px solid #cfcfcf !important;border-right:1px solid #ddd !important;}#fbErrorPopup{position:absolute;right:0;bottom:0;height:19px;width:75px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #f1f2ee 0 0;z-index:999;}#fbErrorPopupContent{position:absolute;right:0;top:1px;height:18px;width:75px;_width:74px;border-left:1px solid #aca899;}#fbErrorIndicator{position:absolute;top:2px;right:5px;}.fbBtnInspectActive{background:#aaa;color:#fff !important;}.fbBody{margin:0;padding:0;overflow:hidden;font-family:Lucida Grande,Tahoma,sans-serif;font-size:11px;background:#fff;}.clear{clear:both;}#fbMiniChrome{display:none;right:0;height:27px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #f1f2ee 0 0;margin-left:1px;}#fbMiniContent{display:block;position:relative;left:-1px;right:0;top:1px;height:25px;border-left:1px solid #aca899;}#fbToolbarSearch{float:right;border:1px solid #ccc;margin:0 5px 0 0;background:#fff url(https://getfirebug.com/releases/lite/latest/skin/xp/search.png) no-repeat 4px 2px !important;background:#fff url(https://getfirebug.com/releases/lite/latest/skin/xp/search.gif) no-repeat 4px 2px;padding-left:20px;font-size:11px;}#fbToolbarErrors{float:right;margin:1px 4px 0 0;font-size:11px;}#fbLeftToolbarErrors{float:left;margin:7px 0px 0 5px;font-size:11px;}.fbErrors{padding-left:20px;height:14px;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/errorIcon.png) no-repeat !important;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/errorIcon.gif) no-repeat;color:#f00;font-weight:bold;}#fbMiniErrors{display:inline;display:none;float:right;margin:5px 2px 0 5px;}#fbMiniIcon{float:right;margin:3px 4px 0;height:20px;width:20px;float:right;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) 0 -135px;cursor:pointer;}#fbChrome{font-family:Lucida Grande,Tahoma,sans-serif;font-size:11px;position:absolute;_position:static;top:0;left:0;height:100%;width:100%;border-collapse:collapse;border-spacing:0;background:#fff;overflow:hidden;}#fbChrome > tbody > tr > td{padding:0;}#fbTop{height:49px;}#fbToolbar{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #f1f2ee 0 0;height:27px;font-size:11px;}#fbPanelBarBox{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #dbd9c9 0 -27px;height:22px;}#fbContent{height:100%;vertical-align:top;}#fbBottom{height:18px;background:#fff;}#fbToolbarIcon{float:left;padding:0 5px 0;}#fbToolbarIcon a{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) 0 -135px;}#fbToolbarButtons{padding:0 2px 0 5px;}#fbToolbarButtons{padding:0 2px 0 5px;}.fbButton{text-decoration:none;display:block;float:left;color:#000;padding:4px 6px 4px 7px;cursor:default;}.fbButton:hover{color:#333;background:#f5f5ef url(https://getfirebug.com/releases/lite/latest/skin/xp/buttonBg.png);padding:3px 5px 3px 6px;border:1px solid #fff;border-bottom:1px solid #bbb;border-right:1px solid #bbb;}.fbBtnPressed{background:#e3e3db url(https://getfirebug.com/releases/lite/latest/skin/xp/buttonBgHover.png) !important;padding:3px 4px 2px 6px !important;margin:1px 0 0 1px !important;border:1px solid #ACA899 !important;border-color:#ACA899 #ECEBE3 #ECEBE3 #ACA899 !important;}#fbStatusBarBox{top:4px;cursor:default;}.fbToolbarSeparator{overflow:hidden;border:1px solid;border-color:transparent #fff transparent #777;_border-color:#eee #fff #eee #777;height:7px;margin:6px 3px;float:left;}.fbBtnSelected{font-weight:bold;}.fbStatusBar{color:#aca899;}.fbStatusBar a{text-decoration:none;color:black;}.fbStatusBar a:hover{color:blue;cursor:pointer;}#fbWindowButtons{position:absolute;white-space:nowrap;right:0;top:0;height:17px;width:48px;padding:5px;z-index:6;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #f1f2ee 0 0;}#fbPanelBar1{width:1024px; z-index:8;left:0;white-space:nowrap;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #dbd9c9 0 -27px;position:absolute;left:4px;}#fbPanelBar2Box{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #dbd9c9 0 -27px;position:absolute;height:22px;width:300px; z-index:9;right:0;}#fbPanelBar2{position:absolute;width:290px; height:22px;padding-left:4px;}.fbPanel{display:none;}#fbPanelBox1,#fbPanelBox2{max-height:inherit;height:100%;font-size:1em;}#fbPanelBox2{background:#fff;}#fbPanelBox2{width:300px;background:#fff;}#fbPanel2{margin-left:6px;background:#fff;}#fbLargeCommandLine{display:none;position:absolute;z-index:9;top:27px;right:0;width:294px;height:201px;border-width:0;margin:0;padding:2px 0 0 2px;resize:none;outline:none;font-size:11px;overflow:auto;border-top:1px solid #B9B7AF;_right:-1px;_border-left:1px solid #fff;}#fbLargeCommandButtons{display:none;background:#ECE9D8;bottom:0;right:0;width:294px;height:21px;padding-top:1px;position:fixed;border-top:1px solid #ACA899;z-index:9;}#fbSmallCommandLineIcon{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/down.png) no-repeat;position:absolute;right:2px;bottom:3px;z-index:99;}#fbSmallCommandLineIcon:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/downHover.png) no-repeat;}.hide{overflow:hidden !important;position:fixed !important;display:none !important;visibility:hidden !important;}#fbCommand{height:18px;}#fbCommandBox{position:fixed;_position:absolute;width:100%;height:18px;bottom:0;overflow:hidden;z-index:9;background:#fff;border:0;border-top:1px solid #ccc;}#fbCommandIcon{position:absolute;color:#00f;top:2px;left:6px;display:inline;font:11px Monaco,monospace;z-index:10;}#fbCommandLine{position:absolute;width:100%;top:0;left:0;border:0;margin:0;padding:2px 0 2px 32px;font:11px Monaco,monospace;z-index:9;outline:none;}#fbLargeCommandLineIcon{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/up.png) no-repeat;position:absolute;right:1px;bottom:1px;z-index:10;}#fbLargeCommandLineIcon:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/upHover.png) no-repeat;}div.fbFitHeight{overflow:auto;position:relative;}.fbSmallButton{overflow:hidden;width:16px;height:16px;display:block;text-decoration:none;cursor:default;}#fbWindowButtons .fbSmallButton{float:right;}#fbWindow_btClose{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/min.png);}#fbWindow_btClose:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/minHover.png);}#fbWindow_btDetach{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/detach.png);}#fbWindow_btDetach:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/detachHover.png);}#fbWindow_btDeactivate{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/off.png);}#fbWindow_btDeactivate:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/offHover.png);}.fbTab{text-decoration:none;display:none;float:left;width:auto;float:left;cursor:default;font-family:Lucida Grande,Tahoma,sans-serif;font-size:11px;font-weight:bold;height:22px;color:#565656;}.fbPanelBar span{float:left;}.fbPanelBar .fbTabL,.fbPanelBar .fbTabR{height:22px;width:8px;}.fbPanelBar .fbTabText{padding:4px 1px 0;}a.fbTab:hover{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) 0 -73px;}a.fbTab:hover .fbTabL{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) -16px -96px;}a.fbTab:hover .fbTabR{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) -24px -96px;}.fbSelectedTab{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) #f1f2ee 0 -50px !important;color:#000;}.fbSelectedTab .fbTabL{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) 0 -96px !important;}.fbSelectedTab .fbTabR{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/sprite.png) -8px -96px !important;}#fbHSplitter{position:fixed;_position:absolute;left:0;top:0;width:100%;height:5px;overflow:hidden;cursor:n-resize !important;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/pixel_transparent.gif);z-index:9;}#fbHSplitter.fbOnMovingHSplitter{height:100%;z-index:100;}.fbVSplitter{background:#ece9d8;color:#000;border:1px solid #716f64;border-width:0 1px;border-left-color:#aca899;width:4px;cursor:e-resize;overflow:hidden;right:294px;text-decoration:none;z-index:10;position:absolute;height:100%;top:27px;}div.lineNo{font:1em Monaco,monospace;position:relative;float:left;top:0;left:0;margin:0 5px 0 0;padding:0 5px 0 10px;background:#eee;color:#888;border-right:1px solid #ccc;text-align:right;}.sourceBox{position:absolute;}.sourceCode{font:1em Monaco,monospace;overflow:hidden;white-space:pre;display:inline;}.nodeControl{margin-top:3px;margin-left:-14px;float:left;width:9px;height:9px;overflow:hidden;cursor:default;background:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_open.gif);_float:none;_display:inline;_position:absolute;}div.nodeMaximized{background:url(https://getfirebug.com/releases/lite/latest/skin/xp/tree_close.gif);}div.objectBox-element{padding:1px 3px;}.objectBox-selector{cursor:default;}.selectedElement{background:highlight;color:#fff !important;}.selectedElement span{color:#fff !important;}* html .selectedElement{position:relative;}@media screen and (-webkit-min-device-pixel-ratio:0){.selectedElement{background:#316AC5;color:#fff !important;}}.logRow *{font-size:1em;}.logRow{position:relative;border-bottom:1px solid #D7D7D7;padding:2px 4px 1px 6px;zbackground-color:#FFFFFF;}.logRow-command{font-family:Monaco,monospace;color:blue;}.objectBox-string,.objectBox-text,.objectBox-number,.objectBox-function,.objectLink-element,.objectLink-textNode,.objectLink-function,.objectBox-stackTrace,.objectLink-profile{font-family:Monaco,monospace;}.objectBox-null{padding:0 2px;border:1px solid #666666;background-color:#888888;color:#FFFFFF;}.objectBox-string{color:red;}.objectBox-number{color:#000088;}.objectBox-function{color:DarkGreen;}.objectBox-object{color:DarkGreen;font-weight:bold;font-family:Lucida Grande,sans-serif;}.objectBox-array{color:#000;}.logRow-info,.logRow-error,.logRow-warn{background:#fff no-repeat 2px 2px;padding-left:20px;padding-bottom:3px;}.logRow-info{background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/infoIcon.png) !important;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/infoIcon.gif);}.logRow-warn{background-color:cyan;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/warningIcon.png) !important;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/warningIcon.gif);}.logRow-error{background-color:LightYellow;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/errorIcon.png) !important;background-image:url(https://getfirebug.com/releases/lite/latest/skin/xp/errorIcon.gif);color:#f00;}.errorMessage{vertical-align:top;color:#f00;}.objectBox-sourceLink{position:absolute;right:4px;top:2px;padding-left:8px;font-family:Lucida Grande,sans-serif;font-weight:bold;color:#0000FF;}.selectorTag,.selectorId,.selectorClass{font-family:Monaco,monospace;font-weight:normal;}.selectorTag{color:#0000FF;}.selectorId{color:DarkBlue;}.selectorClass{color:red;}.objectBox-element{font-family:Monaco,monospace;color:#000088;}.nodeChildren{padding-left:26px;}.nodeTag{color:blue;cursor:pointer;}.nodeValue{color:#FF0000;font-weight:normal;}.nodeText,.nodeComment{margin:0 2px;vertical-align:top;}.nodeText{color:#333333;font-family:Monaco,monospace;}.nodeComment{color:DarkGreen;}.nodeHidden,.nodeHidden *{color:#888888;}.nodeHidden .nodeTag{color:#5F82D9;}.nodeHidden .nodeValue{color:#D86060;}.selectedElement .nodeHidden,.selectedElement .nodeHidden *{color:SkyBlue !important;}.log-object{}.property{position:relative;clear:both;height:15px;}.propertyNameCell{vertical-align:top;float:left;width:28%;position:absolute;left:0;z-index:0;}.propertyValueCell{float:right;width:68%;background:#fff;position:absolute;padding-left:5px;display:table-cell;right:0;z-index:1;}.propertyName{font-weight:bold;}.FirebugPopup{height:100% !important;}.FirebugPopup #fbWindowButtons{display:none !important;}.FirebugPopup #fbHSplitter{display:none !important;}',
     HTML: '<table id="fbChrome" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td id="fbTop" colspan="2"><div id="fbWindowButtons"><a id="fbWindow_btDeactivate" class="fbSmallButton fbHover" title="Deactivate Firebug for this web page">&nbsp;</a><a id="fbWindow_btDetach" class="fbSmallButton fbHover" title="Open Firebug in popup window">&nbsp;</a><a id="fbWindow_btClose" class="fbSmallButton fbHover" title="Minimize Firebug">&nbsp;</a></div><div id="fbToolbar"><div id="fbToolbarContent"><span id="fbToolbarIcon"><a id="fbFirebugButton" class="fbIconButton" class="fbHover" target="_blank">&nbsp;</a></span><span id="fbToolbarButtons"><span id="fbFixedButtons"><a id="fbChrome_btInspect" class="fbButton fbHover" title="Click an element in the page to inspect">Inspect</a></span><span id="fbConsoleButtons" class="fbToolbarButtons"><a id="fbConsole_btClear" class="fbButton fbHover" title="Clear the console">Clear</a></span></span><span id="fbStatusBarBox"><span class="fbToolbarSeparator"></span></span></div></div><div id="fbPanelBarBox"><div id="fbPanelBar1" class="fbPanelBar"><a id="fbConsoleTab" class="fbTab fbHover"><span class="fbTabL"></span><span class="fbTabText">Console</span><span class="fbTabMenuTarget"></span><span class="fbTabR"></span></a><a id="fbHTMLTab" class="fbTab fbHover"><span class="fbTabL"></span><span class="fbTabText">HTML</span><span class="fbTabR"></span></a><a class="fbTab fbHover"><span class="fbTabL"></span><span class="fbTabText">CSS</span><span class="fbTabR"></span></a><a class="fbTab fbHover"><span class="fbTabL"></span><span class="fbTabText">Script</span><span class="fbTabR"></span></a><a class="fbTab fbHover"><span class="fbTabL"></span><span class="fbTabText">DOM</span><span class="fbTabR"></span></a></div><div id="fbPanelBar2Box" class="hide"><div id="fbPanelBar2" class="fbPanelBar"></div></div></div><div id="fbHSplitter">&nbsp;</div></td></tr><tr id="fbContent"><td id="fbPanelBox1"><div id="fbPanel1" class="fbFitHeight"><div id="fbConsole" class="fbPanel"></div><div id="fbHTML" class="fbPanel"></div></div></td><td id="fbPanelBox2" class="hide"><div id="fbVSplitter" class="fbVSplitter">&nbsp;</div><div id="fbPanel2" class="fbFitHeight"><div id="fbHTML_Style" class="fbPanel"></div><div id="fbHTML_Layout" class="fbPanel"></div><div id="fbHTML_DOM" class="fbPanel"></div></div><textarea id="fbLargeCommandLine" class="fbFitHeight"></textarea><div id="fbLargeCommandButtons"><a id="fbCommand_btRun" class="fbButton fbHover">Run</a><a id="fbCommand_btClear" class="fbButton fbHover">Clear</a><a id="fbSmallCommandLineIcon" class="fbSmallButton fbHover"></a></div></td></tr><tr id="fbBottom" class="hide"><td id="fbCommand" colspan="2"><div id="fbCommandBox"><div id="fbCommandIcon">&gt;&gt;&gt;</div><input id="fbCommandLine" name="fbCommandLine" type="text"/><a id="fbLargeCommandLineIcon" class="fbSmallButton fbHover"></a></div></td></tr></tbody></table><span id="fbMiniChrome"><span id="fbMiniContent"><span id="fbMiniIcon" title="Open Firebug Lite"></span><span id="fbMiniErrors" class="fbErrors">2 errors</span></span></span>'
 };

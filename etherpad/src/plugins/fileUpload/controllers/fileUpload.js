@@ -32,6 +32,9 @@ import("plugins.fileUpload.models");
 import("etherpad.pad.padutils");
 jimport("org.apache.commons.fileupload");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {  
   var isPro = pro_utils.isProDomainRequest();
   var userId = padusers.getUserId();

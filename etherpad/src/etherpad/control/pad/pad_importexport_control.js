@@ -35,6 +35,9 @@ import("etherpad.collab.server_utils");
 
 jimport("org.apache.commons.fileupload");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _log(obj) {
   log.custom("import-export", obj);
 }
@@ -43,10 +46,16 @@ function _log(obj) {
 // utilities
 //---------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadTextBytes(padId, revNum) {
   if (revNum === undefined) {
     return null;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return padutils.accessPadLocal(padId, function(pad) {
     if (pad.exists()) {
       var txt = exporthtml.getPadPlainText(pad, revNum);
@@ -57,10 +66,16 @@ function _getPadTextBytes(padId, revNum) {
   }, 'r');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadHtmlBytes(padId, revNum, noDocType) {
   if (revNum === undefined) {
     return null;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var html = padutils.accessPadLocal(padId, function(pad) {
     if (pad.exists()) {
       return exporthtml.getPadHTMLDocument(pad, revNum, noDocType);
@@ -73,6 +88,9 @@ function _getPadHtmlBytes(padId, revNum, noDocType) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getFileExtension(fileName, def) {
   if (fileName.lastIndexOf('.') > 0) {
     return fileName.substr(fileName.lastIndexOf('.')+1);
@@ -81,7 +99,13 @@ function _getFileExtension(fileName, def) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _guessFileType(contentType, fileName) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _f(str) { return function() { return str; }}
   var unchangedExtensions =
     arrayToSet(['txt', 'htm', 'html', 'doc', 'docx', 'rtf', 'pdf', 'odt']);
@@ -113,10 +137,16 @@ function _guessFileType(contentType, fileName) {
   _log({type: "warning", error: "unknown-type", contentType: contentType, fileName: fileName});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteExportFailure() {
   varz.incrementInt("export-failed");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteImportFailure() {
   varz.incrementInt("import-failed");
 }
@@ -126,6 +156,9 @@ function _noteImportFailure() {
 //---------------------------------------
 
 // handles /ep/pad/export/*
+
+// YOURNAME:
+// YOURCOMMENT
 function renderExport() {
   var parts = request.path.split('/');
   var shownPadID = parts[4];
@@ -152,9 +185,18 @@ function renderExport() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _exportToFormat(padId, shownPadID, revisionId, revNum, format) {
   var bytes = _doExportConversion(format,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return _getPadTextBytes(padId, revNum); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(noDocType) { return _getPadHtmlBytes(padId, revNum, noDocType); });
   if (! bytes) {
     return "Unable to convert file for export... try a different format?"
@@ -169,6 +211,9 @@ function _exportToFormat(padId, shownPadID, revisionId, revNum, format) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doExportConversion(format, getTextBytes, getHtmlBytes) {
   if (! (format in importexport.formats)) {
     return false;
@@ -216,21 +261,42 @@ function _doExportConversion(format, getTextBytes, getHtmlBytes) {
 // import
 //---------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getImportInfo(key) {
   var session = getSession();
+
+  // YOURNAME:
+  // YOURCOMMENT
   sync.callsyncIfTrue(session, function() { return ! ('importexport' in session) },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() {
       session.importexport = {};
     });
   var tokens = session.importexport;
+
+  // YOURNAME:
+  // YOURCOMMENT
   sync.callsyncIfTrue(tokens, function() { return ! (key in tokens) },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() {
       tokens[key] = {};
     });
   return tokens[key];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_import() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _r(code) {
     response.setContentType("text/html");
     response.write("<html><body><script>try{parent.document.domain}catch(e){document.domain=document.domain}\n"+code+"</script></body></html>");
@@ -281,9 +347,15 @@ function render_import() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_import2() {
   var token = request.params.token;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _r(txt) {
     response.write(txt);
     response.stop();
@@ -323,6 +395,9 @@ function render_import2() {
   }
 
   if (! request.params.padId) { _r("fail"); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(request.params.padId, function(pad) {
     if (! pad.exists()) {
       _r("fail");

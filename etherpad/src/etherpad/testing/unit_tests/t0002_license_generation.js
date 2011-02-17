@@ -21,10 +21,19 @@ import("etherpad.licensing");
 
 jimport("java.util.Random");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   var r = new Random(0);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testLicense(name, org, expires, editionId, userQuota) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function keydataString() {
       return "{name: "+name+", org: "+org+", expires: "+expires+", editionId: "+editionId+", userQuota: "+userQuota+"}";
     }
@@ -35,6 +44,9 @@ function run() {
       println("   generated key: "+key);
       throw new Error("Generated key does not decode at all.  See stdout.");
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function testMatch(name, x, y) {
       if (x != y) {
         println("key match error ("+name+"): ["+x+"] != ["+y+"]");
@@ -76,6 +88,9 @@ function run() {
 
   // test that all previously generated keys continue to decode.
   var historicalKeys = sqlobj.selectMulti('eepnet_signups', {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   historicalKeys.forEach(function(d) {
     var key = d.licenseKey;
     if (key && !licensing.isValidKey(key)) {

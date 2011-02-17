@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
   etherpad.deobfuscateEmails();
 
@@ -36,6 +39,9 @@ etherpad = {};
 // general utils
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.validEmail = function(x) {
   return (x.length > 0 &&
 	  x.match(/^[\w\.\_\+\-]+\@[\w\_\-]+\.[\w\_\-\.]+$/));
@@ -45,7 +51,13 @@ etherpad.validEmail = function(x) {
 // obfuscating emails
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.deobfuscateEmails = function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   $("a.obfuscemail").each(function() {
     $(this).html($(this).html().replace('e***rp*d','etherpad'));
     this.href = this.href.replace('e***rp*d','etherpad');
@@ -56,12 +68,21 @@ etherpad.deobfuscateEmails = function() {
 // Signing up for pricing info
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.pricingPageInit = function() {
   $('#submitbutton').click(etherpad.pricingSubmit);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.pricingSubmit = function(edition) {
   var allData = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('#pricingcontact input.ti').each(function() {
     allData[$(this).attr('id')] = $(this).val();
   });
@@ -79,6 +100,9 @@ etherpad.pricingSubmit = function(edition) {
     error: error
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function success(responseText) {
     $('#spinner').hide();
     if (responseText == "OK") {
@@ -91,6 +115,9 @@ etherpad.pricingSubmit = function(edition) {
       $('form input').removeAttr('disabled');
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function error() {
     $('#spinner').hide();
     $('#errorbox').hide().html("Server error.").fadeIn('fast');
@@ -106,6 +133,9 @@ etherpad.pricingSubmit = function(edition) {
 // Product page (client-side nagivation with JS)
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.productPageInit = function() {
   $("#productpage #tour").addClass("javascripton");
   etherpad.productPageNavigateTo(window.location.hash.substring(1));
@@ -113,6 +143,9 @@ etherpad.productPageInit = function() {
   $("#productpage a.tournav").click(etherpad.tourNavClick);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.tourNavClick = function() { // to be called as a click event handler
   var href = $(this).attr('href');
   var thorpLoc = href.indexOf('#');
@@ -121,7 +154,13 @@ etherpad.tourNavClick = function() { // to be called as a click event handler
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setNavLink(rightOrLeft, text, linkhash) {
     var navcells = $('#productpage .tourbar .'+rightOrLeft);
     if (! text) {
@@ -133,8 +172,14 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
 	find('a.tournav').click(etherpad.tourNavClick);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function switchCardsIfNecessary(fromCard, toCard, andThen/*(didAnimate)*/) {
     if (! $('#productpage #tour').hasClass("show"+toCard)) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       var afterAnimate = function() {
 	$("#productpage #"+fromCard).get(0).style.display = "";
 	$('#productpage #tour').removeClass("show"+fromCard).addClass("show"+toCard);
@@ -151,10 +196,19 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
       andThen(false);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function switchProseIfNecessary(toNum, useAnimation, andThen) {
     var visibleProse = $("#productpage .tourprose:visible");
     var alreadyVisible = ($("#productpage #tour"+toNum+"prose:visible").size() > 0);
+
+    // YOURNAME:
+    // YOURCOMMENT
     function assignVisibilities() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#productpage .tourprose").each(function() {
 	if (this.id == "tour"+toNum+"prose") {
 	  this.style.display = 'block';
@@ -170,6 +224,9 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
       andThen();
     }
     else {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function afterAnimate() {
 	assignVisibilities();
 	andThen();	
@@ -182,6 +239,9 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
       }
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getProseTitle(n) {
     if (n == 0) return clientVars.screenshotTitle;
     var atag = $("#productpage #tourleftnav .tour"+n+" a");
@@ -192,7 +252,13 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
   var regexResult;
   if ((regexResult = /^uses([1-9][0-9]*)$/.exec(hash))) {
     var tourNum = +regexResult[1];
+
+    // YOURNAME:
+    // YOURCOMMENT
     switchCardsIfNecessary("pageshot", "usecases", function(didAnimate) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       switchProseIfNecessary(tourNum, shouldAnimate && !didAnimate, function() {
 	/*var n = tourNum;
 	setNavLink("left", "&laquo; "+getProseTitle(n-1), (n == 1 ? "" : "uses"+(n-1)));
@@ -209,6 +275,9 @@ etherpad.productPageNavigateTo = function(hash, shouldAnimate) {
     });
   }
   else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     switchCardsIfNecessary("usecases", "pageshot", function() {
       $('#tourtop td.left').html(getProseTitle(0));
       setNavLink("right", clientVars.screenshotNextLink, "uses1");

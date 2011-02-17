@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 window.onerror = function(msg, url, linenumber) {
   var trace = msg + ' @' + url + ':' +  linenumber + '\n\n' + printStackTrace().join('\n\n');
   if (typeof(console) != "undefined") {

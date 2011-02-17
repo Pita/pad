@@ -56,9 +56,15 @@ var array = [0, 1, 2];
 var elements = new java.util.Enumeration({
         index: 0,
         elements: array,
+
+        // YOURNAME:
+        // YOURCOMMENT
         hasMoreElements: function() {
                 return (this.index < this.elements.length);
 	},      
+
+        // YOURNAME:
+        // YOURCOMMENT
         nextElement: function() {
                 return this.elements[this.index++];
 	}

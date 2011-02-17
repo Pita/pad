@@ -15,6 +15,9 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padchat = (function(){
 
   var numToAuthorMap = [''];
@@ -26,6 +29,9 @@ var padchat = (function(){
   var loadingMoreHistory = false;
   var HISTORY_LINES_TO_LOAD_AT_A_TIME = 50;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function authorToNum(author, dontAddIfAbsent) {
     if ((typeof authorToNumMap[author]) == "number") {
       return authorToNumMap[author];
@@ -40,6 +46,9 @@ var padchat = (function(){
       return n;
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getDateNumCSSDayString(dateNum) {
     var d = new Date(+dateNum);
     var year = String(d.getFullYear());
@@ -47,6 +56,9 @@ var padchat = (function(){
     var day = ("0"+String(d.getDate())).slice(-2);
     return year+"-"+month+"-"+day;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getDateNumHumanDayString(dateNum) {
     var d = new Date(+dateNum);
     var monthName = (["January", "February", "March",
@@ -56,8 +68,14 @@ var padchat = (function(){
     var year = d.getFullYear();
     return monthName+" "+dayOfMonth+", "+year;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ensureChatDay(time) {
     var day = getDateNumCSSDayString(time);
+
+    // YOURNAME:
+    // YOURCOMMENT
     var dayIndex = padutils.binarySearch(chatLinesByDay.length, function(n) {
       return chatLinesByDay[n].day >= day;
     });
@@ -80,6 +98,9 @@ var padchat = (function(){
 
     return dayIndex;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addChatLine(userId, time, name, lineText, addBefore) {
     var dayIndex = ensureChatDay(time);
     var dayDiv = $("#chatday"+getDateNumCSSDayString(time));
@@ -121,6 +142,9 @@ var padchat = (function(){
 
     return {lineNode:lineNode};
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function receiveChatHistoryBlock(block) {
     for(var a in block.historicalAuthorData) {
       var data = block.historicalAuthorData[a];
@@ -146,11 +170,17 @@ var padchat = (function(){
       $("a#chatloadmore").css('display', 'none');
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fadeColor(colorCSS) {
     var color = colorutils.css2triple(colorCSS);
     color = colorutils.blend(color, [1,1,1], 0.5);
     return colorutils.triple2css(color);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAuthorCSSColor(author) {
     var n = authorToNum(author, true);
     if (n < 0) {
@@ -170,6 +200,9 @@ var padchat = (function(){
       }
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function changeAuthorColorData(author, cdata) {
     var n = authorToNum(author);
     authorColorArray[n] = cdata;
@@ -179,6 +212,9 @@ var padchat = (function(){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function sendChat() {
     var lineText = $("#chatentrybox").val();
     if (lineText) {
@@ -197,6 +233,9 @@ var padchat = (function(){
   }
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(chatHistoryBlock, initialUserInfo) {
       ensureChatDay(+new Date); // so that current date shows up right away
 
@@ -205,6 +244,9 @@ var padchat = (function(){
       self.handleUserJoinOrUpdate(initialUserInfo);
       receiveChatHistoryBlock(chatHistoryBlock);
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       padutils.bindEnterAndEscape($("#chatentrybox"), function(evt) {
         // return/enter
         sendChat();
@@ -212,33 +254,54 @@ var padchat = (function(){
 
       self.scrollToBottom();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     receiveChat: function(msg) {
       var box = $("#chatlines").get(0);
       var wasAtBottom = (box.scrollTop -
                          (box.scrollHeight - $(box).height()) >= -5);
       addChatLine(msg.userId, +new Date, msg.senderName, msg.lineText, false);
       if (wasAtBottom) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.setTimeout(function() {
           self.scrollToBottom();
         }, 0);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleUserJoinOrUpdate: function(userInfo) {
       changeAuthorColorData(userInfo.userId,
                             { colorId: userInfo.colorId, faded: false });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleUserLeave: function(userInfo) {
       changeAuthorColorData(userInfo.userId,
                             { colorId: userInfo.colorId, faded: true });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     scrollToBottom: function() {
       var box = $("#chatlines").get(0);
       box.scrollTop = box.scrollHeight;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     scrollToTop: function() {
       var box = $("#chatlines").get(0);
       box.scrollTop = 0;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     loadMoreHistory: function() {
       if (loadingMoreHistory) {
         return;
@@ -260,6 +323,9 @@ var padchat = (function(){
         error: error
       });
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function success(text) {
         notLoading();
 
@@ -267,11 +333,17 @@ var padchat = (function(){
 
         // try to keep scrolled to the same place...
         var scrollBox = $("#chatlines").get(0);
+
+        // YOURNAME:
+        // YOURCOMMENT
         var scrollDeterminer = function() { return 0; };
         var topLine = $("#chatlines .chatday:first .chatline:first").children().eq(0);
         if (topLine.length > 0) {
           var posTop = topLine.position().top;
           var scrollTop = scrollBox.scrollTop;
+
+          // YOURNAME:
+          // YOURCOMMENT
           scrollDeterminer = function() {
             var newPosTop = topLine.position().top;
             return newPosTop + (scrollTop - posTop);
@@ -281,9 +353,15 @@ var padchat = (function(){
 
         scrollBox.scrollTop = Math.max(0, Math.min(scrollBox.scrollHeight, scrollDeterminer()));
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function error() {
         notLoading();
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function notLoading() {
         loadingMoreHistory = false;
         $("#padchat #chatloadmore").css('display', 'block');

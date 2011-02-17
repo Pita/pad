@@ -25,6 +25,9 @@ jimport("java.io.File",
 	"java.io.BufferedReader",
 	"net.appjet.oui.JarVirtualFile");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readFileBytes(path) {
   var jfile = new JarVirtualFile(path);
   if (!jfile.exists() || jfile.isDirectory()) {
@@ -33,6 +36,9 @@ function readFileBytes(path) {
   return net.appjet.common.util.BetterFile.getStreamBytes(jfile.openStream());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readFile(path) {
   var bytes = readFileBytes(path);
   if (bytes !== null) {
@@ -42,6 +48,9 @@ function readFile(path) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fileLastModified(path) {
   var jfile = new JarVirtualFile(path);
   if (!jfile.exists()) {
@@ -54,6 +63,9 @@ function fileLastModified(path) {
 // real files
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readRealFileBytes(path) {
   var jfile = new File(path);
   if (!jfile.exists() || jfile.isDirectory()) {
@@ -67,6 +79,9 @@ function readRealFileBytes(path) {
   return bytes;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readRealFile(path) {
   var bytes = readRealFileBytes(path);
   if (bytes !== null) {
@@ -76,6 +91,9 @@ function readRealFile(path) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function writeRealFile(path, data) {
   var jf = new Packages.java.io.File(path);
   var fw = new Packages.java.io.FileWriter(jf);
@@ -85,6 +103,9 @@ function writeRealFile(path, data) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function eachFileLine(file, fn) {
   var iter = fileLineIterator(file);
   while (iter.hasNext) {
@@ -92,6 +113,9 @@ function eachFileLine(file, fn) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fileLineIterator(file) {
   var reader = new BufferedReader(new FileReader(file));
   var nextLine = reader.readLine();

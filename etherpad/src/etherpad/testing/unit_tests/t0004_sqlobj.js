@@ -23,6 +23,9 @@ import("sqlbase.sqlobj");
 import("etherpad.globals.*");
 import("etherpad.testing.testutils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   cleanUpTables();
   testGeneral();
@@ -30,10 +33,16 @@ function run() {
   cleanUpTables();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getTestTableName() {
   return 'sqlobj_unit_test_'+stringutils.randomString(10);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function testGeneral() {
 
   if (isProduction()) {
@@ -66,6 +75,9 @@ function testGeneral() {
   // list tables and make sure it contains tableName
   var l = sqlobj.listTables();
   var found = false;
+
+  // YOURNAME:
+  // YOURCOMMENT
   l.forEach(function(x) {
     if (x == tableName) { found = true; }
   });
@@ -73,6 +85,9 @@ function testGeneral() {
 
   if (sqlcommon.isMysql()) {
     for (var i = 0; i < 3; i++) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       ['MyISAM', 'InnoDB'].forEach(function(e) {
         sqlobj.setTableEngine(tableName, e);
         assertTruthy(e == sqlobj.getTableEngine(tableName));
@@ -94,6 +109,9 @@ function testGeneral() {
   //----------------------------------------------------------------
   
   // insert + selectSingle
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _randomDate() {
     // millisecond accuracy is lost in DB.
     var d = +(new Date);
@@ -116,6 +134,9 @@ function testGeneral() {
     var obj_result = sqlobj.selectSingle(tableName, {id: obj_id});
 
     assertTruthy(obj_result.id == obj_id);
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys(obj_data).forEach(function(k) {
       var d1 = obj_data[k];
       var d2 = obj_result[k];
@@ -133,6 +154,9 @@ function testGeneral() {
   var obj_result_list = sqlobj.selectMulti(tableName, {}, {});
   assertTruthy(obj_result_list.length == obj_data_list.length);
   // orderBy
+
+  // YOURNAME:
+  // YOURCOMMENT
   ['int11', 'a', 'b'].forEach(function(colName) {
     obj_result_list = sqlobj.selectMulti(tableName, {}, {orderBy: colName});
     assertTruthy(obj_result_list.length == obj_data_list.length);
@@ -151,14 +175,23 @@ function testGeneral() {
   var obj_result_list1 = sqlobj.selectMulti(tableName, {tinyInt: true}, {});
   var obj_result_list2 = sqlobj.selectMulti(tableName, {tinyInt: false}, {});
   assertTruthy((obj_result_list1.length + obj_result_list2.length) == obj_data_list.length);
+
+  // YOURNAME:
+  // YOURCOMMENT
   obj_result_list1.forEach(function(o) {
     assertTruthy(o.tinyInt == true);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   obj_result_list2.forEach(function(o) {
     assertTruthy(o.tinyInt == false);
   });
 
   // updateSingle
+
+  // YOURNAME:
+  // YOURCOMMENT
   obj_result_list1.forEach(function(o) {
     o.a = "ttt";
     sqlobj.updateSingle(tableName, {id: o.id}, o);
@@ -167,6 +200,9 @@ function testGeneral() {
   sqlobj.update(tableName, {tinyInt: false}, {a: "fff"});
   // verify
   obj_result_list = sqlobj.selectMulti(tableName, {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   obj_result_list.forEach(function(o) {
     if (o.tinyInt) {
       assertTruthy(o.a == "ttt");
@@ -183,8 +219,14 @@ function testGeneral() {
   assertTruthy(obj_result_list.length == 0);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function cleanUpTables() {
   // delete testing table (and any other old testing tables)
+
+  // YOURNAME:
+  // YOURCOMMENT
   sqlobj.listTables().forEach(function(t) {
     if (t.indexOf("sqlobj_unit_test") == 0) {
       sqlobj.dropTable(t);
@@ -192,6 +234,9 @@ function cleanUpTables() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function testAlterColumn() {
   var tableName = _getTestTableName();
 

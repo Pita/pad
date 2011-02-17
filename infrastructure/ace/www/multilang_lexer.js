@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 AceLexer = (function lexer_init() {
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeIncrementalLexer(lineParser) {
 
   var parseLine = lineParser.parseLine;
@@ -30,11 +36,17 @@ function makeIncrementalLexer(lineParser) {
   // "dirty" lines are unparsed lines.  Other lines have properties startState,endState.
   // "uncolored" lines are parsed but the data has not been handled by ACE.
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function roundBackToLineIndex(charOffset) { // charOffset is [0,document length]
     return lineData.indexOfOffset(charOffset);
     // result is [0,num lines]
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function roundForwardToLineIndex(charOffset) { // charOffset is [0,document length]
     var idx = lineData.indexOfOffset(charOffset);
     var newCharOffset = lineData.offsetOfIndex(idx);
@@ -46,6 +58,9 @@ function makeIncrementalLexer(lineParser) {
     // result is [0,num lines]
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateBuffer(newBuffer, spliceStart, charsRemoved, charsAdded) {
     // newBuffer is string to replace buffer, other args explain the splice
     // that happened between the old buffer and newBuffer
@@ -62,6 +77,9 @@ function makeIncrementalLexer(lineParser) {
       spliceStart + charsAdded + extraEndChars);
     
     var newLineEntries = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     newChars.replace(/[^\n]*\n/g, function(line) {
       newLineEntries.push({ width: line.length, key: String(nextLineDataId++) });
     });
@@ -85,6 +103,9 @@ function makeIncrementalLexer(lineParser) {
     buffer = newBuffer;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findBeginningOfDirtyRegion(dirtyLineIndex) {
     // search backwards for a line that is either the first line
     // or is preceded by a non-dirty line.
@@ -95,6 +116,9 @@ function makeIncrementalLexer(lineParser) {
     return cleanLine + 1;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findEndOfUncoloredRegion(uncoloredLineIndex) {
     // search forwards for a line that is not uncolored,
     // or return number of lines in doc if end of doc is hit.
@@ -110,6 +134,9 @@ function makeIncrementalLexer(lineParser) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineText(lineIndex) {
     var lineEntry = lineData.atIndex(lineIndex);
     var lineTextStart = lineData.offsetOfIndex(lineIndex);
@@ -117,11 +144,17 @@ function makeIncrementalLexer(lineParser) {
     return buffer.substring(lineTextStart, lineTextEnd);    
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setLineStatus(lineIndex, status) {
     lineStatus = lineStatus.substring(0, lineIndex) + status +
       lineStatus.substring(lineIndex+1);
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexCharRange(charRange, isTimeUp) {
     if (isTimeUp()) return;
 
@@ -154,6 +187,9 @@ function makeIncrementalLexer(lineParser) {
 
       var tokenWidths = [];
       var tokenNames = [];
+
+      // YOURNAME:
+      // YOURCOMMENT
       var tokenFunc = function(str, cls) {
 	tokenWidths.push(str.length);
 	tokenNames.push(cls);
@@ -178,6 +214,9 @@ function makeIncrementalLexer(lineParser) {
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function forEachUncoloredSubrange(startChar, endChar, func, isTimeUp) {
     var startLine = roundBackToLineIndex(startChar);
     var endLine = roundForwardToLineIndex(endChar);
@@ -200,10 +239,16 @@ function makeIncrementalLexer(lineParser) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSpansForRange(startChar, endChar, func, justPeek) {
     var startLine = roundBackToLineIndex(startChar);
     var endLine = roundForwardToLineIndex(endChar);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doToken(tokenStart, tokenWidth, tokenClass) {
       // crop token to [startChar,endChar] range
       if (tokenStart + tokenWidth <= startChar) return;
@@ -241,10 +286,16 @@ function makeIncrementalLexer(lineParser) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function markRangeUncolored(startChar, endChar) {
     var startLine = roundBackToLineIndex(startChar);
     var endLine = roundForwardToLineIndex(endChar);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function stripColors(statuses) {
       var a = [];
       for(var i=0;i<statuses.length;i++) {
@@ -259,6 +310,9 @@ function makeIncrementalLexer(lineParser) {
       lineStatus.substring(endLine);
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _vars() {
     return {lineData:lineData, buffer:buffer, lineStatus:lineStatus, nextLineDataId:nextLineDataId,
 	    lineParser:lineParser};
@@ -274,36 +328,60 @@ function makeIncrementalLexer(lineParser) {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeSimpleLexer(lineParser) {
   var parseLine = lineParser.parseLine;
   var initialState = lineParser.initialState;
   var getClassesForScope = lineParser.getClassesForScope;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexAsLines(str, tokenFunc, newLineFunc) {
     if (str.charAt(str.length-1) != '\n') {
       str = str+'\n';
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doToken(txt, scope) {
       tokenFunc(txt, getClassesForScope(scope));
     }
     var state = initialState;
+
+    // YOURNAME:
+    // YOURCOMMENT
     str.replace(/[^\n]*\n/g, function(line) {
       state = parseLine(line, state, doToken);
       newLineFunc();
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lexString(str, tokenFunc) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     lexAsLines(str, tokenFunc, function() {});
   }
 
   return {lexString:lexString, lexAsLines:lexAsLines};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function codeStringToHTML(codeString) {
   var simpleLexer = makeSimpleLexer(grammars["source.js"]);
   var atLineStart = true;
   var html = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function tokenFunc(txt, type) {
     var cls = type;
     if (cls) html.push('<tt class="',cls,'">');
@@ -311,6 +389,9 @@ function codeStringToHTML(codeString) {
     html.push(escapeHTML(txt),'</tt>');
     atLineStart = false;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function newLineFunc() {
     html.push('<br/>\n');
     atLineStart = true;
@@ -320,6 +401,9 @@ function codeStringToHTML(codeString) {
   return html.join('');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function escapeHTML(s) {
   var re = /[&<>\'\" ]/g;
   if (! re.MAP) {
@@ -333,12 +417,21 @@ function escapeHTML(s) {
       ' ': '&#160;'
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.replace(re, function(c) { return re.MAP[c]; });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getIncrementalLexer(type) {
   return makeIncrementalLexer(grammars["text.html.basic"]);//grammars[type]);
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getSimpleLexer(type) {
   return makeSimpleLexer(grammars[type]);
 }

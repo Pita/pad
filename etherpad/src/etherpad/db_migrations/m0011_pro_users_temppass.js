@@ -17,6 +17,9 @@
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   // allow null values in passwordHash
   if (sqlcommon.isDerby()) {

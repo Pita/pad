@@ -16,6 +16,9 @@
 
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.createTable('pro_account_usage', {
     id: sqlobj.getIdColspec(),

@@ -40,6 +40,9 @@ jimport("java.util.concurrent.ConcurrentHashMap");
 jimport("net.appjet.oui.GlobalSynchronizer");
 jimport("net.appjet.oui.exceptionlog");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   appjet.cache.pads = {};
   appjet.cache.pads.meta = new ConcurrentHashMap();
@@ -57,7 +60,13 @@ function onStartup() {
 var _JSON_CACHE_SIZE = 10000;
 
 // to clear: appjet.cache.padmodel.modelcache.map.clear()
+
+// YOURNAME:
+// YOURCOMMENT
 function _getModelCache() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache('padmodel.modelcache', function(cache) {
     if (! cache.map) {
       cache.map = new LimitedSizeMapping(_JSON_CACHE_SIZE);
@@ -66,6 +75,9 @@ function _getModelCache() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function cleanText(txt) {
   return txt.replace(/\r\n/g,'\n').replace(/\r/g,'\n').replace(/\t/g, '        ').replace(/\xa0/g, ' ');
 }
@@ -79,6 +91,9 @@ function cleanText(txt) {
  *
  * Note: padId is a GLOBAL id.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function accessPadGlobal(padId, padFunc, rwMode) {
   // this may make a nested call to accessPadGlobal, so do it first
   pad_security.checkAccessControl(padId, rwMode);
@@ -103,7 +118,13 @@ function accessPadGlobal(padId, padFunc, rwMode) {
     return padFunc(p);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return doWithPadLock(padId, function() {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return sqlcommon.inTransaction(function() {
       var meta = _getPadMetaData(padId); // null if pad doesn't exist yet
 
@@ -115,6 +136,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	meta.status.lastAccess = +new Date();
       }
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getCurrentAText() {
         var tempObj = pad.tempObj();
         if (! tempObj.atext) {
@@ -122,6 +146,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
         }
         return tempObj.atext;
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function addRevision(theChangeset, author, optDatestamp) {
         var atext = getCurrentAText();
         var newAText = Changeset.applyToAText(theChangeset, atext, pad.pool());
@@ -142,9 +169,15 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 
         updateCoarseChangesets(true);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getNumForAuthor(author, dontAddIfAbsent) {
         return pad.pool().putAttrib(['author',author||''], dontAddIfAbsent);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getAuthorForNum(n) {
         // must return null if n is an attrib number that isn't an author
         var pair = pad.pool().getAttrib(n);
@@ -154,6 +187,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
         return null;
       }
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function updateCoarseChangesets(onlyIfPresent) {
         // this is fast to run if the coarse changesets
         // are up-to-date or almost up-to-date;
@@ -212,8 +248,17 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	// Operations that write to the data structure should
 	// set meta.dirty = true.  Any pad access that isn't
 	// done in "read" mode also sets dirty = true.
+
+// YOURNAME:
+// YOURCOMMENT
 	getId: function() { return padId; },
+
+// YOURNAME:
+// YOURCOMMENT
 	exists: function() { return !!meta; },
+
+// YOURNAME:
+// YOURCOMMENT
 	create: function(optText) {
 	  meta = {};
 	  meta.head = -1; // incremented below by addRevision
@@ -239,6 +284,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 
 	  padevents.onNewPad(pad);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	destroy: function() { // you may want to collab_server.bootAllUsers first
           padevents.onDestroyPad(pad);
 
@@ -254,6 +302,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
           sqlobj.deleteRows("PAD_SQLMETA", { id: padId });
 	  meta = null;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	writeToDB: function() {
           var meta2 = {};
           for(var k in meta) meta2[k] = meta[k];
@@ -274,21 +325,42 @@ function accessPadGlobal(padId, padFunc, rwMode) {
           var props = { headRev: meta.head, lastWriteTime: new Date() };
           _writePadSqlMeta(padId, props);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	pool: function() {
 	  return _getPadAPool(padId);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getHeadRevisionNumber: function() { return meta.head; },
+
+// YOURNAME:
+// YOURCOMMENT
 	getRevisionAuthor: function(r) {
 	  var n = _getPadStringArray(padId, "revmeta").getJSONEntry(r).a;
 	  return getAuthorForNum(Number(n));
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getRevisionChangeset: function(r) {
 	  return _getPadStringArray(padId, "revs").getEntry(r);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	tempObj: function() { return _getPadTemp(padId); },
+
+// YOURNAME:
+// YOURCOMMENT
 	getKeyRevisionNumber: function(r) {
 	  return Math.floor(r / meta.keyRevInterval) * meta.keyRevInterval;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getInternalRevisionAText: function(r) {
           var cacheKey = "atext/C/"+r+"/"+padId;
           var modelCache = _getModelCache();
@@ -315,6 +387,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
           modelCache.put(cacheKey, Changeset.cloneAText(atext));
 	  return atext;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getInternalRevisionText: function(r, optInfoObj) {
 	  var atext = pad.getInternalRevisionAText(r);
 	  var text = atext.text;
@@ -325,12 +400,24 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	  }
 	  return text;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getRevisionText: function(r, optInfoObj) {
 	  var internalText = pad.getInternalRevisionText(r, optInfoObj);
 	  return internalText.slice(0, -1);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	atext: function() { return Changeset.cloneAText(getCurrentAText()); },
+
+// YOURNAME:
+// YOURCOMMENT
 	text: function() { return pad.atext().text; },
+
+// YOURNAME:
+// YOURCOMMENT
 	getRevisionDate: function(r) {
 	  var revmeta = _getPadStringArray(padId, "revmeta");
 	  return new Date(revmeta.getJSONEntry(r).t);
@@ -339,22 +426,37 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	// you must go through collab_server.
 	// Also, be sure to run cleanText() on any text to strip out carriage returns
 	// and other stuff.
+
+// YOURNAME:
+// YOURCOMMENT
 	appendRevision: function(theChangeset, author, optDatestamp) {
 	  addRevision(theChangeset, author || '', optDatestamp);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	appendChatMessage: function(obj) {
 	  var index = meta.numChatMessages;
 	  meta.numChatMessages++;
 	  var chat = _getPadStringArray(padId, "chat");
 	  chat.setJSONEntry(index, obj);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getNumChatMessages: function() {
 	  return meta.numChatMessages;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getChatMessage: function(i) {
 	  var chat = _getPadStringArray(padId, "chat");
 	  return chat.getJSONEntry(i);
 	},
+
+        // YOURNAME:
+        // YOURCOMMENT
         getPadOptionsObj: function() {
           var data = pad.getDataRoot();
           if (! data.padOptions) {
@@ -366,13 +468,22 @@ function accessPadGlobal(padId, padFunc, rwMode) {
           }
           return data.padOptions;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         getGuestPolicy: function() {
           // allow/ask/deny
           return pad.getPadOptionsObj().guestPolicy;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         setGuestPolicy: function(policy) {
           pad.getPadOptionsObj().guestPolicy = policy;
         },
+
+// YOURNAME:
+// YOURCOMMENT
 	getDataRoot: function() {
 	  var dataRoot = meta.dataRoot;
 	  if (! dataRoot) {
@@ -383,6 +494,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	},
 	// returns an object, changes to which are not reflected
 	// in the DB;  use setAuthorData for mutation
+
+// YOURNAME:
+// YOURCOMMENT
 	getAuthorData: function(author) {
 	  var authors = _getPadStringArray(padId, "authors");
 	  var n = getNumForAuthor(author, true);
@@ -393,16 +507,28 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	    return authors.getJSONEntry(n);
           }
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	setAuthorData: function(author, data) {
 	  var authors = _getPadStringArray(padId, "authors");
 	  var n = getNumForAuthor(author);
 	  authors.setJSONEntry(n, data);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	adoptChangesetAttribs: function(cs, oldPool) {
 	  return Changeset.moveOpsToNewPool(cs, oldPool, pad.pool());
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	eachATextAuthor: function(atext, func) {
 	  var seenNums = {};
+
+// YOURNAME:
+// YOURCOMMENT
 	  Changeset.eachAttribNumber(atext.attribs, function(n) {
 	    if (! seenNums[n]) {
 	      seenNums[n] = true;
@@ -413,6 +539,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 	    }
 	  });
 	},
+
+        // YOURNAME:
+        // YOURCOMMENT
         getCoarseChangeset: function(start, numChangesets) {
           updateCoarseChangesets();
 
@@ -434,6 +563,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
 
           return cs;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         getSupportsTimeSlider: function() {
           if (! ('supportsTimeSlider' in meta)) {
             if (padutils.isProPadId(padId)) {
@@ -447,6 +579,9 @@ function accessPadGlobal(padId, padFunc, rwMode) {
             return !! meta.supportsTimeSlider;
           }
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         setSupportsTimeSlider: function(v) {
           meta.supportsTimeSlider = v;
         },
@@ -478,11 +613,17 @@ function accessPadGlobal(padId, padFunc, rwMode) {
  * Call an arbitrary function with no arguments inside an exclusive
  * lock on a padId, and return the result.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function doWithPadLock(padId, func) {
   var lockName = "document/"+padId;
   return sync.doWithStringLock(lockName, func);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isPadLockHeld(padId) {
   var lockName = "document/"+padId;
   return GlobalSynchronizer.isHeld(lockName);
@@ -493,6 +634,9 @@ function isPadLockHeld(padId) {
  * but cached in appjet.cache.  Returns null if pad doesn't
  * exist at all (does NOT create it).  Requires pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadMetaData(padId) {
   var padMeta = appjet.cache.pads.meta.get(padId);
   if (! padMeta) {
@@ -513,6 +657,9 @@ function _getPadMetaData(padId) {
  * Sets a pad's meta-data object, such as when creating
  * a pad for the first time.  Requires pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _insertPadMetaData(padId, obj) {
   appjet.cache.pads.meta.put(padId, obj);
 }
@@ -521,11 +668,17 @@ function _insertPadMetaData(padId, obj) {
  * Removes a pad's meta data, writing through to the database.
  * Used for the rare case of deleting a pad.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _removePadMetaData(padId) {
   appjet.cache.pads.meta.remove(padId);
   sqlbase.deleteJSON("PAD_META", padId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadAPool(padId) {
   var padAPool = appjet.cache.pads.apool.get(padId);
   if (! padAPool) {
@@ -545,6 +698,9 @@ function _getPadAPool(padId) {
  * Removes a pad's apool data, writing through to the database.
  * Used for the rare case of deleting a pad.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _removePadAPool(padId) {
   appjet.cache.pads.apool.remove(padId);
   sqlbase.deleteJSON("PAD_APOOL", padId);
@@ -555,6 +711,9 @@ function _removePadAPool(padId) {
  * e.g. for tracking open connections.  Creates object
  * if necessary.  Requires pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadTemp(padId) {
   var padTemp = appjet.cache.pads.temp.get(padId);
   if (! padTemp) {
@@ -569,6 +728,9 @@ function _getPadTemp(padId) {
  * is something like "revs" or "chat".  The object must be acquired and used
  * all within a pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadStringArray(padId, name) {
   var padFoo = appjet.cache.pads[name].get(padId);
   if (! padFoo) {
@@ -581,6 +743,9 @@ function _getPadStringArray(padId, name) {
   }
   var tableName = "PAD_"+name.toUpperCase();
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getEntry: function(idx) {
       var n = Number(idx);
       if (padFoo.writeCache[n]) return padFoo.writeCache[n];
@@ -588,19 +753,31 @@ function _getPadStringArray(padId, name) {
       sqlbase.getPageStringArrayElements(tableName, padId, n, padFoo.readCache);
       return padFoo.readCache[n]; // null if not present in SQL
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setEntry: function(idx, value) {
       var n = Number(idx);
       var v = String(value);
       padFoo.writeCache[n] = v;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getJSONEntry: function(idx) {
       var result = self.getEntry(idx);
       if (! result) return result;
       return fastJSON.parse(String(result));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setJSONEntry: function(idx, valueObj) {
       self.setEntry(idx, fastJSON.stringify(valueObj));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     writeToDB: function() {
       sqlbase.putDictStringArrayElements(tableName, padId, padFoo.writeCache);
       // copy key-vals of writeCache into readCache
@@ -619,6 +796,9 @@ function _getPadStringArray(padId, name) {
  * Destroy a string array;  writes through to the database.  Must be
  * called within a pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _destroyPadStringArray(padId, name) {
   appjet.cache.pads[name].remove(padId);
   var tableName = "PAD_"+name.toUpperCase();
@@ -628,16 +808,25 @@ function _destroyPadStringArray(padId, name) {
 /**
  * SELECT the row of PAD_SQLMETA for the given pad.  Requires pad lock.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadSqlMeta(padId) {
   return sqlobj.selectSingle("PAD_SQLMETA", { id: padId });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _writePadSqlMeta(padId, updates) {
   sqlobj.update("PAD_SQLMETA", { id: padId }, updates);
 }
 
 
 // called from dbwriter
+
+// YOURNAME:
+// YOURCOMMENT
 function removeFromMemory(pad) {
   // safe to call if all data is written to SQL, otherwise will lose data;
   var padId = pad.getId();

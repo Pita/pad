@@ -15,6 +15,9 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
 
   // latest official text from server
@@ -34,11 +37,17 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
   var changeCallback = null;
 
   var changeCallbackTimeout = null;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setChangeCallbackTimeout() {
     // can call this multiple times per call-stack, because
     // we only schedule a call to changeCallback if it exists
     // and if there isn't a timeout already scheduled.
     if (changeCallback && changeCallbackTimeout === null) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       changeCallbackTimeout = scheduler.setTimeout(function() {
 	try {
 	  changeCallback();
@@ -52,11 +61,23 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
 
   var self;
   return self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isTracking: function() { return tracking; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setBaseText: function(text) {
       self.setBaseAttributedText(Changeset.makeAText(text), null);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setBaseAttributedText: function(atext, apoolJsonObj) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       aceCallbacksProvider.withCallbacks("setBaseText", function(callbacks) {
         tracking = true;
         baseAText = Changeset.cloneAText(atext);
@@ -75,6 +96,9 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
         }
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     composeUserChangeset: function(c) {
       if (! tracking) return;
       if (applyingNonUserChanges) return;
@@ -83,9 +107,15 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
 
       setChangeCallbackTimeout();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     applyChangesToBase: function (c, optAuthor, apoolJsonObj) {
       if (! tracking) return;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       aceCallbacksProvider.withCallbacks("applyChangesToBase", function(callbacks) {
 
         if (apoolJsonObj) {
@@ -119,6 +149,9 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
         }
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     prepareUserChangeset: function() {
       // If there are user changes to submit, 'changeset' will be the
       // changeset, else it will be null.
@@ -150,6 +183,9 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
       var data = { changeset: cs, apool: wireApool };
       return data;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     applyPreparedChangesetToBase: function() {
       if (! submittedChangeset) {
 	// violation of protocol; use prepareUserChangeset first
@@ -159,9 +195,15 @@ function makeChangesetTracker(scheduler, apool, aceCallbacksProvider) {
       baseAText = Changeset.applyToAText(submittedChangeset, baseAText, apool);
       submittedChangeset = null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setUserChangeNotificationCallback: function (callback) {
       changeCallback = callback;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     hasUncommittedChanges: function() {
       return !!(submittedChangeset || (! Changeset.isIdentity(userChangeset)));
     }

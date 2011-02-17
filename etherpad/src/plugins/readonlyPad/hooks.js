@@ -12,6 +12,9 @@ import("fastJSON");
 
 var readonlyPad_data = [];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function docBarDropdownsPad(arg) {
     helpers.includeCss('plugins/readonlyPad/readonlyPad.css');
     helpers.includeJs('plugins/readonlyPad/readonlyPad.js');
@@ -19,8 +22,14 @@ function docBarDropdownsPad(arg) {
     return arg.template.include('readonlyPadDropdown.ejs', undefined, ['readonlyPad']);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function collabServerUserChanges(args) {
     var readonlyPad_return = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     model.accessPadGlobal(args.pad, function(pad) {
 	var opts = pad.getPadOptionsObj();
 	

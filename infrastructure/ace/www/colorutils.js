@@ -19,8 +19,14 @@
 var colorutils = {};
 
 // "#ffffff" or "#fff" or "ffffff" or "fff" to [1.0, 1.0, 1.0]
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.css2triple = function(cssColor) {
   var sixHex = colorutils.css2sixhex(cssColor);
+
+  // YOURNAME:
+  // YOURCOMMENT
   function hexToFloat(hh) {
     return Number("0x"+hh)/255;
   }
@@ -30,6 +36,9 @@ colorutils.css2triple = function(cssColor) {
 }
 
 // "#ffffff" or "#fff" or "ffffff" or "fff" to "ffffff"
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.css2sixhex = function(cssColor) {
   var h = /[0-9a-fA-F]+/.exec(cssColor)[0];
   if (h.length != 6) {
@@ -42,7 +51,13 @@ colorutils.css2sixhex = function(cssColor) {
 }
 
 // [1.0, 1.0, 1.0] -> "#ffffff"
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.triple2css = function(triple) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function floatToHex(n) {
     var n2 = colorutils.clamp(Math.round(n*255), 0, 255);
     return ("0"+n2.toString(16)).slice(-2);
@@ -52,31 +67,64 @@ colorutils.triple2css = function(triple) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.clamp = function(v,bot,top) { return v < bot ? bot : (v > top ? top : v); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.min3 = function(a,b,c) { return (a < b) ? (a < c ? a : c) : (b < c ? b : c); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.max3 = function(a,b,c) { return (a > b) ? (a > c ? a : c) : (b > c ? b : c); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.colorMin = function(c) { return colorutils.min3(c[0], c[1], c[2]); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.colorMax = function(c) { return colorutils.max3(c[0], c[1], c[2]); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.scale = function(v, bot, top) { return colorutils.clamp(bot + v*(top-bot), 0, 1); };
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.unscale = function(v, bot, top) { return colorutils.clamp((v-bot)/(top-bot), 0, 1); };
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.scaleColor = function(c, bot, top) {
   return [colorutils.scale(c[0], bot, top),
 	  colorutils.scale(c[1], bot, top),
 	  colorutils.scale(c[2], bot, top)];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.unscaleColor = function(c, bot, top) {
   return [colorutils.unscale(c[0], bot, top),
 	  colorutils.unscale(c[1], bot, top),
 	  colorutils.unscale(c[2], bot, top)];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.luminosity = function(c) {
   // rule of thumb for RGB brightness; 1.0 is white
   return c[0]*0.30 + c[1]*0.59 + c[2]*0.11;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.saturate = function(c) {
   var min = colorutils.colorMin(c);
   var max = colorutils.colorMax(c);
@@ -84,6 +132,9 @@ colorutils.saturate = function(c) {
   return colorutils.unscaleColor(c, min, max);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 colorutils.blend = function(c1, c2, t) {
   return [colorutils.scale(t, c1[0], c2[0]),
 	  colorutils.scale(t, c1[1], c2[1]),

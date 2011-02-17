@@ -4,6 +4,9 @@ import("etherpad.utils.*");
 import("etherpad.globals.*");
 import("etherpad.helpers");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function handlePath(arg) {
   helpers.includeCss('plugins/debugJsBacktrace/javascript-stacktrace/qunit.css');
   helpers.includeJs('plugins/debugJsBacktrace/javascript-stacktrace/qunit.js');

@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('#shoppingform').submit(function() { 
     $('#contbutton').attr("disabled", true).attr("value", "Purchasing...");
   });

@@ -15,6 +15,9 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padimpexp = (function() {
 
   ///// import
@@ -22,11 +25,17 @@ var padimpexp = (function() {
   var currentImportTimer = null;
   var hidePanelCall = null;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function addImportFrames() {
     $("#impexp-import .importframe").remove();
     $('#impexp-import').append(
       $('<iframe style="display: none;" name="importiframe" class="importframe"></iframe>'));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fileInputUpdated() {
     $('#importformfilediv').addClass('importformenabled');
     $('#importsubmitinput').removeAttr('disabled');
@@ -40,6 +49,9 @@ var padimpexp = (function() {
       .animate({paddingLeft:"10px"}, 150, 'swing')
       .animate({paddingLeft:"0px"}, 150, 'swing');
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function fileInputSubmit() {
     $('#importmessagefail').fadeOut("fast");
     var ret = window.confirm(
@@ -47,6 +59,9 @@ var padimpexp = (function() {
 	" Are you sure you want to proceed?");
     if (ret) {
       hidePanelCall = paddocbar.hideLaterIfNoOtherInteraction();
+
+      // YOURNAME:
+      // YOURCOMMENT
       currentImportTimer = window.setTimeout(function() {
         if (! currentImportTimer) {
           return;
@@ -55,6 +70,9 @@ var padimpexp = (function() {
         importFailed("Request timed out.");
       }, 25000); // time out after some number of seconds
       $('#importsubmitinput').attr({disabled: true}).val("Importing...");
+
+      // YOURNAME:
+      // YOURCOMMENT
       window.setTimeout(function() {
         $('#importfileinput').attr({disabled: true}); }, 0);
       $('#importarrow').stop(true, true).hide();
@@ -62,25 +80,43 @@ var padimpexp = (function() {
     }
     return ret;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importFailed(msg) {
     importErrorMessage(msg);
     importDone();
     addImportFrames();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importDone() {
     $('#importsubmitinput').removeAttr('disabled').val("Import Now");
+
+    // YOURNAME:
+    // YOURCOMMENT
     window.setTimeout(function() {
       $('#importfileinput').removeAttr('disabled'); }, 0);
     $('#importstatusball').hide();
     importClearTimeout();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importClearTimeout() {
     if (currentImportTimer) {
       window.clearTimeout(currentImportTimer);
       currentImportTimer = null;
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importErrorMessage(msg) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function showError(fade) {
       $('#importmessagefail').html(
         '<strong style="color: red">Import failed:</strong> '+
@@ -89,12 +125,18 @@ var padimpexp = (function() {
 
     if ($('#importexport .importmessage').is(':visible')) {
 	  $('#importmessagesuccess').fadeOut("fast");
+
+// YOURNAME:
+// YOURCOMMENT
 	  $('#importmessagefail').fadeOut("fast", function() {
             showError(true); });
     } else {
       showError();
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importSuccessful(token) {
     $.ajax({
       type: 'post',
@@ -106,10 +148,16 @@ var padimpexp = (function() {
     });
     addImportFrames();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importApplicationFailed(xhr, textStatus, errorThrown) {
     importErrorMessage("Error during conversion.");
     importDone();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function importApplicationSuccessful(data, textStatus) {
     if (data.substr(0, 2) == "ok") {
       if ($('#importexport .importmessage').is(':visible')) {
@@ -118,7 +166,13 @@ var padimpexp = (function() {
       $('#importmessagesuccess').html(
         '<strong style="color: green">Import successful!</strong>').show();
       $('#importformfilediv').hide();
+
+      // YOURNAME:
+      // YOURCOMMENT
       window.setTimeout(function() {
+
+        // YOURNAME:
+        // YOURCOMMENT
         $('#importmessagesuccess').fadeOut("slow", function() {
           $('#importformfilediv').show();
         });
@@ -137,6 +191,9 @@ var padimpexp = (function() {
 
   ///// export
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cantExport() {
     var type = $(this);
     if (type.hasClass("exporthrefpdf")) {
@@ -156,7 +213,13 @@ var padimpexp = (function() {
   /////
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#impexp-close").click(function() {paddocbar.setShownPanel(null);});
 
       addImportFrames();
@@ -164,6 +227,9 @@ var padimpexp = (function() {
       $('#importform').submit(fileInputSubmit);
       $('.disabledexport').click(cantExport);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     handleFrameCall: function(callName, argsArray) {
       if (callName == 'importFailed') {
         importFailed(argsArray[0]);
@@ -172,11 +238,17 @@ var padimpexp = (function() {
         importSuccessful(argsArray[0]);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function() {
       $("#impexp-disabled-clickcatcher").show();
       $("#impexp-import").css('opacity', 0.5);
       $("#impexp-export").css('opacity', 0.5);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     enable: function() {
       $("#impexp-disabled-clickcatcher").hide();
       $("#impexp-import").css('opacity', 1);

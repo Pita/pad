@@ -24,6 +24,9 @@ jimport("java.lang.System.out.println");
 jimport("java.lang.System");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isPNE() {
   if (appjet.cache.fakePNE || appjet.config['etherpad.fakePNE']) {
     return true;
@@ -43,10 +46,16 @@ function isPNE() {
  *     changes in the PATCH level are perfectly compatible, forwards and backwards.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getVersionString() {
   return appjet.config['etherpad.pneVersion'];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parseVersionString(x) {
   var parts = x.split('.');
   return {
@@ -57,10 +66,16 @@ function parseVersionString(x) {
 }
 
 /* returns {major: int, minor: int, patch: int} */
+
+// YOURNAME:
+// YOURCOMMENT
 function getVersionNumbers() {
   return parseVersionString(getVersionString());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkDbVersionUpgrade() {
   var dbVersionString = persistent_vars.get("db_pne_version");
   var runningVersionString = getVersionString();
@@ -104,6 +119,9 @@ function checkDbVersionUpgrade() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function saveDbVersion() {
   var dbVersionString = persistent_vars.get("db_pne_version");
   if (getVersionString() != dbVersionString) {
@@ -134,13 +152,22 @@ var _eepneAllowedConfigVars = [
   'sslKeyStore'
 ];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isServerLicensed() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function enableTrackingAgain() {
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function pneTrackerHtml() {
   appjet.cache.noMorePneTracking = true;
 }

@@ -31,7 +31,13 @@ import("stringutils.sprintf");
 var _JSON_CACHE_SIZE = 10000;
 
 // to clear: appjet.cache.pad_changeset_control.jsoncache.map.clear()
+
+// YOURNAME:
+// YOURCOMMENT
 function _getJSONCache() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache('pad_changeset_control.jsoncache', function(cache) {
     if (! cache.map) {
       cache.map = new LimitedSizeMapping(_JSON_CACHE_SIZE);
@@ -44,33 +50,54 @@ var _profiler = {
   t: 0,
   laps: [],
   active: false,
+
+  // YOURNAME:
+  // YOURCOMMENT
   start: function() {
     _profiler.t = +new Date;
     _profiler.laps = [];
     //_profiler.active = true;
   },
+
+  // YOURNAME:
+  // YOURCOMMENT
   lap: function(name) {
     if (! _profiler.active) return;
     var t2 = +new Date;
     _profiler.laps.push([name, t2 - _profiler.t]);
   },
+
+  // YOURNAME:
+  // YOURCOMMENT
   dump: function(info) {
     if (! _profiler.active) return;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function padright(s, len) {
       s = String(s);
       return s + new Array(Math.max(0,len-s.length+1)).join(' ');
     }
     var str = padright(info,20)+": ";
+
+    // YOURNAME:
+    // YOURCOMMENT
     _profiler.laps.forEach(function(e) {
       str += padright(e.join(':'), 8);
     });
     java.lang.System.out.println(str);
   },
+
+  // YOURNAME:
+  // YOURCOMMENT
   stop: function() {
     _profiler.active = false;
   }
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   _profiler.start();
 
@@ -80,6 +107,9 @@ function onRequest() {
   var padId = parseUrlId(urlId).localPadId;
   // var revisionId = parts[5];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     if (! pad.exists() && pad.getSupportsTimeSlider()) {
       response.forbid();
@@ -110,7 +140,13 @@ function onRequest() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCacheableChangesetInfoJSON(padId, startNum, endNum, granularity) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     var lastRev = pad.getHeadRevisionNumber();
     if (endNum > lastRev+1) {
@@ -141,6 +177,9 @@ function getCacheableChangesetInfoJSON(padId, startNum, endNum, granularity) {
 
 // uses changesets whose numbers are between startRev (inclusive)
 // and endRev (exclusive); 0 <= startNum < endNum
+
+// YOURNAME:
+// YOURCOMMENT
 function getChangesetInfo(padId, startNum, endNum, granularity) {
   var forwardsChangesets = [];
   var backwardsChangesets = [];
@@ -159,6 +198,9 @@ function getChangesetInfo(padId, startNum, endNum, granularity) {
   // are unaffected by new revisions being added to the pad.
 
   var lastRev;
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     lastRev = pad.getHeadRevisionNumber();
   }, 'r');
@@ -169,6 +211,9 @@ function getChangesetInfo(padId, startNum, endNum, granularity) {
   endNum = Math.floor(endNum / granularity)*granularity;
 
   var lines;
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     lines = _getPadLines(pad, startNum-1);
   }, 'r');
@@ -176,6 +221,9 @@ function getChangesetInfo(padId, startNum, endNum, granularity) {
 
   var compositeStart = startNum;
   while (compositeStart < endNum) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var whileBodyResult = padutils.accessPadLocal(padId, function(pad) {
       _profiler.lap('c0');
       if (compositeStart + granularity > endNum) {
@@ -197,6 +245,9 @@ function getChangesetInfo(padId, startNum, endNum, granularity) {
       _profiler.lap('c5');
       var backwards2 = Changeset.moveOpsToNewPool(backwards, pad.pool(), apool);
       _profiler.lap('c6');
+
+      // YOURNAME:
+      // YOURCOMMENT
       function revTime(r) {
         var date = pad.getRevisionDate(r);
         var s = Math.floor((+date)/1000);
@@ -238,6 +289,9 @@ function getChangesetInfo(padId, startNum, endNum, granularity) {
 
 // Compose a series of consecutive changesets from a pad.
 // precond: startNum < endNum
+
+// YOURNAME:
+// YOURCOMMENT
 function _composePadChangesets(pad, startNum, endNum) {
   if (endNum - startNum > 1) {
     var csFromPad = pad.getCoarseChangeset(startNum, endNum - startNum);
@@ -260,6 +314,9 @@ function _composePadChangesets(pad, startNum, endNum) {
 
 // Get arrays of text lines and attribute lines for a revision
 // of a pad.
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadLines(pad, revNum) {
   var atext;
   _profiler.lap('PL0');

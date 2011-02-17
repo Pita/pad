@@ -36,17 +36,26 @@ jimport("java.lang.System.out.println");
  */
 
 /* returns array */
+
+// YOURNAME:
+// YOURCOMMENT
 function _getRevisionsArray(pad) {
   var dataRoot = pad.getDataRoot();
   if (!dataRoot.savedRevisions) {
     dataRoot.savedRevisions = [];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   dataRoot.savedRevisions.sort(function(a,b) {
     return cmp(b.timestamp, a.timestamp);
   });
   return dataRoot.savedRevisions;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadRevisionById(pad, savedRevId) {
   var revs = _getRevisionsArray(pad);
   var rev;
@@ -63,10 +72,16 @@ function _getPadRevisionById(pad, savedRevId) {
 /* public functions */
 /*----------------------------------------------------------------*/
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getRevisionList(pad) {
   return _getRevisionsArray(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function saveNewRevision(pad, savedBy, savedById, revisionNumber, optIP, optTimestamp, optId) {
   var revArray = _getRevisionsArray(pad);
   var rev = {
@@ -83,6 +98,9 @@ function saveNewRevision(pad, savedBy, savedById, revisionNumber, optIP, optTime
   return rev;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setLabel(pad, savedRevId, userId, newLabel) {
   var rev = _getPadRevisionById(pad, savedRevId);
   if (!rev) {
@@ -97,6 +115,9 @@ function setLabel(pad, savedRevId, userId, newLabel) {
   rev.label = newLabel;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStoredRevision(pad, savedRevId) {
   return _getPadRevisionById(pad, savedRevId);
 }

@@ -20,10 +20,16 @@
 
 var _MAX_LIST_LEVEL = 8;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sanitizeUnicode(s) {
   return s.replace(/[\uffff\ufffe\ufeff\ufdd0-\ufdef\ud800-\udfff]/g, '?');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeContentCollector(collectStyles, browser, apool, domInterface,
                               className2Author) {
   browser = browser || {};
@@ -36,60 +42,111 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
   }
 
   var dom = domInterface || {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isNodeText: function(n) {
       return (n.nodeType == 3);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeTagName: function(n) {
       return n.tagName;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeValue: function(n) {
       return n.nodeValue;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeNumChildren: function(n) {
       return n.childNodes.length;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeChild: function(n, i) {
       return n.childNodes.item(i);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeProp: function(n, p) {
       return n[p];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeAttr: function(n, a) {
       return n.getAttribute(a);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     optNodeInnerHTML: function(n) {
       return n.innerHTML;
     }
   };
 
   var _blockElems = { "div":1, "p":1, "pre":1, "li":1 };
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isBlockElement(n) {
     return !!_blockElems[(dom.nodeTagName(n) || "").toLowerCase()];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function textify(str) {
     return sanitizeUnicode(
       str.replace(/[\n\r ]/g, ' ').replace(/\xa0/g, ' ').replace(/\t/g, '        '));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAssoc(node, name) {
     return dom.nodeProp(node, "_magicdom_"+name);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var lines = (function() {
     var textArray = [];
     var attribsArray = [];
     var attribsBuilder = null;
     var op = Changeset.newOp('+');
     var self = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       length: function() { return textArray.length; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       atColumnZero: function() {
         return textArray[textArray.length-1] === "";
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       startNew: function() {
         textArray.push("");
         self.flush(true);
         attribsBuilder = Changeset.smartOpAssembler();
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       textOfLine: function(i) { return textArray[i]; },
+
+      // YOURNAME:
+      // YOURCOMMENT
       appendText: function(txt, attrString) {
         textArray[textArray.length-1] += txt;
         //dmesg(txt+" / "+attrString);
@@ -97,9 +154,18 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
         op.chars = txt.length;
         attribsBuilder.append(op);
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       textLines: function() { return textArray.slice(); },
+
+      // YOURNAME:
+      // YOURCOMMENT
       attribLines: function() { return attribsArray; },
       // call flush only when you're done
+
+      // YOURNAME:
+      // YOURCOMMENT
       flush: function(withNewline) {
         if (attribsBuilder) {
           attribsArray.push(attribsBuilder.toString());
@@ -111,6 +177,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     return self;
   }());
   var cc = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _ensureColumnZero(state) {
     if (! lines.atColumnZero()) {
       cc.startNewLine(state);
@@ -119,6 +188,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
   var selection, startPoint, endPoint;
   var selStart = [-1,-1], selEnd = [-1,-1];
   var blockElems = { "div":1, "p":1, "pre":1 };
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _isEmpty(node, state) {
     // consider clean blank lines pasted in IE to be empty
     if (dom.nodeNumChildren(node) == 0) return true;
@@ -134,6 +206,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     }
     return false;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _pointHere(charsAfter, state) {
     var ln = lines.length()-1;
     var chr = lines.textOfLine(ln).length;
@@ -143,9 +218,15 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     chr += charsAfter;
     return [ln, chr];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _reachBlockPoint(nd, idx, state) {
     if (! dom.isNodeText(nd)) _reachPoint(nd, idx, state);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _reachPoint(nd, idx, state) {
     if (startPoint && nd == startPoint.node && startPoint.index == idx) {
       selStart = _pointHere(0, state);
@@ -154,12 +235,21 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
       selEnd = _pointHere(0, state);
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.incrementFlag = function(state, flagName) {
     state.flags[flagName] = (state.flags[flagName] || 0)+1;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.decrementFlag = function(state, flagName) {
     state.flags[flagName]--;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.incrementAttrib = function(state, attribName) {
     if (! state.attribs[attribName]) {
       state.attribs[attribName] = 1;
@@ -169,10 +259,16 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     }
     _recalcAttribString(state);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.decrementAttrib = function(state, attribName) {
     state.attribs[attribName]--;
     _recalcAttribString(state);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _enterList(state, listType) {
     var oldListType = state.listType;
     state.listLevel = (state.listLevel || 0)+1;
@@ -183,6 +279,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     _recalcAttribString(state);
     return oldListType;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _exitList(state, oldListType) {
     state.listLevel--;
     if (state.listType != 'none') {
@@ -191,6 +290,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     state.listType = oldListType;
     _recalcAttribString(state);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _enterAuthor(state, author) {
     var oldAuthor = state.author;
     state.authorLevel = (state.authorLevel || 0)+1;
@@ -198,11 +300,17 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     _recalcAttribString(state);
     return oldAuthor;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _exitAuthor(state, oldAuthor) {
     state.authorLevel--;
     state.author = oldAuthor;
     _recalcAttribString(state);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _recalcAttribString(state) {
     var lst = [];
     for(var a in state.attribs) {
@@ -220,12 +328,18 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     }
     state.attribString = Changeset.makeAttribsString('+', lst, apool);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _produceListMarker(state) {
     lines.appendText('*', Changeset.makeAttribsString(
       '+', [['list', state.listType],
             ['insertorder', 'first']],
       apool));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.startNewLine = function(state) {
     if (state) {
       var atBeginningOfLine = lines.textOfLine(lines.length()-1).length == 0;
@@ -235,6 +349,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     }
     lines.startNew();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.notifySelection = function (sel) {
     if (sel) {
       selection = sel;
@@ -242,11 +359,17 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
       endPoint = selection.endPoint;
     }
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.doAttrib = function(state, na) {
     state.localAttribs = (state.localAttribs || []);
     state.localAttribs.push(na);
     cc.incrementAttrib(state, na);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.collectContent = function (node, state) {
     if (! state) {
       state = {flags: {/*name -> nesting counter*/},
@@ -421,6 +544,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     state.localAttribs = localAttribs;
   };
   // can pass a falsy value for end of doc
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.notifyNextNode = function (node) {
     // an "empty block" won't end a line; this addresses an issue in IE with
     // typing into a blank line at the end of the document.  typed text
@@ -432,14 +558,26 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     }
   };
   // each returns [line, char] or [-1,-1]
+
+  // YOURNAME:
+  // YOURCOMMENT
   var getSelectionStart = function() { return selStart; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   var getSelectionEnd = function() { return selEnd; };
 
   // returns array of strings for lines found, last entry will be "" if
   // last line is complete (i.e. if a following span should be on a new line).
   // can be called at any point
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.getLines = function() { return lines.textLines(); };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   cc.finish = function() {
     lines.flush();
     var lineAttribs = lines.attribLines();
@@ -451,6 +589,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
     var ss = getSelectionStart();
     var se = getSelectionEnd();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function fixLongLines() {
       // design mode does not deal with with really long lines!
       var lineLimit = 2000; // chars
@@ -478,6 +619,9 @@ function makeContentCollector(collectStyles, browser, apool, domInterface,
 	    newStrings.push(oldString);
 	    newAttribStrings.push(oldAttribString);
 	  }
+
+// YOURNAME:
+// YOURCOMMENT
 	  function fixLineNumber(lineChar) {
 	    if (lineChar[0] < 0) return;
 	    var n = lineChar[0];

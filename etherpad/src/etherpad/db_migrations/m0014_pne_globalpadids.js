@@ -22,6 +22,9 @@ import("etherpad.log");
 import("sqlbase.sqlcommon.*");
 import("etherpad.pad.padutils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   // this is a PNE-only migration
@@ -39,6 +42,9 @@ function run() {
   var renamesSoFar = 0;
   var progressBar = startConsoleProgressBar();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   renamesNeeded.forEach(function(obj) {
     var oldPadId = String(obj.id);
     var newPadId;
@@ -67,11 +73,20 @@ function run() {
       sqlbase.deleteJSON("PAD_APOOL", oldPadId);
       sqlbase.putJSON("PAD_APOOL", newPadId, apool);
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function renamePadInStringArrayTable(arrayName) {
         var stmnt = "UPDATE "+btquote("PAD_"+arrayName.toUpperCase()+"_META")+
           " SET "+btquote("ID")+" = ? WHERE "+btquote("ID")+" = ?";
+
+        // YOURNAME:
+        // YOURCOMMENT
         return withConnection(function(conn) {
           var pstmnt = conn.prepareStatement(stmnt);
+
+          // YOURNAME:
+          // YOURCOMMENT
           return closing(pstmnt, function() {
             pstmnt.setString(1, newPadId);
             pstmnt.setString(2, oldPadId);

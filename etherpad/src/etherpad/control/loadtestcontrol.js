@@ -24,15 +24,24 @@ import("etherpad.collab.collab_server");
 // NOTE: we need to talk before enabling this again, for potential security vulnerabilities.
 var LOADTEST_ENABLED = false;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   if (!LOADTEST_ENABLED) {
     response.forbid();
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_createpad() {
   var padId = request.params.padId;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     if (! pad.exists()) {
       pad.create(pad_control.getDefaultPadText());
@@ -43,9 +52,15 @@ function render_createpad() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_readpad() {
   var padId = request.params.padId;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     /* nothing */
   });
@@ -54,10 +69,16 @@ function render_readpad() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_appendtopad() {
   var padId = request.params.padId;
   var text = request.params.text;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     collab_server.appendPadText(pad, text);
   });
@@ -66,9 +87,15 @@ function render_appendtopad() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_flushpad() {
   var padId = request.params.padId;
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     dbwriter.writePadNow(pad, true);
   });
@@ -77,10 +104,16 @@ function render_flushpad() {
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_setpadtext() {
   var padId = request.params.padId;
   var text = request.params.text;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   padutils.accessPadLocal(padId, function(pad) {
     collab_server.setPadText(pad, text);
   });

@@ -17,7 +17,13 @@
 import("sync");
 
 /* performs function on an object from the cache, all within a lock */
+
+// YOURNAME:
+// YOURCOMMENT
 function syncedWithCache(name, fn) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return sync.doWithStringLock("cache/"+name, function() {
     var parts = name.split(".");
     var obj = appjet.cache;

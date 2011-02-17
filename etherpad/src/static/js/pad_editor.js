@@ -15,12 +15,21 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padeditor = (function(){
   var self = {
     ace: null, // this is accessed directly from other files
     viewZoom: 100,
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(readyFunc, initialViewOptions) {
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function aceReady() {
         $("#editorloadingbox").hide();
         if (readyFunc) {
@@ -41,21 +50,39 @@ var padeditor = (function(){
       self.initViewZoom();
       $("#viewbarcontents").show();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     initViewOptions: function() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       padutils.bindCheckboxChange($("#options-linenoscheck"), function() {
         pad.changeViewOption('showLineNumbers',
                              padutils.getCheckbox($("#options-linenoscheck")));
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       padutils.bindCheckboxChange($("#options-colorscheck"), function() {
         pad.changeViewOption('showAuthorColors',
                              padutils.getCheckbox("#options-colorscheck"));
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#viewfontmenu").change(function() {
         pad.changeViewOption('useMonospaceFont',
                               $("#viewfontmenu").val() == 'monospace');
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setViewOptions: function(newOptions) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       function getOption(key, defaultValue) {
         var value = String(newOptions[key]);
         if (value == "true") return true;
@@ -77,17 +104,26 @@ var padeditor = (function(){
                            (v ? "monospace" : "Arial, sans-serif"));
       $("#viewfontmenu").val(v ? "monospace" : "normal");
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     initViewZoom: function() {
       var viewZoom = Number(padcookie.getPref('viewZoom'));
       if ((! viewZoom) || isNaN(viewZoom)) {
         viewZoom = 100;
       }
       self.setViewZoom(viewZoom);
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#viewzoommenu").change(function(evt) {
         // strip initial 'z' from val
         self.setViewZoom(Number($("#viewzoommenu").val().substring(1)));
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setViewZoom: function(percent) {
       if (! (percent >= 50 && percent <= 1000)) {
         // percent is out of sane range or NaN (which fails comparisons)
@@ -103,17 +139,26 @@ var padeditor = (function(){
 
       padcookie.setPref('viewZoom', percent);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     dispose: function() {
       if (self.ace) {
         self.ace.destroy();
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     disable: function() {
       if (self.ace) {
         self.ace.setProperty("grayedOut", true);
         self.ace.setEditable(false);
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     restoreRevisionText: function(dataFromServer) {
       pad.addHistoricalAuthors(dataFromServer.historicalAuthorData);
       self.ace.importAText(dataFromServer.atext, dataFromServer.apool, true);

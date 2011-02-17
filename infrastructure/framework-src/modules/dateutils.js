@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function noon(date) {
   return new Date(date.toString().split(' ').slice(0, 4).join(' ') + " 12:00");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function nextMonth(date) {
   var newDate = new Date(date.getTime());
   var newMonth = date.getMonth() + 1;
@@ -35,13 +41,22 @@ var months =
   ["January", "February", "March", "April", "May", "June", 
    "July", "August", "September", "October", "November", "December"];
 
+
+// YOURNAME:
+// YOURCOMMENT
 var shortMonths = months.map(function(mon) { return mon.substr(0, 3); });
 
 var days = 
   ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
+
+// YOURNAME:
+// YOURCOMMENT
 var shortDays = days.map(function(day) { return day.substr(0, 3); });
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dateFormat(date, format) {
   var formatter = new Packages.java.text.SimpleDateFormat(format);
   return String(formatter.format(date).toString());

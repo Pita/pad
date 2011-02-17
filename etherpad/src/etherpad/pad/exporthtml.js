@@ -16,6 +16,9 @@
 
 import("etherpad.collab.ace.easysync2.Changeset");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPadPlainText(pad, revNum) {
   var atext = ((revNum !== undefined) ? pad.getInternalRevisionAText(revNum) :
                pad.atext());
@@ -39,6 +42,9 @@ function getPadPlainText(pad, revNum) {
   return pieces.join('');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPadHTML(pad, revNum) {
   var atext = ((revNum !== undefined) ? pad.getInternalRevisionAText(revNum) :
                pad.atext());
@@ -50,6 +56,9 @@ function getPadHTML(pad, revNum) {
   var tags = ['b','i','u','s'];
   var props = ['bold','italic','underline','strikethrough'];
   var anumMap = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   props.forEach(function(propName, i) {
     var propTrueNum = apool.putAttrib([propName,true], true);
     if (propTrueNum >= 0) {
@@ -57,6 +66,9 @@ function getPadHTML(pad, revNum) {
     }
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getLineHTML(text, attribs) {
     var propVals = [false, false, false];
     var ENTER = 1;
@@ -72,11 +84,17 @@ function getPadHTML(pad, revNum) {
     var taker = Changeset.stringIterator(text);
     var assem = Changeset.stringAssembler();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function emitOpenTag(i) {
       assem.append('<');
       assem.append(tags[i]);
       assem.append('>');
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function emitCloseTag(i) {
       assem.append('</');
       assem.append(tags[i]);
@@ -86,6 +104,9 @@ function getPadHTML(pad, revNum) {
     var urls = _findURLs(text);
 
     var idx = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function processNextChars(numChars) {
       if (numChars <= 0) {
         return;
@@ -98,6 +119,9 @@ function getPadHTML(pad, revNum) {
       while (iter.hasNext()) {
         var o = iter.next();
         var propChanged = false;
+
+        // YOURNAME:
+        // YOURCOMMENT
         Changeset.eachAttribNumber(o.attribs, function(a) {
           if (a in anumMap) {
             var i = anumMap[a]; // i = 0 => bold, etc.
@@ -175,6 +199,9 @@ function getPadHTML(pad, revNum) {
     } // end processNextChars
 
     if (urls) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       urls.forEach(function(urlData) {
         var startIndex = urlData[0];
         var url = urlData[1];
@@ -247,6 +274,9 @@ function getPadHTML(pad, revNum) {
   return pieces.join('');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _analyzeLine(text, aline, apool) {
   var line = {};
 
@@ -279,6 +309,9 @@ function _analyzeLine(text, aline, apool) {
   return line;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPadHTMLDocument(pad, revNum, noDocType) {
   var head = (noDocType?'':'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '+
               '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')+
@@ -296,6 +329,9 @@ function getPadHTMLDocument(pad, revNum, noDocType) {
   return head + getPadHTML(pad, revNum) + foot;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _escapeHTML(s) {
   var re = /[&<>]/g;
   if (! re.MAP) {
@@ -306,10 +342,16 @@ function _escapeHTML(s) {
       '>': '&gt;',
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return s.replace(re, function(c) { return re.MAP[c]; });
 }
 
 // copied from ACE
+
+// YOURNAME:
+// YOURCOMMENT
 function _processSpaces(s) {
   var doesWrap = true;
   if (s.indexOf("<") < 0 && ! doesWrap) {
@@ -317,6 +359,9 @@ function _processSpaces(s) {
     return s.replace(/ /g, '&nbsp;');
   }
   var parts = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   s.replace(/<[^>]*>?| |[^ <]+/g, function(m) { parts.push(m); });
   if (doesWrap) {
     var endOfLine = true;
@@ -367,6 +412,9 @@ var _REGEX_URLCHAR = new RegExp('('+/[-:@a-zA-Z0-9_.,~%+\/\\?=&#;()$]/.source+'|
 var _REGEX_URL = new RegExp(/(?:(?:https?|s?ftp|ftps|file|smb|afp|nfs|(x-)?man|gopher|txmt):\/\/|mailto:)/.source+_REGEX_URLCHAR.source+'*(?![:.,;])'+_REGEX_URLCHAR.source, 'g');
 
 // returns null if no URLs, or [[startIndex1, url1], [startIndex2, url2], ...]
+
+// YOURNAME:
+// YOURCOMMENT
 function _findURLs(text) {
   _REGEX_URL.lastIndex = 0;
   var urls = null;

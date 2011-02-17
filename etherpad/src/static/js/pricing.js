@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('#buylink').click(function() { window.location = "/ep/store/eepnet-checkout"; return false; });
 });

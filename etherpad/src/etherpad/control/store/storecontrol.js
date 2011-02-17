@@ -31,8 +31,14 @@ jimport("java.lang.System.out.println");
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {}
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var disp = new Dispatcher();
   disp.addLocations([
@@ -43,6 +49,9 @@ function onRequest() {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   response.redirect("/ep/about/pricing");
 }
@@ -51,6 +60,9 @@ function render_main() {
 // Flow goes through these 4 pages in order:
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_eval_signup_get() {
   renderFramed("store/eepnet_eval_signup.ejs", {
     trialDays: eepnet_trial.getTrialDays(),
@@ -60,6 +72,9 @@ function render_eepnet_eval_signup_get() {
   delete getSession().errorMsg;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_eepnet_eval_signup_post() {
 //   response.setContentType("text/plain; charset=utf-8");
 //   var data = {};
@@ -70,15 +85,24 @@ function render_eepnet_eval_signup_get() {
 //     getSession().pricingContactData = {};
 //   }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 //   function _redirectErr(msg) {
 //     response.write(fastJSON.stringify({error: msg}));
 //     response.stop();
 //   }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 //   fields.forEach(function(f) { 
 //     getSession().pricingContactData[f] = request.params[f];
 //   });
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 //   fields.forEach(function(f) {
 //     data[f] = request.params[f];
 //     if (!(data[f] && (data[f].length > 0))) {
@@ -106,6 +130,9 @@ function render_eepnet_eval_signup_get() {
 //   response.write(fastJSON.stringify(web2leadData));
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_salesforce_web2lead_ok() {
 //   renderFramedHtml([
 //     '<script>',
@@ -114,11 +141,17 @@ function render_eepnet_eval_signup_get() {
 //   ].join('\n'));
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_eepnet_eval_download() {
 //   // NOTE: keep this URL around for historical reasons?
 //   response.redirect("/ep/store/eepnet-download");
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_eepnet_download() {
 //   renderFramed("store/eepnet_download.ejs", {
 //     message: (getSession().message || null),
@@ -127,10 +160,16 @@ function render_eepnet_eval_signup_get() {
 //   delete getSession().message;
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_eepnet_download_zip() {
 //   response.redirect("/static/zip/pne-release/etherpad-pne-"+PNE_RELEASE_VERSION+".zip");
 // }
 // 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_eepnet_download_nextsteps() {
 //   renderFramed("store/eepnet_eval_nextsteps.ejs");
 // }
@@ -138,6 +177,9 @@ function render_eepnet_eval_signup_get() {
 //----------------------------------------------------------------
 // recover a lost license
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_recover_license_get() {
   var d = DIV({className: "fpcontent"});
 
@@ -164,6 +206,9 @@ function render_eepnet_recover_license_get() {
   renderFramedHtml(d);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_recover_license_post() {
   var email = request.params.email.toLowerCase();
   if (!eepnet_trial.hasEmailAlreadyDownloaded(email) && !eepnet_trialhasEmailAlreadyPurchased(email)) {
@@ -180,6 +225,9 @@ function render_eepnet_recover_license_post() {
 }
 
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_purchase_get() {
   renderFramed("store/eepnet_purchase.ejs", {});
 }
@@ -188,6 +236,9 @@ function render_eepnet_purchase_get() {
 // csc-help page
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_csc_help_get() {
   response.write(renderTemplateAsString("store/csc-help.ejs"));
 }
@@ -196,6 +247,9 @@ function render_csc_help_get() {
 // paypal notifications for pro
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_paypalnotify() {
   team_billing_control.handlePaypalNotify();
 }

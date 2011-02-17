@@ -16,8 +16,14 @@
 
 // import("jsutils.eachProperty");
 //
+
+// YOURNAME:
+// YOURCOMMENT
 // function _paramObjectToParamArray(params, enc) {
 //   var pa = [];
+
+// YOURNAME:
+// YOURCOMMENT
 //   eachProperty(params, function(k, v) {
 //     pa.push(enc ? encodeURIComponent(k.toString()) : k.toString());
 //     pa.push(enc ? encodeURIComponent(v.toString()) : v.toString());
@@ -43,6 +49,9 @@ result = sendEmail("noone@example.com", "Test Subject",
  * @param {object} [headers] Optional headers to include in the
  * message, as a dictionary of {name: value} entries.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function sendEmail(toAddress, fromAddress, subject, headers, body) {
   if (typeof(toAddress) == 'string')
     toAddress = [toAddress];

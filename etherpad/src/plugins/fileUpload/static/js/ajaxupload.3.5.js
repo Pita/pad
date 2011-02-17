@@ -16,6 +16,9 @@
  * http://valums.com/ajax-upload-changelog/
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
 	
 var d = document, w = window;
@@ -23,6 +26,9 @@ var d = document, w = window;
 /**
  * Get element by id
  */	
+
+// YOURNAME:
+// YOURCOMMENT
 function get(element){
 	if (typeof element == "string")
 		element = d.getElementById(element);
@@ -32,10 +38,16 @@ function get(element){
 /**
  * Attaches event to a dom element
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function addEvent(el, type, fn){
 	if (w.addEventListener){
 		el.addEventListener(type, fn, false);
 	} else if (w.attachEvent){
+
+// YOURNAME:
+// YOURCOMMENT
 		var f = function(){
 		  fn.call(el, w.event);
 		};			
@@ -47,8 +59,14 @@ function addEvent(el, type, fn){
 /**
  * Creates and returns element from html chunk
  */
+
+// YOURNAME:
+// YOURCOMMENT
 var toElement = function(){
 	var div = d.createElement('div');
+
+// YOURNAME:
+// YOURCOMMENT
 	return function(html){
 		div.innerHTML = html;
 		var el = div.childNodes[0];
@@ -57,21 +75,36 @@ var toElement = function(){
 	}
 }();
 
+
+// YOURNAME:
+// YOURCOMMENT
 function hasClass(ele,cls){
 	return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function addClass(ele,cls) {
 	if (!hasClass(ele,cls)) ele.className += " "+cls;
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function removeClass(ele,cls) {
 	var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
 	ele.className=ele.className.replace(reg,' ');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // getOffset function copied from jQuery lib (http://jquery.com/)
 if (document.documentElement["getBoundingClientRect"]){
 	// Get Offset using getBoundingClientRect
 	// http://ejohn.org/blog/getboundingclientrect-is-awesome/
+
+// YOURNAME:
+// YOURCOMMENT
 	var getOffset = function(el){
 		var box = el.getBoundingClientRect(),
 		doc = el.ownerDocument,
@@ -106,6 +139,9 @@ if (document.documentElement["getBoundingClientRect"]){
 	
 } else {
 	// Get offset adding all offsets 
+
+// YOURNAME:
+// YOURCOMMENT
 	var getOffset = function(el){
 		if (w.jQuery){
 			return jQuery(el).offset();
@@ -125,6 +161,9 @@ if (document.documentElement["getBoundingClientRect"]){
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getBox(el){
 	var left, right, top, bottom;	
 	var offset = getOffset(el);
@@ -145,6 +184,9 @@ function getBox(el){
 /**
  * Crossbrowser mouse coordinates
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getMouseCoords(e){		
 	// pageX/Y is not supported in IE
 	// http://www.quirksmode.org/dom/w3c_cssom.html			
@@ -174,22 +216,37 @@ function getMouseCoords(e){
 /**
  * Function generates unique id
  */		
+
+// YOURNAME:
+// YOURCOMMENT
 var getUID = function(){
 	var id = 0;
+
+// YOURNAME:
+// YOURCOMMENT
 	return function(){
 		return 'ValumsAjaxUpload' + id++;
 	}
 }();
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fileFromPath(file){
 	return file.replace(/.*(\/|\\)/, "");			
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getExt(file){
 	return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
 }			
 
 // Please use AjaxUpload , Ajax_upload will be removed in the next version
+
+// YOURNAME:
+// YOURCOMMENT
 Ajax_upload = AjaxUpload = function(button, options){
 	if (button.jquery){
 		// jquery object was passed
@@ -230,12 +287,21 @@ Ajax_upload = AjaxUpload = function(button, options){
 		// Set to "json" in that case. 
 		responseType: false,
 		// When user selects a file, useful with autoSubmit disabled			
+
+// YOURNAME:
+// YOURCOMMENT
 		onChange: function(file, extension){},					
 		// Callback to fire before file is uploaded
 		// You can return false to cancel upload
+
+// YOURNAME:
+// YOURCOMMENT
 		onSubmit: function(file, extension){},
 		// Fired when file upload is completed
 		// WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+
+// YOURNAME:
+// YOURCOMMENT
 		onComplete: function(file, response) {}
 	};
 
@@ -250,16 +316,28 @@ Ajax_upload = AjaxUpload = function(button, options){
 			
 // assigning methods to our class
 AjaxUpload.prototype = {
+
+// YOURNAME:
+// YOURCOMMENT
 	setData : function(data){
 		this._settings.data = data;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	disable : function(){
 		this._disabled = true;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	enable : function(){
 		this._disabled = false;
 	},
 	// removes ajaxupload
+
+// YOURNAME:
+// YOURCOMMENT
 	destroy : function(){
 		if(this._input){
 			if(this._input.parentNode){
@@ -271,6 +349,9 @@ AjaxUpload.prototype = {
 	/**
 	 * Creates invisible file input above the button 
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	_createInput : function(){
 		var self = this;
 		var input = d.createElement("input");
@@ -301,6 +382,9 @@ AjaxUpload.prototype = {
 							
 		this._parentDialog.appendChild(input);
 
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent(input, 'change', function(){
 			// get filename from input
 			var file = fileFromPath(this.value);	
@@ -319,8 +403,14 @@ AjaxUpload.prototype = {
 		// As dialog opens slowly (it is a sheet dialog which takes some time to open)
 		// there is some time while you can leave the button.
 		// So we should not change display to none immediately
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent(input, 'click', function(){
 			self.justClicked = true;
+
+// YOURNAME:
+// YOURCOMMENT
 			setTimeout(function(){
 				// we will wait 3 seconds for dialog to open
 				self.justClicked = false;
@@ -329,16 +419,25 @@ AjaxUpload.prototype = {
 		
 		this._input = input;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	_rerouteClicks : function (){
 		var self = this;
 	
 		// IE displays 'access denied' error when using this method
 		// other browsers just ignore click()
+
+// YOURNAME:
+// YOURCOMMENT
 		// addEvent(this._button, 'click', function(e){
 		//   self._input.click();
 		// });
 				
 		var box, dialogOffset = {top:0, left:0}, over = false;							
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent(self._button, 'mouseover', function(e){
 			if (!self._input || over) return;
 			over = true;
@@ -352,6 +451,9 @@ AjaxUpload.prototype = {
 	
 		// we can't use mouseout on the button,
 		// because invisible input is over it
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent(document, 'mousemove', function(e){
 			var input = self._input;			
 			if (!input || !over) return;
@@ -384,6 +486,9 @@ AjaxUpload.prototype = {
 	/**
 	 * Creates iframe with unique name
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	_createIframe : function(){
 		// unique name
 		// We cannot use getTime, because it sometimes return
@@ -401,6 +506,9 @@ AjaxUpload.prototype = {
 	/**
 	 * Upload file without refreshing the page
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	submit : function(){
 		var self = this, settings = this._settings;	
 					
@@ -432,6 +540,9 @@ AjaxUpload.prototype = {
 			
 			var toDeleteFlag = false;
 			
+
+// YOURNAME:
+// YOURCOMMENT
 			addEvent(iframe, 'load', function(e){
 					
 				if (// For Safari
@@ -442,6 +553,9 @@ AjaxUpload.prototype = {
 					// First time around, do not delete.
 					if( toDeleteFlag ){
 						// Fix busy state in FF3
+
+// YOURNAME:
+// YOURCOMMENT
 						setTimeout( function() {
 							d.body.removeChild(iframe);
 						}, 0);
@@ -521,6 +635,9 @@ AjaxUpload.prototype = {
 	/**
 	 * Creates form, that will be submitted to iframe
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	_createForm : function(iframe){
 		var settings = this._settings;
 		

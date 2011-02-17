@@ -19,10 +19,19 @@ import("sqlbase.sqlobj");
 
 import("etherpad.testing.testutils.*");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   withConnection(function(conn) {
     var s = conn.createStatement();
+
+    // YOURNAME:
+    // YOURCOMMENT
     closing(s, function() {
       s.execute("delete from just_a_test");
     });
@@ -31,6 +40,9 @@ function run() {
   sqlobj.insert("just_a_test", {id: 1, x: "a"});
 
   try {  // this should fail
+
+    // YOURNAME:
+    // YOURCOMMENT
     inTransaction(function(conn) {
       sqlobj.updateSingle("just_a_test", {id: 1}, {id: 1, x: "b"});
       // note: this will be pritned to the console, but that's OK

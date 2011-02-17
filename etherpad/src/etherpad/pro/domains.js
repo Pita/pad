@@ -39,6 +39,9 @@ var reservedSubdomains = {
   'www': 1
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCache() {
   if (!appjet.cache.pro_domains) {
     appjet.cache.pro_domains = {
@@ -48,6 +51,9 @@ function _getCache() {
   return appjet.cache.pro_domains;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doesSubdomainExist(subDomain) {
   if (reservedSubdomains[subDomain]) {
     return true;
@@ -58,23 +64,35 @@ function doesSubdomainExist(subDomain) {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateCache(locator) {
   var record = sqlobj.selectSingle('pro_domains', locator);
   var recordCache = _getCache().records;
 
   if (record) {
     // update both maps: recordCache.id, recordCache.subDomain
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys(recordCache).forEach(function(key) {
       recordCache[key][record[key]] = record;
     });
   } else {
     // write false for whatever hit with this locator
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys(locator).forEach(function(key) {
       recordCache[key][locator[key]] = false;
     });
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainRecord(domainId) {
   if (!(domainId in _getCache().records.id)) {
     _updateCache({id: domainId});
@@ -83,6 +101,9 @@ function getDomainRecord(domainId) {
   return (record ? record : null);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainRecordFromSubdomain(subDomain) {
   subDomain = subDomain.toLowerCase();
   if (!(subDomain in _getCache().records.subDomain)) {
@@ -93,12 +114,18 @@ function getDomainRecordFromSubdomain(subDomain) {
 }
 
 /** returns id of newly created subDomain */
+
+// YOURNAME:
+// YOURCOMMENT
 function createNewSubdomain(subDomain, orgName) {
   var id = sqlobj.insert('pro_domains', {subDomain: subDomain, orgName: orgName});
   _updateCache({id: id});
   return id;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPrivateNetworkDomainId() {
   var r = getDomainRecordFromSubdomain('<<private-network>>');
   if (!r) {
@@ -108,6 +135,9 @@ function getPrivateNetworkDomainId() {
 }
 
 /** returns null if not found. */
+
+// YOURNAME:
+// YOURCOMMENT
 function getRequestDomainRecord() {
   if (pne_utils.isPNE()) {
     var r = getDomainRecord(getPrivateNetworkDomainId());
@@ -130,6 +160,9 @@ function getRequestDomainRecord() {
 }
 
 /* throws exception if not pro domain request. */
+
+// YOURNAME:
+// YOURCOMMENT
 function getRequestDomainId() {
   var r = getRequestDomainRecord();
   if (!r) {

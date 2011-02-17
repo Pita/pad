@@ -30,16 +30,25 @@ var tests = [
 ];
 
 var tscope = this;
+
+// YOURNAME:
+// YOURCOMMENT
 tests.forEach(function(t) {
   import.call(tscope, 'etherpad.testing.unit_tests.'+t);
 });
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _testName(x) {
   x = x.replace(/^t\d+\_/, '');
   return x;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_run() {
   response.setContentType("text/plain; charset=utf-8");
   if (isProduction() && (request.params.p != "waverunner")) {
@@ -53,6 +62,9 @@ function render_run() {
   println("----------------------------------------------------------------");
   println("running tests");
   println("----------------------------------------------------------------");
+
+  // YOURNAME:
+  // YOURCOMMENT
   tests.forEach(function(t) {
     var testName = _testName(t);
     if (singleTest && (singleTest != testName)) {

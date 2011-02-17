@@ -18,6 +18,9 @@ if (serverhandlers.cometHandler === undefined) {
   throw new Packages.net.appjet.oui.NoHandlerException("No comet handler defined!");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _ga(k) {
   return String(appjet.context.attributes().apply(k));
 }

@@ -14,12 +14,21 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('.title').click(function() {
     var id = $(this).parent().attr("id")
     toggleId(id);
     // $(this).parent().children('.statbody').toggle();
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('.statbody').each(function() {
     if (isVisible($(this).parent().attr("id"))) {
       $(this).show();
@@ -29,6 +38,9 @@ $(function() {
   if (! cat) {
     cat = "health";
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('.navlink').click(function() {
     var cat = $(this).attr("id").slice(4);
     showCategory(cat);
@@ -36,8 +48,14 @@ $(function() {
   showCategory(cat);
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 function showCategory(cat) {
   $('#fragment').val(cat);
+
+  // YOURNAME:
+  // YOURCOMMENT
   $('.categorywrapper').each(function() {
     var localCat = $(this).attr("id").slice(3);
     if (localCat == cat) {
@@ -50,11 +68,17 @@ function showCategory(cat) {
   })
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function formChanged() {
   document.forms[0].submit();
 }
 
 if (! String.prototype.startsWith) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   String.prototype.startsWith = function(s) {
     if (this.length < s.length) { return false; }
     return this.substr(0, s.length) == s;
@@ -62,6 +86,9 @@ if (! String.prototype.startsWith) {
 }
 
 if (! String.prototype.trim) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   String.prototype.trim = function() {
     var firstNonSpace;
     for (var i = 0; i < this.length; ++i) {
@@ -89,6 +116,9 @@ if (! String.prototype.trim) {
 }
 
 if (! Array.prototype.contains) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Array.prototype.contains = function(obj) {
     for (var i = 0; i < this.length; ++i) {
       if (this[i] == obj) return true;
@@ -98,6 +128,9 @@ if (! Array.prototype.contains) {
 }
 
 if (! Array.prototype.first) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   Array.prototype.first = function(f) {
     for (var i = 0; i < this.length; ++i) {
       if (f(this[i])) {
@@ -109,29 +142,50 @@ if (! Array.prototype.first) {
 
 var cookieprefix = "visiblestats="
 
+
+// YOURNAME:
+// YOURCOMMENT
 function statsCookieValue() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return (document.cookie.split(";").map(function(s) { return s.trim() }).first(function(str) { 
     return str.startsWith(cookieprefix); 
   }) || cookieprefix).split("=")[1];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isVisible(id) {
   var cookieValue = statsCookieValue();
   return ! (cookieValue.split("-").contains(id));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function rememberHidden(id) {
   if (! isVisible(id)) { return; }
   document.cookie = cookieprefix+
     statsCookieValue().split("-").concat([id]).join("-");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function rememberVisible(id) {
   if (isVisible(id)) { return; }
   document.cookie = cookieprefix+
+
+    // YOURNAME:
+    // YOURCOMMENT
     statsCookieValue().split("-").filter(function(obj) { return obj != id }).join("-");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function toggleId(id) {
   var body = $('#'+id).children('.statbody');
   body.toggle();

@@ -34,10 +34,16 @@ jimport("java.io.File");
 jimport("net.appjet.ajstdlib.execution");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getReadableTime() {
   return (new Date()).toString().split(' ').slice(0, 5).join('-');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.trackerAndSessionIds = function() {
   var m = new Packages.scala.collection.mutable.HashMap();
   if (request.isDefined) {
@@ -67,6 +73,9 @@ serverhandlers.tasks.trackerAndSessionIds = function() {
   return m;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   var f = execution.wrapRunTask("trackerAndSessionIds", null,
     java.lang.Class.forName("scala.collection.mutable.HashMap"));
@@ -77,11 +86,17 @@ function onStartup() {
 // Logfile parsing
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _n(x) {
   if (x < 10) { return "0"+x; }
   else { return x; }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function logFileName(prefix, logName, day) {
   var fmt = [day.getFullYear(), _n(day.getMonth()+1), _n(day.getDate())].join('-');
   var fname = (appjet.config['logDir'] + '/'+prefix+'/' + logName + '/' +
@@ -96,15 +111,24 @@ function logFileName(prefix, logName, day) {
   return fname;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function frontendLogFileName(logName, day) {
   return logFileName('frontend', logName, day);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function backendLogFileName(logName, day) {
   return logFileName('backend', logName, day);
 }
 
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function _getRequestLogEntry() {
   if (request.isDefined) {
     var logEntry = {
@@ -127,6 +151,9 @@ function _getRequestLogEntry() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function logRequest() {
   if ((! request.isDefined) ||
       startsWith(request.path, COMETPATH) ||
@@ -137,18 +164,33 @@ function logRequest() {
   _log("request", _getRequestLogEntry());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _log(name, m) {
   var cache = appjet.cache;
 
   callsyncIfTrue(
     cache,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return ! ('logWriters' in cache)},
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { cache.logWriters = {}; }
   );
 
   callsyncIfTrue(
     cache.logWriters,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return !(name in cache.logWriters) },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() {
       lw = new net.appjet.oui.GenericLogger('frontend', name, true);
       if (! isProduction()) {
@@ -166,15 +208,24 @@ function _log(name, m) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function custom(name, m) {
   _log(name, m);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _stampedMessage(m) {
   var obj = {};
   if (typeof(m) == 'string') {
     obj.message = m;
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(m, function(k, v) {
       obj[k] = v;
     });
@@ -196,6 +247,9 @@ function _stampedMessage(m) {
 // logException
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function logException(ex) {
   if (typeof(ex) != 'object' || ! (ex instanceof java.lang.Throwable)) {
     ex = new java.lang.RuntimeException(String(ex));
@@ -209,6 +263,9 @@ function logException(ex) {
   _log("exception", m);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function callCatchingExceptions(func) {
   try {
     return func();
@@ -222,6 +279,9 @@ function callCatchingExceptions(func) {
 //----------------------------------------------------------------
 // warning
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function warn(m) {
   _log("warn", _stampedMessage(m));
 }
@@ -229,15 +289,27 @@ function warn(m) {
 //----------------------------------------------------------------
 // info
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function info(m) {
   _log("info", _stampedMessage(m));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserJoin(userId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doUpdate() {
     sqlobj.update('pad_cookie_userids', {id: userId}, {lastActiveDate: new Date()});
   }
   try {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function() {
       if (sqlobj.selectSingle('pad_cookie_userids', {id: userId})) {
         doUpdate();
@@ -248,6 +320,9 @@ function onUserJoin(userId) {
     });
   }
   catch (e) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function() {
       doUpdate();
     });

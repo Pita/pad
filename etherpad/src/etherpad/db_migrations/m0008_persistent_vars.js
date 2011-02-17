@@ -17,6 +17,9 @@
 import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   var idColspec = 'INT NOT NULL '+sqlcommon.autoIncrementClause()+' PRIMARY KEY';

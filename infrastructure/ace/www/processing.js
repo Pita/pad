@@ -23,8 +23,14 @@
  * More information: http://processing.org/
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
 
+
+// YOURNAME:
+// YOURCOMMENT
 this.Processing = function Processing( aElement, aCode )
 {
   var p = buildProcessing( aElement );
@@ -32,6 +38,9 @@ this.Processing = function Processing( aElement, aCode )
   return p;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function log()
 {
   try
@@ -48,6 +57,9 @@ function log()
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parse( aCode, p )
 {
   // Angels weep at this parsing code :-(
@@ -59,6 +71,9 @@ function parse( aCode, p )
   aCode = aCode.replace(/([^\s])%([^\s])/g, "$1 % $2");
  
   // Simple convert a function-like thing to function
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/(?:static )?(\w+ )(\w+)\s*(\([^\)]*\)\s*{)/g, function(all, type, name, args)
   {
     if ( name == "if" || name == "for" || name == "while" )
@@ -79,11 +94,17 @@ function parse( aCode, p )
   aCode = aCode.replace(/([\(,]\s*)(\w+)((?:\[\])+| )\s*(\w+\s*[\),])/g, "$1$4");
 
   // float[] foo = new float[5];
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/new (\w+)((?:\[([^\]]*)\])+)/g, function(all, name, args)
   {
     return "new ArrayList(" + args.slice(1,-1).split("][").join(", ") + ")";
   });
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/(?:static )?\w+\[\]\s*(\w+)\[?\]?\s*=\s*{.*?};/g, function(all)
   {
     return all.replace(/{/g, "[").replace(/}/g, "]");
@@ -93,6 +114,9 @@ function parse( aCode, p )
   var intFloat = /(\n\s*(?:int|float)(?:\[\])?(?:\s*|[^\(]*?,\s*))([a-z]\w*)(;|,)/i;
   while ( intFloat.test(aCode) )
   {
+
+    // YOURNAME:
+    // YOURCOMMENT
     aCode = aCode.replace(new RegExp(intFloat), function(all, type, name, sep)
     {
       return type + " " + name + " = 0" + sep;
@@ -100,6 +124,9 @@ function parse( aCode, p )
   }
 
   // float foo = 5;
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/(?:static )?(\w+)((?:\[\])+| ) *(\w+)\[?\]?(\s*[=,;])/g, function(all, type, arr, name, sep)
   {
     if ( type == "return" )
@@ -109,12 +136,18 @@ function parse( aCode, p )
   });
 
   // Fix Array[] foo = {...} to [...]
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/=\s*{((.|\s)*?)};/g, function(all,data)
   {
     return "= [" + data.replace(/{/g, "[").replace(/}/g, "]") + "]";
   });
   
   // static { ... } blocks
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/static\s*{((.|\n)*?)}/g, function(all, init)
   {
     // Convert the static definitons to variable assignments
@@ -127,12 +160,18 @@ function parse( aCode, p )
 
   var classes = ["int", "float", "boolean", "string"];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ClassReplace(all, name, extend, vars, last)
   {
     classes.push( name );
 
     var static = "";
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     vars = vars.replace(/final\s+var\s+(\w+\s*=\s*.*?;)/g, function(all,set)
     {
       static += " " + name + "." + set;
@@ -141,7 +180,13 @@ function parse( aCode, p )
 
     // Move arguments up from constructor and wrap contents with
     // a with(this), and unwrap constructor
+
+    // YOURNAME:
+    // YOURCOMMENT
     return "function " + name + "() {with(this){\n  " +
+
+      // YOURNAME:
+      // YOURCOMMENT
       (extend ? "var __self=this;function superMethod(){extendClass(__self,arguments," + extend + ");}\n" : "") +
       // Replace var foo = 0; with this.foo = 0;
       // and force var foo; to become this.foo = null;
@@ -171,6 +216,9 @@ function parse( aCode, p )
       
     allRest = allRest.slice( rest.length + 1 );
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     rest = rest.replace(new RegExp("\\b" + className + "\\(([^\\)]*?)\\)\\s*{", "g"), function(all, args)
     {
       args = args.split(/,\s*?/);
@@ -189,10 +237,19 @@ function parse( aCode, p )
     });
     
     // Fix class method names
+
+    // YOURNAME:
+    // YOURCOMMENT
     // this.collide = function() { ... }
     // and add closing } for with(this) ...
+
+    // YOURNAME:
+    // YOURCOMMENT
     rest = rest.replace(/(?:public )?Processing.\w+ = function (\w+)\((.*?)\)/g, function(all, name, args)
     {
+
+      // YOURNAME:
+      // YOURCOMMENT
       return "ADDMETHOD(this, '" + name + "', function(" + args + ")";
     });
     
@@ -219,6 +276,9 @@ function parse( aCode, p )
   // Do some tidying up, where necessary
   aCode = aCode.replace(/Processing.\w+ = function addMethod/g, "addMethod");
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function nextBrace( right )
   {
     var rest = right;
@@ -263,13 +323,22 @@ function parse( aCode, p )
   aCode = aCode.replace(/('[a-zA-Z0-9]')/g, "$1.charCodeAt(0)");
 
   // Convert #aaaaaa into color
+
+  // YOURNAME:
+  // YOURCOMMENT
   aCode = aCode.replace(/#([a-f0-9]{6})/ig, function(m, hex){
     var num = toNumbers(hex);
     return "color(" + num[0] + "," + num[1] + "," + num[2] + ")";
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function toNumbers( str ){
     var ret = [];
+
+     // YOURNAME:
+     // YOURCOMMENT
      str.replace(/(..)/g, function(str){
       ret.push( parseInt( str, 16 ) );
     });
@@ -281,6 +350,9 @@ function parse( aCode, p )
   return aCode;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function buildProcessing( curElement ){
 
   var p = {};
@@ -356,6 +428,9 @@ function buildProcessing( curElement ){
   
   // In case I ever need to do HSV conversion:
   // http://srufaculty.sru.edu/david.dailey/javascript/js/5rml.js
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.color = function color( aValue1, aValue2, aValue3, aValue4 )
   {
     var aColor = "";
@@ -408,6 +483,9 @@ function buildProcessing( curElement ){
     }
 
     // HSB conversion function from Mootools, MIT Licensed
+
+    // YOURNAME:
+    // YOURCOMMENT
     function HSBtoRGB(h, s, b)
     {
       h = (h / redRange) * 100;
@@ -433,6 +511,9 @@ function buildProcessing( curElement ){
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getColor( aValue, range )
     {
       return Math.round(255 * (aValue / range));
@@ -441,6 +522,9 @@ function buildProcessing( curElement ){
     return aColor;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.nf = function( num, pad )
   {
     var str = "" + num;
@@ -449,6 +533,9 @@ function buildProcessing( curElement ){
     return str;
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.AniSprite = function( prefix, frames )
   {
     this.images = [];
@@ -459,6 +546,9 @@ function buildProcessing( curElement ){
       this.images.push( prefix + p.nf( i, ("" + frames).length ) + ".gif" );
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.display = function( x, y )
     {
       p.image( this.images[ this.pos ], x, y );
@@ -467,17 +557,26 @@ function buildProcessing( curElement ){
         this.pos = 0;
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.getWidth = function()
     {
       return getImage(this.images[0]).width;
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.getHeight = function()
     {
       return getImage(this.images[0]).height;
     };
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function buildImageObject( obj )
   {
     var pixels = obj.data;
@@ -486,6 +585,9 @@ function buildProcessing( curElement ){
     if ( data.__defineGetter__ && data.__lookupGetter__ && !data.__lookupGetter__("pixels") )
     {
       var pixelsDone;
+
+      // YOURNAME:
+      // YOURCOMMENT
       data.__defineGetter__("pixels", function()
       {
         if ( pixelsDone )
@@ -514,24 +616,39 @@ function buildProcessing( curElement ){
     return data;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.createImage = function createImage( w, h, mode )
   {
     var data = {
       width: w,
       height: h,
       pixels: new Array( w * h ),
+
+      // YOURNAME:
+      // YOURCOMMENT
       get: function(x,y)
       {
         return this.pixels[w*y+x];
       },
       _mask: null,
+
+      // YOURNAME:
+      // YOURCOMMENT
       mask: function(img)
       {
         this._mask = img;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       loadPixels: function()
       {
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       updatePixels: function()
       {
       }
@@ -540,6 +657,9 @@ function buildProcessing( curElement ){
     return data;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.createGraphics = function createGraphics( w, h )
   {
     var canvas = document.createElement("canvas");
@@ -549,21 +669,33 @@ function buildProcessing( curElement ){
     return ret;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.beginDraw = function beginDraw()
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.endDraw = function endDraw()
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.tint = function tint( rgb, a )
   {
     curTint = a;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getImage( img ) {
     if ( typeof img == "string" )
     {
@@ -594,6 +726,9 @@ function buildProcessing( curElement ){
     return canvas;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.image = function image( img, x, y, w, h )
   {
     x = x || 0;
@@ -630,16 +765,25 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.exit = function exit()
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.save = function save( file )
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.loadImage = function loadImage( file )
   {
     var img = document.getElementById(file);
@@ -659,10 +803,16 @@ function buildProcessing( curElement ){
     return data;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.loadFont = function loadFont( name )
   {
     return {
       name: name,
+
+      // YOURNAME:
+      // YOURCOMMENT
       width: function( str )
       {
         if ( curContext.mozMeasureText )
@@ -675,12 +825,18 @@ function buildProcessing( curElement ){
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.textFont = function textFont( name, size )
   {
     curTextFont = name;
     p.textSize( size );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.textSize = function textSize( size )
   {
     if ( size )
@@ -689,11 +845,17 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.textAlign = function textAlign()
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.text = function text( str, x, y )
   {
     if ( str && curContext.mozDrawText )
@@ -708,42 +870,66 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.char = function char( key )
   {
     //return String.fromCharCode( key );
     return key;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.println = function println()
   {
 
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.map = function map( value, istart, istop, ostart, ostop )
   {
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   String.prototype.replaceAll = function(re, replace)
   {
     return this.replace(new RegExp(re, "g"), replace);
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.Point = function Point( x, y )
   {
     this.x = x;
     this.y = y;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.copy = function()
     {
       return new Point( x, y );
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.Random = function()
   {
     var haveNextNextGaussian = false;
     var nextNextGaussian;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.nextGaussian = function()
     {
       if (haveNextNextGaussian) {
@@ -766,6 +952,9 @@ function buildProcessing( curElement ){
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.ArrayList = function ArrayList( size, size2, size3 )
   {
     var array = new Array( 0 | size );
@@ -794,23 +983,38 @@ function buildProcessing( curElement ){
       }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.size = function()
     {
       return this.length;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.get = function( i )
     {
       return this[ i ];
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.remove = function( i )
     {
       return this.splice( i, 1 );
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.add = function( item )
     {
       for ( var i = 0; this[ i ] != undefined; i++ ) {}
       this[ i ] = item;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.clone = function()
     {
       var a = new ArrayList( size );
@@ -820,10 +1024,16 @@ function buildProcessing( curElement ){
       }
       return a;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.isEmpty = function()
     {
       return !this.length;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     array.clear = function()
     {
       this.length = 0;
@@ -832,6 +1042,9 @@ function buildProcessing( curElement ){
     return array;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.colorMode = function colorMode( mode, range1, range2, range3, range4 )
   {
     curColorMode = mode;
@@ -854,12 +1067,18 @@ function buildProcessing( curElement ){
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.beginShape = function beginShape( type )
   {
     curShape = type;
     curShapeCount = 0; 
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.endShape = function endShape( close )
   {
     if ( curShapeCount != 0 )
@@ -883,6 +1102,9 @@ function buildProcessing( curElement ){
     }
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.vertex = function vertex( x, y, x2, y2, x3, y3 )
   {
     if ( curShapeCount == 0 && curShape != p.POINTS )
@@ -943,12 +1165,18 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.curveTightness = function()
   {
 
   }
 
   // Unimplmented - not really possible with the Canvas API
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.curveVertex = function( x, y, x2, y2 )
   {
     p.vertex( x, y, x2, y2 );
@@ -956,91 +1184,145 @@ function buildProcessing( curElement ){
 
   p.bezierVertex = p.vertex
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.rectMode = function rectMode( aRectMode )
   {
     curRectMode = aRectMode;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.imageMode = function()
   {
 
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.ellipseMode = function ellipseMode( aEllipseMode )
   {
     curEllipseMode = aEllipseMode;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.dist = function dist( x1, y1, x2, y2 )
   {
     return Math.sqrt( Math.pow( x2 - x1, 2 ) + Math.pow( y2 - y1, 2 ) );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.year = function year()
   {
     return (new Date).getYear() + 1900;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.month = function month()
   {
     return (new Date).getMonth();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.day = function day()
   {
     return (new Date).getDay();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.hour = function hour()
   {
     return (new Date).getHours();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.minute = function minute()
   {
     return (new Date).getMinutes();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.second = function second()
   {
     return (new Date).getSeconds();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.millis = function millis()
   {
     return (new Date).getTime() - start;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.ortho = function ortho()
   {
   
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.translate = function translate( x, y )
   {
     curContext.translate( x, y );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.scale = function scale( x, y )
   {
     curContext.scale( x, y || x );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.rotate = function rotate( aAngle )
   {
     curContext.rotate( aAngle );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.pushMatrix = function pushMatrix()
   {
     curContext.save();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.popMatrix = function popMatrix()
   {
     curContext.restore();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.redraw = function redraw()
   {
     if ( hasBackground )
@@ -1055,11 +1337,17 @@ function buildProcessing( curElement ){
     inDraw = false;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.loop = function loop()
   {
     if ( loopStarted )
       return;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var looping = setInterval(function()
     {
       try
@@ -1076,11 +1364,17 @@ function buildProcessing( curElement ){
     loopStarted = true;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.frameRate = function frameRate( aRate )
   {
     curFrameRate = aRate;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.background = function background( img )
   {
     if ( arguments.length )
@@ -1109,41 +1403,65 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.sq = function sq( aNumber )
   {
     return aNumber * aNumber;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.sqrt = function sqrt( aNumber )
   {
     return Math.sqrt( aNumber );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.int = function int( aNumber )
   {
     return Math.floor( aNumber );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.min = function min( aNumber, aNumber2 )
   {
     return Math.min( aNumber, aNumber2 );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.max = function max( aNumber, aNumber2 )
   {
     return Math.max( aNumber, aNumber2 );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.ceil = function ceil( aNumber )
   {
     return Math.ceil( aNumber );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.floor = function floor( aNumber )
   {
     return Math.floor( aNumber );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.float = function float( aNumber )
   {
     return typeof aNumber == "string" ?
@@ -1151,11 +1469,17 @@ function buildProcessing( curElement ){
         parseFloat( aNumber );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.byte = function byte( aNumber )
   {
     return aNumber || 0;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.random = function random( aMin, aMax )
   {
     return arguments.length == 2 ?
@@ -1164,6 +1488,9 @@ function buildProcessing( curElement ){
   }
 
   // From: http://freespace.virgin.net/hugo.elias/models/m_perlin.htm
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.noise = function( x, y, z )
   {
     return arguments.length >= 2 ?
@@ -1171,6 +1498,9 @@ function buildProcessing( curElement ){
       PerlinNoise_2D( x, x );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function Noise(x, y)
   {
     var n = x + y * 57;
@@ -1178,6 +1508,9 @@ function buildProcessing( curElement ){
     return Math.abs(1.0 - (((n * ((n * n * 15731) + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function SmoothedNoise(x, y)
   {
     var corners = ( Noise(x-1, y-1)+Noise(x+1, y-1)+Noise(x-1, y+1)+Noise(x+1, y+1) ) / 16;
@@ -1186,6 +1519,9 @@ function buildProcessing( curElement ){
     return corners + sides + center;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function InterpolatedNoise(x, y)
   {
     var integer_X    = Math.floor(x);
@@ -1205,6 +1541,9 @@ function buildProcessing( curElement ){
     return Interpolate(i1 , i2 , fractional_Y);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function PerlinNoise_2D(x, y)
   {
       var total = 0;
@@ -1222,6 +1561,9 @@ function buildProcessing( curElement ){
       return total;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function Interpolate(a, b, x)
   {
     var ft = x * p.PI;
@@ -1229,66 +1571,105 @@ function buildProcessing( curElement ){
     return  a*(1-f) + b*f;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.red = function( aColor )
   {
     return parseInt(aColor.slice(5));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.green = function( aColor )
   {
     return parseInt(aColor.split(",")[1]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.blue = function( aColor )
   {
     return parseInt(aColor.split(",")[2]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.alpha = function( aColor )
   {
     return parseInt(aColor.split(",")[3]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.abs = function abs( aNumber )
   {
     return Math.abs( aNumber );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.cos = function cos( aNumber )
   {
     return Math.cos( aNumber );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.sin = function sin( aNumber )
   {
     return Math.sin( aNumber );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.pow = function pow( aNumber, aExponent )
   {
     return Math.pow( aNumber, aExponent );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.constrain = function constrain( aNumber, aMin, aMax )
   {
     return Math.min( Math.max( aNumber, aMin ), aMax );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.sqrt = function sqrt( aNumber )
   {
   	return Math.sqrt( aNumber );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.atan2 = function atan2( aNumber, aNumber2 )
   {
   	return Math.atan2( aNumber, aNumber2 );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.radians = function radians( aAngle )
   {
     return ( aAngle / 180 ) * p.PI;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.size = function size( aWidth, aHeight )
   {
     var fillStyle = curContext.fillStyle;
@@ -1301,43 +1682,67 @@ function buildProcessing( curElement ){
     curContext.strokeStyle = strokeStyle;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.noStroke = function noStroke()
   {
     doStroke = false;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.noFill = function noFill()
   {
     doFill = false;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.smooth = function smooth()
   {
   
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.noLoop = function noLoop()
   {
     doLoop = false;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.fill = function fill()
   {
     doFill = true;
     curContext.fillStyle = p.color.apply( this, arguments );
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.stroke = function stroke()
   {
     doStroke = true;
     curContext.strokeStyle = p.color.apply( this, arguments );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.strokeWeight = function strokeWeight( w )
   {
     curContext.lineWidth = w;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.point = function point( x, y )
   {
     var oldFill = curContext.fillStyle;
@@ -1346,6 +1751,9 @@ function buildProcessing( curElement ){
     curContext.fillStyle = oldFill;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.get = function get( x, y )
   {
     if ( arguments.length == 0 )
@@ -1363,6 +1771,9 @@ function buildProcessing( curElement ){
     return getLoaded.get( x, y );
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.set = function set( x, y, color )
   {
     var oldFill = curContext.fillStyle;
@@ -1371,6 +1782,9 @@ function buildProcessing( curElement ){
     curContext.fillStyle = oldFill;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.arc = function arc( x, y, width, height, start, stop )
   {
     if ( width <= 0 )
@@ -1396,6 +1810,9 @@ function buildProcessing( curElement ){
     curContext.closePath();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.line = function line( x1, y1, x2, y2 )
   {
     curContext.lineCap = "round";
@@ -1409,6 +1826,9 @@ function buildProcessing( curElement ){
     curContext.closePath();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.bezier = function bezier( x1, y1, x2, y2, x3, y3, x4, y4 )
   {
     curContext.lineCap = "butt";
@@ -1422,6 +1842,9 @@ function buildProcessing( curElement ){
     curContext.closePath();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.triangle = function triangle( x1, y1, x2, y2, x3, y3 )
   {
     p.beginShape();
@@ -1431,6 +1854,9 @@ function buildProcessing( curElement ){
     p.endShape();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.quad = function quad( x1, y1, x2, y2, x3, y3, x4, y4 )
   {
     p.beginShape();
@@ -1441,6 +1867,9 @@ function buildProcessing( curElement ){
     p.endShape();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.rect = function rect( x, y, width, height )
   {
     if ( width == 0 && height == 0 )
@@ -1485,6 +1914,9 @@ function buildProcessing( curElement ){
     curContext.closePath();
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.ellipse = function ellipse( x, y, width, height )
   {
     x = x || 0;
@@ -1516,16 +1948,25 @@ function buildProcessing( curElement ){
     curContext.closePath();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.link = function( href, target )
   {
     window.location = href;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.loadPixels = function()
   {
     p.pixels = buildImageObject( curContext.getImageData(0, 0, p.width, p.height) ).pixels;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.updatePixels = function()
   {
     var colors = /(\d+),(\d+),(\d+),(\d+)/;
@@ -1548,6 +1989,9 @@ function buildProcessing( curElement ){
     curContext.putImageData(pixels, 0, 0);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.extendClass = function extendClass( obj, args, fn )
   {
     if ( arguments.length == 3 )
@@ -1560,6 +2004,9 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.addMethod = function addMethod( object, name, fn )
   {
     if ( object[ name ] )
@@ -1567,6 +2014,9 @@ function buildProcessing( curElement ){
       var args = fn.length;
       
       var oldfn = object[ name ];
+
+      // YOURNAME:
+      // YOURCOMMENT
       object[ name ] = function()
       {
         if ( arguments.length == args )
@@ -1581,6 +2031,9 @@ function buildProcessing( curElement ){
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   p.init = function init(code){
     p.stroke( 0 );
     p.fill( 255 );
@@ -1591,6 +2044,9 @@ function buildProcessing( curElement ){
 
     if ( code )
     {
+
+      // YOURNAME:
+      // YOURCOMMENT
       (function(Processing){with (p){
         eval(parse(code, p));
       }})(p);
@@ -1616,6 +2072,9 @@ function buildProcessing( curElement ){
       }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach( curElement, "mousemove", function(e)
     {
       p.pmouseX = p.mouseX;
@@ -1634,6 +2093,9 @@ function buildProcessing( curElement ){
       }      
     });
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach( curElement, "mousedown", function(e)
     {
       mousePressed = true;
@@ -1648,6 +2110,9 @@ function buildProcessing( curElement ){
       }
     });
       
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach( curElement, "mouseup", function(e)
     {
       mousePressed = false;
@@ -1663,6 +2128,9 @@ function buildProcessing( curElement ){
       }
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach( document, "keydown", function(e)
     {
       keyPressed = true;
@@ -1684,6 +2152,9 @@ function buildProcessing( curElement ){
       }
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     attach( document, "keyup", function(e)
     {
       keyPressed = false;
@@ -1699,6 +2170,9 @@ function buildProcessing( curElement ){
       }
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function attach(elem, type, fn)
     {
       if ( elem.addEventListener )

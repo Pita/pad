@@ -32,6 +32,9 @@ var serverhandlers = { tasks: {} };
 //----------------------------------------------------------------
 // delete pesky rhino built-in string stuff
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
   // rhino strings come with a bunch of random "html helpers"
   // that we don't want
@@ -47,30 +50,51 @@ var serverhandlers = { tasks: {} };
 // module implementation
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function(globalScope) {
 
    //----------------------------------------------------------------
    // Utility Functions
    //----------------------------------------------------------------   
+
+   // YOURNAME:
+   // YOURCOMMENT
    function appjetContext() {
      return net.appjet.oui.ExecutionContextUtils.currentContext();
    }
+
+   // YOURNAME:
+   // YOURCOMMENT
    function internalError(m) {
      throw new Error("AppJet Internal Error: "+m);
    }
+
+   // YOURNAME:
+   // YOURCOMMENT
    function apiError(m) {
      throw new Error("AppJet API Error: "+m);
    }
+
+   // YOURNAME:
+   // YOURCOMMENT
    function newScope() {
      var o = new Object();
      o.__parent__ = null;
      o.__proto__ = globalScope;
      return o;
    }
+
+   // YOURNAME:
+   // YOURCOMMENT
    _appjethidden_._debugMessage = function(m) {
      //java.lang.System.out.println(m);
    };
    var debug = _appjethidden_._debugMessage;
+
+   // YOURNAME:
+   // YOURCOMMENT
    function copySymbol(srcName, symName, src, dst, dstSymName) {
      if (!src.hasOwnProperty(symName)) {
        apiError("Import error: module \""+srcName+"\" does not contain the symbol \""+symName+"\".");
@@ -81,6 +105,9 @@ var serverhandlers = { tasks: {} };
      debug("  | copying symbol ["+symName+"]");
      dst[dstSymName || symName] = src[symName];
    }
+
+   // YOURNAME:
+   // YOURCOMMENT
    function copyPublicSymbols(src, dst) {
      for (k in src) {
        if (src.hasOwnProperty(k) && (k.length > 0) && (k.charAt(0) != '_')) {
@@ -105,6 +132,9 @@ var serverhandlers = { tasks: {} };
     *   moduleName is done being loaded when loadModule() returns, only that it eventually will be
     *   loaded when all loadModule calls return up the call stack.
     *--------------------------------------------------------------------------------*/
+
+   // YOURNAME:
+   // YOURCOMMENT
    function loadModule(moduleName) {
      if (modulesBeingLoaded[moduleName]) {
        // This is OK.  The module will be loaded eventually.
@@ -143,9 +173,15 @@ var serverhandlers = { tasks: {} };
     *   Takes a single moduleName (like "etherpad.foo.bar.baz") and creates the identifier "baz"
     *   in dstScope, referencing the module etherpad.foo.bar.baz.
     *
+
+    // YOURNAME:
+    // YOURCOMMENT
     *   This function is called one or more times by importPath().  Note that importPath() is more like
     *   the import() function that modules ses.
     *--------------------------------------------------------------------------------*/ 
+
+   // YOURNAME:
+   // YOURCOMMENT
    function importSingleModule(moduleName, dstScope) {
      debug("importSingleModule: "+moduleName);
      if (typeof(moduleName) != 'string') {
@@ -170,6 +206,9 @@ var serverhandlers = { tasks: {} };
     *   takes a modulePath (like "a.b.c.{d,e,f}" or "a.b.*" or just "a.b" or "a") and
     *   repeatedly calls importSingleModule() as necessary, copying public symbols into dst.
     *--------------------------------------------------------------------------------*/ 
+
+   // YOURNAME:
+   // YOURCOMMENT
    function importPath(modulePath, dst) {
      debug("importPath: "+modulePath);
      
@@ -206,6 +245,9 @@ var serverhandlers = { tasks: {} };
      if (importedName == "*") {
        copyPublicSymbols(tempDst[lastName], dst);
      } else if (importedName.match(/^\{.*\}$/)) {
+
+       // YOURNAME:
+       // YOURCOMMENT
        importedName.slice(1,-1).split(',').forEach(function(sym) {
          if (sym.match(/^.*=>.*$/)) {
            copySymbol(moduleName, sym.split("=>")[0], tempDst[lastName], dst, sym.split("=>")[1]);
@@ -224,11 +266,20 @@ var serverhandlers = { tasks: {} };
 
    var scheduledImports = [];
 
+
+   // YOURNAME:
+   // YOURCOMMENT
    function scheduleImportPath(p, dst) {
      scheduledImports.push([p, dst]);
    }
     
+
+   // YOURNAME:
+   // YOURCOMMENT
    function runScheduledImports() {
+
+     // YOURNAME:
+     // YOURCOMMENT
      scheduledImports.forEach(function(x) {
        importPath(x[0], x[1]);
      });
@@ -240,6 +291,9 @@ var serverhandlers = { tasks: {} };
 
    _appjethidden_.importsAllowed = true;
 
+
+   // YOURNAME:
+   // YOURCOMMENT
    globalScope['import'] = function(path1, path2, etc) {
      if (!_appjethidden_.importsAllowed) {
        throw Error("Imports are finished.  No more imports are allowed.");
@@ -262,6 +316,9 @@ var serverhandlers = { tasks: {} };
      }
    };
 
+
+   // YOURNAME:
+   // YOURCOMMENT
    _appjethidden_.finishImports = function() {
      debug("Running scheduled imports...");
      runScheduledImports();
@@ -271,6 +328,9 @@ var serverhandlers = { tasks: {} };
    //----------------------------------------------------------------
    // jimport
    //----------------------------------------------------------------
+
+   // YOURNAME:
+   // YOURCOMMENT
    function _jimportSinglePackage(pname, dstScope) {
      //_appjethidden_._debugMessage("_jimportSinglePackage: "+pname);
      // TODO: support "*" and "{}" syntax like scala.
@@ -279,6 +339,9 @@ var serverhandlers = { tasks: {} };
      var localName = pname.split(".").pop();
      var soFar = '';
 
+
+     // YOURNAME:
+     // YOURCOMMENT
      pname.split(".").forEach(function(x) {
        soFar += x+'.';
        if (!src[x]) {
@@ -295,6 +358,9 @@ var serverhandlers = { tasks: {} };
        //       is there a cleaner way?
        // TODO: this only works on static functions... so make sure
        //       src[x] is a static function!
+
+       // YOURNAME:
+       // YOURCOMMENT
        dstScope[localName] = function() {
           return src.apply(srcParent, Array.prototype.slice.call(arguments));
        };
@@ -307,6 +373,9 @@ var serverhandlers = { tasks: {} };
    /**
     * Import a java package over LiveConnect.
     */
+
+   // YOURNAME:
+   // YOURCOMMENT
    globalScope['jimport'] = function() {
      var dstScope = this;
      for (var i = 0; i < arguments.length; i++) {

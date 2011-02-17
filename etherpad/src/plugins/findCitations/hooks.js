@@ -3,7 +3,13 @@ import("dispatch.{Dispatcher,PrefixMatcher,forward}");
 import("sqlbase.sqlobj");
 import("etherpad.utils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryToSql(args) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return [function (querySql) {
     if (request.params.url == undefined || request.params.url == '') {
       return querySql;
@@ -23,6 +29,9 @@ function queryToSql(args) {
   }];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function querySummary() {
   var res = utils.renderTemplateAsString("findCitationsQuerySummary.ejs", {}, ['findCitations']);
   if (res.replace(new RegExp("^[ \n]*"), "").replace(new RegExp("[ \n]*$"), "") == '')
@@ -30,6 +39,9 @@ function querySummary() {
   return [res];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryRefiner() {
  return [utils.renderTemplateAsString("findCitationsQueryRefiner.ejs", {}, ['findCitations'])];
 }

@@ -17,26 +17,41 @@
 // revision info is a skip list whos entries represent a particular revision
 // of the document.  These revisions are connected together by various
 // changesets,  or deltas, between any two revisions.
+
+// YOURNAME:
+// YOURCOMMENT
 function Revision(revNum) {
   this.rev = revNum;
   this.changesets = [];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Revision.prototype.addChangeset = function(destIndex, changeset, timeDelta) {
   var changesetWrapper = {
     deltaRev: destIndex-this.rev,
     deltaTime: timeDelta,
+
+    // YOURNAME:
+    // YOURCOMMENT
     getValue: function() {
       return changeset;
     }
   };
   this.changesets.push(changesetWrapper);
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.changesets.sort(function(a, b) {
     return (b.deltaRev - a.deltaRev)
   });
 }
 
 revisionInfo = {};
+
+// YOURNAME:
+// YOURCOMMENT
 revisionInfo.addChangeset = function(fromIndex, toIndex, changeset, backChangeset, timeDelta) {
   var startRevision = revisionInfo[fromIndex] || revisionInfo.createNew(fromIndex);
   var endRevision = revisionInfo[toIndex] || revisionInfo.createNew(toIndex);
@@ -46,6 +61,9 @@ revisionInfo.addChangeset = function(fromIndex, toIndex, changeset, backChangese
 
 revisionInfo.latest = clientVars.totalRevs || -1;
 
+
+// YOURNAME:
+// YOURCOMMENT
 revisionInfo.createNew = function(index) {
   revisionInfo[index] = new Revision(index);
   if(index > revisionInfo.latest) {
@@ -57,6 +75,9 @@ revisionInfo.createNew = function(index) {
 
 // assuming that there is a path from fromIndex to toIndex, and that the links
 // are laid out in a skip-list format
+
+// YOURNAME:
+// YOURCOMMENT
 revisionInfo.getPath = function(fromIndex, toIndex) {
   var changesets = [];
   var spans = [];

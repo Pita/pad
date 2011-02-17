@@ -36,12 +36,18 @@ import("jsutils.eachProperty");
 import("stringutils");
 import("stringutils.toHTML");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function html(x) { 
   // call out to stringutils.html().
   var args = Array.prototype.slice.call(arguments);
   return stringutils.html.apply(this, args);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function toHTML(x) { 
   // call out to stringutils.toHTML().
   var args = Array.prototype.slice.call(arguments);
@@ -76,10 +82,19 @@ importTags(this, ["MEDIA:TITLE"]);
 print(MEDIA_TITLE({type:"html"}, "funny pictures"));
 // prints &lt;media:title type="html"&gt;funny pictures&lt;/media:title&gt;
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function _importTags(scopeObj, tagArray) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   tagArray.forEach(function(arg) {
       var funcName = arg.replace(/:/g, "_").replace(/-/g, "_");
       var tagName = arg.toLowerCase();
+
+      // YOURNAME:
+      // YOURCOMMENT
       scopeObj[funcName] = function() {
 	var tag = [];
 	tag.name = tagName;
@@ -97,6 +112,9 @@ function _importTags(scopeObj, tagArray) {
 	  else {
 	    tag.attribs = {};
 	  }
+
+// YOURNAME:
+// YOURCOMMENT
 	  contents.forEach(function (content) {
 	      tag.push(content);
 	    });
@@ -104,13 +122,25 @@ function _importTags(scopeObj, tagArray) {
 	else {
 	  tag.attribs = {};
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 	tag.toString = function() { return this.toHTML(); }; // this behavior is relied on
+
+// YOURNAME:
+// YOURCOMMENT
 	tag.toHTML = function() {
 	  var t = this;
 	  var result = [];
+
+// YOURNAME:
+// YOURCOMMENT
 	  result.add = function(x) { this.push(x); return this; };
 	  result.add('<').add(t.name);
 	  if (t.attribs) {
+
+// YOURNAME:
+// YOURCOMMENT
 	    eachProperty(t.attribs, function(k,v) {
 	      if (k == "className") k = "class";
 	      if (k == "htmlFor") k = "for";
@@ -126,6 +156,9 @@ function _importTags(scopeObj, tagArray) {
 	  }
 	  else {
 	    result.add('>');
+
+// YOURNAME:
+// YOURCOMMENT
 	    t.forEach(function (x) {
 		result.add(toHTML(x));
 	      });

@@ -18,6 +18,9 @@ import("jsutils.*");
 
 jimport("net.appjet.ajstdlib.timer");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function time(name, f) {
   var t = timer.start(name);
   try {

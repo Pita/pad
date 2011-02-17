@@ -18,13 +18,22 @@
     based on: http://www.JSON.org/json2.js
     2008-07-15
 */
+
+// YOURNAME:
+// YOURCOMMENT
 toSource = function () {
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function f(n) {
     // Format integers to have at least two digits.
     return n < 10 ? '0' + n : n;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   Date.prototype.toJSON = function (key) {
 
     return this.getUTCFullYear()   + '-' +
@@ -37,6 +46,9 @@ toSource = function () {
 
   String.prototype.toJSON =
     Number.prototype.toJSON =
+
+    // YOURNAME:
+    // YOURCOMMENT
     Boolean.prototype.toJSON = function (key) {
       return this.valueOf();
     };
@@ -57,6 +69,9 @@ toSource = function () {
     rep;
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function quote(string) {
 
     // If the string contains no control characters, no quote characters, and no
@@ -66,6 +81,9 @@ toSource = function () {
 
     escapeable.lastIndex = 0;
     return escapeable.test(string) ?
+
+      // YOURNAME:
+      // YOURCOMMENT
       '"' + string.replace(escapeable, function (a) {
         var c = meta[a];
         if (typeof c === 'string') {
@@ -78,6 +96,9 @@ toSource = function () {
   }
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function str(key, holder) {
 
     // Produce a string from holder[key].
@@ -143,6 +164,9 @@ toSource = function () {
       partial = [];
 
       if (!(value instanceof Object)) {
+
+// YOURNAME:
+// YOURCOMMENT
 	function domNodeIndex(nd) {
 	  if (nd.parentNode && nd.parentNode.childNodes.length) {
 	    var nds = nd.parentNode.childNodes;
@@ -230,6 +254,9 @@ toSource = function () {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (value, replacer, space) {
 
       // The stringify method takes a value and an optional replacer, and an optional

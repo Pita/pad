@@ -16,8 +16,14 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeCSSManager(emptyStylesheetTitle) {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSheetByTitle(title) {
     var allSheets = document.styleSheets;
     for(var i=0;i<allSheets.length;i++) {
@@ -29,6 +35,9 @@ function makeCSSManager(emptyStylesheetTitle) {
     return null;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   /*function getSheetTagByTitle(title) {
     var allStyleTags = document.getElementsByTagName("style");
     for(var i=0;i<allStyleTags.length;i++) {
@@ -42,17 +51,29 @@ function makeCSSManager(emptyStylesheetTitle) {
 
   var browserSheet = getSheetByTitle(emptyStylesheetTitle);
   //var browserTag = getSheetTagByTitle(emptyStylesheetTitle);
+
+  // YOURNAME:
+  // YOURCOMMENT
   function browserRules() { return (browserSheet.cssRules || browserSheet.rules); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function browserDeleteRule(i) {
     if (browserSheet.deleteRule) browserSheet.deleteRule(i);
     else browserSheet.removeRule(i);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function browserInsertRule(i, selector) {
     if (browserSheet.insertRule) browserSheet.insertRule(selector+' {}', i);
     else browserSheet.addRule(selector, null, i);
   }
   var selectorList = [];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function indexOfSelector(selector) {
     for(var i=0;i<selectorList.length;i++) {
       if (selectorList[i] == selector) {
@@ -62,6 +83,9 @@ function makeCSSManager(emptyStylesheetTitle) {
     return -1;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function selectorStyle(selector) {
     var i = indexOfSelector(selector);
     if (i < 0) {
@@ -73,6 +97,9 @@ function makeCSSManager(emptyStylesheetTitle) {
     return browserRules().item(i).style;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeSelectorStyle(selector) {
     var i = indexOfSelector(selector);
     if (i >= 0) {
@@ -82,6 +109,9 @@ function makeCSSManager(emptyStylesheetTitle) {
   }
 
   return {selectorStyle:selectorStyle, removeSelectorStyle:removeSelectorStyle,
+
+// YOURNAME:
+// YOURCOMMENT
 	  info: function() {
 	    return selectorList.length+":"+browserRules().length;
 	  }};

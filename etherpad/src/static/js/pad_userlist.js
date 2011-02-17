@@ -15,13 +15,22 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var paduserlist = (function() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var rowManager = (function() {
     // The row manager handles rendering rows of the user list and animating
     // their insertion, removal, and reordering.  It manipulates TD height
     // and TD opacity.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextRowId() {
       return "usertr"+(nextRowId.counter++);
     }
@@ -33,6 +42,9 @@ var paduserlist = (function() {
 
     var ANIMATION_START = -12; // just starting to fade in
     var ANIMATION_END = 12; // just finishing fading out
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getAnimationHeight(step, power) {
       var a = Math.abs(step/12);
       if (power == 2) a = a*a;
@@ -53,12 +65,21 @@ var paduserlist = (function() {
     // we do lots of manipulation of table rows and stuff that JQuery makes ok, despite
     // IE's poor handling when manipulating the DOM directly.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getEmptyRowHtml(height) {
       return '<td colspan="'+NUMCOLS+'" style="border:0;height:'+height+'px"><!-- --></td>';
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function isNameEditable(data) {
       return (! data.name) && (data.status != 'Disconnected');
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function replaceUserRowContents(tr, height, data) {
       var tds = getUserRowHtml(height, data).match(/<td.*?<\/td>/gi);
       if (isNameEditable(data) && tr.find("td.usertdname input:enabled").length > 0) {
@@ -75,6 +96,9 @@ var paduserlist = (function() {
       }
       return tr;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getUserRowHtml(height, data) {
       var nameHtml;
       var isGuest = (data.id.charAt(0) != 'p');
@@ -95,12 +119,21 @@ var paduserlist = (function() {
               '<td style="height:',height,'px" class="usertdstatus">',padutils.escapeHtml(data.status),'</td>',
               '<td style="height:',height,'px" class="activity">',padutils.escapeHtml(data.activity),'</td>'].join('');
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function getRowHtml(id, innerHtml) {
       return '<tr id="'+id+'">'+innerHtml+'</tr>';
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function rowNode(row) {
       return $("#"+row.domId);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function handleRowData(row) {
       if (row.data && row.data.status == 'Disconnected') {
         row.opacity = 0.5;
@@ -109,17 +142,29 @@ var paduserlist = (function() {
         delete row.opacity;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function handleRowNode(tr, data) {
       if (data.titleText) {
         var titleText = data.titleText;
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.setTimeout(function() { tr.attr('title', titleText )}, 0);
       }
       else {
         tr.removeAttr('title');
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function handleOtherUserInputs() {
       // handle 'INPUT' elements for naming other unnamed users
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#otheruserstable input.newinput").each(function() {
         var input = $(this);
         var tr = input.closest("tr");
@@ -134,6 +179,9 @@ var paduserlist = (function() {
     }
 
     // animationPower is 0 to skip animation, 1 for linear, 2 for quadratic, etc.
+
+    // YOURNAME:
+    // YOURCOMMENT
     function insertRow(position, data, animationPower) {
       position = Math.max(0, Math.min(rowsPresent.length, position));
       animationPower = (animationPower === undefined ? 4 : animationPower);
@@ -169,6 +217,9 @@ var paduserlist = (function() {
       return row;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function updateRow(position, data) {
       var row = rowsPresent[position];
       if (row) {
@@ -185,6 +236,9 @@ var paduserlist = (function() {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function removeRow(position, animationPower) {
       animationPower = (animationPower === undefined ? 4 : animationPower);
       var row = rowsPresent[position];
@@ -203,6 +257,9 @@ var paduserlist = (function() {
     }
 
     // newPosition is position after the row has been removed
+
+    // YOURNAME:
+    // YOURCOMMENT
     function moveRow(oldPosition, newPosition, animationPower) {
       animationPower = (animationPower === undefined ? 1 : animationPower); // linear is best
       var row = rowsPresent[oldPosition];
@@ -213,6 +270,9 @@ var paduserlist = (function() {
       }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function animateStep() {
       // animation must be symmetrical
       for(var i=rowsFadingIn.length-1;i>=0;i--) { // backwards to allow removal
@@ -280,7 +340,13 @@ var paduserlist = (function() {
   var otherUsersData = [];
   var colorPickerOpen = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function rowManagerMakeNameEditor(jnode, userId) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     setUpEditable(jnode, function() {
       var existingIndex = findExistingIndex(userId);
       if (existingIndex >= 0) {
@@ -289,6 +355,9 @@ var paduserlist = (function() {
       else {
         return '';
       }
+
+    // YOURNAME:
+    // YOURCOMMENT
     }, function(newName) {
       if (! newName) {
         jnode.addClass("editempty");
@@ -301,6 +370,9 @@ var paduserlist = (function() {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function renderMyUserInfo() {
     if (myUserInfo.name) {
       $("#myusernameedit").removeClass("editempty").val(
@@ -321,6 +393,9 @@ var paduserlist = (function() {
     $("#myswatch").css('background', pad.getColorPalette()[myUserInfo.colorId]);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function findExistingIndex(userId) {
     var existingIndex = -1;
     for(var i=0;i<otherUsersInfo.length;i++) {
@@ -332,7 +407,13 @@ var paduserlist = (function() {
     return existingIndex;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setUpEditable(jqueryNode, valueGetter, valueSetter) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     jqueryNode.bind('focus', function(evt) {
       var oldValue = valueGetter();
       if (jqueryNode.val() !== oldValue) {
@@ -340,18 +421,30 @@ var paduserlist = (function() {
       }
       jqueryNode.addClass("editactive").removeClass("editempty");
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     jqueryNode.bind('blur', function(evt) {
       var newValue = jqueryNode.removeClass("editactive").val();
       valueSetter(newValue);
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     padutils.bindEnterAndEscape(jqueryNode, function onEnter() {
       jqueryNode.blur();
+
+    // YOURNAME:
+    // YOURCOMMENT
     }, function onEscape() {
       jqueryNode.val(valueGetter()).blur();
     });
     jqueryNode.removeAttr('disabled').addClass('editable');
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function showColorPicker() {
     if (! colorPickerOpen) {
       var palette = pad.getColorPalette();
@@ -368,9 +461,15 @@ var paduserlist = (function() {
     $("#mycolorpicker .pickerswatchouter:eq("+(myUserInfo.colorId||0)+")").
       addClass('picked');
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getColorPickerSwatchIndex(jnode) {
     return Number(jnode.get(0).className.match(/\bn([0-9]+)\b/)[1])-1;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function closeColorPicker(accept) {
     if (accept) {
       var newColorId = getColorPickerSwatchIndex($("#mycolorpicker .picked"));
@@ -384,6 +483,9 @@ var paduserlist = (function() {
     renderMyUserInfo();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function updateInviteNotice() {
     if (otherUsersInfo.length == 0) {
       $("#otheruserstable").hide();
@@ -398,6 +500,9 @@ var paduserlist = (function() {
   var knocksToIgnore = {};
   var guestPromptFlashState = 0;
   var guestPromptFlash = padutils.makeAnimationScheduler(
+
+    // YOURNAME:
+    // YOURCOMMENT
     function () {
       var prompts = $("#guestprompts .guestprompt");
       if (prompts.length == 0) {
@@ -416,6 +521,9 @@ var paduserlist = (function() {
     }, 1000);
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(myInitialUserInfo) {
       self.setMyUserInfo(myInitialUserInfo);
 
@@ -424,14 +532,23 @@ var paduserlist = (function() {
       if (pad.getUserIsGuest()) {
         $("#myusernameedit").addClass('myusernameedithoverable');
         setUpEditable($("#myusernameedit"),
+
+                      // YOURNAME:
+                      // YOURCOMMENT
                       function() {
                         return myUserInfo.name || '';
                       },
+
+                      // YOURNAME:
+                      // YOURCOMMENT
                       function(newValue) {
                         myUserInfo.name = newValue;
                         pad.notifyChangeName(newValue);
                         // wrap with setTimeout to do later because we get
                         // a double "blur" fire in IE...
+
+                        // YOURNAME:
+                        // YOURCOMMENT
                         window.setTimeout(function() {
                           renderMyUserInfo();
                         }, 0);
@@ -440,24 +557,39 @@ var paduserlist = (function() {
 
       // color picker
       $("#myswatchbox").click(showColorPicker);
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#mycolorpicker .pickerswatchouter").click(function() {
         $("#mycolorpicker .pickerswatchouter").removeClass('picked');
         $(this).addClass('picked');
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#mycolorpickersave").click(function() {
         closeColorPicker(true);
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $("#mycolorpickercancel").click(function() {
         closeColorPicker(false);
       });
       //
 
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setMyUserInfo: function(info) {
       myUserInfo = $.extend({}, info);
 
       renderMyUserInfo();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     userJoinOrUpdate: function(info) {
       if ((! info.userId) || (info.userId == myUserInfo.userId)) {
         // not sure how this would happen
@@ -479,6 +611,9 @@ var paduserlist = (function() {
       if (existingIndex >= 0) {
         numUsersBesides--;
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       var newIndex = padutils.binarySearch(numUsersBesides, function(n) {
         if (existingIndex >= 0 && n >= existingIndex) {
           // pretend existingIndex isn't there
@@ -517,6 +652,9 @@ var paduserlist = (function() {
 
       updateInviteNotice();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     userLeave: function(info) {
       var existingIndex = findExistingIndex(info.userId);
       if (existingIndex >= 0) {
@@ -530,6 +668,9 @@ var paduserlist = (function() {
         // joins, or updates happen for this user in the
         // next N seconds, to remove the user from the list.
         var thisUserId = info.userId;
+
+        // YOURNAME:
+        // YOURCOMMENT
         var thisLeaveTimer = window.setTimeout(function() {
           var newExistingIndex = findExistingIndex(thisUserId);
           if (newExistingIndex >= 0) {
@@ -547,6 +688,9 @@ var paduserlist = (function() {
       }
       updateInviteNotice();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     showGuestPrompt: function(userId, displayName) {
       if (knocksToIgnore[userId]) {
         return;
@@ -567,6 +711,9 @@ var paduserlist = (function() {
         // update display name
         box.find(".guestname").html('<strong>Guest:</strong> '+padutils.escapeHtml(displayName));
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       var hideLater = padutils.getCancellableAction(actionName, function() {
         self.removeGuestPrompt(userId);
       });
@@ -574,18 +721,30 @@ var paduserlist = (function() {
 
       guestPromptFlash.scheduleAnimation();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     removeGuestPrompt: function(userId) {
       var box = $("#guestprompt-"+padutils.encodeUserId(userId));
       // remove ID now so a new knock by same user gets new, unfaded box
+
+      // YOURNAME:
+      // YOURCOMMENT
       box.removeAttr('id').fadeOut("fast", function() {
         box.remove();
       });
 
       knocksToIgnore[userId] = true;
+
+      // YOURNAME:
+      // YOURCOMMENT
       window.setTimeout(function() {
         delete knocksToIgnore[userId];
       }, 5000);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     answerGuestPrompt: function(encodedUserId, approve) {
       var guestId = padutils.decodeUserId(encodedUserId);
 

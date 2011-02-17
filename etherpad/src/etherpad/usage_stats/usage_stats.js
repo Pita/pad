@@ -47,11 +47,17 @@ jimport("org.jfree.data.time.TimeSeriesCollection");
 //----------------------------------------------------------------
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _listStats(statName) {
   return sqlobj.selectMulti('statistics', {name: statName}, {orderBy: '-timestamp'});
 }
 
 // public accessor
+
+// YOURNAME:
+// YOURCOMMENT
 function getStatData(statName) {
   return _listStats(statName);
 }
@@ -60,6 +66,9 @@ function getStatData(statName) {
 // HTML & Graph generating
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function respondWithGraph(statName) {
   var width = 500;
   var height = 300;
@@ -76,6 +85,9 @@ function respondWithGraph(statName) {
     case 'line':
       var ts = new TimeSeries(statName);
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       _listStats(statName).forEach(function(stat) {
         var day = new Day(new java.util.Date(stat.timestamp * 1000));
         ts.addOrUpdate(day, fastJSON.parse(stat.value).value);
@@ -90,25 +102,43 @@ function respondWithGraph(statName) {
       var valuesToWatch = [];
       var series = {};
       var nLines = 5;
+
+      // YOURNAME:
+      // YOURCOMMENT
       function forEachFirstN(n, stat, f) {
         for (var i = 0; i < Math.min(n, stat.topValues.length); i++) {
           f(stat.topValues[i].value, stat.topValues[i].count);
         }
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       forEachFirstN(nLines, latestStat, function(value, count) {
         valuesToWatch.push(value);
         series[value] = new TimeSeries(value);
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       stats.forEach(function(stat) {
         var day = new Day(new java.util.Date(stat.timestamp*1000));
         var statData = fastJSON.parse(stat.value);
+
+        // YOURNAME:
+        // YOURCOMMENT
         valuesToWatch.forEach(function(value) { series[value].addOrUpdate(day, 0); })
+
+        // YOURNAME:
+        // YOURCOMMENT
         forEachFirstN(nLines, statData, function(value, count) {
           if (series[value]) {
             series[value].addOrUpdate(day, count);
           }
         });
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       valuesToWatch.forEach(function(value) {
         dataset.addSeries(series[value]);
       });
@@ -118,14 +148,23 @@ function respondWithGraph(statName) {
       var stats = _listStats(statName);
       percentagesToGraph = ["50", "90", "100"];
       series = {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       percentagesToGraph.forEach(function(pct) {
         series[pct] = new TimeSeries(pct+"%");
         dataset.addSeries(series[pct]);
       });
       if (stats.length == 0) break;
+
+      // YOURNAME:
+      // YOURCOMMENT
       stats.forEach(function(stat) {
         var day = new Day(new java.util.Date(stat.timestamp*1000));
         var statData = fastJSON.parse(stat.value);
+
+        // YOURNAME:
+        // YOURCOMMENT
         eachProperty(series, function(pct, timeseries) {
           timeseries.addOrUpdate(day, statData[pct] || 0);
         });

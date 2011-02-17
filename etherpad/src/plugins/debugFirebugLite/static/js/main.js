@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 function debugFirebugLiteInit() {
   this.hooks = [];
 }

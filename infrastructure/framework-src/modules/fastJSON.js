@@ -17,10 +17,16 @@
 jimport("net.appjet.oui.FastJSON");
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function stringify(x) {
   return String(FastJSON.stringify(x));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function parse(x) {
   return FastJSON.parse(appjet.context, x);
 }

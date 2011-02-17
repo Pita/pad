@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Changeset(arg) {
 
   var array;
@@ -41,17 +44,35 @@ function Changeset(arg) {
 
   // OOP style: attach generic methods to array object, hold no state in environment
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   //function error(msg) { top.console.error(msg); top.console.trace(); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function error(msg) { var e = new Error(msg); e.easysync = true; throw e; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function assert(b, msg) { if (! b) error("Changeset: "+String(msg)); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function min(x, y) { return (x < y) ? x : y; }
   Changeset._assert = assert;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.isIdentity = function() {
     return this.length == 6 && this[1] == this[2] && this[3] == 0 &&
       this[4] == this[1] && this[5] == "";
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.eachStrip = function(func, thisObj) {
     // inside "func", the method receiver will be "this" by default,
     // or you can pass an object.
@@ -63,10 +84,22 @@ function Changeset(arg) {
     return false;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.numStrips = function() { return (this.length-3)/3; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.oldLen = function() { return this[1]; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.newLen = function() { return this[2]; };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.checkRep = function() {
     assert(this[0] == Changeset.MAGIC, "bad magic");
     assert(this[1] >= 0, "bad old text length");
@@ -78,6 +111,9 @@ function Changeset(arg) {
     var newLen = this[2];
     // iterate over the "text strips"
     var actualNewLen = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.eachStrip(function(startIndex, numTaken, newText, i) {
       var s = startIndex, t = numTaken, n = newText;
       var isFirst = (i == 0);
@@ -98,15 +134,24 @@ function Changeset(arg) {
     assert(newLen == actualNewLen, "calculated new text length doesn't match");
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.applyToText = function(text) {
     assert(text.length == this.oldLen(), "mismatched apply: "+text.length+" / "+this.oldLen());
     var buf = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.eachStrip(function (s, t, n) {
       buf.push(text.substr(s, t), n);
     });
     return buf.join('');
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makeBuilder(oldLen, supportAuthors) {
     var C = Changeset(oldLen);
     if (supportAuthors) {
@@ -115,14 +160,23 @@ function Changeset(arg) {
     return C.builder();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getNumInserted(C) {
     var numChars = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     C.eachStrip(function(s,t,n) {
       numChars += n.length;
     });
     return numChars;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _ensureAuthors(C) {
     if (! C.authors) {
       C.setAuthor();
@@ -130,6 +184,9 @@ function Changeset(arg) {
     return C;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.setAuthor = function(author) {
     var C = this;
     // authors array has even length >= 2;
@@ -140,6 +197,9 @@ function Changeset(arg) {
     return C;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.builder = function() {
     // normal pattern is Changeset(oldLength).builder().appendOldText(...). ...
     // builder methods mutate this!
@@ -147,6 +207,9 @@ function Changeset(arg) {
     // OOP style: state in environment
     var self;
     return self = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       appendNewText: function(str, author) {
 	C[C.length-1] += str;
 	C[2] += str.length;
@@ -169,6 +232,9 @@ function Changeset(arg) {
 
 	return self;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       appendOldText: function(startIndex, numTaken) {
 	if (numTaken == 0) return self;
 	// properties of last strip...
@@ -186,14 +252,23 @@ function Changeset(arg) {
 	C.checkRep();
 	return self;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       toChangeset: function() { return C; }
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.authorSlicer = function(outputBuilder) {
     return _makeAuthorSlicer(this, outputBuilder);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makeAuthorSlicer(changesetOrAuthorsIn, builderOut) {
     // "builderOut" only needs to support appendNewText
     var authors; // considered immutable
@@ -209,13 +284,28 @@ function Changeset(arg) {
     var charIndex = 0;
     var charWithinAuthor = 0; // 0 <= charWithinAuthor <= authors[authorPtr];  max value iff atEnd
     var atEnd = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curAuthor() { return authors[authorPtr+1]; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curAuthorWidth() { return authors[authorPtr]; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function assertNotAtEnd() { assert(! atEnd, "_authorSlicer: can't move past end"); }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function forwardInAuthor(numChars) {
       charWithinAuthor += numChars;
       charIndex += numChars;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextAuthor() {
       assertNotAtEnd();
       assert(charWithinAuthor == curAuthorWidth(), "_authorSlicer: not at author end");
@@ -228,6 +318,9 @@ function Changeset(arg) {
 
     var self;
     return self = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       skipChars: function(n) {
 	assert(n >= 0, "_authorSlicer: can't skip negative n");
 	if (n == 0) return;
@@ -247,6 +340,9 @@ function Changeset(arg) {
 	  }
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       takeChars: function(n, text) {
 	assert(n >= 0, "_authorSlicer: can't take negative n");
 	if (n == 0) return;
@@ -273,12 +369,18 @@ function Changeset(arg) {
 	  }
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       setBuilder: function(builder) {
 	builderOut = builder;
       }
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makeSlicer(C, output) {
     // C: Changeset, output: builder from _makeBuilder
     // C is considered immutable, won't change or be changed
@@ -295,15 +397,36 @@ function Changeset(arg) {
     }
 
     var ptr = 3;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curStartIndex() { return C[ptr]; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curNumTaken() { return C[ptr+1]; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curNewText() { return C[ptr+2]; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curStripWidth() { return curNumTaken() + curNewText().length; }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function assertNotAtEnd() { assert(! atEnd, "_slicer: can't move past changeset end"); }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function forwardInStrip(numChars) {
       charWithinStrip += numChars;
       charIndex += numChars;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextStrip() {
       assertNotAtEnd();
       assert(charWithinStrip == curStripWidth(), "_slicer: not at strip end");
@@ -314,6 +437,9 @@ function Changeset(arg) {
 	atEnd = true;
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function curNumNewCharsInRange(start, end) {
       // takes two indices into the current strip's combined "taken" and "new"
       // chars, and returns how many "new" chars are included in the range
@@ -330,6 +456,9 @@ function Changeset(arg) {
 
     var self;
     return self = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       skipChars: function (n) {
 	assert(n >= 0, "_slicer: can't skip negative n");
 	if (n == 0) return;
@@ -358,6 +487,9 @@ function Changeset(arg) {
 	  }
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       takeChars: function (n) {
 	assert(n >= 0, "_slicer: can't take negative n");
 	if (n == 0) return;
@@ -398,16 +530,25 @@ function Changeset(arg) {
 	  }
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       skipTo: function(n) {
 	self.skipChars(n - charIndex);
       }
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.slicer = function(outputBuilder) {
     return _makeSlicer(this, outputBuilder);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.compose = function(next) {
     assert(next.oldLen() == this.newLen(), "mismatched composition");
 
@@ -419,6 +560,9 @@ function Changeset(arg) {
       authorSlicer = _makeAuthorSlicer(next.authors, builder);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     next.eachStrip(function(s, t, n) {
       slicer.skipTo(s);
       slicer.takeChars(t);
@@ -433,10 +577,16 @@ function Changeset(arg) {
     return builder.toChangeset();
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.traverser = function() {
     return _makeTraverser(this);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makeTraverser(C) {
     var s = C[3], t = C[4], n = C[5];
     var nextIndex = 6;
@@ -447,6 +597,9 @@ function Changeset(arg) {
       authorSlicer = _makeAuthorSlicer(C.authors, null);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function advanceIfPossible() {
       if (t == 0 && n == "" && nextIndex < C.length) {
 	s = C[nextIndex];
@@ -458,23 +611,41 @@ function Changeset(arg) {
 
     var self;
     return self = {
+
+      // YOURNAME:
+      // YOURCOMMENT
       numTakenChars: function() {
 	// if starts with taken characters, then how many, else 0
 	return (t > 0) ? t : 0;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       numNewChars: function() {
 	// if starts with new characters, then how many, else 0
 	return (t == 0 && n.length > 0) ? n.length : 0;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       takenCharsStart: function() {
 	return (self.numTakenChars() > 0) ? s : 0;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       hasMore: function() {
 	return self.numTakenChars() > 0 || self.numNewChars() > 0;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       curIndex: function() {
 	return indexIntoNewText;
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       consumeTakenChars: function (x) {
 	assert(self.numTakenChars() > 0, "_traverser: no taken chars");
 	assert(x >= 0 && x <= self.numTakenChars(), "_traverser: bad number of taken chars");
@@ -484,9 +655,15 @@ function Changeset(arg) {
 	indexIntoNewText += x;
 	advanceIfPossible();
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       consumeNewChars: function(x) {
 	return self.appendNewChars(x, null);
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       appendNewChars: function(x, builder) {
 	assert(self.numNewChars() > 0, "_traverser: no new chars");
 	assert(x >= 0 && x <= self.numNewChars(), "_traverser: bad number of new chars");
@@ -510,18 +687,30 @@ function Changeset(arg) {
 	  return str;
 	}
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       consumeAvailableTakenChars: function() {
 	return self.consumeTakenChars(self.numTakenChars());
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       consumeAvailableNewChars: function() {
 	return self.consumeNewChars(self.numNewChars());
       },
+
+      // YOURNAME:
+      // YOURCOMMENT
       appendAvailableNewChars: function(builder) {
 	return self.appendNewChars(self.numNewChars(), builder);
       }
     };
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.follow = function(prev, reverseInsertOrder) {
     // prev: Changeset, reverseInsertOrder: boolean
 
@@ -562,11 +751,17 @@ function Changeset(arg) {
     return builder.toChangeset();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.encodeToString = function(asBinary) {
     var stringDataArray = [];
     var numsArray = [];
     if (! asBinary) numsArray.push(this[0]);
     numsArray.push(this[1], this[2]);
+
+    // YOURNAME:
+    // YOURCOMMENT
     this.eachStrip(function(s, t, n) {
       numsArray.push(s, t, n.length);
       stringDataArray.push(n);
@@ -580,7 +775,13 @@ function Changeset(arg) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function escapeCrazyUnicode(str) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return str.replace(/\\/g, '\\\\').replace(/[\ud800-\udfff]/g, function (c) {
       return "\\u"+("0000"+c.charCodeAt(0).toString(16)).slice(-4);
     });
@@ -588,6 +789,9 @@ function Changeset(arg) {
 
   array.applyToAttributedText = Changeset.applyToAttributedText;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function splicesFromChanges(c) {
     var splices = [];
     // get a list of splices, [startChar, endChar, newText]
@@ -617,10 +821,16 @@ function Changeset(arg) {
     return splices;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.toSplices = function() {
     return splicesFromChanges(this);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   array.characterRangeFollowThis = function(selStartChar, selEndChar, insertionsAfter) {
     var changeset = this;
     // represent the selection as a changeset that replaces the selection with some finite string.
@@ -632,6 +842,9 @@ function Changeset(arg) {
 	"X").appendOldText(selEndChar, changeset.oldLen() - selEndChar).toChangeset();
     var newSelectionChangeset = selectionChangeset.follow(changeset, insertionsAfter);
     var selectionSplices = newSelectionChangeset.toSplices();
+
+    // YOURNAME:
+    // YOURCOMMENT
     function includeChar(i) {
       if (! includeChar.calledYet) {
 	selStartChar = i;
@@ -655,6 +868,9 @@ function Changeset(arg) {
 }
 
 Changeset.MAGIC = "Changeset";
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.makeSplice = function(oldLength, spliceStart, numRemoved, stringInserted) {
   oldLength = (oldLength || 0);
   spliceStart = (spliceStart || 0);
@@ -667,11 +883,23 @@ Changeset.makeSplice = function(oldLength, spliceStart, numRemoved, stringInsert
   builder.appendOldText(spliceStart + numRemoved, oldLength - numRemoved - spliceStart);
   return builder.toChangeset();
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.identity = function(len) {
   return Changeset(len).builder().appendOldText(0, len).toChangeset();
 };
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.decodeFromString = function(str) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function error(msg) { var e = new Error(msg); e.easysync = true; throw e; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function toHex(str) {
     var a = [];
     a.push("length["+str.length+"]:");
@@ -682,7 +910,13 @@ Changeset.decodeFromString = function(str) {
     if (str.length > TRUNC) a.push("...");
     return a.join(' ');
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function unescapeCrazyUnicode(str) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return str.replace(/\\(u....|\\)/g, function(seq) {
       if (seq == "\\\\") return "\\";
       return String.fromCharCode(Number("0x"+seq.substring(2)));
@@ -732,8 +966,14 @@ Changeset.decodeFromString = function(str) {
   return Changeset(array);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.numberArrayToString = function(nums) {
   var array = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function writeNum(n) {
     // does not support negative numbers
     var twentyEightBit = (n & 0xfffffff);
@@ -753,10 +993,16 @@ Changeset.numberArrayToString = function(nums) {
   return array.join('');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Changeset.numberArrayFromString = function(str, startIndex) {
   // returns [numberArray, remainingString]
   var nums = [];
   var strIndex = (startIndex || 0);
+
+  // YOURNAME:
+  // YOURCOMMENT
   function readNum() {
     var n = str.charCodeAt(strIndex++);
     if (n > 0x7fff) {
@@ -777,7 +1023,13 @@ Changeset.numberArrayFromString = function(str, startIndex) {
   return [nums, str.substring(strIndex)];
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function repeatString(str, times) {
     if (times <= 0) return "";
     var s = repeatString(str, times >> 1);
@@ -785,8 +1037,17 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     if (times & 1) s += str;
     return s;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function chr(n) { return String.fromCharCode(n+48); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ord(c) { return c.charCodeAt(0)-48; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function runMatcher(c) {
     // Takes "A" and returns /\u0041+/g .
     // Avoid creating new objects unnecessarily by caching matchers
@@ -796,6 +1057,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     re = runMatcher[c] = new RegExp("\\u"+("0000"+c.charCodeAt(0).toString(16)).slice(-4)+"+", 'g');
     return re;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function runLength(str, idx, c) {
     var re = runMatcher(c);
     re.lastIndex = idx;
@@ -807,6 +1071,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
   }
 
   // emptyObj may be a StorableObject
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.initAttributedText = function(emptyObj, initialString, initialAuthor) {
     var obj = emptyObj;
     obj.authorMap = { 1: (initialAuthor || '') };
@@ -814,6 +1081,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     obj.attribs = repeatString(chr(1), obj.text.length);
     return obj;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.gcAttributedText = function(atObj) {
     // "garbage collect" the list of authors
     var removedAuthors = [];
@@ -825,6 +1095,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     }
     return removedAuthors;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.cloneAttributedText = function(emptyObj, atObj) {
     var obj = emptyObj;
     obj.text = atObj.text; // string
@@ -836,6 +1109,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     }
     return obj;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.applyToAttributedText = function(atObj, C) {
     C = (C || this);
     var oldText = atObj.text;
@@ -846,6 +1122,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     var textBuf = [];
     var attribsBuf = [];
     var authorMap = atObj.authorMap;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function authorId(author) {
       for(var a in authorMap) {
 	if (authorMap[Number(a)] === author) {
@@ -860,6 +1139,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
 	}
       }
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     var myBuilder = { appendNewText: function(txt, author) {
       // object that acts as a "builder" in that it receives requests from
       // authorSlicer to append text attributed to different authors
@@ -869,6 +1151,9 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     if (C.authors) {
       authorSlicer = C.authorSlicer(myBuilder);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     C.eachStrip(function (s, t, n) {
       textBuf.push(oldText.substr(s, t), n);
       attribsBuf.push(oldAttribs.substr(s, t));
@@ -883,26 +1168,44 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     atObj.attribs = attribsBuf.join('');
     return atObj;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.getAttributedTextCharAuthor = function(atObj, idx) {
     return atObj.authorMap[ord(atObj.attribs.charAt(idx))];
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.getAttributedTextCharRunLength = function(atObj, idx) {
     var c = atObj.attribs.charAt(idx);
     return runLength(atObj.attribs, idx, c);
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.eachAuthorInAttributedText = function(atObj, func) {
     // call func(author, authorNum)
     for(var a in atObj.authorMap) {
       if (func(atObj.authorMap[a], Number(a))) break;
     }
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.getAttributedTextAuthorByNum = function(atObj, n) {
     return atObj.authorMap[n];
   };
   // Compressed attributed text can be cloned, but nothing else until uncompressed!!
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.compressAttributedText = function(atObj) {
     // idempotent, mutates the object, returns it
     if (atObj.attribs) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       atObj.attribs_c = atObj.attribs.replace(/([\s\S])\1{0,63}/g, function(run) {
 	return run.charAt(0)+chr(run.length);;
       });
@@ -910,9 +1213,15 @@ Changeset.numberArrayFromString = function(str, startIndex) {
     }
     return atObj;
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   Changeset.decompressAttributedText = function(atObj) {
     // idempotent, mutates the object, returns it
     if (atObj.attribs_c) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       atObj.attribs = atObj.attribs_c.replace(/[\s\S][\s\S]/g, function(run) {
 	return repeatString(run.charAt(0), ord(run.charAt(1)));
       });

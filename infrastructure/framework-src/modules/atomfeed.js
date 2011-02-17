@@ -18,6 +18,9 @@ import("stringutils.sprintf");
 
 // TODO: validate XHTML of entries?
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _xmlDate(d) {
   return sprintf("%04d-%02d-%02dT%02d:%02d:%02dZ", 
     d.getUTCFullYear(), d.getUTCMonth()+1, d.getUTCDate(),
@@ -36,7 +39,13 @@ function _xmlDate(d) {
 // NOTE: entries should be sorted descending by entry.updated (newest first)
 //
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderFeed(title, lastUpdated, entries, href) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ampesc(url) {
     return url.replace(/&/g, '&amp;');
   }
@@ -51,6 +60,9 @@ function renderFeed(title, lastUpdated, entries, href) {
   r.push('<link rel="alternate" type="text/html" href="' + href + '" />');
   r.push('<id>' + ampesc(request.url) + '</id>');
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   entries.forEach(function(entry) {
     r.push('<entry>',
 	   '<title>' + entry.title + '</title>',

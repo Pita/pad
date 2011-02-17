@@ -26,7 +26,13 @@ import("etherpad.pro.domains");
 import("etherpad.sessions.getSession");
 import("etherpad.store.checkout");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _createRecordIfNecessary(domainId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   inTransaction(function() {
     var r = sqlobj.selectSingle('pro_account_usage', {domainId: domainId});
     if (!r) {
@@ -46,6 +52,9 @@ function _createRecordIfNecessary(domainId) {
  * Effect: counts the current number of domain accounts and stores that
  * as the current account usage count.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function resetAccountUsageCount(domainId) {
   _createRecordIfNecessary(domainId);
   var newCount = pro_accounts.getActiveCount(domainId);
@@ -60,6 +69,9 @@ function resetAccountUsageCount(domainId) {
  * Returns the max number of accounts that have existed simultaneously
  * since the last reset.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getAccountUsageCount(domainId) {
   _createRecordIfNecessary(domainId);
   var record = sqlobj.selectSingle('pro_account_usage', {domainId: domainId});
@@ -71,6 +83,9 @@ function getAccountUsageCount(domainId) {
  * Updates the current account usage count by computing:
  *   usage_count = max(current_accounts, usage_count)
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function updateAccountUsageCount(domainId) {
   _createRecordIfNecessary(domainId);
   var record = sqlobj.selectSingle('pro_account_usage', {domainId: domainId});
@@ -85,6 +100,9 @@ function updateAccountUsageCount(domainId) {
 
 // called per request
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _generateGlobalBillingNotice(status) {
   if (status == team_billing.CURRENT) {
     return;
@@ -112,6 +130,9 @@ function _generateGlobalBillingNotice(status) {
   request.cache.globalProNotice = notice;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function perRequestBillingCheck() {
   // Do nothing if under the free account limit.
   var activeAccounts = pro_accounts.getCachedActiveCount(domains.getRequestDomainId());

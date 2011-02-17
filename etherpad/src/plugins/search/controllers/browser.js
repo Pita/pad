@@ -35,6 +35,9 @@ import("etherpad.admin.plugins");
 import("fastJSON");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var type = "pads";
   if (request.params.type != undefined)

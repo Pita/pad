@@ -20,6 +20,9 @@ jimport("net.appjet.common.util.LimitedSizeMapping");
 
 var HISTORY_SIZE = 100;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getMap() {
   if (!appjet.cache['activepads']) {
     appjet.cache['activepads'] = {
@@ -29,10 +32,16 @@ function _getMap() {
   return appjet.cache['activepads'].map;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function touch(padId) {
   _getMap().put(padId, +(new Date));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActivePads() {
   var m = _getMap();
   var a = m.listAllKeys().toArray();
@@ -44,6 +53,9 @@ function getActivePads() {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   activePads.sort(function(a,b) { return cmp(b.timestamp,a.timestamp); });
   return activePads;
 }

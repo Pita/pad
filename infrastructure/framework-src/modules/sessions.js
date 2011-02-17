@@ -28,6 +28,9 @@ jimport("net.appjet.common.util.ExpiringMapping");
 var _DEFAULT_COOKIE_NAME = "SessionID";
 var _DEFAULT_SERVER_EXPIRATION = 3*24*60*60*1000; // 72 hours
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSessionId(cookieName, createIfNotPresent, domain) {
   if (request.isComet || request.isCron) {
     return null;
@@ -59,19 +62,34 @@ function getSessionId(cookieName, createIfNotPresent, domain) {
   return appjet.requestCache.sessionId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getExpiringSessionMap(db) {
   sync.callsyncIfTrue(db,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return (!db.map); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { db.map = new ExpiringMapping(_DEFAULT_SERVER_EXPIRATION); });
   return db.map;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCachedDb() {
   return appjet.cacheRoot("net.appjet.ajstdlib.session");
 }
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSession(opts) {
   // Session options.
   if (!opts) { opts = {}; }
@@ -100,6 +118,9 @@ function getSession(opts) {
   return sessionData;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function writeSessionsToDisk() {
   var dateString = dateutils.dateFormat(new Date(), "yyyy-MM-dd");
   var dataFile = new Packages.java.io.File(appjet.config.sessionStoreDir+"/sessions-"+dateString+".jslog");
@@ -121,15 +142,24 @@ function writeSessionsToDisk() {
   writer.close();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _extractDate(fname) {
   var datePart = fname.substr("sessions-".length, "2009-09-24".length);
   return Number(datePart.split("-").join(""));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function readLatestSessionsFromDisk() {
   var dir = new Packages.java.io.File(appjet.config.sessionStoreDir);
   if (! dir.exists()) { return; }
   var files = dir.listFiles(new Packages.java.io.FilenameFilter({ 
+
+    // YOURNAME:
+    // YOURCOMMENT
     accept: function(dir, name) { 
       return startsWith(name, "sessions") && endsWith(name, ".jslog") 
     }
@@ -142,6 +172,9 @@ function readLatestSessionsFromDisk() {
     }
   }
   var map = _getExpiringSessionMap(_getCachedDb());
+
+  // YOURNAME:
+  // YOURCOMMENT
   fileutils.eachFileLine(latestFile, function(json) {
     try {
       var obj = fastJSON.parse(json);

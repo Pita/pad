@@ -16,6 +16,9 @@
 
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.addColumns('pro_accounts', {
     isDeleted: sqlobj.getBoolColspec("NOT NULL DEFAULT 0")

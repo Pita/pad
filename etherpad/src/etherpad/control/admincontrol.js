@@ -63,6 +63,9 @@ jimport("org.mindrot.BCrypt");
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _isAuthorizedAdmin() {
   if (!isProduction()) {
     return true;
@@ -70,6 +73,9 @@ function _isAuthorizedAdmin() {
   return (getSession().adminAuth === true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest(name) {
   if (name == "auth") {
     return;
@@ -91,6 +97,9 @@ function onRequest(name) {
   return disp.dispatch();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _commonHead() {
   return HEAD(STYLE(
     "html {font-family:Verdana,Helvetica,sans-serif;}",
@@ -100,6 +109,9 @@ function _commonHead() {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_auth() {
   var cont = getSession().cont;
   if (getSession().message) {
@@ -130,6 +142,9 @@ function render_auth() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   renderHtml("admin/page.ejs",
    {
@@ -140,9 +155,15 @@ function render_main() {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_config() {
 
   vars = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(appjet.config, function(k,v) {
     vars.push(k);
   });
@@ -150,6 +171,9 @@ function render_config() {
   vars.sort();
 
   body = PRE()
+
+  // YOURNAME:
+  // YOURCOMMENT
   vars.forEach(function(v) {
     body.push("appjet.config."+v+" = "+appjet.config[v]+"\n");
   });
@@ -165,6 +189,9 @@ function render_config() {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_test() {
   response.setContentType("text/plain");
   response.write(Packages.net.appjet.common.util.ExpiringMapping + "\n");
@@ -175,6 +202,9 @@ function render_test() {
   response.write(m.toString());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_dashboard() {
   var body = BODY();
   body.push(H1({style: "border-bottom: 1px solid black;"}, "Dashboard"));
@@ -226,7 +256,13 @@ function render_dashboard() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // Note: This function is called by the PNE dashboard (pro_admin_control.js)!  Be careful.
+
+// YOURNAME:
+// YOURCOMMENT
 function renderPadConnections() {
   var d = DIV();
   var lastCount = cometlatencies.lastCount();
@@ -235,11 +271,17 @@ function renderPadConnections() {
     var countMap = {};
     Array.prototype.map.call(lastCount.get().elements().collect().toArray().unbox(
       java.lang.Class.forName("java.lang.Object")),
+
+      // YOURNAME:
+      // YOURCOMMENT
       function(x) {
         countMap[x._1()] = x._2();
       });
     var totalConnected = 0;
     var ul = UL();
+
+    // YOURNAME:
+    // YOURCOMMENT
     eachProperty(countMap, function(k,v) {
       ul.push(LI(k+": "+v));
       if (/^\d+$/.test(v)) {
@@ -254,7 +296,13 @@ function renderPadConnections() {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // Note: This function is called by the PNE dashboard (pro_admin_control.js)!  Be careful.
+
+// YOURNAME:
+// YOURCOMMENT
 function renderCometStats() {
   var d = DIV();
   var lastStats = cometlatencies.lastStats();
@@ -264,7 +312,13 @@ function renderCometStats() {
   if (lastStats.isDefined()) {
     d.push(P("Realtime transport latency percentiles (microseconds):"));
     var ul = UL();
+
+    // YOURNAME:
+    // YOURCOMMENT
     lastStats.map(scalaF1(function(s) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       ['50', '90', '95', '99', 'max'].forEach(function(id) {
         var fn = id;
         if (id != "max") {
@@ -279,6 +333,9 @@ function renderCometStats() {
     d.push(P("Still collecting data... check back in a minutes."));
   }
 
+
+ // YOURNAME:
+ // YOURCOMMENT
  /*    ["p50", "p90", "p95", "p99", "max"].forEach(function(id) {
         ul.push(LI(B(
 
@@ -291,7 +348,13 @@ function renderCometStats() {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // Note: This function is called by the PNE dashboard (pro_admin_control.js)!  Be careful.
+
+// YOURNAME:
+// YOURCOMMENT
 function renderResponseCodes() {
   var statusCodeFrequencyNames = ["minute", "hour", "day", "week"];
   var data = { };
@@ -299,6 +362,9 @@ function renderResponseCodes() {
   for (var i = 0; i < statusCodes.length; ++i) {
     var name = statusCodeFrequencyNames[i];
     var map = statusCodes[i];
+
+    // YOURNAME:
+    // YOURCOMMENT
     map.foreach(scalaF1(function(pair) {
       if (! (pair._1() in data)) data[pair._1()] = {};
       var scmap = data[pair._1()];
@@ -307,16 +373,28 @@ function renderResponseCodes() {
   };
    var stats = TABLE({id: "responsecodes-table", style: "margin-left: 25px;",
                      border: 1, cellspacing: 0, cellpadding: 4},
+
+                     // YOURNAME:
+                     // YOURCOMMENT
                      TR.apply(TR, statusCodeFrequencyNames.map(function(name) {
     return TH({colspan: 2}, "Last", html("&nbsp;"), name);
   })));
   var sortedStati = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(data, function(k) {
     sortedStati.push(k);
   });
   sortedStati.sort();
+
+  // YOURNAME:
+  // YOURCOMMENT
   sortedStati.forEach(function(k, i) { // k is status code.
     var row = TR();
+
+    // YOURNAME:
+    // YOURCOMMENT
     statusCodeFrequencyNames.forEach(function(name) {
       row.push(TD({style: 'width: 2em;'}, data[k][name] ? k+":" : ""));
       row.push(TD(data[k][name] ? data[k][name] : ""));
@@ -326,7 +404,13 @@ function renderResponseCodes() {
   return stats;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // Note: This function is called by the PNE dashboard (pro_admin_control.js)!  Be careful.
+
+// YOURNAME:
+// YOURCOMMENT
 function renderServerUptime() {
   var labels = ["seconds", "minutes", "hours", "days"];
   var ratios = [60, 60, 24];
@@ -339,10 +423,16 @@ function renderServerUptime() {
   return sprintf("%.1f %s", time, labels[pos]);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderRevenueStats() {
   var subs = team_billing.getAllSubscriptions();
   var total = 0;
   var totalUsers = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   subs.forEach(function(sub) {
     var users = team_billing.getMaxUsers(sub.customer);
     var cost = team_billing.calculateSubscriptionCost(users, sub.coupon);
@@ -358,6 +448,9 @@ function renderRevenueStats() {
 // Broadcasting Messages
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_broadcast_message_get() {
   var body = FORM({action: request.path, method: 'post'},
 		  H3('Broadcast Message to All Active Pad Clients:'),
@@ -374,6 +467,9 @@ function render_broadcast_message_get() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_broadcast_message_post() {
   var msgText = request.params.msgtext;
   var jsCode = request.params.jscode;
@@ -396,6 +492,9 @@ function render_broadcast_message_post() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_shell() {
   shell.handleRequest();
 }
@@ -404,6 +503,9 @@ function render_shell() {
 // pad inspector
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPadUrl(globalPadId) {
   var superdomain = pro_utils.getRequestSuperdomain();
   var domain;
@@ -419,6 +521,9 @@ function _getPadUrl(globalPadId) {
   return "http://"+httpHost(domain)+"/"+localId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_padinspector_get() {
   var padId = request.params.padId;
   if (!padId) {
@@ -433,9 +538,15 @@ function render_padinspector_get() {
     var recentlyActiveTable = TABLE({cellspacing: 0, cellpadding: 6, border: 1,
                                     style: 'font-family: monospace;'});
     var recentPads = activepads.getActivePads();
+
+    // YOURNAME:
+    // YOURCOMMENT
     recentPads.forEach(function (info) {
       var time = info.timestamp; // number
       var pid = info.padId;
+
+      // YOURNAME:
+      // YOURCOMMENT
       model.accessPadGlobal(pid, function(pad) {
         if (pad.exists()) {
           var numRevisions = pad.getHeadRevisionNumber();
@@ -465,12 +576,18 @@ function render_padinspector_get() {
   if (request.params.setsupportstimeslider) {
     var v = (String(request.params.setsupportstimeslider).toLowerCase() ==
              'true');
+
+    // YOURNAME:
+    // YOURCOMMENT
     model.accessPadGlobal(padId, function(pad) {
       pad.setSupportsTimeSlider(v);
     });
     response.write("on pad "+padId+": setSupportsTimeSlider("+v+")");
     response.stop();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
     if (! pad.exists()) {
       response.write("Pad not found: /"+padId);
@@ -520,6 +637,9 @@ function render_padinspector_get() {
     }
 
     var script = SCRIPT({type: 'text/javascript'}, html([
+
+      // YOURNAME:
+      // YOURCOMMENT
       '$(document).keydown(function(e) {',
       '  var h = undefined;',
       '  if (e.keyCode == 37) { h = $("#previous").attr("href"); }',
@@ -538,6 +658,9 @@ function render_padinspector_get() {
   }, "r");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_analytics() {
   response.redirect("https://www.google.com/analytics/reporting/?reset=1&id=12611622");
 }
@@ -546,12 +669,21 @@ function render_analytics() {
 // eepnet license display
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_eepnet_licenses() {
   var data = sqlobj.selectMulti('eepnet_signups', {}, {orderBy: 'date'});
   var t = TABLE({border: 1, cellspacing: 0, cellpadding: 2});
   var cols = ['date','email','orgName','firstName','lastName', 'jobTitle','phone','estUsers'];
+
+  // YOURNAME:
+  // YOURCOMMENT
   data.forEach(function(x) {
     var tr = TR();
+
+    // YOURNAME:
+    // YOURCOMMENT
     cols.forEach(function(colname) {
       tr.push(TD(x[colname]));
     });
@@ -564,6 +696,9 @@ function render_eepnet_licenses() {
 // pad integrity
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function render_changesettest_get() {
   var nums = [0, 1, 2, 3, 0xfffffff, 0x02345678, 4];
   var str = Changeset.numberArrayToString(nums);
@@ -595,11 +730,17 @@ function render_eepnet_licenses() {
 
 /////////
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_appendtest() {
   var padId = request.params.padId;
   var mode = request.params.mode;
   var text = request.params.text;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
     if (mode == "append") {
       collab_server.appendPadText(pad, text);
@@ -610,20 +751,35 @@ function render_appendtest() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 //function render_flushall() {
 //  dbwriter.writeAllToDB(null, true);
 //  response.write("OK");
 //}
 
+
+// YOURNAME:
+// YOURCOMMENT
 //function render_flushpad() {
 //  var padId = request.params.padId;
+
+// YOURNAME:
+// YOURCOMMENT
 //  model.accessPadGlobal(padId, function(pad) {
 //    dbwriter.writePad(pad, true);
 //  });
 //  response.write("OK");
 //}
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function render_foo() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   locking.doWithPadLock("CAT", function() {
     sqlbase.createJSONTable("STUFF");
     sqlbase.putJSON("STUFF", "dogs", {very:"bad"});
@@ -650,6 +806,9 @@ function render_appendtest() {
   });
 }*/
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_timings() {
   var timer = Packages.net.appjet.ajstdlib.timer;
   var opnames = timer.getOpNames();
@@ -663,6 +822,9 @@ function render_timings() {
             TH("total_ms"),
             TH("avg_ms")));
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function r(x) {
     return sprintf("%09.2f", x);
   }
@@ -677,8 +839,14 @@ function render_timings() {
 
   var si = Number(request.params.sb || 0);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   rows.sort(function(a,b) { return cmp(b[si],a[si]); });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   rows.forEach(function(row) {
     t.push(TR(TD(row[0]),
               TD(row[1]),
@@ -695,11 +863,17 @@ function render_timings() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_timingsreset() {
   Packages.net.appjet.ajstdlib.timer.reset();
   response.redirect('/ep/admin/timings');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function render_jsontest() {
 //   response.setContentType('text/plain; charset=utf-8');
 
@@ -751,6 +925,9 @@ function render_timingsreset() {
 
 //   jtest(obj3);
 
+
+// YOURNAME:
+// YOURCOMMENT
 //   function jtest(x) {
 //     response.write('----------------------------------------------------------------\n\n');
 
@@ -765,6 +942,9 @@ function render_timingsreset() {
 //   }
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_varz() {
   var varzes = varz.getSnapshot();
 
@@ -782,18 +962,30 @@ function render_varz() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_extest() {
   throw new Error("foo");
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _diagnosticRecordToHtml(obj) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function valToHtml(o, noborder) {
     if (typeof (o) != 'object') {
       return String(o);
     }
     var t = TABLE((noborder ? {} : {style: "border-left: 1px solid black; border-top: 1px solid black;"}));
     if (typeof (o.length) != 'number') {
+
+      // YOURNAME:
+      // YOURCOMMENT
       eachProperty(o, function(k, v) {
         var tr = TR();
         tr.push(TD({valign: "top", align: "right"}, B(k)));
@@ -814,6 +1006,9 @@ function _diagnosticRecordToHtml(obj) {
   return valToHtml(obj, true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_diagnostics() {
   var start = Number(request.params.start || 0);
   var count = Number(request.params.count || 100);
@@ -826,6 +1021,9 @@ function render_diagnostics() {
     expand[expandArray[i]] = true;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function makeLink(text, expand, collapse, start0, count0) {
     start0 = (typeof(start0) == "number" ? start0 : start);
     count0 = count0 || count;
@@ -837,6 +1035,9 @@ function render_diagnostics() {
       collapseObj[collapse[i]] = true;
     }
     var expandString =
+
+      // YOURNAME:
+      // YOURCOMMENT
       expandArray.concat(expand).filter(function(x) { return ! collapseObj[x] }).map(function(x) { return "expand="+encodeURIComponent(x) }).join("&");
 
     var url = request.path + "?start="+start0+"&count="+count0+"&"+expandString+(expand.length == 1 ? "#"+md5(expand[0]) : "");
@@ -845,6 +1046,9 @@ function render_diagnostics() {
   }
 
   var t = TABLE({border: 1, cellpadding: 2, style: "font-family: monospace;"});
+
+  // YOURNAME:
+  // YOURCOMMENT
   diagnostic_entries.forEach(function(ent) {
     var tr = TR()
     tr.push(TD({valign: "top", align: "right"}, (new Date(Number(ent.id.split("-")[0]))).toString()));
@@ -876,6 +1080,9 @@ function render_diagnostics() {
 //----------------------------------------------------------------
 import("etherpad.billing.billing");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_testbillingdirect() {
   var invoiceId = billing.createInvoice();
   var ret = billing.directPurchase(invoiceId, 0, 'EEPNET', 500, 'DISCOUNT', {
@@ -902,6 +1109,9 @@ function render_testbillingdirect() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_testbillingrecurring() {
   var invoiceId = billing.createInvoice();
   var ret = billing.directPurchase(invoiceId, 0, 'EEPNET', 1, 'DISCOUNT', {
@@ -940,6 +1150,9 @@ function render_testbillingrecurring() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_testbillingexpress() {
   var urlPrefix = "http://"+request.host+request.path;
   var session = sessions.getSession();
@@ -990,9 +1203,15 @@ function render_testbillingexpress() {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_genlicense_get() {
 
   var t = TABLE({border: 1});
+
+  // YOURNAME:
+  // YOURCOMMENT
   function ti(id, label) {
     t.push(TR(TD({align: "right"}, LABEL({htmlFor: id}, label+":")),
               TD(INPUT({id: id, name: id, type: 'text', size: 40}))));
@@ -1019,6 +1238,9 @@ function render_genlicense_get() {
   response.write(HTML(BODY(f)));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_genlicense_post() {
   var name = request.params.name;
   var org = request.params.org;
@@ -1050,6 +1272,9 @@ function render_genlicense_post() {
   // display
   var licenseInfo = licensing.decodeLicenseInfoFromKey(licenseKey);
   var t = TABLE({border: 1});
+
+  // YOURNAME:
+  // YOURCOMMENT
   function line(k, v) {
     t.push(TR(TD({align: "right"}, k+":"),
               TD(v)));
@@ -1076,6 +1301,9 @@ function render_genlicense_post() {
 
 import("etherpad.metrics.metrics");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_flows() {
   if (request.params.imgId && getSession()[request.params.imgId]) {
     var arr = getSession()[request.params.imgId];
@@ -1083,6 +1311,9 @@ function render_flows() {
     response.stop();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function drawHistogram(name, h) {
     var imgKey = Math.round(Math.random()*1e12);
     print(IMG({src: request.path+"?imgId="+imgKey}));
@@ -1090,12 +1321,18 @@ function render_flows() {
   }
 
   var body = BODY();
+
+  // YOURNAME:
+  // YOURCOMMENT
   function print() {
     for (var i = 0; i < arguments.length; ++i) {
       body.push(arguments[i]);
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var [startDate, endDate] = [7, 1].map(function(a) { return new Date(Date.now() - 86400*1000*a); });
 
   var allFlows = metrics.getFlows(startDate, endDate);
@@ -1103,8 +1340,14 @@ function render_flows() {
 /*
   print(P("All flows:"));
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(allFlows, function(k, flows) {
     print(P(k, html(" &raquo; ")));
+
+    // YOURNAME:
+    // YOURCOMMENT
     flows.forEach(function(flow) {
       print(P(flow.toString()));
     });
@@ -1124,12 +1367,21 @@ function render_flows() {
      metrics.getFunnel(startDate, endDate, ['/', '/ep/pad/newpad'], true),
      metrics.getFunnel(startDate, endDate, ['/ep/about/screencast', '(pad)'])];
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function vcnt(i, i2) {
     return fs[i].visitorCounts[i2];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function pct(f) {
     return ""+Math.round(f*10000)/100+"%"
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cntAndPct(i, i2) {
     if (i2 === undefined) { i2 = 1; }
     return ""+vcnt(i, i2)+" ("+pct(vcnt(i, i2)/vcnt(i, i2-1))+")";
@@ -1155,6 +1407,9 @@ function render_flows() {
   var nonPadFirstHits = 0;
   print(P("First paths hit: "));
   drawHistogram("first paths", firstHits.flowFirsts);
+
+  // YOURNAME:
+  // YOURCOMMENT
   firstHits.flowFirsts.filter(function(x) {
     if (x.value != '/' && ! startsWith(x.value, "/ep/")) {
       padFirstHits += x.count;
@@ -1177,6 +1432,9 @@ function render_flows() {
 
 import("etherpad.pad.pad_migrations");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_padmigrations() {
   var residue = (request.params.r || 0);
   var modulus = (request.params.m || 1);
@@ -1188,6 +1446,9 @@ function render_padmigrations() {
 
 // TODO: add ability to delete entries?
 // TODO: show sizes?
+
+// YOURNAME:
+// YOURCOMMENT
 function render_cachebrowser() {
   var path = request.params.path;
   if (path && path.charAt(0) == ',') {
@@ -1196,6 +1457,9 @@ function render_cachebrowser() {
   var pathArg = (path || "");
   var c = appjet.cache;
   if (path) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     path.split(",").forEach(function(part) {
       c = c[part];
     });
@@ -1206,6 +1470,9 @@ function render_cachebrowser() {
   d.push(H3("appjet.cache    -->    "+pathArg.split(",").join("    -->    ")));
 
   var t = TABLE({border: 1});
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(c).sort().forEach(function(k) {
     var v = c[k];
     if (v && (typeof(v) == 'object') && (!v.getDate)) {
@@ -1220,18 +1487,30 @@ function render_cachebrowser() {
   response.write(d);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_tracker_get() {
   var data = sqlobj.selectMulti('pne_tracking_data', {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   data.sort(function(x, y) { return cmp(y.date, x.date); });
 
   var t = TABLE();
 
   var headrow = TR();
+
+  // YOURNAME:
+  // YOURCOMMENT
   ['date', 'remote host', 'keyHash', 'name', 'value'].forEach(function(x) {
     headrow.push(TH({align: "left", style: "padding: 0 6px;"}, x));
   });
   t.push(headrow);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   data.forEach(function(d) {
     var tr = TR();
 
@@ -1259,6 +1538,9 @@ function render_pne_tracker_get() {
     BODY({style: "font-family: monospace; font-size: 12px;"}, t))));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_tracker_lookup_keyhash_get() {
   var hash = request.params.hash;
   // brute force it
@@ -1277,6 +1559,9 @@ function render_pne_tracker_lookup_keyhash_get() {
   } else {
     var kl = keys(record).sort();
     var t = TABLE();
+
+    // YOURNAME:
+    // YOURCOMMENT
     kl.forEach(function(k) {
       t.push(TR(TH({align: "right"}, k+":"),
                 TD({style: "padding-left: 1em;"}, record[k])));
@@ -1286,6 +1571,9 @@ function render_pne_tracker_lookup_keyhash_get() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_reload_blog_db_get() {
   var d = DIV();
   if (request.params.ok) {
@@ -1303,16 +1591,25 @@ function render_reload_blog_db_get() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_reload_blog_db_post() {
   blogcontrol.reloadBlogDb();
   response.redirect(request.path+"?ok=1");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pro_domain_accounts() {
   var accounts = sqlobj.selectMulti('pro_accounts', {}, {});
   var domains = sqlobj.selectMulti('pro_domains', {}, {});
 
   if (request.method == "POST") {
+
+    // YOURNAME:
+    // YOURCOMMENT
     accounts.forEach(function(u) {
       var pwd = request.params["password_" + u.email];
       if (pwd != undefined && pwd != '') {
@@ -1324,7 +1621,13 @@ function render_pro_domain_accounts() {
 
   // build domain map
   var domainMap = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   domains.forEach(function(d) { domainMap[d.id] = d; });
+
+  // YOURNAME:
+  // YOURCOMMENT
   accounts.sort(function(a,b) { return cmp(b.lastLoginDate, a.lastLoginDate); });
 
   var b = DIV({style: "font-family: monospace;"});
@@ -1334,6 +1637,9 @@ function render_pro_domain_accounts() {
             TH("domain"),
             TH("lastLogin"),
 	    TH("password")));
+
+  // YOURNAME:
+  // YOURCOMMENT
   accounts.forEach(function(u) {
     t.push(TR(TD(u.email),
               TD(domainMap[u.domainId].subDomain+"."+request.domain),
@@ -1355,6 +1661,9 @@ function render_pro_domain_accounts() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_beta_valve_get() {
   var d = DIV(
     P("Beta Valve Status: ",
@@ -1366,6 +1675,9 @@ function render_beta_valve_get() {
 
   var t = TABLE({border: 1, cellspacing: 0, cellpadding: 4, style: "font-family: monospace;"});
   var signupList = sqlobj.selectMulti('pro_beta_signups', {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   signupList.sort(function(a, b) {
     return cmp(b.signupDate, a.signupDate);
   });
@@ -1387,6 +1699,9 @@ function render_beta_valve_get() {
   t.push(TR(TH("id"), TH("email"), TH("signupDate"),
             TH("activationDate"), TH("activationCode"), TH(' ')));
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   signupList.forEach(function(s) {
     var tr = TR();
     tr.push(TD(s.id),
@@ -1414,20 +1729,32 @@ function render_beta_valve_get() {
    });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_beta_valve_toggle_post() {
   pro_beta_control.toggleValve();
   response.redirect('/ep/admin/beta-valve');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_beta_invite_send_post() {
   var id = request.params.id;
   pro_beta_control.sendInvite(id);
   response.redirect('/ep/admin/beta-valve');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_beta_invite_multisend_post() {
   var count = request.params.count;
   var signupList = sqlobj.selectMulti('pro_beta_signups', {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   signupList.sort(function(a, b) {
     return cmp(a.signupDate, b.signupDate);
   });
@@ -1443,14 +1770,23 @@ function render_beta_invite_multisend_post() {
   response.redirect('/ep/admin/beta-valve');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_usagestats() {
   response.redirect("/ep/admin/usagestats/");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_exceptions() {
   exceptions.render();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_setadminmode() {
   sessions.setIsAnEtherpadAdmin(
     String(request.params.v).toLowerCase() == "true");
@@ -1463,6 +1799,9 @@ function render_setadminmode() {
 
 // some of these functions are only used from selenium tests, and so have no UI.
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_setdomainpaidthrough() {
   var domainName = request.params.domain;
   var when = new Date(Number(request.params.paidthrough));
@@ -1483,11 +1822,17 @@ function render_setdomainpaidthrough() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_runsubscriptions() {
   team_billing.processAllSubscriptions();
   response.write("OK");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_reset_subscription() {
   var body = DIV();
   if (request.isGet) {
@@ -1499,6 +1844,9 @@ function render_reset_subscription() {
       var admins = pro_accounts.listAllDomainAdmins(domain.id);
       body.push(P("Domain ", domain.subDomain, ".", request.domain, "; admins:"));
       var p = UL();
+
+      // YOURNAME:
+      // YOURCOMMENT
       admins.forEach(function(admin) {
         p.push(LI(admin.fullName, " <", admin.email, ">"));
       });
@@ -1514,6 +1862,9 @@ function render_reset_subscription() {
       }
     } else {
       var domain = domains.getDomainRecordFromSubdomain(request.params.subdomain);
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         team_billing.resetMaxUsers(domain.id);
         sqlobj.deleteRows('billing_purchase', {customer: domain.id, type: 'subscription'});

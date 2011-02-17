@@ -28,6 +28,9 @@ import("etherpad.utils.*");
 
 import("static.js.billing_shared.{billing=>billingJS}");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dollars(x, nocommas) {
   if (! x) { return "0.00"; }
   var s = String(x);
@@ -66,6 +69,9 @@ function dollars(x, nocommas) {
   return [dollars,pennies].join('.');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function obfuscateCC(x) {
   if (x.length == 16 || x.length == 15) {
     return stringutils.repeat("X", x.length-4) + x.substr(-4);
@@ -77,14 +83,23 @@ function obfuscateCC(x) {
 
 // validation functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isOnlyDigits(s) {
   return /^[0-9]+$/.test(s);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isOnlyLettersAndSpaces(s) {
   return /^[a-zA-Z ]+$/.test(s);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isLength(s, minLen, maxLen) {
   if (maxLen === undefined) {
     return (typeof(s) == 'string' && s.length == minLen);
@@ -93,15 +108,24 @@ function isLength(s, minLen, maxLen) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function errorMissing(validationError, name, description) {
   validationError(name, "Please enter a "+description+".");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function errorTooSomething(validationError, name, description, max, tooWhat, betterAdjective) {
   validationError(name, "Your "+description+" is too " + tooWhat + "; please provide a "+description+
                          " that is "+max+" characters or "+betterAdjective);  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateString(validationError, s, name, description, mustExist, maxLength, minLength) {
   if (mustExist && ! s) {
     errorMissing(validationError, name, description);
@@ -114,6 +138,9 @@ function validateString(validationError, s, name, description, mustExist, maxLen
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateZip(validationError, s) {
   if (! s) {
     errorMissing(validationError, 'billingZipCode', "ZIP code");
@@ -123,6 +150,9 @@ function validateZip(validationError, s) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateBillingCart(validationError, cart) {
   var p = cart;
   
@@ -177,6 +207,9 @@ function validateBillingCart(validationError, cart) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cardType(number) {
   var cardType = billingJS.getCcType(number);
   switch (cardType) {
@@ -191,6 +224,9 @@ function _cardType(number) {
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function generatePayInfo(cart) {
   var isUs = cart.billingCountry == "US";
 
@@ -234,14 +270,23 @@ var billingCartFieldMap = {
   address: { f: ["billingAddressLine1", "billingAddressLine2", "billingCity", "billingState", "billingCountry", "billingZipCode"], d: "address" }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateErrorFields(validationError, errorPrefix, fieldList) {
   if (fieldList.length > 0) {
     var errorMsg;
     var errorFields;
     errorMsg = errorPrefix + 
+
+               // YOURNAME:
+               // YOURCOMMENT
                fieldList.map(function(field) { return billingCartFieldMap[field].d }).join(", ") +
                ".";
     errorFields = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     fieldList.forEach(function(field) {
       errorFields = errorFields.concat(billingCartFieldMap[field].f);
     });
@@ -249,6 +294,9 @@ function validateErrorFields(validationError, errorPrefix, fieldList) {
   }    
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function guessBillingNames(cart, name) {
   if (! cart.billingFirstName && ! cart.billingLastName) {
     var nameParts = name.split(/\s+/);
@@ -261,6 +309,9 @@ function guessBillingNames(cart, name) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function writeToEncryptedLog(s) {
   if (! appjet.config["etherpad.billingEncryptedLog"]) {
     // no need to log, this probably isn't the live server.
@@ -268,7 +319,13 @@ function writeToEncryptedLog(s) {
   }
   var e = net.appjet.oui.Encryptomatic;
   sync.callsyncIfTrue(appjet.cache, 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { return ! appjet.cache.billingEncryptedLog },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() {
       appjet.cache.billingEncryptedLog = {
         writer: new java.io.FileWriter(appjet.config["etherpad.billingEncryptedLog"], true),
@@ -276,6 +333,9 @@ function writeToEncryptedLog(s) {
       }
     });
   var l = appjet.cache.billingEncryptedLog;
+
+  // YOURNAME:
+  // YOURCOMMENT
   sync.callsync(l, function() {
     l.writer.write(e.bytesToAscii(e.encrypt(
       new java.io.ByteArrayInputStream((new java.lang.String(s)).getBytes("UTF-8")),
@@ -284,14 +344,23 @@ function writeToEncryptedLog(s) {
   })
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function formatExpiration(expiration) {
   return dateutils.shortMonths[Number(expiration.substr(0, 2))-1]+" "+expiration.substr(2);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function formatDate(date) {
   return dateutils.months[date.getMonth()]+" "+date.getDate()+", "+date.getFullYear();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function salesEmail(to, from, subject, headers, body) {
   sendEmail(to, from, subject, headers, body);
   if (globals.isProduction()) {

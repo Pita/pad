@@ -14,25 +14,43 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padconnectionstatus = (function() {
 
   var status = {what: 'connecting'};
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function() {
+
+      // YOURNAME:
+      // YOURCOMMENT
       $('button#forcereconnect').click(function() {
         pad.forceReconnect();
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     connected: function() {
       status = {what: 'connected'};
       padmodals.hideModal(500);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     reconnecting: function() {
       status = {what: 'reconnecting'};
       $("#connectionbox").get(0).className = 'modaldialog cboxreconnecting';
       padmodals.showModal("#connectionbox", 500);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     disconnected: function(msg) {
       status = {what: 'disconnected', why: msg};
       var k = String(msg).toLowerCase(); // known reason why
@@ -44,9 +62,15 @@ var padconnectionstatus = (function() {
       $("#connectionbox").get(0).className = cls;
       padmodals.showModal("#connectionbox", 500);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     isFullyConnected: function() {
       return status.what == 'connected';
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getStatus: function() { return status; }
   };
   return self;

@@ -15,37 +15,64 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function newSpanList() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function encodeInt(num) {
     num = num & 0x1fffffff;
     // neither 16-bit char can be 0x0001 or mistakable for the other
     return String.fromCharCode(((num >> 15) & 0x3fff) | 0x4000) +
       String.fromCharCode((num & 0x7fff) | 0x8000);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function decodeInt(str) {
     return ((str.charCodeAt(0) & 0x3fff) << 15) | (str.charCodeAt(1) & 0x7fff);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function indexOfInt(str, n) {
     var result = str.indexOf(encodeInt(n));
     if (result < 0) return result;
     return result/2;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function intAt(str, i) {
     var idx = i*2;
     return decodeInt(str.substr(idx, 2));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function numInts(str) { return str.length/2; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function subrange(str, start, end) {
     return str.substring(start*2, end*2);
   }
   var nil = "\1\1";
   var repeatNilCache = [''];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function repeatNil(times) {
     while (times >= repeatNilCache.length) {
       repeatNilCache.push(repeatNilCache[repeatNilCache.length-1] + nil);
     }
     return repeatNilCache[times];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function indexOfNonnil(str, start) {
     startIndex = (start || 0)*2;
     var nonnilChar = /[^\1]/g;
@@ -56,18 +83,30 @@ function newSpanList() {
     }
     return (nonnilChar.lastIndex - 1)/2;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function intSplice(str, start, delCount, newStr) {
     return str.substring(0, start*2) + newStr + str.substring((start+delCount)*2);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function entryWidth(entry) {
     if ((typeof entry) == "number") return entry;
     return (entry && entry.width) || 1;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   // "func" is a function over 0..(numItems-1) that is monotonically
   // "increasing" with index (false, then true).  Finds the boundary
   // between false and true, a number between 0 and numItems inclusive.
+
+  // YOURNAME:
+  // YOURCOMMENT
   function binarySearch(numItems, func) {
     if (numItems < 1) return 0;
     if (func(0)) return 0;
@@ -93,8 +132,17 @@ function newSpanList() {
   var length = 0;
   var totalWidth = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function idAtIndex(i) { return intAt(entryList, i); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function indexOfId(id) { return indexOfInt(entryList, id); }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function offsetOfId(id) {
     if (! id) return totalWidth;
     var entry = idToEntry[id];
@@ -102,13 +150,25 @@ function newSpanList() {
     var lastCharLoc = indexOfInt(charList, id);
     return lastCharLoc + 1 - wid;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function idAtOffset(n) {
     return intAt(charList, indexOfNonnil(charList, n));
   }
   
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     length: function() { return length; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     totalWidth: function() { return totalWidth; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     next: function (entryOrKey) {
       if ((typeof entryOrKey) == "object") {
 	var entry = entryOrKey;
@@ -123,6 +183,9 @@ function newSpanList() {
 	return null;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     prev: function (entryOrKey) {
       if ((typeof entryOrKey) == "object") {
 	var entry = entryOrKey;
@@ -137,13 +200,37 @@ function newSpanList() {
 	return null;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     atKey: function (k) { return idToEntry[keyToId[k]]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     atIndex: function (i) { return idToEntry[idAtIndex(i)]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyAtIndex: function(i) { return idToKey[idAtIndex(i)]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyAtOffset: function(n) { return idToKey[idAtOffset(n)]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     containsKey: function (k) { return !! keyToId[k]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfKey: function (k) { return indexOfId(keyToId[k]); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfEntry: function (entry) { return self.indexOfKey(entry.key); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setKeyWidth: function (k, width) {
       var id = keyToId[k];
       var charStart = offsetOfId(id);
@@ -155,17 +242,35 @@ function newSpanList() {
       charList = intSplice(charList, charStart, toDelete, repeatNil(toInsert));      
       totalWidth += (width - oldWidth);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setEntryWidth: function (entry, width) {
       return self.setKeyWidth(entry.key, width);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getEntryWidth: function (entry) {
       return entryWidth(entry);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getKeyWidth: function (k) {
       return entryWidth(idToEntry[keyToId[k]]);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfKey: function(k) { return offsetOfId(keyToId[k]); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfEntry: function(entry) { return self.offsetOfKey(entry.key); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     offsetOfIndex: function (i) {
       if (i < 0) return 0;
       else if (i >= length) {
@@ -175,19 +280,34 @@ function newSpanList() {
 	return offsetOfId(idAtIndex(i));
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     atOffset: function (n) {
       return idToEntry[idAtOffset(n)];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     indexOfOffset: function (n) {
       if (n < 0) return 0;
       else if (n >= totalWidth) return length;
       return indexOfId(idAtOffset(n));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     search: function(entryFunc) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       return binarySearch(length, function (i) {
 	return entryFunc(idToEntry[idAtIndex(i)]);
       });
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     push: function(entry, optKey) {
       self.splice(length, 0, [entry], (optKey && [optKey]));
     },
@@ -196,6 +316,9 @@ function newSpanList() {
     // ultra-light-weight representation.  In the latter case the key array is
     // used to get the keys.  Some functions become useless with this usage, i.e.
     // the ones that use an entry for identity.
+
+    // YOURNAME:
+    // YOURCOMMENT
     splice: function (start, deleteCount, newEntryArray, optKeyArray) {
       var charStart = self.offsetOfIndex(start);
       var charsToDelete = 0;

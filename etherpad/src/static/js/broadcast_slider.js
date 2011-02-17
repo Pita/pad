@@ -16,6 +16,9 @@
 
 var global = this;
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function() { // wrap this code in its own namespace
   var sliderLength = 1000;
   var sliderPos = 0;
@@ -24,7 +27,13 @@ var global = this;
   var savedRevisions = [];
   var sliderPlaying = false;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function disableSelection(element) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     element.onselectstart = function() {
       return false;
     };
@@ -32,6 +41,9 @@ var global = this;
     element.style.MozUserSelect = "none";
     element.style.cursor = "default";
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var _callSliderCallbacks = function(newval) {
     sliderPos = newval;
     for(var i=0; i<slidercallbacks.length; i++) {
@@ -39,6 +51,9 @@ var global = this;
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var updateSliderElements = function() {
     for(var i=0; i<savedRevisions.length; i++) {
       var position = parseInt(savedRevisions[i].attr('pos'));
@@ -47,6 +62,9 @@ var global = this;
     $("#ui-slider-handle").css('left', sliderPos * ($("#ui-slider-bar").width()-2) / (sliderLength * 1.0));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var addSavedRevision = function(position, info) {
     var newSavedRevision = $('<div></div>');
     newSavedRevision.addClass("star");
@@ -55,12 +73,18 @@ var global = this;
     newSavedRevision.css('position', 'absolute');
     newSavedRevision.css('left', (position * ($("#ui-slider-bar").width()-2) / (sliderLength * 1.0)) - 1);
     $("#timeslider-slider").append(newSavedRevision);
+
+    // YOURNAME:
+    // YOURCOMMENT
     newSavedRevision.mouseup(function(evt) {
       BroadcastSlider.setSliderPosition(position);
     });
     savedRevisions.push(newSavedRevision);
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var removeSavedRevision = function (position) {
     var element = $("div.star [pos="+position+"]");
     savedRevisions.remove(element);
@@ -69,18 +93,30 @@ var global = this;
   };
 
   /* Begin small 'API' */
+
+  // YOURNAME:
+  // YOURCOMMENT
   function onSlider(callback) {
     slidercallbacks.push(callback);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSliderPosition() {
     return sliderPos;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setSliderPosition(newpos) {
     newpos = Number(newpos);
     if(newpos < 0 || newpos > sliderLength) return;
     $("#ui-slider-handle").css('left', newpos * ($("#ui-slider-bar").width()-2) / (sliderLength * 1.0));
+
+    // YOURNAME:
+    // YOURCOMMENT
     $("a.tlink").map(function() {
       $(this).attr('href', $(this).attr('thref').replace("%revision%", newpos));
     });
@@ -106,16 +142,25 @@ var global = this;
     _callSliderCallbacks(newpos);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getSliderLength() {
     return sliderLength;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setSliderLength(newlength) {
     sliderLength = newlength;
     updateSliderElements();
   }
 
   // just take over the whole slider screen with a reconnect message
+
+  // YOURNAME:
+  // YOURCOMMENT
   function showReconnectUI() {
     if(!clientVars.sliderEnabled || !clientVars.supportsSlider) {
         $("#padmain, #rightbars").css('top', "130px");
@@ -124,10 +169,16 @@ var global = this;
     $('#error').show();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setAuthors(authors) {
     $("#authorstable").empty();
     var numAnonymous = 0;
     var numNamed = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     authors.forEach(function(author) {
       if(author.name) {
         numNamed ++;
@@ -159,6 +210,9 @@ var global = this;
     setSliderPosition: setSliderPosition,
     getSliderLength: getSliderLength,
     setSliderLength: setSliderLength,
+
+    // YOURNAME:
+    // YOURCOMMENT
     isSliderActive: function() {return sliderActive;},
     playpause: playpause,
     addSavedRevision: addSavedRevision,
@@ -166,6 +220,9 @@ var global = this;
     setAuthors: setAuthors
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function playButtonUpdater() {
     if(sliderPlaying) {
       if(getSliderPosition()+1 > sliderLength) {
@@ -179,6 +236,9 @@ var global = this;
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function playpause() {
     $("#playpause_button_icon").toggleClass('pause');
 
@@ -193,11 +253,17 @@ var global = this;
   }
 
   // assign event handlers to html UI elements after page load
+
+  // YOURNAME:
+  // YOURCOMMENT
   $(window).load(function() {
     disableSelection($("#playpause_button")[0]);
     disableSelection($("#timeslider")[0]);
 
     if(clientVars.sliderEnabled && clientVars.supportsSlider) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).keyup(function(e) {
         var code = -1;
         if (!e) var e = window.event;
@@ -234,10 +300,16 @@ var global = this;
       });
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     $(window).resize(function() {
       updateSliderElements();
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     $("#ui-slider-bar").mousedown(function(evt) {
       setSliderPosition(Math.floor((evt.clientX-$("#ui-slider-bar").offset().left) * sliderLength / 742));
       $("#ui-slider-handle").css('left', (evt.clientX-$("#ui-slider-bar").offset().left));
@@ -245,11 +317,17 @@ var global = this;
     });
 
     // Slider dragging
+
+    // YOURNAME:
+    // YOURCOMMENT
     $("#ui-slider-handle").mousedown(function(evt) {
       this.startLoc = evt.clientX;
       this.currentLoc = parseInt($(this).css('left'));
       var self = this;
       sliderActive = true;
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).mousemove(function(evt2) {
         $(self).css('pointer', 'move')
         var newloc = self.currentLoc + (evt2.clientX - self.startLoc);
@@ -260,6 +338,9 @@ var global = this;
         if(getSliderPosition() != Math.floor(newloc * sliderLength / ($("#ui-slider-bar").width()-2)))
           _callSliderCallbacks(Math.floor(newloc * sliderLength / ($("#ui-slider-bar").width()-2)))
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).mouseup(function(evt2) {
         $(document).unbind('mousemove');
         $(document).unbind('mouseup');
@@ -275,15 +356,24 @@ var global = this;
     })
 
     // play/pause toggling
+
+    // YOURNAME:
+    // YOURCOMMENT
     $("#playpause_button").mousedown(function(evt) {
       var self = this;
 
       $(self).css('background-image', 'url(/static/img/pad/timeslider/crushed_button_depressed.png)');
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(self).mouseup(function(evt2) {
         $(self).css('background-image', 'url(/static/img/pad/timeslider/crushed_button_undepressed.png)');
         $(self).unbind('mouseup');
         BroadcastSlider.playpause();
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).mouseup(function(evt2) {
         $(self).css('background-image', 'url(/static/img/pad/timeslider/crushed_button_undepressed.png)');
         $(document).unbind('mouseup');
@@ -291,6 +381,9 @@ var global = this;
     });
 
     // next/prev saved revision and changeset
+
+    // YOURNAME:
+    // YOURCOMMENT
     $('.stepper').mousedown(function(evt) {
       var self = this;
       var origcss = $(self).css('background-position');
@@ -307,6 +400,9 @@ var global = this;
 
       $(self).css('background-position', newcss)
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(self).mouseup(function(evt2) {
         $(self).css('background-position',origcss);
         $(self).unbind('mouseup');
@@ -336,6 +432,9 @@ var global = this;
           setSliderPosition(nextStar);
         }
       });
+
+      // YOURNAME:
+      // YOURCOMMENT
       $(document).mouseup(function(evt2) {
         $(self).css('background-position',origcss);
         $(self).unbind('mouseup');
@@ -376,6 +475,9 @@ var global = this;
           $("#timeslider").show();
           setSliderLength(clientVars.totalRevs);
           setSliderPosition(clientVars.revNum);
+
+          // YOURNAME:
+          // YOURCOMMENT
           clientVars.savedRevisions.forEach(function(revision) {
             addSavedRevision(revision.revNum, revision);
           })
@@ -396,6 +498,9 @@ var global = this;
   });
 })();
 
+
+// YOURNAME:
+// YOURCOMMENT
 BroadcastSlider.onSlider(function(loc) {
   $("#viewlatest").html(loc==BroadcastSlider.getSliderLength()?"Viewing latest content":"View latest content");
 })

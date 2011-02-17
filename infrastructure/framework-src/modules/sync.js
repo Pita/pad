@@ -21,6 +21,9 @@ jimport("net.appjet.oui.GlobalSynchronizer");
  * synchronously calls a no-argument function.
  * f may have return values.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function callsync(obj, f) {
   if (!obj._LOCK) {
     try {
@@ -45,8 +48,14 @@ function callsync(obj, f) {
  * condition() is true. condition may be called 
  * twice and shouldn't have side-effects.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function callsyncIfTrue(obj, condition, f) {
   if (condition()) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     callsync(obj, function() {
       if (condition()) {
         f();
@@ -59,9 +68,18 @@ function callsyncIfTrue(obj, condition, f) {
  * returns a function that synchronously calls
  * f with its own arguments
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function wrapsync(obj, f, thisArg) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     var args = Array.prototype.slice.call(arguments);
+
+    // YOURNAME:
+    // YOURCOMMENT
     var wrapper = function() {
       return f.apply(thisArg, args);
     }
@@ -69,6 +87,9 @@ function wrapsync(obj, f, thisArg) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doWithStringLock(lockName, fn) {
   GlobalSynchronizer.acquire(lockName);
   try {

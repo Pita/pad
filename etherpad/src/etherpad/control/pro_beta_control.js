@@ -26,6 +26,9 @@ import("etherpad.sessions.getSession");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main_get() {
   if (isValveOpen()) {
     response.redirect("/ep/pro-signup/");
@@ -36,6 +39,9 @@ function render_main_get() {
   delete getSession().betaSignupError;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_signup_post() {
   // record in sql: [id, email, activated=false, activationCode]
   // log to disk
@@ -61,6 +67,9 @@ function render_signup_post() {
   response.redirect('/ep/beta-account/signup-ok');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_signup_ok() {
   renderNoticeString(
     DIV({style: "font-size: 16pt; border: 1px solid green; background: #eeffee; margin: 2em 4em; padding: 1em;"},
@@ -70,11 +79,17 @@ function render_signup_ok() {
 }
 
 // return string if not valid, falsy otherwise.
+
+// YOURNAME:
+// YOURCOMMENT
 function isValidCode(code) {
   if (isValveOpen()) {
     return undefined;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function wr(m) {
     return DIV(P(m), P("You can sign up for the beta ", 
             A({href: "/ep/beta-account/"}, "here")));
@@ -93,6 +108,9 @@ function isValidCode(code) {
   return undefined;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isValveOpen() {
   if (appjet.cache.proBetaValveIsOpen === undefined) {
     appjet.cache.proBetaValveIsOpen = true;
@@ -100,10 +118,16 @@ function isValveOpen() {
   return appjet.cache.proBetaValveIsOpen;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function toggleValve() {
   appjet.cache.proBetaValveIsOpen = !appjet.cache.proBetaValveIsOpen;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendInvite(recordId) {
   var record = sqlobj.selectSingle('pro_beta_signups', {id: recordId});
   if (record.activationCode) {
@@ -113,6 +137,9 @@ function sendInvite(recordId) {
 
   // create activation code
   var code = stringutils.randomString(10);
+
+  // YOURNAME:
+  // YOURCOMMENT
   sqlcommon.inTransaction(function() {
     sqlobj.update('pro_beta_signups', {id: recordId}, {activationCode: code});
     var body = renderTemplateAsString('email/pro_beta_invite.ejs', {
@@ -128,6 +155,9 @@ function sendInvite(recordId) {
   getSession().betaAdminMessage = "Invite sent.";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function notifyActivated(code) {
   println("updating: "+code);
   sqlobj.update('pro_beta_signups', {activationCode: code}, 

@@ -28,10 +28,19 @@ import("etherpad.log.{custom=>eplog}");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clearKeys(obj, keys) {
   var newObj = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj, function(k, v) {
     var isCopied = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys.forEach(function(key) {
       if (k == key.name &&
           key.valueTest(v)) {
@@ -50,81 +59,156 @@ function clearKeys(obj, keys) {
   return newObj;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function replaceWithX(s) {
   return repeat("X", s.length);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function log(obj) {  
   eplog('billing', clearKeys(obj, [
     {name: "ACCT", 
+
+     // YOURNAME:
+     // YOURCOMMENT
      valueTest: function(s) { return /^\d{15,16}$/.test(s) }, 
      valueReplace: replaceWithX},
     {name: "CVV2", 
+
+     // YOURNAME:
+     // YOURCOMMENT
      valueTest: function(s) { return /^\d{3,4}$/.test(s) },
      valueReplace: replaceWithX}]));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var _USER = function() { return appjet.config['etherpad.paypal.user'] || "zamfir_1239051855_biz_api1.gmail.com"; }
+
+// YOURNAME:
+// YOURCOMMENT
 var _PWD = function() { return appjet.config['etherpad.paypal.pwd'] || "1239051867"; }
+
+// YOURNAME:
+// YOURCOMMENT
 var _SIGNATURE = function() { return appjet.config['etherpad.paypal.signature'] || "AQU0e5vuZCvSg-XJploSa.sGUDlpAwAy5fz.FhtfOQ25Qa9sFLDt7Bmp"; }
+
+// YOURNAME:
+// YOURCOMMENT
 var _RECEIVER = function() { return appjet.config['etherpad.paypal.receiver'] || "zamfir_1239051855_biz@gmail.com"; }
+
+// YOURNAME:
+// YOURCOMMENT
 var _paypalApiUrl = function() { return appjet.config['etherpad.paypal.apiUrl'] || "https://api-3t.sandbox.paypal.com/nvp"; }
+
+// YOURNAME:
+// YOURCOMMENT
 var _paypalWebUrl = function() { return appjet.config['etherpad.paypal.webUrl'] || "https://www.sandbox.paypal.com/cgi-bin/webscr"; }
+
+// YOURNAME:
+// YOURCOMMENT
 function paypalPurchaseUrl(token) {
   return (appjet.config['etherpad.paypal.purchaseUrl'] || "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=")+token;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPurchase(id) {
   return sqlobj.selectSingle('billing_purchase', {id: id});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPurchaseForCustomer(customerId) {
   return sqlobj.selectSingle('billing_purchase', {customer: customerId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updatePurchase(id, fields) {
   sqlobj.updateSingle('billing_purchase', {id: id}, fields);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getInvoicesForPurchase(purchaseId) {
   return sqlobj.selectMulti('billing_invoice', {purchase: purchaseId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getInvoice(id) {
   return sqlobj.selectSingle('billing_invoice', {id: id});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createInvoice() {
   return _newInvoice();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateInvoice(id, fields) {
   sqlobj.updateSingle('billing_invoice', {id: id}, fields)
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTransaction(id) {
   return sqlobj.selectSingle('billing_transaction', {id: id});
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function getTransactionByExternalId(txnId) {
   return sqlobj.selectSingle('billing_transaction', {txnId: txnId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTransactionsForCustomer(customerId) {
   return sqlobj.selectMulti('billing_transaction', {customer: customerId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPendingTransactionsForCustomer(customerId) {
   return sqlobj.selectMulti('billing_transaction', {customer: customerId, status: 'pending'});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateTransaction(id, fields) {
   return sqlobj.updateSingle('billing_transaction', {id: id}, fields);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAdjustments(invoiceId) {
   return sqlobj.selectMulti('billing_adjustment', {invoice: invoiceId});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createSubscription(customer, product, dollars, couponCode) {
   var purchaseId = _newPurchase(customer, product, dollarsToCents(dollars), couponCode);
   _purchaseActive(purchaseId);
@@ -132,6 +216,9 @@ function createSubscription(customer, product, dollars, couponCode) {
   return purchaseId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _newPurchase(customer, product, cents, couponCode) {
   var purchaseId = sqlobj.insert('billing_purchase', {
     customer: customer,
@@ -143,6 +230,9 @@ function _newPurchase(customer, product, cents, couponCode) {
   return purchaseId;  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _newInvoice() {
   var invoiceId = sqlobj.insert('billing_invoice', {
     time: new Date(),
@@ -153,6 +243,9 @@ function _newInvoice() {
   return invoiceId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _newTransaction(customer, cents) {
   var transactionId = sqlobj.insert('billing_transaction', {
     customer: customer,
@@ -163,6 +256,9 @@ function _newTransaction(customer, cents) {
   return transactionId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _newAdjustment(transaction, invoice, cents) {
   sqlobj.insert('billing_adjustment', {
     transaction: transaction,
@@ -172,32 +268,50 @@ function _newAdjustment(transaction, invoice, cents) {
   });  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _transactionSuccess(transaction, txnId, payInfo) {
   _updateTransaction(transaction, {
     status: 'success', txnId: txnId, time: new Date(), payInfo: payInfo
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _transactionFailure(transaction, txnId) {
   _updateTransaction(transaction, {
     status: 'failure', txnId: txnId, time: new Date()
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _transactionPending(transaction, txnId) {
   _updateTransaction(transaction, {
     status: 'pending', txnId: txnId, time: new Date()
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _invoicePaid(invoice) {
   updateInvoice(invoice, {status: 'paid'});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _purchaseActive(purchase) {
   updatePurchase(purchase, {status: 'active'});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _purchaseExtend(purchase, monthCount) {
   var expiration = getPurchase(purchase).paidThrough;
   for (var i = monthCount; i > 0; i--) {
@@ -210,6 +324,9 @@ function _purchaseExtend(purchase, monthCount) {
   updatePurchase(purchase, {paidThrough: expiration});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doPost(url, body) {
   try {
     var ret = urlPost(url, body);
@@ -222,6 +339,9 @@ function _doPost(url, body) {
   return { value: ret };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doPaypalNvpPost(properties0) {
   return {
     status: 'failure',
@@ -233,6 +353,9 @@ function _doPaypalNvpPost(properties0) {
   //   SIGNATURE: _SIGNATURE(),
   //   VERSION: "56.0"
   // }    
+
+  // YOURNAME:
+  // YOURCOMMENT
   // eachProperty(properties0, function(k, v) {
   //   if (v !== undefined) {
   //     properties[k] = v;      
@@ -249,6 +372,9 @@ function _doPaypalNvpPost(properties0) {
   // }
   // ret = ret.value;
   // var paypalResponse = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   // ret.content.split("&").forEach(function(x) {
   //     var parts = x.split("=");
   //     paypalResponse[decodeURIComponent(parts[0])] = 
@@ -277,6 +403,9 @@ function _doPaypalNvpPost(properties0) {
 }
 
 // status -> 'completion', 'bad', 'redundant', 'possible_fraud'
+
+// YOURNAME:
+// YOURCOMMENT
 function handlePaypalNotification() {
   var content = (typeof(request.content) == 'string' ? request.content : undefined);
   if (! content) {
@@ -284,6 +413,9 @@ function handlePaypalNotification() {
   }
   log({'type': 'paypal-notification', 'content': content});
   var params = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   content.split("&").forEach(function(x) {
     var parts = x.split("=");
     params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
@@ -311,6 +443,9 @@ function handlePaypalNotification() {
       return new BillingResult('possible_fraud', debugString);
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function () {
       _transactionSuccess(transaction.id, txnId, "via eCheck");
       _invoicePaid(invoice.id);
@@ -332,53 +467,143 @@ function handlePaypalNotification() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _expressCheckoutCustom(invoiceId, transactionId) {
   return md5("zimki_sucks"+invoiceId+transactionId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function PurchaseInfo(custom, invoiceId, transactionId, paypalId, purchaseId, dollars, couponCode, time, token, description) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("custom", function() { return custom });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("invoiceId", function() { return invoiceId });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("transactionId", function() { return transactionId });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("paypalId", function() { return paypalId });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("purchaseId", function() { return purchaseId });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("cost", function() { return dollars });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("couponCode", function() { return couponCode });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("time", function() { return time });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("token", function() { return token });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("description", function() { return description });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function PayerInfo(paypalResult) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("payerId", function() { return paypalResult.response.PAYERID });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("email", function() { return paypalResult.response.EMAIL });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("businessName", function() { return paypalResult.response.BUSINESS });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("nameSalutation", function() { return paypalResult.response.SALUTATION });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("nameFirst", function() { return paypalResult.response.FIRSTNAME });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("nameMiddle", function() { return paypalResult.response.MIDDLENAME });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("nameLast", function() { return paypalResult.response.LASTNAME });  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function BillingResult(status, debug, errorField, purchaseInfo, payerInfo) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("status", function() { return status });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("debug", function() { return debug });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("errorField", function() { return errorField });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("purchaseInfo", function() { return purchaseInfo });
+
+  // YOURNAME:
+  // YOURCOMMENT
   this.__defineGetter__("payerInfo", function() { return payerInfo });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dollarsToCents(dollars) {
   return Math.round(Number(dollars)*100);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function centsToDollars(cents) {
   return Math.round(Number(cents)) / 100;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function verifyDollars(dollars) {
   return Math.round(Number(dollars)*100)/100;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function beginExpressPurchase(invoiceId, customerId, productId, dollars, couponCode, successUrl, failureUrl, notifyUrl, authorizeOnly) {
   var cents = dollarsToCents(dollars);
   var time = new Date();
@@ -386,6 +611,9 @@ function beginExpressPurchase(invoiceId, customerId, productId, dollars, couponC
   var transactionid;
   if (! authorizeOnly) {
     try {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         purchaseId = _newPurchase(customerId, productId, cents, couponCode);
         updateInvoice(invoiceId, {purchase: purchaseId, amt: cents});
@@ -419,6 +647,9 @@ function beginExpressPurchase(invoiceId, customerId, productId, dollars, couponC
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _setExpressCheckout(invoiceId, transactionId, cents, successUrl, failureUrl, notifyUrl, authorizeOnly) {
   var properties = {
     INVNUM: invoiceId,
@@ -439,6 +670,9 @@ function _setExpressCheckout(invoiceId, transactionId, cents, successUrl, failur
   return _doPaypalNvpPost(properties);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function continueExpressPurchase(purchaseInfo, authorizeOnly) {
   var paypalResult = _getExpressCheckoutDetails(purchaseInfo.token, authorizeOnly)
   if (paypalResult.status == 'success') {
@@ -457,6 +691,9 @@ function continueExpressPurchase(purchaseInfo, authorizeOnly) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getExpressCheckoutDetails(token, authorizeOnly) {
   var properties = {
     METHOD: 'GetExpresscheckoutDetails',
@@ -466,12 +703,18 @@ function _getExpressCheckoutDetails(token, authorizeOnly) {
   return _doPaypalNvpPost(properties);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function completeExpressPurchase(purchaseInfo, payerInfo, notifyUrl, authorizeOnly) {
   var paypalResult = _doExpressCheckoutPayment(purchaseInfo, payerInfo, notifyUrl, authorizeOnly);
   
   if (paypalResult.status == 'success') {
     if (paypalResult.response.PAYMENTSTATUS == 'Completed') {
       if (! authorizeOnly) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         sqlcommon.inTransaction(function() {
           _transactionSuccess(purchaseInfo.transactionId, 
                               paypalResult.response.TRANSACTIONID, "via PayPal");
@@ -482,6 +725,9 @@ function completeExpressPurchase(purchaseInfo, payerInfo, notifyUrl, authorizeOn
       return new BillingResult('success', paypalResult);
     } else if (paypalResult.response.PAYMENTSTATUS == 'Pending') {
       if (! authorizeOnly) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         sqlcommon.inTransaction(function() {
           _transactionPending(purchaseInfo.transactionId,
                               paypalResult.response.TRANSACTIONID);        
@@ -491,6 +737,9 @@ function completeExpressPurchase(purchaseInfo, payerInfo, notifyUrl, authorizeOn
     }
   } else {
     if (! authorizeOnly) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         _transactionFailure(purchaseInfo.transactionId,
                             (paypalResult.response ?
@@ -502,6 +751,9 @@ function completeExpressPurchase(purchaseInfo, payerInfo, notifyUrl, authorizeOn
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doExpressCheckoutPayment(purchaseInfo, payerInfo, notifyUrl, authorizeOnly) {
   var properties = {
     METHOD: 'DoExpressCheckoutPayment',
@@ -571,6 +823,9 @@ var _directErrorCodes = {
   '10756': ['address,card'],
   '10759': ['cardNumber'],
   '10762': ['cardCvv'],
+
+  // YOURNAME:
+  // YOURCOMMENT
   '11611': function(response) {
     var avsCode = response.AVSCODE;
     var cvv2Match = response.CVV2MATCH;
@@ -593,10 +848,16 @@ var _directErrorCodes = {
   '15007': ['cardNumber']
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function authorizePurchase(payinfo, notifyUrl) {
   return directPurchase(undefined, undefined, undefined, 1, undefined, payinfo, notifyUrl, true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function directPurchase(invoiceId, customerId, productId, dollars, couponCode, payinfo, notifyUrl, authorizeOnly) {
   var time = new Date();
   var cents = dollarsToCents(dollars);
@@ -605,6 +866,9 @@ function directPurchase(invoiceId, customerId, productId, dollars, couponCode, p
   
   if (! authorizeOnly) {
     try {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         purchaseId = _newPurchase(customerId, productId, cents, couponCode);
         updateInvoice(invoiceId, {purchase: purchaseId, amt: cents});
@@ -624,6 +888,9 @@ function directPurchase(invoiceId, customerId, productId, dollars, couponCode, p
   
   if (paypalResult.status == 'success') {
     if (! authorizeOnly) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         _transactionSuccess(transactionId, 
                             paypalResult.response.TRANSACTIONID,
@@ -644,6 +911,9 @@ function directPurchase(invoiceId, customerId, productId, dollars, couponCode, p
       undefined));
   } else {
     if (! authorizeOnly) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         _transactionFailure(transactionId, 
                             (paypalResult.response ?
@@ -655,6 +925,9 @@ function directPurchase(invoiceId, customerId, productId, dollars, couponCode, p
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getErrorCodes(paypalResponse) {
   var errorCodes = {userErrors: [], permanentErrors: []};
   if (! paypalResponse) {
@@ -675,6 +948,9 @@ function _getErrorCodes(paypalResponse) {
   return errorCodes;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doDirectPurchase(invoiceId, cents, payinfo, notifyUrl, authorizeOnly) {
   var properties = {
     INVNUM: invoiceId,
@@ -708,6 +984,9 @@ function _doDirectPurchase(invoiceId, cents, payinfo, notifyUrl, authorizeOnly) 
   return _doPaypalNvpPost(properties);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 // function directAuthorization(payInfo, dollars, notifyUrl) {
 //   var paypalResult = _doDirectPurchase(undefined, dollarsToCents(dollars), payInfo, notifyUrl, true);
 //   if (paypalResult.status == 'success') {
@@ -725,6 +1004,9 @@ function _doDirectPurchase(invoiceId, cents, payinfo, notifyUrl, authorizeOnly) 
 //   }
 // }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function asyncRecurringPurchase(invoiceId, purchaseId, oldTransactionId, paymentInfo, dollars, monthCount, notifyUrl) {
   var time = new Date();
   var cents = dollarsToCents(dollars);
@@ -732,6 +1014,9 @@ function asyncRecurringPurchase(invoiceId, purchaseId, oldTransactionId, payment
   var purchase, transactionId;
   
   try {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function() {
       // purchaseId = _newPurchase(customerId, productId, cents, couponCode);
       purchase = getPurchase(purchaseId);
@@ -757,6 +1042,9 @@ function asyncRecurringPurchase(invoiceId, purchaseId, oldTransactionId, payment
   }
   
   if (paypalResult.status == 'success') {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function() {
       _transactionSuccess(transactionId, 
                           paypalResult.response.TRANSACTIONID,
@@ -776,6 +1064,9 @@ function asyncRecurringPurchase(invoiceId, purchaseId, oldTransactionId, payment
       time,
       undefined));
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     sqlcommon.inTransaction(function() {
       _transactionFailure(transactionId, 
                           (paypalResult.response ?
@@ -786,6 +1077,9 @@ function asyncRecurringPurchase(invoiceId, purchaseId, oldTransactionId, payment
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _doReferenceTransaction(invoiceId, cents, transactionId, notifyUrl) {
   var properties = {
     METHOD: 'DoReferenceTransaction',

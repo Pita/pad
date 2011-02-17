@@ -4,6 +4,9 @@ import("etherpad.utils.*");
 import("etherpad.globals.*");
 import("dispatch.{Dispatcher,PrefixMatcher,forward}");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function editBarItemsLeftPad(arg) {
   return arg.template.include('heading1EditbarButtons.ejs', undefined, ['heading1']);
 }

@@ -1,11 +1,20 @@
+
+// YOURNAME:
+// YOURCOMMENT
 function twitterStyleTagsInit() {
   this.hooks = ['aceInitInnerdocbodyHead', 'aceGetFilterStack', 'aceCreateDomLine'];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 twitterStyleTagsInit.prototype.aceInitInnerdocbodyHead = function(args) {
   args.iframeHTML.push('\'<link rel="stylesheet" type="text/css" href="/static/css/plugins/twitterStyleTags/pad.css"/>\'');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 twitterStyleTagsInit.prototype.aceGetFilterStack = function(args) {
   return [
     args.linestylefilter.getRegexpFilter(
@@ -15,9 +24,15 @@ twitterStyleTagsInit.prototype.aceGetFilterStack = function(args) {
   ];
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 twitterStyleTagsInit.prototype.aceCreateDomLine = function(args) {
   if (args.cls.indexOf('padtagsearch') >= 0) {
     var href;
+
+    // YOURNAME:
+    // YOURCOMMENT
     cls = args.cls.replace(/(^| )padtagsearch:(\S+)/g, function(x0, space, padtagsearch) {
       var tag = encodeURI(padtagsearch.substring(1));
       href = '/ep/search?query=' + tag;
@@ -30,6 +45,9 @@ twitterStyleTagsInit.prototype.aceCreateDomLine = function(args) {
      extraCloseTags: '</a>'}];
   } else if (args.cls.indexOf('padtag') >= 0) {
     var href;
+
+    // YOURNAME:
+    // YOURCOMMENT
     cls = args.cls.replace(/(^| )padtag:(\S+)/g, function(x0, space, padtag) {
       var tag = encodeURI(padtag.substring(1));
       href = '/ep/search?query=' + tag;

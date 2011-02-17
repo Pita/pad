@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeVirtualLineView(lineNode) {
   
   // how much to jump forward or backward at once in a charSeeker before
@@ -26,10 +29,16 @@ function makeVirtualLineView(lineNode) {
   var maxCharIncrement = 20;
   var seekerAtEnd = null;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getNumChars() {
     return lineNode.textContent.length;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getNumVirtualLines() {
     if (! seekerAtEnd) {
       var seeker = makeCharSeeker();
@@ -39,21 +48,36 @@ function makeVirtualLineView(lineNode) {
     return seekerAtEnd.getVirtualLine() + 1;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getVLineAndOffsetForChar(lineChar) {
     var seeker = makeCharSeeker();
     seeker.forwardByWhile(maxCharIncrement, null, lineChar);
     var theLine = seeker.getVirtualLine();
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.backwardByWhile(8, function() { return seeker.getVirtualLine() == theLine; });
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.forwardByWhile(1, function() { return seeker.getVirtualLine() != theLine; });
     var lineStartChar = seeker.getOffset();
     return {vline:theLine, offset:(lineChar - lineStartChar)};
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getCharForVLineAndOffset(vline, offset) {
     // returns revised vline and offset as well as absolute char index within line.
     // if offset is beyond end of line, for example, will give new offset at end of line.
     var seeker = makeCharSeeker();
     // go to start of line
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.binarySearch(function() {
       return seeker.getVirtualLine() >= vline;
     });
@@ -62,6 +86,9 @@ function makeVirtualLineView(lineNode) {
     // go to offset, overshooting the virtual line only if offset is too large for it
     seeker.forwardByWhile(maxCharIncrement, null, lineStart+offset);
     // get back into line
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.backwardByWhile(1, function() { return seeker.getVirtualLine() != theLine; }, lineStart);
     var lineChar = seeker.getOffset();
     var theOffset = lineChar - lineStart;
@@ -77,8 +104,14 @@ function makeVirtualLineView(lineNode) {
 
   return {getNumVirtualLines:getNumVirtualLines, getVLineAndOffsetForChar:getVLineAndOffsetForChar,
 	  getCharForVLineAndOffset:getCharForVLineAndOffset,
+
+// YOURNAME:
+// YOURCOMMENT
 	  makeCharSeeker: function() { return makeCharSeeker(); } };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function deepFirstChildTextNode(nd) {
     nd = nd.firstChild;
     while (nd && nd.firstChild) nd = nd.firstChild;
@@ -86,8 +119,14 @@ function makeVirtualLineView(lineNode) {
     return null;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function makeCharSeeker(/*lineNode*/) {
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function charCoords(tnode, i) {
       var container = tnode.parentNode;
 
@@ -143,6 +182,9 @@ function makeVirtualLineView(lineNode) {
     var approxLineHeight;
     var whichLine = 0;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nextNode() {
       var n = curNode;
       if (! n) n = lineNode.firstChild;
@@ -152,6 +194,9 @@ function makeVirtualLineView(lineNode) {
       }
       return n;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     function prevNode() {
       var n = curNode;
       if (! n) n = lineNode.lastChild;
@@ -170,6 +215,9 @@ function makeVirtualLineView(lineNode) {
       curTop = firstCharData.top;
       curLeft = firstCharData.left;
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       function updateCharData(tnode, i) {
 	var coords = charCoords(tnode, i);
 	whichLine += Math.round((coords.top - curTop) / approxLineHeight);
@@ -178,6 +226,9 @@ function makeVirtualLineView(lineNode) {
       }
 
       seeker = {
+
+// YOURNAME:
+// YOURCOMMENT
 	forward: function(numChars) {
 	  var oldChar = curChar;
 	  var newChar = curChar + numChars;
@@ -204,6 +255,9 @@ function makeVirtualLineView(lineNode) {
 	  updateCharData(deepFirstChildTextNode(curNode), curCharWithinNode);
 	  return curChar - oldChar;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	backward: function(numChars) {
 	  var oldChar = curChar;
 	  var newChar = curChar - numChars;
@@ -227,24 +281,54 @@ function makeVirtualLineView(lineNode) {
 	  updateCharData(deepFirstChildTextNode(curNode), curCharWithinNode);
 	  return oldChar - curChar;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	getVirtualLine: function() { return whichLine; },
+
+// YOURNAME:
+// YOURCOMMENT
 	getLeftCoord: function() { return curLeft; }
       };
     }
     else {
       curLeft = lineNode.offsetLeft;
+
+      // YOURNAME:
+      // YOURCOMMENT
       seeker = { forward: function(numChars) { return 0; },
+
+// YOURNAME:
+// YOURCOMMENT
 		 backward: function(numChars) { return 0; },
+
+// YOURNAME:
+// YOURCOMMENT
 		 getVirtualLine: function() { return 0; },
+
+// YOURNAME:
+// YOURCOMMENT
 		 getLeftCoord: function() { return curLeft; }
 	       };
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.getOffset = function() { return curChar; };
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.getLineLength = function() { return lineLength; };
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.toString = function() {
       return "seeker[curChar: "+curChar+"("+lineText.charAt(curChar)+"), left: "+seeker.getLeftCoord()+", vline: "+seeker.getVirtualLine()+"]";
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function moveByWhile(isBackward, amount, optCondFunc, optCharLimit) {
       var charsMovedLast = null;
       var hasCondFunc = ((typeof optCondFunc) == "function");
@@ -262,16 +346,28 @@ function makeVirtualLineView(lineNode) {
       }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.forwardByWhile = function(amount, optCondFunc, optCharLimit) {
       moveByWhile(false, amount, optCondFunc, optCharLimit);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.backwardByWhile = function(amount, optCondFunc, optCharLimit) {
       moveByWhile(true, amount, optCondFunc, optCharLimit);
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     seeker.binarySearch = function(condFunc) {
       // returns index of boundary between false chars and true chars;
       // positions seeker at first true char, or else last char
       var trueFunc = condFunc;
+
+      // YOURNAME:
+      // YOURCOMMENT
       var falseFunc = function() { return ! condFunc(); };
       seeker.forwardByWhile(20, falseFunc);
       seeker.backwardByWhile(20, trueFunc);

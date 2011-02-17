@@ -38,7 +38,13 @@ import("etherpad.log");
 jimport("java.lang.System.out.println");
 jimport("net.appjet.ajstdlib.execution.executeCodeInNewScope");
 
+
+// YOURNAME:
+// YOURCOMMENT
 /* Make a split function like Ruby's: "abc".split(/b/) -> ['a', 'b', 'c'] */
+
+// YOURNAME:
+// YOURCOMMENT
 function rsplit(x, regex) {
 	var item = x;
 	var result = regex.exec(item);
@@ -65,11 +71,17 @@ function rsplit(x, regex) {
 };
 
 /* Chop is nice to have too */
+
+// YOURNAME:
+// YOURCOMMENT
 function chop(x) {
   return x.substr(0, x.length - 1);
 }
 
 /* Adaptation from the Scanner of erb.rb  */
+
+// YOURNAME:
+// YOURCOMMENT
 var EjsScanner = function(source, left, right) {
 	this.left_delimiter = 	left +'%';	//<%
 	this.right_delimiter = 	'%'+right;	//>
@@ -89,14 +101,23 @@ var EjsScanner = function(source, left, right) {
 	this.stag = null;
 	this.lines = 0;
 };
+
+// YOURNAME:
+// YOURCOMMENT
 EjsView = function(data) {
 	this.data = data;
 };
+
+// YOURNAME:
+// YOURCOMMENT
 EjsView.prototype.partial = function(options, data){
 	if(!data) data = this.data;
 	return new EJS(options).render(data);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 EjsScanner.to_text = function(input){
 	if(input == null || input === undefined)
         return '';
@@ -110,6 +131,9 @@ EjsScanner.to_text = function(input){
 EjsScanner.prototype = {
 
   /* For each line, scan! */
+
+  // YOURNAME:
+  // YOURCOMMENT
   scan: function(block) {
      scanline = this.scanline;
 	 regex = this.SplitRegexp;
@@ -124,6 +148,9 @@ EjsScanner.prototype = {
   },
   
   /* For each token, block! */
+
+  // YOURNAME:
+  // YOURCOMMENT
   scanline: function(line, regex, block) {
 	 this.lines++;
 	 var line_split = rsplit(line, regex);
@@ -141,6 +168,9 @@ EjsScanner.prototype = {
 };
 
 /* Adaptation from the Buffer of erb.rb  */
+
+// YOURNAME:
+// YOURCOMMENT
 var EjsBuffer = function(pre_cmd, post_cmd) {
 	this.line = new Array();
 	this.script = "";
@@ -154,16 +184,25 @@ var EjsBuffer = function(pre_cmd, post_cmd) {
 }
 EjsBuffer.prototype = {
 	
+
+  // YOURNAME:
+  // YOURCOMMENT
   push: function(cmd) {
 	this.line.push(cmd);
   },
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   cr: function() {
 	this.script = this.script + this.line.join('; ');
 	this.line = new Array();
 	this.script = this.script + "\n";
   },
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   close: function() {
 	if (this.line.length > 0)
 	{
@@ -179,6 +218,9 @@ EjsBuffer.prototype = {
 };
 
 /* Adaptation from the Compiler of erb.rb  */
+
+// YOURNAME:
+// YOURCOMMENT
 EjsCompiler = function(source, left) {
 	this.pre_cmd = ['var ejs_data = "";'];
 	this.post_cmd = new Array();
@@ -216,6 +258,9 @@ EjsCompiler = function(source, left) {
 	this.out = '';
 }
 EjsCompiler.prototype = {
+
+  // YOURNAME:
+  // YOURCOMMENT
   compile: function(options) {
   	options = options || {};
 	this.out = '';
@@ -223,6 +268,9 @@ EjsCompiler.prototype = {
 	var insert_cmd = put_cmd;
 	var buff = new EjsBuffer(this.pre_cmd, this.post_cmd);		
 	var content = '';
+
+// YOURNAME:
+// YOURCOMMENT
 	var clean = function(content)
 	{
 	    content = content.replace(/\\/g, '\\\\');
@@ -230,6 +278,9 @@ EjsCompiler.prototype = {
         content = content.replace(/\"/g,  '\\"');
         return content;
 	};
+
+// YOURNAME:
+// YOURCOMMENT
 	this.scanner.scan(function(token, scanner) {
 		if (scanner.stag == null)
 		{
@@ -304,6 +355,9 @@ EjsCompiler.prototype = {
 	buff.close();
 	this.out = buff.script + ";";
 	var to_be_evaled = [
+
+    // YOURNAME:
+    // YOURCOMMENT
     'var process = function(_CONTEXT,_VIEW) {',
     '  with(_VIEW) {',
     '    with (_CONTEXT) {',
@@ -316,6 +370,9 @@ EjsCompiler.prototype = {
   // make funhtml.* available in parent scope.
   var parentScope = {};
   parentScope.EjsScanner = EjsScanner;
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(funhtml).forEach(function(k) {
     parentScope[k] = funhtml[k];
   });
@@ -331,6 +388,9 @@ EjsCompiler.prototype = {
 
 
 //type, cache, folder
+
+// YOURNAME:
+// YOURCOMMENT
 EJS = function( options ){
 	this.set_options(options);
 	
@@ -367,17 +427,26 @@ EJS = function( options ){
 	EJS.update(this.name, this);
 	this.template = template;
 };
+
+// YOURNAME:
+// YOURCOMMENT
 EJS.config = function(options){
 	EJS.cache = options.cache != null ? options.cache : EJS.cache;
 	EJS.type = options.type != null ? options.type : EJS.type;
 	var templates_directory = {}; //nice and private container
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	EJS.get = function(path, cache){
 		if(cache == false) return null;
 		if(templates_directory[path]) return templates_directory[path];
   		return null;
 	};
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	EJS.update = function(path, template) { 
 		if(path == null) return;
 		templates_directory[path] = template;
@@ -390,13 +459,22 @@ EJS.config = function(options){
 EJS.config( {cache: true, type: '<' } );
 
 EJS.prototype = {
+
+// YOURNAME:
+// YOURCOMMENT
 	render : function(object){
 		var v = new EjsView(object);
         return this.template.process.call(v, object, v);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	out : function(){
 		return this.template.out;
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	set_options : function(options){
 		this.type = options.type != null ? options.type : EJS.type;
 		this.cache = options.cache != null ? options.cache : EJS.cache;
@@ -406,12 +484,18 @@ EJS.prototype = {
 	// called without options, returns a function that takes the object
 	// called with options being a string, uses that as a url
 	// called with options as an object
+
+// YOURNAME:
+// YOURCOMMENT
 	update : function(element, options){
 		if(typeof element == 'string'){
 			element = document.getElementById(element);
 		}
 		if(options == null){
 			_template = this;
+
+// YOURNAME:
+// YOURCOMMENT
 			return function(object){
 				EJS.prototype.update.call(_template, element, object);
 			};
@@ -420,6 +504,9 @@ EJS.prototype = {
 			params = {};
 			params.url = options;
 			_template = this;
+
+// YOURNAME:
+// YOURCOMMENT
 			params.onComplete = function(request){
 				var object = eval( request.responseText );
 				EJS.prototype.update.call(_template, element, object);
@@ -432,7 +519,13 @@ EJS.prototype = {
 	}
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 	EJS.newRequest = function(){
+
+// YOURNAME:
+// YOURCOMMENT
 	   var factories = [function() { return new ActiveXObject("Msxml2.XMLHTTP"); },function() { return new XMLHttpRequest(); },function() { return new ActiveXObject("Microsoft.XMLHTTP"); }];
 	   for(var i = 0; i < factories.length; i++) {
 	        try {
@@ -443,6 +536,9 @@ EJS.prototype = {
 	   }
 	};
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	EJS.request = function(path){
 	   var request = new EJS.newRequest();
 	   request.open("GET", path, false);
@@ -454,10 +550,16 @@ EJS.prototype = {
 	   
 	   return request.responseText
 	};
+
+// YOURNAME:
+// YOURCOMMENT
 	EJS.ajax_request = function(params){
 		params.method = ( params.method ? params.method : 'GET');
 		
 		var request = new EJS.newRequest();
+
+// YOURNAME:
+// YOURCOMMENT
 		request.onreadystatechange = function(){
 			if(request.readyState == 4){
 				if(request.status == 200){

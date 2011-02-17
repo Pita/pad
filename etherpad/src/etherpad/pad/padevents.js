@@ -30,6 +30,9 @@ import("etherpad.pad.noprowatcher");
 import("etherpad.collab.collab_server");
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onNewPad(pad) {
   log.custom("padevents", {
     type: "newpad",
@@ -38,6 +41,9 @@ function onNewPad(pad) {
   pro_pad_db.onCreatePad(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onDestroyPad(pad) {
   log.custom("padevents", {
     type: "destroypad",
@@ -46,7 +52,13 @@ function onDestroyPad(pad) {
   pro_pad_db.onDestroyPad(pad);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserJoin(pad, userInfo) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   log.callCatchingExceptions(function() {
 
     var name = userInfo.name || "unnamed";
@@ -66,7 +78,13 @@ function onUserJoin(pad, userInfo) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserLeave(pad, userInfo) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   log.callCatchingExceptions(function() {
 
     var name = userInfo.name || "unnamed";
@@ -84,7 +102,13 @@ function onUserLeave(pad, userInfo) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserInfoChange(pad, userInfo) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   log.callCatchingExceptions(function() {
 
     activepads.touch(pad.getId());
@@ -92,6 +116,9 @@ function onUserInfoChange(pad, userInfo) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onClientMessage(pad, senderUserInfo, msg) {
   var padId = pad.getId();
   activepads.touch(padId);
@@ -114,6 +141,9 @@ function onClientMessage(pad, senderUserInfo, msg) {
   }
   else if (msg.type == "padtitle") {
     if (msg.title && padutils.isProPadId(pad.getId())) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       pro_padmeta.accessProPad(pad.getId(), function(propad) {
         propad.setTitle(String(msg.title).substring(0, 80));
       });
@@ -121,6 +151,9 @@ function onClientMessage(pad, senderUserInfo, msg) {
   }
   else if (msg.type == "padpassword") {
     if (padutils.isProPadId(pad.getId())) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       pro_padmeta.accessProPad(pad.getId(), function(propad) {
         propad.setPassword(msg.password || null);
       });
@@ -143,7 +176,13 @@ function onClientMessage(pad, senderUserInfo, msg) {
       padOptions.guestPolicy = opts.guestPolicy;
       if (opts.guestPolicy == 'deny') {
         // boot guests!
+
+        // YOURNAME:
+        // YOURCOMMENT
         collab_server.bootUsersFromPad(pad, "unauth", function(userInfo) {
+
+          // YOURNAME:
+          // YOURCOMMENT
           return padusers.isGuest(userInfo.userId); }).forEach(function(userInfo) {
             pad_security.revokePadUserAccess(padId, userInfo.userId); });
       }
@@ -159,7 +198,13 @@ function onClientMessage(pad, senderUserInfo, msg) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onEditPad(pad, authorId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   log.callCatchingExceptions(function() {
 
     pro_pad_db.onEditPad(pad, authorId);

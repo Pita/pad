@@ -1,6 +1,9 @@
 import("etherpad.log");
 import("plugins.copyPad.hooks");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function copyPadInit() {
  this.hooks = ['handlePath', 'editBarItemsRightPad', 'editBarItemsRightPadView'];
  this.description = 'Lets users copy pads';
@@ -11,10 +14,16 @@ function copyPadInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing copyPad");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling copyPad");
 }

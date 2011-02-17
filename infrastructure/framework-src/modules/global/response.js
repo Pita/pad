@@ -19,9 +19,15 @@
  */
 
 /** @ignore */
+
+// YOURNAME:
+// YOURCOMMENT
 function _cx() { return appjet.context };
 
 /** @ignore */
+
+// YOURNAME:
+// YOURCOMMENT
 function _cookiestring(c) {
   var x = '';
   if (!c.name) { throw new Error('cookie name is required'); }
@@ -51,6 +57,9 @@ function _cookiestring(c) {
 };
 
 /** @ignore */
+
+// YOURNAME:
+// YOURCOMMENT
 function _cookiedate(d) {
   var x = d.toGMTString();
   var p = x.split(' ');
@@ -68,6 +77,9 @@ get isDefined() {
 /**
  * Halts the program immediately and returns 403 Forbidden error to the user.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.forbid = function() {
   _cx().response().error(403, "Forbidden");
 };
@@ -79,6 +91,9 @@ response.forbid = function() {
  *   otherwise calls to print() so far will be displayed.  Either way, no more
  *   code will be executed.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.stop = function(renderCurrentPage) {
   _cx().response().stop();
 };
@@ -86,6 +101,9 @@ response.stop = function(renderCurrentPage) {
 /**
  * Halts the program immediately and returns a 404 not found error to the user.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.notFound = function() {
   _cx().response().error(404, "404: Not found");
 };
@@ -96,6 +114,9 @@ response.notFound = function() {
  *
  * @param {string} path The new path
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.redirect = function(path) {
   if ((! path) && path != "") {
     throw new Error("Invalid redirect: "+path);
@@ -112,17 +133,29 @@ response.redirect = function(path) {
  *
  * @param {number} newCode
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.setStatusCode = function(newCode) {
   _cx().response().setStatusCode(newCode);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 response.getStatusCode = function() {
   return _cx().response().getStatusCode();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.sendError = function(errorCode, errorHtml) {
   _cx().response().error(errorCode, errorHtml);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.reset = function() {
   _cx().response().reset();
 };
@@ -136,6 +169,9 @@ response.setHeader('Cache-Control', 'no-cache');
  * @param {string} name
  * @param {string} value
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.setHeader = function(name, value) {
   _cx().response().setHeader(name, value);
 };
@@ -147,6 +183,9 @@ response.setHeader = function(name, value) {
  * @param {string} name
  * @param {string} value
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.addHeader = function(name, value) {
   _cx().response().addHeader(name, value);
 };
@@ -159,6 +198,9 @@ response.addHeader = function(name, value) {
  * @param {string} name
  * @return {array} An array of header values. Empty array if none set.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.getHeader = function(name) {
   if (! this.isDefined) {
     return [];
@@ -172,6 +214,9 @@ response.getHeader = function(name) {
  *
  * @param {string} name
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.removeHeader = function(name) {
   _cx().response().removeHeader(name);
 };
@@ -180,6 +225,9 @@ response.removeHeader = function(name) {
  * Low-level hook for writing raw data to the response.
  * @param {string} data will be written, verbatim, to the HTTP resonse.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.write = function(data) {
   _cx().response().write(data);
 };
@@ -190,6 +238,9 @@ response.write = function(data) {
  * or writing an uploaded file.
  * @param {string} data will be written, verbatim, to the HTTP resonse.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.writeBytes = function(data) {
   _cx().response().writeBytes(data);
 };
@@ -220,6 +271,9 @@ response.setCookie({
   <li>secure (optional): Whether this cookie should only be sent securely.</li>
 </ul>
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.setCookie = function(cookieObject) {
   this.addHeader('Set-Cookie', _cookiestring(cookieObject));
 
@@ -237,14 +291,23 @@ response.setCookie = function(cookieObject) {
  * its expiration time to zero).
  * @param {string} name The name of the cookie to delete.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.deleteCookie = function(name) {
   this.setCookie({name: name, value: '', expires: 0});
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _trim(s) {
   return String((new java.lang.String(s)).trim());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.getCookie = function(name) {
   var cookieHeaders = this.getHeader('Set-Cookie');
   if (! cookieHeaders) { return; }
@@ -259,17 +322,29 @@ response.getCookie = function(name) {
  * a charset, that charset is used to send the response.
  * @param {string} contentType the new content-type
  */
+
+// YOURNAME:
+// YOURCOMMENT
 response.setContentType = function(contentType) {
   _cx().response().setContentType(contentType);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.getCharacterEncoding = function() {
   return _cx().response().getCharacterEncoding();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.neverCache = function() {
   // be aggressive about not letting the response be cached.
   var that = this;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function sh(k,v) { that.setHeader(k,v); }
   sh('Expires', 'Sat, 18 Jun 1983 07:07:07 GMT');
   sh('Last-Modified', (new Date()).toGMTString());
@@ -278,8 +353,14 @@ response.neverCache = function() {
   sh('Pragma', 'no-cache');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.alwaysCache = function() {
   var that = this;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function sh(k,v) { that.setHeader(k,v); }
   that.removeHeader('Last-Modified');
   that.removeHeader('Pragma');
@@ -289,6 +370,9 @@ response.alwaysCache = function() {
   sh('Cache-Control', 'max-age=315360000');
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 response.setGzip = function(gzip) {
   _cx().response().setGzip(gzip);
 }

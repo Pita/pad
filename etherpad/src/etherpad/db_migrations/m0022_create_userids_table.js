@@ -17,6 +17,9 @@
 import("etherpad.utils.isPrivateNetworkEdition");
 import("sqlbase.sqlobj");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (isPrivateNetworkEdition()) {
     return;

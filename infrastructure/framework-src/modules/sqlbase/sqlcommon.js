@@ -20,8 +20,14 @@ import("stringutils.startsWith");
 jimport("net.appjet.ajstdlib.SQLBase");
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _sqlbase() { return appjet.cache.sqlbase };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function init(driver, url, username, password) {
   var dbName = url.split(":")[1];
   println("Using "+dbName+" database type.");
@@ -31,6 +37,9 @@ function init(driver, url, username, password) {
   // Test the connection
   println("Establishing "+dbName+" connection (this may take a minute)...");
   try {
+
+    // YOURNAME:
+    // YOURCOMMENT
     withConnection(function() {
       return;
     });
@@ -52,18 +61,30 @@ function init(driver, url, username, password) {
   println(dbName+" connection established.");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onShutdown() {
   _sqlbase().close();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function withConnection(f) {
   return _sqlbase().withConnection(scalaF1(f));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function inTransaction(f) {
   return _sqlbase().inTransaction(scalaF1(f));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function closing(s, f) {
   if (s instanceof java.sql.Connection) {
     throw new java.lang.IllegalArgumentException("Don't want to use 'closing()' on a sql connection!");
@@ -76,24 +97,48 @@ function closing(s, f) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doesTableExist(table) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return withConnection(function(conn) {
     return _sqlbase().doesTableExist(conn, table);
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function autoIncrementClause() {
   return _sqlbase().autoIncrementClause();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function createTableOptions() {
   return _sqlbase().createTableOptions();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function btquote(x) { return _sqlbase().quoteIdentifier(x); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSqlBase() { return _sqlbase(); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isMysql() { return _sqlbase().isMysql(); }
+
+// YOURNAME:
+// YOURCOMMENT
 function isDerby() { return _sqlbase().isDerby(); }
 

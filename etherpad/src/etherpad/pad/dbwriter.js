@@ -32,18 +32,30 @@ var AGE_FOR_PAD_FLUSH_MS = 5*60*1000; // 5 minutes
 var DBUNWRITABLE_WRITE_DELAY_MS = 30*1000; // 30 seconds
 
 // state is { constant: true }, { constant: false }, { trueAfter: timeInMs }
+
+// YOURNAME:
+// YOURCOMMENT
 function setWritableState(state) {
   _dbwriter().dbWritable = state;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getWritableState() {
   return _dbwriter().dbWritable;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isDBWritable() {
   return _isDBWritable();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _isDBWritable() {
   var state = _dbwriter().dbWritable;
   if (typeof state != "object") {
@@ -58,6 +70,9 @@ function _isDBWritable() {
   else return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getWritableStateDescription(state) {
   var v = _isDBWritable();
   var restOfMessage = "";
@@ -75,10 +90,16 @@ function getWritableStateDescription(state) {
   return v+restOfMessage;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dbwriter() {
   return appjet.cache.dbwriter;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   appjet.cache.dbwriter = {};
   var dbwriter = _dbwriter();
@@ -93,10 +114,16 @@ function onStartup() {
   _scheduleCheckForStalePads();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _scheduleCheckForStalePads() {
   execution.scheduleTask("dbwriter_infreq", "checkForStalePads", AGE_FOR_PAD_FLUSH_MS, []);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onShutdown() {
   log.info("Doing final DB writes before shutdown...");
   var success = execution.shutdownAndWaitOnTaskThreadPool("dbwriter", 10000);
@@ -105,6 +132,9 @@ function onShutdown() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _logException(e) {
   var exc = utils.toJavaException(e);
   log.warn("writeAllToDB: Error writing to SQL!  Written to exceptions.log: "+exc);
@@ -112,6 +142,9 @@ function _logException(e) {
   exceptionlog.apply(exc);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function taskFlushPad(padId, reason) {
   var dbwriter = _dbwriter();
   if (! _isDBWritable()) {
@@ -120,6 +153,9 @@ function taskFlushPad(padId, reason) {
     return;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
     writePadNow(pad, true);
   }, "r");
@@ -127,6 +163,9 @@ function taskFlushPad(padId, reason) {
   log.info("taskFlushPad: flushed "+padId+(reason?(" (reason: "+reason+")"):''));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function taskWritePad(padId) {
   var dbwriter = _dbwriter();
   if (! _isDBWritable()) {
@@ -138,6 +177,9 @@ function taskWritePad(padId) {
 
   profiler.reset();
   var t1 = profiler.rcb("lock wait");
+
+  // YOURNAME:
+  // YOURCOMMENT
   model.accessPadGlobal(padId, function(pad) {
     t1();
     _dbwriter().pendingWrites.remove(padId); // do this first
@@ -159,6 +201,9 @@ function taskWritePad(padId) {
   }, "r");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function taskCheckForStalePads() {
   // do this first
   _scheduleCheckForStalePads();
@@ -179,6 +224,9 @@ function taskCheckForStalePads() {
       // skip it, don't want to lock up stale pad flusher
     }
     else {
+
+      // YOURNAME:
+      // YOURCOMMENT
       accessPadGlobal(p, function(pad) {
         if (pad.exists()) {
 	  var padAge = (+new Date()) - pad._meta.status.lastAccess;
@@ -194,6 +242,9 @@ function taskCheckForStalePads() {
   log.info("taskCheckForStalePads: flushed "+numStale+" stale pads");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function notifyPadDirty(padId) {
   var dbwriter = _dbwriter();
   if (! dbwriter.pendingWrites.containsKey(padId)) {
@@ -203,10 +254,16 @@ function notifyPadDirty(padId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function scheduleFlushPad(padId, reason) {
   execution.scheduleTask("dbwriter_infreq", "flushPad", 0, [padId, reason]);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function _dbwriterLoopBody(executor) {
   try {
     var info = writeAllToDB(executor);
@@ -221,14 +278,23 @@ function scheduleFlushPad(padId, reason) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _startInThread(name, func) {
   (new Thread(new Runnable({
+
+      // YOURNAME:
+      // YOURCOMMENT
       run: function() {
         func();
       }
   }), name)).start();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function killDBWriterThreadAndWait() {
   appjet.cache.abortDBWriter = true;
   while (appjet.cache.runningDBWriter) {
@@ -236,6 +302,9 @@ function killDBWriterThreadAndWait() {
   }
 }*/
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function writeAllToDB(executor, andFlush) {
   if (!executor) {
     executor = new ScheduledThreadPoolExecutor(NUM_WRITER_THREADS);
@@ -255,9 +324,15 @@ function killDBWriterThreadAndWait() {
   var latch = new CountDownLatch(padList.length);
 
   for (var i = 0; i < padList.length; i++) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     _spawnCall(executor, function(p) {
       try {
         var padWriteResult = {};
+
+        // YOURNAME:
+        // YOURCOMMENT
         accessPadGlobal(p, function(pad) {
           if (pad.exists()) {
                padCount.getAndIncrement();
@@ -291,6 +366,9 @@ function killDBWriterThreadAndWait() {
   return obj;
 }*/
 
+
+// YOURNAME:
+// YOURCOMMENT
 function writePadNow(pad, andFlush) {
   var didWrite = false;
   var didRemove = false;
@@ -326,10 +404,16 @@ function writePadNow(pad, andFlush) {
   return {didWrite:didWrite, didRemove:didRemove};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function _spawnCall(executor, func, varargs) {
   var args = Array.prototype.slice.call(arguments, 2);
   var that = this;
   executor.schedule(new Runnable({
+
+    // YOURNAME:
+    // YOURCOMMENT
     run: function() {
       func.apply(that, args);
     }

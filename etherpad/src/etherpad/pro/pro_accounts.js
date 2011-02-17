@@ -42,18 +42,27 @@ import("fastJSON")
 jimport("org.mindrot.BCrypt");
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _dmesg(m) {
   if (!isProduction()) {
     println(m);
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _computePasswordHash(p) {
   var pwh;
   pwh = BCrypt.hashpw(p, BCrypt.gensalt(10));
   return pwh;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _withCache(name, fn) {
   return syncedWithCache('pro_accounts.'+name, fn);
 }
@@ -62,30 +71,45 @@ function _withCache(name, fn) {
 // validation
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateEmail(email) {
   if (!email) { return "Email is required."; }
   if (!isValidEmail(email)) { return "\""+email+"\" does not look like a valid email address."; }
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateFullName(name) {
   if (!name) { return "Full name is required."; }
   if (name.length < 2) { return "Full name must be at least 2 characters."; }
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validatePassword(p) {
   if (!p) { return "Password is required."; }
   if (p.length < 6) { return "Passwords must be at least 6 characters."; }
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validateEmailDomainPair(email, domainId) {
   // TODO: make sure the same email address cannot exist more than once within
   // the same domainid.
 }
 
 /* if domainId is null, then use domainId of current request. */
+
+// YOURNAME:
+// YOURCOMMENT
 function createNewAccount(domainId, fullName, email, password, isAdmin, skipValidation) {
   if (!domainId) {
     domainId = domains.getRequestDomainId();
@@ -108,6 +132,9 @@ function createNewAccount(domainId, fullName, email, password, isAdmin, skipVali
   fullName = toHTML(fullName);
 
   // make sure account does not already exist on this domain.
+
+  // YOURNAME:
+  // YOURCOMMENT
   var ret = inTransaction(function() {
     var existingAccount = getAccountByEmail(email, domainId);
     if (existingAccount) {
@@ -126,6 +153,9 @@ function createNewAccount(domainId, fullName, email, password, isAdmin, skipVali
     return sqlobj.insert('pro_accounts', account);
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('does-domain-admin-exist', function(cache) {
     delete cache[domainId];
   });
@@ -146,6 +176,9 @@ function createNewAccount(domainId, fullName, email, password, isAdmin, skipVali
   return ret;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _checkAccess(account) {
   if (sessions.isAnEtherpadAdmin()) {
     return;
@@ -155,6 +188,9 @@ function _checkAccess(account) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setPassword(account, newPass) {
   _checkAccess(account);
   var passHash = _computePasswordHash(newPass);
@@ -162,6 +198,9 @@ function setPassword(account, newPass) {
   markDirtySessionAccount(account.id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setTempPassword(account, tempPass) {
   _checkAccess(account);
   var tempPassHash = _computePasswordHash(tempPass);
@@ -169,24 +208,36 @@ function setTempPassword(account, tempPass) {
   markDirtySessionAccount(account.id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setEmail(account, newEmail) {
   _checkAccess(account);
   sqlobj.update('pro_accounts', {id: account.id}, {email: newEmail});
   markDirtySessionAccount(account.id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setFullName(account, newName) {
   _checkAccess(account);
   sqlobj.update('pro_accounts', {id: account.id}, {fullName: newName});
   markDirtySessionAccount(account.id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setIsAdmin(account, newVal) {
   _checkAccess(account);
   sqlobj.update('pro_accounts', {id: account.id}, {isAdmin: newVal});
   markDirtySessionAccount(account.id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setDeleted(account) {
   _checkAccess(account);
   if (!isNumeric(account.id)) {
@@ -209,8 +260,14 @@ function setDeleted(account) {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doesAdminExist() {
   var domainId = domains.getRequestDomainId();
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _withCache('does-domain-admin-exist', function(cache) {
     if (cache[domainId] === undefined) {
       _dmesg("cache miss for doesAdminExist (domainId="+domainId+")");
@@ -221,6 +278,9 @@ function doesAdminExist() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function attemptSingleSignOn() {
   if(!appjet.config['etherpad.SSOScript']) return null;
   
@@ -242,6 +302,9 @@ function attemptSingleSignOn() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSessionProAccount() {
   if (sessions.isAnEtherpadAdmin()) {
     return getEtherpadAdminAccount();
@@ -257,6 +320,9 @@ function getSessionProAccount() {
   return account;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isAccountSignedIn() {
   if (getSessionProAccount()) {
     return true;
@@ -284,10 +350,16 @@ function isAccountSignedIn() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isAdminSignedIn() {
   return isAccountSignedIn() && getSessionProAccount().isAdmin;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function requireAccount(message) {
   if ((request.path == "/ep/account/sign-in") ||
       (request.path == "/ep/account/sign-out") ||
@@ -297,6 +369,9 @@ function requireAccount(message) {
     return;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function checkSessionAccount() {
     if (!getSessionProAccount()) {
       if (message) {
@@ -315,6 +390,9 @@ function requireAccount(message) {
     response.stop();
   }
   // update dirty session account if necessary
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('dirty-session-accounts', function(cache) {
     var uid = getSessionProAccount().id;
     if (cache[uid]) {
@@ -328,6 +406,9 @@ function requireAccount(message) {
   checkSessionAccount();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function requireAdminAccount() {
   requireAccount();
   if (!getSessionProAccount().isAdmin) {
@@ -337,6 +418,9 @@ function requireAdminAccount() {
 }
 
 /* returns undefined on success, error string otherise. */
+
+// YOURNAME:
+// YOURCOMMENT
 function authenticateSignIn(email, password) {
   // blank passwords are not allowed to sign in.
   if (password == "") return "Please provide a password.";
@@ -393,10 +477,16 @@ function authenticateSignIn(email, password) {
   return undefined; // success
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function signOut() {
   delete getSession().proAccount;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function authenticateTempSignIn(uid, tempPass) {
   var emsg = "That password reset link that is no longer valid.";
 
@@ -422,6 +512,9 @@ function authenticateTempSignIn(uid, tempPass) {
   response.redirect("/ep/account/");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function signInSession(account) {
   account.lastLoginDate = new Date();
   account.tempPassHash = null;
@@ -430,6 +523,9 @@ function signInSession(account) {
   padusers.notifySignIn();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function listAllDomainAccounts(domainId) {
   if (domainId === undefined) {
     domainId = domains.getRequestDomainId();
@@ -439,6 +535,9 @@ function listAllDomainAccounts(domainId) {
   return records;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function listAllDomainAdmins(domainId) {
   if (domainId === undefined) {
     domainId = domains.getRequestDomainId();
@@ -449,6 +548,9 @@ function listAllDomainAdmins(domainId) {
   return records;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActiveCount(domainId) {
   var records = sqlobj.selectMulti('pro_accounts',
     {domainId: domainId, isDeleted: false}, {});
@@ -460,6 +562,9 @@ function getActiveCount(domainId) {
  * want the account info even if the account has been deleted.  For
  * example, when asking who created a pad.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getAccountById(accountId) {
   var r = sqlobj.selectSingle('pro_accounts', {id: accountId});
   if (r) {
@@ -475,6 +580,9 @@ function getAccountById(accountId) {
  * deleted accounts may match a given email, but only one non-deleted
  * account should ever match a single (email,domainId) pair.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getAccountByEmail(email, domainId) {
   if (!domainId) {
     domainId = domains.getRequestDomainId();
@@ -487,11 +595,17 @@ function getAccountByEmail(email, domainId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getFullNameById(id) {
   if (!id) {
     return null;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _withCache('names-by-id', function(cache) {
     if (cache[id] === undefined) {
       _dmesg("cache miss for getFullNameById (accountId="+id+")");
@@ -510,6 +624,9 @@ function getFullNameById(id) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTempSigninUrl(account, tempPass) {
   if(appjet.config.listenSecurePort != 0 || appjet.config.useHttpsUrls)
     return [
@@ -533,20 +650,35 @@ function getTempSigninUrl(account, tempPass) {
 
 /* will force session data for this account to be updated next time that
  * account requests a page. */
+
+// YOURNAME:
+// YOURCOMMENT
 function markDirtySessionAccount(uid) {
   var domainId = domains.getRequestDomainId();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('dirty-session-accounts', function(cache) {
     cache[uid] = true;
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('names-by-id', function(cache) {
     delete cache[uid];
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('does-domain-admin-exist', function(cache) {
     delete cache[domainId];
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function reloadSessionAccountData(uid) {
   if (!uid) {
     uid = getSessionProAccount().id;
@@ -554,11 +686,17 @@ function reloadSessionAccountData(uid) {
   getSession().proAccount = getAccountById(uid);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllAccountsWithEmail(email) {
   var accountRecords = sqlobj.selectMulti('pro_accounts', {email: email, isDeleted: false}, {});
   return accountRecords;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getEtherpadAdminAccount() {
   try {
     return {
@@ -580,7 +718,13 @@ function getEtherpadAdminAccount() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCachedActiveCount(domainId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return _withCache('user-counts.'+domainId, function(c) {
     if (!c.count) {
       c.count = getActiveCount(domainId);
@@ -589,7 +733,13 @@ function getCachedActiveCount(domainId) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updateCachedActiveCount(domainId) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   _withCache('user-counts.'+domainId, function(c) {
     c.count = getActiveCount(domainId);
   });

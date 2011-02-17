@@ -19,15 +19,24 @@
 
 module("invocation");
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("printStackTrace", function() {
     expect(1);
     var r = printStackTrace();
     equals(r.constructor, Array, 'printStackTrace returns an array');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("printStackTrace options", function() {
     expect(1);
     var guessFunctions = printStackTrace.implementation.prototype.guessFunctions;
+
+    // YOURNAME:
+    // YOURCOMMENT
     printStackTrace.implementation.prototype.guessFunctions = function() {
         printStackTrace.implementation.prototype.guessFunctions = guessFunctions;
         ok(true, 'guessFunctions called');
@@ -37,67 +46,124 @@ test("printStackTrace options", function() {
 
 module("mode");
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("mode", function() {
     expect(1);
     equals("chrome firefox other opera opera10".indexOf(printStackTrace.implementation.prototype.mode()) >= 0,true);
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("run mode", function() {
     expect(1);
     var p = new printStackTrace.implementation();
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.other = p.firefox = p.chrome = p.opera = p.opera10 = function() { equals(1,1,'called'); };
     p.run();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("run firefox", function() {
     expect(1);
     var p = new printStackTrace.implementation();
     p._mode = 'firefox';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.other = p.opera = function() { equals(1,0,'must not be called'); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.firefox = function() { equals(1,1,'called'); };
     p.run();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("run opera", function() {
     expect(1);
     var p = new printStackTrace.implementation();
     p._mode = 'opera';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.opera10 = p.other = p.firefox = p.chrome = function() { equals(1,0,'must not be called'); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.opera = function() { equals(1,1,'called'); };
     p.run();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("run opera10", function() {
     expect(1);
     var p = new printStackTrace.implementation();
     p._mode = 'opera10';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.opera = p.other = p.firefox = p.chrome = function() { equals(1,0,'must not be called'); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.opera10 = function() { equals(1,1,'called'); };
     p.run();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("run other", function() {
     expect(1);
     var p = new printStackTrace.implementation();
     p._mode = 'other';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.opera = p.firefox = function() { equals(1,0,'must not be called'); };
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.other = function() { equals(1,1,'called'); };
     p.run();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("firefox", function() {
     var mode = printStackTrace.implementation.prototype.mode();
     var e = [];
     e.push({ stack: 'discarded()...\nf1(1,"abc")@file.js:40\n()@file.js:41\n@:0  \nf44()@file.js:494'});
     if(mode == 'firefox') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function discarded() {
             try {(0)();} catch (exception) {
                 e.push(exception);
             }
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         function f1(arg1, arg2) {
             discarded();
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             f1(1, "abc");
         };
@@ -115,19 +181,31 @@ test("firefox", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("chrome", function() {
     var mode = printStackTrace.implementation.prototype.mode();
     var e = [];
     e.push({ stack: 'ignored\nignored\n at discarded (file.js:132:3)\n at file.js:135:3\n at f1 (file.js:132:13)\n at file.js:135:23\n at Object.<anonymous> (file.js:137:9)\n at file.js:137:32 at process (file.js:594:22)'});
     if(mode == 'chrome') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function discarded() {
             try {(0)();} catch (exception) {
                 e.push(exception);
             }
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         function f1(arg1, arg2) {
             discarded();
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             f1(1, "abc");
         };
@@ -145,21 +223,39 @@ test("chrome", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("opera10", function() {
 	var mode = printStackTrace.implementation.prototype.mode();
 	var e = [];
+
+// YOURNAME:
+// YOURCOMMENT
 	e.push({ stack: 'ignored\nf1([arguments not available])@http://site.com/main.js:2\n<anonymous function: f2>([arguments not available])@http://site.com/main.js:4\n@',
+
+// YOURNAME:
+// YOURCOMMENT
 	 	stacktrace: 'ignored\nError thrown at line 1, column 55 in discarded():\n    (0)();\ncalled from line 1, column 333 in f1(arg1, arg2):\n   discarded();\ncalled from line 1, column 470 in <anonymous function>():\n   f1(1, "abc");\ncalled from line 1, column 278 in program code:\n   f2();' });
 	if (mode == 'opera10') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function discarded() {
             try {(0)();} catch (exception) {
                 e.push(exception);
             }
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         function f1(arg1, arg2) {
 			var blah = arg1;
             discarded();
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             f1(1, "abc");
         };
@@ -177,19 +273,34 @@ test("opera10", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("opera", function() {
     var mode = printStackTrace.implementation.prototype.mode();
     var e = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     e.push({ message: 'ignored\nignored\nignored\nignored\nLine 40 of linked script http://site.com: in function f1\n      discarded()\nLine 44 of linked script http://site.com\n     f1(1, "abc")\nignored\nignored'});
     if(mode == 'opera') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function discarded() {
             try {(0)();} catch (exception) {
                 e.push(exception);
             }
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         function f1(arg1, arg2) {
             discarded();
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             f1(1, "abc");
         };
@@ -207,14 +318,26 @@ test("opera", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("other", function() {
     var mode = printStackTrace.implementation.prototype.mode();
+
+    // YOURNAME:
+    // YOURCOMMENT
     var frame = function(args, fun, caller) {
         this['arguments'] = args;
         this.caller = caller;
         this.fun = fun;
     };
+
+    // YOURNAME:
+    // YOURCOMMENT
     frame.prototype.toString = function() { return 'function '+this.fun+'() {}'; };
+
+    // YOURNAME:
+    // YOURCOMMENT
     function f10() {}
     var frame_f2 = new frame([], '', undefined);
     var frame_f1 = new frame([1, 'abc', f10, {1: {2: {3: 4} } }], 'FUNCTION f1  (a,b,c)', frame_f2);
@@ -224,6 +347,9 @@ test("other", function() {
     equals(message[0].indexOf('f1(1,"abc",#function,#object)') >= 0, true, 'f1');
     equals(message[1].indexOf('{anonymous}()') >= 0, true, 'f2 anonymous');
     if(mode == 'other') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         function f1(arg1, arg2) {
             var message = printStackTrace.implementation.prototype.other(arguments.callee);
             var message_string = message.join("\n");
@@ -231,6 +357,9 @@ test("other", function() {
             equals(message[0].indexOf('f1(1,"abc",#function,#object)') >= 0, true, 'f1');
             equals(message[1].indexOf('{anonymous}()') >= 0, true, 'f2 anonymous');
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             f1(1, 'abc', f10, {1: {2: {3: 4} } });
         };
@@ -240,10 +369,16 @@ test("other", function() {
 
 module("util");
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("recursion other", function() {
     var mode = printStackTrace.implementation.prototype.mode();
     expect(mode == 'other' ? 2 : 0);
     if (mode == 'other') {
+
+// YOURNAME:
+// YOURCOMMENT
 	    function recurse(b) {
 		    if (!b) {
 	            var message = printStackTrace.implementation.prototype.other(arguments.callee);
@@ -259,8 +394,14 @@ test("recursion other", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("stringify", function() {
     expect(5);
+
+    // YOURNAME:
+    // YOURCOMMENT
     equals(printStackTrace.implementation.prototype.stringifyArguments(["a", 1, {}, function() {}, undefined]), '"a",1,#object,#function,undefined');
     equals(printStackTrace.implementation.prototype.stringifyArguments([0, 1, 2, 3]), '0,1,2,3');
     equals(printStackTrace.implementation.prototype.stringifyArguments([['a', null]]), '["a",null]');
@@ -268,23 +409,41 @@ test("stringify", function() {
     equals(printStackTrace.implementation.prototype.stringifyArguments([]), '');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("isSameDomain", function() {
 	expect(1);
 	ok(printStackTrace.implementation.prototype.isSameDomain(location.href));
 	
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctionNameFromLines", function() {
     expect(3);
+
+    // YOURNAME:
+    // YOURCOMMENT
     equals(printStackTrace.implementation.prototype.guessFunctionNameFromLines(2, ['var a = function() {', 'var b = 2;', '};']), 'a');
+
+    // YOURNAME:
+    // YOURCOMMENT
     equals(printStackTrace.implementation.prototype.guessFunctionNameFromLines(2, ['function a() {', 'var b = 2;', '};']), 'a');
     equals(printStackTrace.implementation.prototype.guessFunctionNameFromLines(2, ['var a = 1;', 'var b = 2;', 'var c = 3;']), '(?)');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("getSource cache miss", function() {
     expect(3);
     var p = new printStackTrace.implementation();
     var file = 'file:///test';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.ajax = function(fileArg, callback) {
         equals(fileArg, file, 'cache miss');
         return 'line0\nline1\n';
@@ -294,10 +453,16 @@ test("getSource cache miss", function() {
     equals(lines[1], 'line1');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("getSource cache hit", function() {
     expect(2);
     var p = new printStackTrace.implementation();
     var file = 'file:///test';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.ajax = function(fileArg, callback) {
         ok(false, 'not called');
     };
@@ -307,6 +472,9 @@ test("getSource cache hit", function() {
     equals(lines[1], 'line1');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("sync ajax", function() {
     expect(1);
     var p = new printStackTrace.implementation();
@@ -314,17 +482,29 @@ test("sync ajax", function() {
     ok(data.indexOf('stacktrace') >= 0, 'synchronous get');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctionName", function() {
     expect(1);
     var p = new printStackTrace.implementation();
     var file = 'http://' + window.location.hostname + '/file.js';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.sourceCache[file] = ['var a = function() {', 'var b = 2;', '};'];
     equals(p.guessFunctionName(file, 2), 'a');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctionName exception", function() {
     expect(1);
     var p = new printStackTrace.implementation();
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.getSource = function() {
         throw 'permission denied';
     };
@@ -332,16 +512,25 @@ test("guessFunctionName exception", function() {
     equals(p.guessFunctionName(file, 2), 'getSource failed with url: file:///test, exception: permission denied');
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctions firefox", function() {
     var results = [];
     var mode = printStackTrace.implementation.prototype.mode();
     var p = new printStackTrace.implementation();
     p._mode = 'firefox';
     var file = 'http://' + window.location.hostname + '/file.js';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.sourceCache[file] = ['var f2 = function() {', 'var b = 2;', '};'];
     results.push(['run() ('+file+':1)', 'f2()@'+file+':1']);
         
     if (mode == 'firefox') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             try {
                 (0)();
@@ -359,16 +548,25 @@ test("guessFunctions firefox", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctions chrome", function() {
     var results = [];
     var mode = printStackTrace.implementation.prototype.mode();
     var p = new printStackTrace.implementation();
     p._mode = 'chrome';
     var file = 'http://' + window.location.hostname + '/file.js';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.sourceCache[file] = ['var f2 = function() {', 'var b = 2;', '};'];
     results.push(['run() ('+file+':1:1)', 'f2() ('+file+':1:1)']);
         
     if (mode == 'chrome') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             try {
                 (0)();
@@ -386,16 +584,25 @@ test("guessFunctions chrome", function() {
     }
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctions opera", function() {
 	var results = [];
     var mode = printStackTrace.implementation.prototype.mode();
 	var p = new printStackTrace.implementation();
 	p._mode = 'opera';
 	var file = 'http://' + window.location.hostname + '/file.js';
+
+// YOURNAME:
+// YOURCOMMENT
 	p.sourceCache[file] = ['var f2 = function() {', 'var b = 2;', '};'];
 	results.push(['f2()@'+file+':2 -- code']);
 	
 	if (mode == 'opera') {
+
+// YOURNAME:
+// YOURCOMMENT
 	    var f2 = function() {
 	        try {
 	            (0)();
@@ -413,16 +620,25 @@ test("guessFunctions opera", function() {
 	}
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 test("guessFunctions other", function() {
     var results = [];
     var mode = printStackTrace.implementation.prototype.mode();
     var p = new printStackTrace.implementation();
     p._mode = 'other';
     var file = 'http://' + window.location.hostname + '/file.js';
+
+    // YOURNAME:
+    // YOURCOMMENT
     p.sourceCache[file] = ['var f2 = function() {', 'var b = 2;', '};'];
     results.push(['{anonymous}()']);
        
     if (mode == 'other') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var f2 = function() {
             try { (0)(); } catch(e) {
                 results.push(p.run());

@@ -20,6 +20,9 @@ import("sqlbase.sqlcommon");
 import("sqlbase.sqlobj");
 import("etherpad.log");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function tagsToQuery(tags, antiTags) {
   var prefixed = [];
   for (i = 0; i < antiTags.length; i++)
@@ -27,6 +30,9 @@ function tagsToQuery(tags, antiTags) {
   return tags.concat(prefixed).join(',');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function queryToTags(query) {
   var tags = {
     tags: [],
@@ -44,6 +50,9 @@ function queryToTags(query) {
   return tags;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function stringFormat(text, obj) {
   var name;
   for (name in obj) {
@@ -61,6 +70,9 @@ function stringFormat(text, obj) {
  */
 
 /* Filters pads by tags and anti-tags */
+
+// YOURNAME:
+// YOURCOMMENT
 function getQueryToSql(tags, antiTags, querySql) {
   var queryTable;
   var queryParams;
@@ -133,6 +145,9 @@ function getQueryToSql(tags, antiTags, querySql) {
 
 /* Returns the sql to count the number of results from some other
  * query. */
+
+// YOURNAME:
+// YOURCOMMENT
 function nrSql(querySql) {
   var queryTable;
   var queryParams;
@@ -155,6 +170,9 @@ function nrSql(querySql) {
 /* Returns the sql to select the 10 best new tags to tack on to a
  * query, that is, the tags that are closest to halving the result-set
  * if tacked on. */
+
+// YOURNAME:
+// YOURCOMMENT
 function newTagsSql(querySql) {
   var queryTable;
   var queryParams;
@@ -199,6 +217,9 @@ function newTagsSql(querySql) {
 
 /* Select the X last changed matching pads and some extra information
  * on them. */
+
+// YOURNAME:
+// YOURCOMMENT
 function padInfoSql(querySql, limit, offset) {
   var sql = '' +
    'select ' +

@@ -53,7 +53,13 @@
 
             For example, this would serialize Dates as ISO strings.
 
+
+                // YOURNAME:
+                // YOURCOMMENT
                 Date.prototype.toJSON = function (key) {
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     function f(n) {
                         // Format integers to have at least two digits.
                         return n < 10 ? '0' + n : n;
@@ -101,6 +107,9 @@
             text = JSON.stringify(['e', {pluribus: 'unum'}], null, '\t');
             // text is '[\n\t"e",\n\t{\n\t\t"pluribus": "unum"\n\t}\n]'
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             text = JSON.stringify([new Date()], function (key, value) {
                 return this[key] instanceof Date ?
                     'Date(' + this[key] + ')' : value;
@@ -123,6 +132,9 @@
             // Parse the text. Values that look like ISO date strings will
             // be converted to Date objects.
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             myData = JSON.parse(text, function (key, value) {
                 var a;
                 if (typeof value === 'string') {
@@ -136,6 +148,9 @@
                 return value;
             });
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
                 var d;
                 if (typeof value === 'string' &&
@@ -177,8 +192,14 @@
 if (!this.JSON) {
     JSON = {};
 }
+
+// YOURNAME:
+// YOURCOMMENT
 (function () {
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function f(n) {
         // Format integers to have at least two digits.
         return n < 10 ? '0' + n : n;
@@ -186,6 +207,9 @@ if (!this.JSON) {
 
     if (typeof Date.prototype.toJSON !== 'function') {
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         Date.prototype.toJSON = function (key) {
 
             return this.getUTCFullYear()   + '-' +
@@ -198,6 +222,9 @@ if (!this.JSON) {
 
         String.prototype.toJSON =
         Number.prototype.toJSON =
+
+        // YOURNAME:
+        // YOURCOMMENT
         Boolean.prototype.toJSON = function (key) {
             return this.valueOf();
         };
@@ -220,6 +247,9 @@ if (!this.JSON) {
     rep;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function quote(string) {
 
 // If the string contains no control characters, no quote characters, and no
@@ -229,6 +259,9 @@ if (!this.JSON) {
 
         escapeable.lastIndex = 0;
         return escapeable.test(string) ?
+
+            // YOURNAME:
+            // YOURCOMMENT
             '"' + string.replace(escapeable, function (a) {
                 var c = meta[a];
                 if (typeof c === 'string') {
@@ -240,6 +273,9 @@ if (!this.JSON) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function str(key, holder) {
 
 // Produce a string from holder[key].
@@ -370,6 +406,9 @@ if (!this.JSON) {
 // If the JSON object does not yet have a stringify method, give it one.
 
     if (typeof JSON.stringify !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         JSON.stringify = function (value, replacer, space) {
 
 // The stringify method takes a value and an optional replacer, and an optional
@@ -417,6 +456,9 @@ if (!this.JSON) {
 // If the JSON object does not yet have a parse method, give it one.
 
     if (typeof JSON.parse !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         JSON.parse = function (text, reviver) {
 
 // The parse method takes a text and an optional reviver function, and returns
@@ -424,6 +466,9 @@ if (!this.JSON) {
 
             var j;
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             function walk(holder, key) {
 
 // The walk method is used to recursively walk the resulting structure so
@@ -452,6 +497,9 @@ if (!this.JSON) {
 
             cx.lastIndex = 0;
             if (cx.test(text)) {
+
+                // YOURNAME:
+                // YOURCOMMENT
                 text = text.replace(cx, function (a) {
                     return '\\u' +
                         ('0000' + a.charCodeAt(0).toString(16)).slice(-4);

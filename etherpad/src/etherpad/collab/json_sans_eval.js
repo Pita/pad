@@ -47,6 +47,9 @@
  * @return {Object|Array}
  * @author Mike Samuel <mikesamuel@gmail.com>
  */
+
+// YOURNAME:
+// YOURCOMMENT
 var jsonParse = (function () {
   var number
       = '(?:-?\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b)';
@@ -80,6 +83,9 @@ var jsonParse = (function () {
     't': '\t',
     'x7c': '|'
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   function unescapeOne(_, ch, hex) {
     return ch ? escapes[ch] : String.fromCharCode(parseInt(hex, 16));
   }
@@ -91,6 +97,9 @@ var jsonParse = (function () {
   // Constructor to use based on an open token.
   var firstTokenCtors = { '{': Object, '[': Array };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (json) {
     // Split into tokens
     var toks = json.match(jsonToken);

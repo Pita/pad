@@ -39,6 +39,9 @@ import("etherpad.pad.activepads");
 import("etherpad.pad.model");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var disp = new Dispatcher();
   disp.addLocations([
@@ -49,6 +52,9 @@ function onRequest() {
   return disp.dispatch();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   if (request.path == '/ep/') {
     response.redirect('/');
@@ -58,10 +64,16 @@ function render_main() {
   var livePads = pro_pad_db.listLiveDomainPads();
   var recentPads = pro_pad_db.listAllDomainPads();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var renderLivePads = function() {
     return pro_padlist.renderPadList(livePads, ['title', 'connectedUsers'], 10);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var renderRecentPads = function() {
     return pro_padlist.renderPadList(recentPads, ['title'], 10);
   };
@@ -83,6 +95,9 @@ function render_main() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_finish_activation_get() {
   if (!isActivationAllowed()) {
     response.redirect('/');
@@ -103,6 +118,9 @@ function render_finish_activation_get() {
 
   var domainId = domains.getRequestDomainId();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache('pro-activations', function(c) {
     delete c[domainId];
   });
@@ -113,12 +131,18 @@ function render_finish_activation_get() {
       DIV({style: "display: none;", id: "reference"}, acct.id, ":", tempPass)));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isActivationAllowed() {
   if (request.path != '/ep/finish-activation') {
     return false;
   }
   var allowed = false;
   var domainId = domains.getRequestDomainId();
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache('pro-activations', function(c) {
     if (c[domainId]) {
       return true;
@@ -127,6 +151,9 @@ function isActivationAllowed() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_payment_required_get() {
   // Users get to this page when there is a problem with billing:
   // possibilities:

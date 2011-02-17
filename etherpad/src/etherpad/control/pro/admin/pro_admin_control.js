@@ -43,6 +43,9 @@ var _PRO = 1;
 var _PNE_ONLY = 2;
 var _ONDEMAND_ONLY = 3;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getLeftnavItems() {
   var nav = [
     _PRO, [
@@ -58,7 +61,13 @@ function _getLeftnavItems() {
   return nav;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderAdminLeftNav() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _make(x) {
     if ((x[0] == _PNE_ONLY) && !pne_utils.isPNE()) {
       return null;
@@ -74,6 +83,9 @@ function renderAdminLeftNav() {
     }
   }
   var selected;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makeitem(x) {
     if (x[1]) {
       var p = x[1];
@@ -92,8 +104,14 @@ function renderAdminLeftNav() {
       return LI(DIV({className: 'leftnav-title'}, x[2]));
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _makelist(x) {
     var ul = UL();
+
+    // YOURNAME:
+    // YOURCOMMENT
     x.forEach(function(y) { 
       var t = _make(y);
       if (t) { ul.push(t); }
@@ -109,8 +127,14 @@ function renderAdminLeftNav() {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderAdminPage(p, data) {
   appjet.requestCache.proTopNavSelection = 'admin';
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getAdminContent() {
     if (typeof(p) == 'function') {
       return p();
@@ -127,6 +151,9 @@ function renderAdminPage(p, data) {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var disp = new Dispatcher();
   disp.addLocations([
@@ -144,11 +171,17 @@ function onRequest() {
   pro_accounts.requireAdminAccount();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
 //  renderAdminPage('admin');
   response.redirect('/ep/admin/account-manager/')
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_dashboard() {
   renderAdminPage('pne-dashboard', {
     renderUptime: admincontrol.renderServerUptime,
@@ -180,6 +213,9 @@ var _documentedServerOptions = [
   'verbose'
 ];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_config_get() {
   renderAdminPage('pne-config', {
     propKeys: _documentedServerOptions,
@@ -187,10 +223,16 @@ function render_pne_config_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_pne_advanced_get() {
   response.redirect("/ep/admin/shell");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_shell_get() {
   if (!(pne_utils.isPNE() || sessions.isAnEtherpadAdmin())) {
     return false;
@@ -205,6 +247,9 @@ function render_shell_get() {
   delete getSession().pneAdminShellElapsed;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_shell_post() {
   if (!(pne_utils.isPNE() || sessions.isAnEtherpadAdmin())) {
     return false;
@@ -217,14 +262,29 @@ function render_shell_post() {
   response.redirect(request.path);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_recover_padtext_get() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getNumRevisions(localPadId) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return padutils.accessPadLocal(localPadId, function(pad) {
       if (!pad.exists()) { return null; }
       return 1+pad.getHeadRevisionNumber();
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getPadText(localPadId, revNum) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return padutils.accessPadLocal(localPadId, function(pad) {
       if (!pad.exists()) { return null; }
       return pad.getRevisionText(revNum);
@@ -274,6 +334,9 @@ function render_recover_padtext_get() {
     d.push(DIV({style: "font-family: monospace; border: 1px solid #ccc; background: #ffe; padding: 1em;"}, padText));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   renderAdminPage(function() { return d; });
 }
 

@@ -1,5 +1,8 @@
 HierarchyTest = TestCase("HierarchyTest");
 
+
+// YOURNAME:
+// YOURCOMMENT
 HierarchyTest.prototype.testNestingDetection = function(){
 	var titles = [
 		"maverick", 

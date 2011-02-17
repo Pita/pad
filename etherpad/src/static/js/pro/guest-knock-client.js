@@ -15,6 +15,9 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function knock() {
   $.ajax({
     type: "POST",
@@ -29,6 +32,9 @@ function knock() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function knockReply(responseText) {
   //console.log("knockReply: "+responseText);
   if (responseText == "approved") {
@@ -43,10 +49,16 @@ function knockReply(responseText) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function knockError() {
   alert("There was an error requesting access to the pad.  Kindly report this by sending email to bugs@etherpad.com.");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
   knock();
 });

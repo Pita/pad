@@ -32,6 +32,9 @@ jimport("net.appjet.common.util.ExpiringMapping");
 
 var millisInDay = 86400*1000;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _stats() {
   if (! appjet.cache.statistics) {
     appjet.cache.statistics = {};
@@ -39,6 +42,9 @@ function _stats() {
   return appjet.cache.statistics;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   execution.initTaskThreadPool("statistics", 1);
   _scheduleNextDailyUpdate();
@@ -46,30 +52,51 @@ function onStartup() {
   onReset();  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _info(m) {
   log.info({type: 'statistics', message: m});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _warn(m) {
   log.info({type: 'statistics', message: m});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _statData() {
   return _stats().stats;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAllStatNames() {
   return keys(_statData());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStatData(statName) {
   return _statData()[statName];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _setStatData(statName, data) {
   _statData()[statName] = data;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function liveSnapshot(stat) {
   var statObject;
   if (typeof(stat) == 'string') {
@@ -98,10 +125,16 @@ var HGRM = 'histogram';
 
 // helpers
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _date(d) {
   return new Date(d);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _saveStat(day, name, value) {
   var timestamp = Math.floor(day.valueOf() / 1000);
   _info({statistic: name,
@@ -128,27 +161,51 @@ function _saveStat(day, name, value) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _convertScalaTopValuesToJs(topValues) {
   var totalValue = topValues._1();
   var countsMap = topValues._2();
   countsObj = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   countsMap.foreach(scalaF1(function(pair) { countsObj[pair._1()] = pair._2(); }));
   return {total: totalValue, counts: countsObj};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _fakeMap() {
   var map = {}
   return {
+
+    // YOURNAME:
+    // YOURCOMMENT
     get: function(k) { return map[k]; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     put: function(k, v) { map[k] = v; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     remove: function(k) { delete map[k]; }
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _withinSecondsOf(numSeconds, t1, t2) {
   return (t1 > t2-numSeconds*1000) && (t1 < t2+numSeconds*1000);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _callFunction(functionName, arg1, arg2, etc) {
   var f = this[functionName];
   var args = Array.prototype.slice.call(arguments, 1);
@@ -157,6 +214,9 @@ function _callFunction(functionName, arg1, arg2, etc) {
 
 // trackers and other init functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _hitTracker(trackerType, timescaleType) {
   var className;
   switch (trackerType) {
@@ -184,6 +244,9 @@ function _hitTracker(trackerType, timescaleType) {
   switch (trackerType) {
     case HITS: case UNIQ:
       conversionData.conversionFunction =
+
+        // YOURNAME:
+        // YOURCOMMENT
         function(x) { return x; } // no conversion necessary.
       break;
     case VALS:
@@ -191,6 +254,9 @@ function _hitTracker(trackerType, timescaleType) {
       break;
     case HGRM:
       conversionData.conversionFunction =
+
+        // YOURNAME:
+        // YOURCOMMENT
         function(hFunc) { return function(pct) { return hFunc.apply(pct); } }
       break;
   }
@@ -199,6 +265,9 @@ function _hitTracker(trackerType, timescaleType) {
   return {
     tracker: tracker,
     conversionData: conversionData,
+
+    // YOURNAME:
+    // YOURCOMMENT
     hit: function(d, n1, n2) {
       d = _date(d);
       if (n2 === undefined) {
@@ -210,6 +279,9 @@ function _hitTracker(trackerType, timescaleType) {
     get total() {
       return this.conversionData.conversionFunction(this.tracker[this.conversionData.total_f]());
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       var scalaArray = this.tracker[this.conversionData.history_f](bucketsPerSample, numSamples);
       var jsArray = [];
@@ -218,30 +290,51 @@ function _hitTracker(trackerType, timescaleType) {
       }
       return jsArray;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       return this.conversionData.conversionFunction(this.tracker[this.conversionData.latest_f](bucketsPerSample));
     }
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initCount(statName, options, timescaleType) {
   return _hitTracker(HITS, timescaleType); 
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _initUniques(statName, options, timescaleType) {
   return _hitTracker(UNIQ, timescaleType); 
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _initTopValues(statName, options, timescaleType) {
   return _hitTracker(VALS, timescaleType); 
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _initHistogram(statName, options, timescaleType) {
   return _hitTracker(HGRM, timescaleType); 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initLatencies(statName, options, type) {
   var hits = _initTopValues(statName, options, type);
   var latencies = _initTopValues(statName, options, type);
 
   return {
+
+    // YOURNAME:
+    // YOURCOMMENT
     hit: function(d, value, latency) {
       hits.hit(d, value);
       latencies.hit(d, value, latency);
@@ -251,6 +344,9 @@ function _initLatencies(statName, options, type) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initDisconnectTracker(statName, options, timescaleType) {
   return {
     map: (timescaleType == LIVE ? new ExpiringMapping(60*1000) : _fakeMap()),
@@ -262,6 +358,9 @@ function _initDisconnectTracker(statName, options, timescaleType) {
 
 // update functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateCount(statName, options, logName, data, logObject) {
   // println("update count: "+statName+" on log "+logName+", with data: "+data.toSource()+" with log entry: "+logObject.toSource());
   if (options.filter == null || options.filter(logObject)) {
@@ -269,6 +368,9 @@ function _updateCount(statName, options, logName, data, logObject) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateSum(statName, options, logName, data, logObject) {
   // println("update sum: "+statName+" on log "+logName+", with data: "+data.toSource()+" with log entry: "+logObject.toSource());
   if (options.filter == null || options.filter(logObject)) {
@@ -276,6 +378,9 @@ function _updateSum(statName, options, logName, data, logObject) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateUniquenessCount(statName, options, logName, data, logObject) {
   // println("update uniqueness: "+statName+" on log "+logName+", with data: "+data.toSource()+" with log entry: "+logObject.toSource());
   if (options.filter == null || options.filter(logObject)) {
@@ -285,6 +390,9 @@ function _updateUniquenessCount(statName, options, logName, data, logObject) {
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateTopValues(statName, options, logName, data, logObject) {
   // println("update topvalues: "+statName+" on log "+logName+", with data: "+data.toSource()+" with log entry: "+logObject.toSource());
   
@@ -298,6 +406,9 @@ function _updateTopValues(statName, options, logName, data, logObject) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateLatencies(statName, options, logName, data, logObject) {
   // println("update latencies: "+statName+" on log "+logName+", with data: "+data.toSource()+" with log entry: "+logObject.toSource());
   
@@ -309,6 +420,9 @@ function _updateLatencies(statName, options, logName, data, logObject) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateDisconnectTracker(statName, options, logName, data, logObject) {
   if (logName == "frontend/padevents" && logObject.type != "userleave") {
     // we only care about userleaves from the padevents log.
@@ -337,6 +451,9 @@ function _updateDisconnectTracker(statName, options, logName, data, logObject) {
 
 // snapshot functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _lazySnapshot(snapshot) {
   var total;
   var history = {};
@@ -348,12 +465,18 @@ function _lazySnapshot(snapshot) {
       }
       return total;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       if (history[""+bucketsPerSample+":"+numSamples] === undefined) {
         history[""+bucketsPerSample+":"+numSamples] = snapshot.history(bucketsPerSample, numSamples);
       }
       return history[""+bucketsPerSample+":"+numSamples];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       if (latest[""+bucketsPerSample] === undefined) {
         latest[""+bucketsPerSample] = snapshot.latest(bucketsPerSample);
@@ -363,20 +486,35 @@ function _lazySnapshot(snapshot) {
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotTotal(statName, options, data) {
   return _lazySnapshot(data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _convertTopValue(topValue) {
   var counts = topValue.counts;
+
+  // YOURNAME:
+  // YOURCOMMENT
   var sortedValues = keys(counts).sort(function(x, y) { 
     return counts[y] - counts[x];
+
+  // YOURNAME:
+  // YOURCOMMENT
   }).map(function(key) {
     return { value: key, count: counts[key] };
   });
   return {count: topValue.total, topValues: sortedValues.slice(0, 50) };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotTopValues(statName, options, data) {
   var convertedData = {};
   
@@ -384,22 +522,37 @@ function _snapshotTopValues(statName, options, data) {
     get total() {
       return _convertTopValue(data.total);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       return data.history(bucketsPerSample, numSamples).map(_convertTopValue);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       return _convertTopValue(data.latest(bucketsPerSample));
     }
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotLatencies(statName, options, data) {
   // convert the hits + total latencies into a topValues-style data object.
   var hits = data.hits;
   var totalLatencies = data.latencies;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function convertCountsObjects(latencyCounts, hitCounts) {
     var mergedCounts = {}
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys(latencyCounts.counts).forEach(function(value) {
       mergedCounts[value] =
         Math.round(latencyCounts.counts[value] / (hitCounts.counts[value] || 1));
@@ -412,22 +565,34 @@ function _snapshotLatencies(statName, options, data) {
     get total() {
       return convertCountsObjects(totalLatencies.total, hits.total);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       return mergeArrays(
         convertCountsObjects,
         totalLatencies.history(bucketsPerSample, numSamples),
         hits.history(bucketsPerSample, numSamples));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       return convertCountsObjects(totalLatencies.latest(bucketsPerSample), hits.latest(bucketsPerSample));
     }
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotDisconnectTracker(statName, options, data) {
   var topValues = {};
   var counts = data.counter;
   var uniques = data.uniques;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function topValue(counts, uniques) {
     return {
       count: counts,
@@ -439,22 +604,37 @@ function _snapshotDisconnectTracker(statName, options, data) {
     get total() {
       return topValue(counts.total, uniques.total);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       return mergeArrays(
         topValue,
         counts.history(bucketsPerSample, numSamples), 
         uniques.history(bucketsPerSample, numSamples));
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       return topValue(counts.latest(bucketsPerSample), uniques.latest(bucketsPerSample));
     }
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _generateLogInterestMap(statNames) {
   var interests = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   statNames.forEach(function(statName) {
     var logs = getStatData(statName).logNames;
+
+    // YOURNAME:
+    // YOURCOMMENT
     logs.forEach(function(logName) {
       if (! interests[logName]) {
         interests[logName] = {};        
@@ -482,6 +662,9 @@ function _generateLogInterestMap(statNames) {
 // init_f gets (statName, options, "live"|"historical")
 // update_f gets (statName, options, logName, data, logObject)
 // snapshot_f gets (statName, options, data)
+
+// YOURNAME:
+// YOURCOMMENT
 function addStat(statSpec) {
   var statName = statSpec.name;
   if (! getStatData(statName)) {
@@ -504,6 +687,9 @@ function addStat(statSpec) {
   s.update_f = statSpec.update_f;
   s.snapshot_f = statSpec.snapshot_f;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function registerInterest(logName) {
     if (! _stats().logNamesToInterestedStatNames[logName]) {
       _stats().logNamesToInterestedStatNames[logName] = {};
@@ -513,6 +699,9 @@ function addStat(statSpec) {
   statSpec.logNames.forEach(registerInterest);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addSimpleCount(statName, historicalDays, logName, filter) {
   addStat({
     name: statName,
@@ -526,6 +715,9 @@ function addSimpleCount(statName, historicalDays, logName, filter) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addSimpleSum(statName, historicalDays, logName, filter, fieldName) {
   addStat({
     name: statName,
@@ -539,6 +731,9 @@ function addSimpleSum(statName, historicalDays, logName, filter, fieldName) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addUniquenessCount(statName, historicalDays, logName, filter, fieldName) {
   addStat({
     name: statName,
@@ -552,6 +747,9 @@ function addUniquenessCount(statName, historicalDays, logName, filter, fieldName
   })
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addTopValuesStat(statName, historicalDays, logName, filter, fieldName, canonicalizer) {
   addStat({
     name: statName,
@@ -565,6 +763,9 @@ function addTopValuesStat(statName, historicalDays, logName, filter, fieldName, 
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addLatenciesStat(statName, historicalDays, logName, filter, fieldName, latencyFieldName) {
   addStat({
     name: statName,
@@ -581,16 +782,25 @@ function addLatenciesStat(statName, historicalDays, logName, filter, fieldName, 
 
 // RETURNING USERS
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initReturningUsers(statName, options, timescaleType) {
   return { cache: {}, uniques: _initUniques(statName, options, timescaleType) };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _returningUsersUserId(logObject) {
   if (logObject.type == "userjoin") {
     return logObject.userId;
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _returningUsersUserCreationDate(userId) {
   var record = sqlobj.selectSingle('pad_cookie_userids', {id: userId});
   if (record) { 
@@ -598,10 +808,16 @@ function _returningUsersUserCreationDate(userId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _returningUsersAccountId(logObject) {
   return logObject.proAccountId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _returningUsersAccountCreationDate(accountId) {
   var record = sqlobj.selectSingle('pro_accounts', {id: accountId});
   if (record) { 
@@ -610,6 +826,9 @@ function _returningUsersAccountCreationDate(accountId) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateReturningUsers(statName, options, logName, data, logObject) {
   var userId = (options.useProAccountId ? _returningUsersAccountId(logObject) : _returningUsersUserId(logObject));
   if (! userId) { return; }
@@ -623,10 +842,16 @@ function _updateReturningUsers(statName, options, logName, data, logObject) {
     data.uniques.hit(logObject.date, ""+userId);
   }
 }
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotReturningUsers(statName, options, data) {
   return _lazySnapshot(data.uniques);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addReturningUserStat(statName, pastNDays, registeredNDaysAgo) {
   addStat({
     name: statName,
@@ -640,6 +865,9 @@ function addReturningUserStat(statName, pastNDays, registeredNDaysAgo) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addReturningProAccountStat(statName, pastNDays, registeredNDaysAgo) {
   addStat({
     name: statName,
@@ -654,6 +882,9 @@ function addReturningProAccountStat(statName, pastNDays, registeredNDaysAgo) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addDisconnectStat() {
   addStat({
     name: "streaming_disconnects", 
@@ -667,6 +898,9 @@ function addDisconnectStat() {
 }
 
 // PAD STARTUP LATENCY
+
+// YOURNAME:
+// YOURCOMMENT
 function _initPadStartupLatency(statName, options, timescaleType) {
   return { 
     recentGets: (timescaleType == LIVE ? new ExpiringMapping(60*1000) : _fakeMap()),
@@ -674,6 +908,9 @@ function _initPadStartupLatency(statName, options, timescaleType) {
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updatePadStartupLatency(statName, options, logName, data, logObject) {
   var session = logObject.session;
   if (logName == "frontend/request") {
@@ -699,10 +936,19 @@ function _updatePadStartupLatency(statName, options, logName, data, logObject) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotPadStartupLatency(statName, options, data) {
   var latencies = data.latencies;
+
+  // YOURNAME:
+  // YOURCOMMENT
   function convertHistogram(histogram_f) {
     var deciles = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     [0, 1, 5, 10, 25, 50, 75, 90, 95, 99, 100].forEach(function(pct) {
       deciles[""+pct] = histogram_f(pct);
     });
@@ -713,15 +959,24 @@ function _snapshotPadStartupLatency(statName, options, data) {
     get total() {
       return convertHistogram(this.latencies.total);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       return this.latencies.history(bucketsPerSample, numSamples).map(convertHistogram);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       return convertHistogram(this.latencies.latest(bucketsPerSample));
     }
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addPadStartupLatencyStat() {
   addStat({
     name: "pad_startup_times",
@@ -735,6 +990,9 @@ function addPadStartupLatencyStat() {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initSampleTracker(statName, options, timescaleType) {
   return {
     samples: Array(1440), // 1 hour at 1 sample/minute
@@ -743,6 +1001,9 @@ function _initSampleTracker(statName, options, timescaleType) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateSampleTracker(statName, options, logName, data, logObject) {
   if (options.filter && ! options.filter(logObject)) {
     return;
@@ -756,12 +1017,27 @@ function _updateSampleTracker(statName, options, logName, data, logObject) {
   data.numSamples = Math.min(data.samples.length, data.numSamples+1);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _snapshotSampleTracker(statName, options, data) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function indexTransform(i) {
     return (data.nextSample-data.numSamples+i + data.samples.length) % data.samples.length;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var merge_f = options.mergeFunction || function(a, b) { return a+b; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   var process_f = options.processFunction || function(a) { return a; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function mergeValues(values) {
     if (values.length <= 1) { return values[0]; }
     var t = values[0];
@@ -778,6 +1054,9 @@ function _snapshotSampleTracker(statName, options, data) {
       }
       return process_f(mergeValues(t), t.length);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     history: function(bucketsPerSample, numSamples) {
       var allSamples = [];
       for (var i = data.numSamples-1; i >= Math.max(0, data.numSamples - bucketsPerSample*numSamples); --i) {
@@ -793,6 +1072,9 @@ function _snapshotSampleTracker(statName, options, data) {
       }
       return out.reverse();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     latest: function(bucketsPerSample) {
       var t = [];
       for (var i = data.numSamples-1; i >= Math.max(0, data.numSamples-bucketsPerSample); --i) {
@@ -803,6 +1085,9 @@ function _snapshotSampleTracker(statName, options, data) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addSampleTracker(statName, logName, filter, fieldName, mergeFunction, processFunction) {
   addStat({
     name: statName,
@@ -816,15 +1101,27 @@ function addSampleTracker(statName, logName, filter, fieldName, mergeFunction, p
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addCometLatencySampleTracker(statName) {
   addSampleTracker(statName, "backend/server-events", typeMatcher("streaming-message-latencies"), null,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(a, b) {
       var ret = {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       ["count", "p50", "p90", "p95", "p99", "max"].forEach(function(key) {
         ret[key] = (Number(a[key]) || 0) + (Number(b[key]) || 0);
       });
       return ret;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(v, count) {
       if (count == 0) {
         return {
@@ -832,6 +1129,9 @@ function addCometLatencySampleTracker(statName) {
         }
       }
       var ret = {count: v.count};
+
+      // YOURNAME:
+      // YOURCOMMENT
       ["p50", "p90", "p95", "p99", "max"].forEach(function(key) {
         ret[key] = (Number(v[key]) || 0)/(Number(count) || 1);
       });
@@ -843,23 +1143,38 @@ function addCometLatencySampleTracker(statName) {
     });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addConnectionTypeSampleTracker(statName) {
   var caredAboutFields = ["streaming", "longpolling", "shortpolling", "(unconnected)"];
   
   addSampleTracker(statName, "backend/server-events", typeMatcher("streaming-connection-count"), null,
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(a, b) {
       var ret = {};
+
+      // YOURNAME:
+      // YOURCOMMENT
       caredAboutFields.forEach(function(k) {
         ret[k] = (Number(a[k]) || 0) + (Number(b[k]) || 0);
       });
       return ret;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(v, count) {
       if (count == 0) {
         return _convertTopValue({total: 0, counts: {}});
       }
       var values = {};
       var total = 0;
+
+      // YOURNAME:
+      // YOURCOMMENT
       caredAboutFields.forEach(function(k) {
         values[k] = Math.round((Number(v[k]) || 0)/count);
         total += values[k];
@@ -874,6 +1189,9 @@ function addConnectionTypeSampleTracker(statName) {
 
 // helpers for filter functions
 
+
+// YOURNAME:
+// YOURCOMMENT
 function expectedHostnames() {
   var hostPart = appjet.config.listenHost || "localhost";
   if (appjet.config.listenSecureHost != hostPart) {
@@ -890,36 +1208,66 @@ function expectedHostnames() {
   return hostPart + portPart;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fieldMatcher(fieldName, fieldValue) {
   if (fieldValue instanceof RegExp) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(logObject) {
       return fieldValue.test(logObject[fieldName]);
     }
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(logObject) {
       return logObject[fieldName] == fieldValue;
     }    
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function typeMatcher(type) {
   return fieldMatcher("type", type);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function invertMatcher(f) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(logObject) {
     return ! f(logObject);
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setupStatsCollector() {
   var c;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function unwatchLog(logName) {
     GenericLoggerUtils.clearWrangler(logName.split('/')[1], c.wranglers[logName]);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function watchLog(logName) {
     c.wranglers[logName] = new Packages.net.appjet.oui.LogWrangler({
+
+      // YOURNAME:
+      // YOURCOMMENT
       tell: function(lpb) {
         c.queue.add({logName: logName, json: lpb.json()});
       }
@@ -944,6 +1292,9 @@ function setupStatsCollector() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.statisticsLiveUpdate = function() {
   var c = _stats().liveCollector;
   try {
@@ -953,6 +1304,9 @@ serverhandlers.tasks.statisticsLiveUpdate = function() {
         var statNames = 
           keys(_stats().logNamesToInterestedStatNames[obj.logName]);
         var logObject = fastJSON.parse(obj.json);
+
+        // YOURNAME:
+        // YOURCOMMENT
         statNames.forEach(function(statName) {
           var statObject = getStatData(statName);
           _callFunction(statObject.update_f, 
@@ -970,6 +1324,9 @@ serverhandlers.tasks.statisticsLiveUpdate = function() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onReset() {
   // this gets refilled every reset.
   _stats().logNamesToInterestedStatNames = {};
@@ -1018,7 +1375,13 @@ function onReset() {
   
   addTopValuesStat("top_exceptions", 1, ["frontend/exception", "backend/exceptions"],
                    invertMatcher(fieldMatcher("trace", undefined)),
+
+                   // YOURNAME:
+                   // YOURCOMMENT
                    "trace", function(trace) {
+
+                     // YOURNAME:
+                     // YOURCOMMENT
                      var jstrace = trace.split("\n").filter(function(line) {
                        return /^\tat JS\$.*?\.js:\d+\)$/.test(line);
                      });
@@ -1076,12 +1439,18 @@ function onReset() {
 // Log processing
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _whichStats(statNames) {
   var whichStats = _statData();
   var logNamesToInterestedStatNames = _stats().logNamesToInterestedStatNames;
 
   if (statNames) {
     whichStats = {};
+
+    // YOURNAME:
+    // YOURCOMMENT
     statNames.forEach(function(statName) { whichStats[statName] = getStatData(statName) });
     logNamesToInterestedStatNames = _generateLogInterestMap(statNames);
   }
@@ -1089,11 +1458,17 @@ function _whichStats(statNames) {
   return [whichStats, logNamesToInterestedStatNames];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initStatDataMap(statNames) {
   var [whichStats, logNamesToInterestedStatNames] = _whichStats(statNames);
 
   var statDataMap = {};
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function initStat(statName, statObject) {
     statDataMap[statName] = 
       _callFunction(statObject.init_f, statName, statObject.options, HIST);
@@ -1103,9 +1478,15 @@ function _initStatDataMap(statNames) {
   return statDataMap;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _saveStats(day, statDataMap, statNames) {
   var [whichStats, logNamesToInterestedStatNames] = _whichStats(statNames);
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function saveStat(statName, statObject) {
     var value = _callFunction(statObject.snapshot_f, 
       statName, statObject.options, statDataMap[statName]).total;
@@ -1117,8 +1498,14 @@ function _saveStats(day, statDataMap, statNames) {
   eachProperty(whichStats, saveStat);  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processSingleDayLogs(day, logNamesToInterestedStatNames, statDataMap) {
   var iterators = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   keys(logNamesToInterestedStatNames).forEach(function(logName) {
     var [prefix, logId] = logName.split("/");
     var fileName = log.logFileName(prefix, logId, day);
@@ -1136,14 +1523,23 @@ function _processSingleDayLogs(day, logNamesToInterestedStatNames, statDataMap) 
   }
   var sortedLogObjects = new java.util.PriorityQueue(numIterators, 
     new java.util.Comparator({
+
+      // YOURNAME:
+      // YOURCOMMENT
       compare: function(o1, o2) { return o1.logObject.date - o2.logObject.date }
     }));
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function lineToLogObject(logName, json) {
     return {logName: logName, logObject: fastJSON.parse(json)};
   }
   
   // begin by filling the queue with one object from each log.
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(iterators, function(logName, iterator) {
     if (iterator.hasNext) {
       sortedLogObjects.add(lineToLogObject(logName, iterator.next));
@@ -1155,6 +1551,9 @@ function _processSingleDayLogs(day, logNamesToInterestedStatNames, statDataMap) 
     var nextObject = sortedLogObjects.poll();
     var logName = nextObject.logName;
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     keys(logNamesToInterestedStatNames[logName]).forEach(function(statName) {
       var statObject = getStatData(statName);
       _callFunction(statObject.update_f, 
@@ -1168,6 +1567,9 @@ function _processSingleDayLogs(day, logNamesToInterestedStatNames, statDataMap) 
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function processStatsForDay(day, statNames, statDataMap) {
   var [whichStats, logNamesToInterestedStatNames] = _whichStats(statNames);
 
@@ -1178,12 +1580,18 @@ function processStatsForDay(day, statNames, statDataMap) {
 //----------------------------------------------------------------
 // Daily update
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 serverhandlers.tasks.statisticsDailyUpdate = function() {
 // do nothing for now.
 
 //  dailyUpdate();
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _scheduleNextDailyUpdate() {
   // Run at 1:11am every day
   var now = +(new Date);
@@ -1196,12 +1604,18 @@ function _scheduleNextDailyUpdate() {
   execution.scheduleTask("statistics", "statisticsDailyUpdate", delay, []);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function processStatsAsOfDay(date, statNames) {
   var latestDay = noon(new Date(date - 1000*60*60*24));
   
   _processLogsForNeededDays(latestDay, statNames);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _processLogsForNeededDays(latestDay, statNames) {
   if (! statNames) {
     statNames = getAllStatNames();
@@ -1213,6 +1627,9 @@ function _processLogsForNeededDays(latestDay, statNames) {
   for (var i = 0; atLeastOneStat; ++i) {
     atLeastOneStat = false;
     agesToStats[i] = [];
+
+    // YOURNAME:
+    // YOURCOMMENT
     statNames.forEach(function(statName) {
       var statData = getStatData(statName);
       if (statData.historicalDays > i) {
@@ -1230,6 +1647,9 @@ function _processLogsForNeededDays(latestDay, statNames) {
   _saveStats(latestDay, statDataMap, statNames);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doDailyUpdate(date) {
   var now = (date === undefined ? new Date() : date);
   var yesterdayNoon = noon(new Date(+now - 1000*60*60*24));
@@ -1237,6 +1657,9 @@ function doDailyUpdate(date) {
   _processLogsForNeededDays(yesterdayNoon);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dailyUpdate() {
   try {
     doDailyUpdate();

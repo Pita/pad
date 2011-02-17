@@ -2,6 +2,9 @@ import("etherpad.log");
 import("plugins.langTag.hooks");
 import("plugins.langTag.static.js.main");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function langTagInit() {
  this.hooks = ['twitterStyleTagsTagSelector'];
  this.description = 'Language tag inserter (for twitterStyleTags).';
@@ -11,10 +14,16 @@ function langTagInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing langTag");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling langTag");
 }

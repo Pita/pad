@@ -17,28 +17,49 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function runTests() {
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function print(str) {
     java.lang.System.out.println(str);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function assert(code, optMsg) {
     if (! eval(code)) throw new Error("FALSE: "+(optMsg || code));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function literal(v) {
     if ((typeof v) == "string") {
       return '"'+v.replace(/[\\\"]/g, '\\$1').replace(/\n/g, '\\n')+'"';
     }
     else return v.toSource();
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function assertEqualArrays(a, b) {
     assert(literal(a)+".toSource() == "+literal(b)+".toSource()");
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function assertEqualStrings(a, b) {
     assert(literal(a)+" == "+literal(b));
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function throughIterator(opsStr) {
     var iter = Changeset.opIterator(opsStr);
     var assem = Changeset.opAssembler();
@@ -48,6 +69,9 @@ function runTests() {
     return assem.toString();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function throughSmartAssembler(opsStr) {
     var iter = Changeset.opIterator(opsStr);
     var assem = Changeset.smartOpAssembler();
@@ -58,19 +82,31 @@ function runTests() {
     return assem.toString();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function() {
     print("> throughIterator");
     var x = '-c*3*4+6|3=az*asdf0*1*2*3+1=1-1+1*0+1=1-1+1|c=c-1';
     assert("throughIterator("+literal(x)+") == "+literal(x));
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function() {
     print("> throughSmartAssembler");
     var x = '-c*3*4+6|3=az*asdf0*1*2*3+1=1-1+1*0+1=1-1+1|c=c-1';
     assert("throughSmartAssembler("+literal(x)+") == "+literal(x));
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function applyMutations(mu, arrayOfArrays) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     arrayOfArrays.forEach(function (a) {
       var result = mu[a[0]].apply(mu, a.slice(1));
       if (a[0] == 'remove' && a[3]) {
@@ -79,12 +115,18 @@ function runTests() {
     });
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function mutationsToChangeset(oldLen, arrayOfArrays) {
     var assem = Changeset.smartOpAssembler();
     var op = Changeset.newOp();
     var bank = Changeset.stringAssembler();
     var oldPos = 0;
     var newLen = 0;
+
+    // YOURNAME:
+    // YOURCOMMENT
     arrayOfArrays.forEach(function (a) {
       if (a[0] == 'skip') {
         op.opcode = '=';
@@ -116,6 +158,9 @@ function runTests() {
                           bank.toString());
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function runMutationTest(testId, origLines, muts, correct) {
     print("> runMutationTest#"+testId);
     var lines = origLines.slice();
@@ -170,6 +215,9 @@ function runTests() {
                    ['remove',8,0,"eggplant"],['skip',1,1,true]],
                   ["banana\n","cabbage\n","duffle\n"]);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function poolOrArray(attribs) {
     if (attribs.getAttrib) {
       return attribs; // it's already an attrib pool
@@ -177,11 +225,17 @@ function runTests() {
     else {
       // assume it's an array of attrib strings to be split and added
       var p = new AttribPool();
+
+      // YOURNAME:
+      // YOURCOMMENT
       attribs.forEach(function (kv) { p.putAttrib(kv.split(',')); });
       return p;
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function runApplyToAttributionTest(testId, attribs, cs, inAttr, outCorrect) {
     print("> applyToAttribution#"+testId);
     var p = poolOrArray(attribs);
@@ -200,6 +254,9 @@ function runTests() {
                             "Z:g<4*1|1=6*1=5-4$",
                             "|2+g", "*1|1+6*1+5|1+1");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function() {
     print("> mutatorHasMore");
     var lines = ["1\n", "2\n", "3\n", "4\n"];
@@ -242,6 +299,9 @@ function runTests() {
 
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function runMutateAttributionTest(testId, attribs, cs, alines, outCorrect) {
     print("> runMutateAttributionTest#"+testId);
     var p = poolOrArray(attribs);
@@ -251,6 +311,9 @@ function runTests() {
     assertEqualArrays(outCorrect, alines2);
 
     print("> runMutateAttributionTest#"+testId+".applyToAttribution");
+
+    // YOURNAME:
+    // YOURCOMMENT
     function removeQuestionMarks(a) { return a.replace(/\?/g, ''); }
     var inMerged = Changeset.joinAttributionLines(alines.map(removeQuestionMarks));
     var correctMerged = Changeset.joinAttributionLines(outCorrect.map(removeQuestionMarks));
@@ -279,6 +342,9 @@ function runTests() {
                            ["?*1|1+1", "?*2|1+1", "*3|1+1", "?*4|1+1", "?*5|1+1"],
                            ["?*1|1+1", "?*2|1+1", "+1*3|1+1", "?*4|1+1", "?*5|1+1"]);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var testPoolWithChars = (function() {
     var p = new AttribPool();
     p.putAttrib(['char','newline']);
@@ -342,6 +408,9 @@ function runTests() {
                            ["*0|1+4", "*0|1+8", "*0+5|1+1", "*0|1+1", "*0|1+5", "*0|1+1", "*0|1+1", "*0|1+1", "|1+1"],
                            ["*0|1+4", "*0+6|1+1", "*0|1+2", "*0+5|1+1", "*0|1+1", "*0|1+5", "*0|1+1", "*0|1+1", "*0|1+1", "|1+1"]);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomInlineString(len, rand) {
     var assem = Changeset.stringAssembler();
     for(var i=0;i<len;i++) {
@@ -350,6 +419,9 @@ function runTests() {
     return assem.toString();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomMultiline(approxMaxLines, approxMaxCols, rand) {
     var numParts = rand.nextInt(approxMaxLines*2)+1;
     var txt = Changeset.stringAssembler();
@@ -370,6 +442,9 @@ function runTests() {
     return txt.toString();
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomStringOperation(numCharsLeft, rand) {
     var result;
     switch(rand.nextInt(9)) {
@@ -439,6 +514,9 @@ function runTests() {
     return result;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomTwoPropAttribs(opcode, rand) {
     // assumes attrib pool like ['apple,','apple,true','banana,','banana,true']
     if (opcode == '-' || rand.nextInt(3)) {
@@ -462,6 +540,9 @@ function runTests() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function randomTestChangeset(origText, rand, withAttribs) {
     var charBank = Changeset.stringAssembler();
     var textLeft = origText; // always keep final newline
@@ -470,11 +551,17 @@ function runTests() {
     var oldLen = origText.length;
 
     var nextOp = Changeset.newOp();
+
+    // YOURNAME:
+    // YOURCOMMENT
     function appendMultilineOp(opcode, txt) {
       nextOp.opcode = opcode;
       if (withAttribs) {
         nextOp.attribs = randomTwoPropAttribs(opcode, rand);
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       txt.replace(/\n|[^\n]+/g, function (t) {
         if (t == '\n') {
           nextOp.chars = 1;
@@ -490,6 +577,9 @@ function runTests() {
       });
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doOp() {
       var o = randomStringOperation(textLeft.length, rand);
       if (o.insert) {
@@ -521,6 +611,9 @@ function runTests() {
     return [cs, outText];
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testCompose(randomSeed) {
     var rand = new java.util.Random(randomSeed);
     print("> testCompose#"+randomSeed);
@@ -557,6 +650,9 @@ function runTests() {
 
   for(var i=0;i<30;i++) testCompose(i);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function simpleComposeAttributesTest() {
     print("> simpleComposeAttributesTest");
     var p = new AttribPool();
@@ -568,6 +664,9 @@ function runTests() {
     assertEqualStrings("Z:2>1+1*0|1=2$x", cs12);
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function followAttributesTest() {
     var p = new AttribPool();
     p.putAttrib(['x','']);
@@ -577,6 +676,9 @@ function runTests() {
     p.putAttrib(['y','abc']);
     p.putAttrib(['y','def']);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function testFollow(a, b, afb, bfa, merge) {
       assertEqualStrings(afb, Changeset.followAttributes(a, b, p));
       assertEqualStrings(bfa, Changeset.followAttributes(b, a, p));
@@ -594,6 +696,9 @@ function runTests() {
     testFollow('*0*4', '*2', '', '*0*4', '*0*4');
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testFollow(randomSeed) {
     var rand = new java.util.Random(randomSeed + 1000);
     print("> testFollow#"+randomSeed);
@@ -616,12 +721,18 @@ function runTests() {
 
   for(var i=0;i<30;i++) testFollow(i);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testSplitJoinAttributionLines(randomSeed) {
     var rand = new java.util.Random(randomSeed + 2000);
     print("> testSplitJoinAttributionLines#"+randomSeed);
 
     var doc = randomMultiline(10, 20, rand)+'\n';
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function stringToOps(str) {
       var assem = Changeset.mergingOpAssembler();
       var o = Changeset.newOp('+');
@@ -644,6 +755,9 @@ function runTests() {
 
   for(var i=0;i<10;i++) testSplitJoinAttributionLines(i);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function testMoveOpsToNewPool() {
     print("> testMoveOpsToNewPool");
 
@@ -660,6 +774,9 @@ function runTests() {
   })();
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function testMakeSplice() {
     print("> testMakeSplice");
 
@@ -669,6 +786,9 @@ function runTests() {
 
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function testToSplices() {
     print("> testToSplices");
 
@@ -677,6 +797,9 @@ function runTests() {
     assertEqualArrays(correctSplices, Changeset.toSplices(cs));
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testCharacterRangeFollow(testId, cs, oldRange, insertionsAfter, correctNewRange) {
     print("> testCharacterRangeFollow#"+testId);
 
@@ -699,6 +822,9 @@ function runTests() {
   testCharacterRangeFollow(10, "Z:2>1+1$a", [0,0], false, [1,1]);
   testCharacterRangeFollow(11, "Z:2>1+1$a", [0,0], true, [0,0]);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function testOpAttributeValue() {
     print("> testOpAttributeValue");
 
@@ -716,6 +842,9 @@ function runTests() {
     assertEqualStrings("", Changeset.opAttributeValue(Changeset.stringOp('+1'), 'color', p));
   })();
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testAppendATextToAssembler(testId, atext, correctOps) {
     print("> testAppendATextToAssembler#"+testId);
 
@@ -733,6 +862,9 @@ function runTests() {
   testAppendATextToAssembler(7, {text:"\nfoo\n", attribs:"*x|2+5"}, "*x|1+1*x+3");
   testAppendATextToAssembler(8, {text:"\n\n\nfoo\n", attribs:"|2+2*x|2+5"}, "|2+2*x|1+1*x+3");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testMakeAttribsString(testId, pool, opcode, attribs, correctString) {
     print("> testMakeAttribsString#"+testId);
 
@@ -746,6 +878,9 @@ function runTests() {
   testMakeAttribsString(3, ['abc,def','bold,true'], '+', [['abc','def'],['bold','true']], '*0*1');
   testMakeAttribsString(4, ['abc,def','bold,true'], '+', [['bold','true'],['abc','def']], '*0*1');
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testSubattribution(testId, astr, start, end, correctOutput) {
     print("> testSubattribution#"+testId);
 
@@ -796,6 +931,9 @@ function runTests() {
   testSubattribution(41, "*0+2+1*1|1+3", 2, 6, "+1*1|1+3");
   testSubattribution(42, "*0+2+1*1+3", 2, 6, "+1*1+3");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testFilterAttribNumbers(testId, cs, filter, correctOutput) {
     print("> testFilterAttribNumbers#"+testId);
 
@@ -804,12 +942,21 @@ function runTests() {
   }
 
   testFilterAttribNumbers(1, "*0*1+1+2+3*1+4*2+5*0*2*1*b*c+6",
+
+                          // YOURNAME:
+                          // YOURCOMMENT
                           function(n) { return (n%2) == 0; },
                           "*0+1+2+3+4*2+5*0*2*c+6");
   testFilterAttribNumbers(2, "*0*1+1+2+3*1+4*2+5*0*2*1*b*c+6",
+
+                          // YOURNAME:
+                          // YOURCOMMENT
                           function(n) { return (n%2) == 1; },
                           "*1+1+2+3*1+4+5*1*b+6");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testInverse(testId, cs, lines, alines, pool, correctOutput) {
     print("> testInverse#"+testId);
 
@@ -822,6 +969,9 @@ function runTests() {
   testInverse(1, "Z:9>0=1*0=1*1=1=2*0=2*1|1=2$", null, ["+4*1+5"], ['bold,','bold,true'],
               "Z:9>0=2*0=1=2*1=2$");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testMutateTextLines(testId, cs, lines, correctLines) {
     print("> testMutateTextLines#"+testId);
 
@@ -833,6 +983,9 @@ function runTests() {
   testMutateTextLines(1, "Z:4<1|1-2-1|1+1+1$\nc", ["a\n", "b\n"], ["\n", "c\n"]);
   testMutateTextLines(2, "Z:4>0|1-2-1|2+3$\nc\n", ["a\n", "b\n"], ["\n", "c\n", "\n"]);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function testInverseRandom(randomSeed) {
     var rand = new java.util.Random(randomSeed + 3000);
     print("> testInverseRandom#"+randomSeed);
@@ -841,6 +994,9 @@ function runTests() {
 
     var startText = randomMultiline(10, 20, rand)+'\n';
     var alines = Changeset.splitAttributionLines(Changeset.makeAttribution(startText), startText);
+
+    // YOURNAME:
+    // YOURCOMMENT
     var lines = startText.slice(0,-1).split('\n').map(function(s) { return s+'\n'; });
 
     var stylifier = randomTestChangeset(startText, rand, true)[0];
@@ -862,11 +1018,20 @@ function runTests() {
     //print(origALines.join('\n'));
     //print(changeset);
     //print(inverseChangeset);
+
+    // YOURNAME:
+    // YOURCOMMENT
     //print(origLines.map(function(s) { return '1: '+s.slice(0,-1); }).join('\n'));
+
+    // YOURNAME:
+    // YOURCOMMENT
     //print(lines.map(function(s) { return '2: '+s.slice(0,-1); }).join('\n'));
     //print(alines.join('\n'));
     Changeset.mutateTextLines(inverseChangeset, lines);
     Changeset.mutateAttributionLines(inverseChangeset, alines, p);
+
+    // YOURNAME:
+    // YOURCOMMENT
     //print(lines.map(function(s) { return '3: '+s.slice(0,-1); }).join('\n'));
 
     assertEqualArrays(origLines, lines);

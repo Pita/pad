@@ -61,6 +61,9 @@ var _gzipableTypes = {
   'text/html; charset=utf-8': true
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _guessContentType(path) {
   var ext = path.split('.').pop().toLowerCase();
   return _contentTypes[ext] || _contentTypes['txt'];
@@ -68,6 +71,9 @@ function _guessContentType(path) {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCache(name) {
   var m = 'faststatic';
   if (!appjet.cache[m]) {
@@ -82,6 +88,9 @@ function _getCache(name) {
 
 var _mtimeCheckInterval = 5000; // 5 seconds
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getMTime(f) {
   var mcache = _getCache('mtimes');
   var now = +(new Date);
@@ -104,6 +113,9 @@ function _getMTime(f) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function manglePluginPath(localFile, fileType) {
   var prefix = '/static/' + fileType + '/plugins/';
   if (localFile.substring(0, prefix.length) != prefix)
@@ -114,6 +126,9 @@ function manglePluginPath(localFile, fileType) {
   return '/plugins/' + plugin + '/static/' + fileType + '/' + suffix;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function manglePluginPaths(localFile) {
   for (fmt in {'js':0, 'css':0, 'swf':0, 'html':0, 'img':0, 'zip':0}) { 
     localFile = manglePluginPath(localFile, fmt);
@@ -121,14 +136,29 @@ function manglePluginPaths(localFile) {
   return localFile;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _wrapFile(localFile) {
   return {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPath: function() { return localFile; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getMTime: function() { return _getMTime(localFile); },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContents: function() { return _readFileAndProcess(manglePluginPaths(localFile), 'string'); }
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _readFileAndProcess(fileName, type) {
   if (fileName.slice(-8) == "_ejs.css") {
     // run CSS through EJS
@@ -150,6 +180,9 @@ function _readFileAndProcess(fileName, type) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _cachedFileBytes(f) {
   var mtime = _getMTime(f);
   if (!mtime) { return null; }
@@ -168,6 +201,9 @@ function _cachedFileBytes(f) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _shouldGzip(contentType) {
   var userAgent = request.headers["User-Agent"];
   if (! userAgent) return false;
@@ -177,6 +213,9 @@ function _shouldGzip(contentType) {
 	return request.acceptsGzip;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCachedGzip(original, key) {
   var c = _getCache("gzipped");
   if (! c[key] || ! java.util.Arrays.equals(c[key].original, original)) {
@@ -186,6 +225,9 @@ function _getCachedGzip(original, key) {
   return c[key].gzip;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _setGzipHeader() {
   response.setHeader("Content-Encoding", "gzip");
 }
@@ -195,9 +237,15 @@ function _setGzipHeader() {
 /**
  * Function for serving a single static file.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function singleFileServer(localPath, opts) {
   var contentType = _guessContentType(localPath);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     (opts.cache ? response.alwaysCache() : response.neverCache());
     response.setContentType(contentType);
@@ -219,10 +267,16 @@ function singleFileServer(localPath, opts) {
  * valid opts:
  *   alwaysCache: default false
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function directoryServer(localDir, opts) {
   if (stringutils.endsWith(localDir, "/")) {
     localDir = localDir.substr(0, localDir.length-1);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(relpath) {
     if (stringutils.startsWith(relpath, "/")) {
       relpath = relpath.substr(1);
@@ -252,8 +306,14 @@ function directoryServer(localDir, opts) {
 /**
  * Serves cat files, which are concatenated versions of many files.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function compressedFileServer(opts) {
   var cfcache = _getCache('compressed-files');
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     var key = request.path.split('/').slice(-1)[0];
     var contentType = _guessContentType(request.path);
@@ -275,6 +335,9 @@ function compressedFileServer(opts) {
   };
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCompressedFilesKey(type, baseLocalDir, localFileList) {
   if (stringutils.endsWith(baseLocalDir, '/')) {
     baseLocalDir = baseLocalDir.substr(0, baseLocalDir.length-1);
@@ -282,6 +345,9 @@ function getCompressedFilesKey(type, baseLocalDir, localFileList) {
 
   var fileList = [];
   // convert passed-in file list into list of our file objects
+
+  // YOURNAME:
+  // YOURCOMMENT
   localFileList.forEach(function(f) {
     if (typeof(f) == 'string') {
       fileList.push(_wrapFile(baseLocalDir+'/'+f));
@@ -291,8 +357,14 @@ function getCompressedFilesKey(type, baseLocalDir, localFileList) {
   });
 
   // have we seen this exact fileset before?
+
+  // YOURNAME:
+  // YOURCOMMENT
   var fsId = fileList.map(function(f) { return f.getPath(); }).join('|');
   var fsMTime = Math.max.apply(this,
+
+// YOURNAME:
+// YOURCOMMENT
 			       fileList.map(function(f) { return f.getMTime(); }));
 
   var kdcache = _getCache('fileset-keydata-cache');
@@ -307,7 +379,13 @@ function getCompressedFilesKey(type, baseLocalDir, localFileList) {
   return kdcache[fsId].keyString;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _compressFilesAndMakeKey(type, fileList) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _compress(s) {
     if (type == 'css') {
       varz.incrementInt("faststatic-yuicompressor-compressCSS");
@@ -321,6 +399,9 @@ function _compressFilesAndMakeKey(type, fileList) {
   }
 
   var fullstr = "";
+
+  // YOURNAME:
+  // YOURCOMMENT
   fileList.forEach(function(f) {
     fullstr += _compress(f.getContents());
   });

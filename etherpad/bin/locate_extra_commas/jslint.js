@@ -264,6 +264,9 @@ SOFTWARE.
 
 "use strict";
 
+
+// YOURNAME:
+// YOURCOMMENT
 var JSLINT = (function () {
 
     var adsafe_id,      // The widget's ADsafe id.
@@ -967,8 +970,14 @@ var JSLINT = (function () {
         };
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function F() {}     // Used by Object.create
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function is_own(object, name) {
 
 // The object.hasOwnProperty method fails when the property under consideration
@@ -980,12 +989,18 @@ var JSLINT = (function () {
 // Provide critical ES5 functions to ES3.
 
     if (typeof Array.isArray !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Array.isArray = function (o) {
             return Object.prototype.toString.apply(o) === '[object Array]';
         };
     }
 
     if (typeof Object.create !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Object.create = function (o) {
             F.prototype = o;
             return new F();
@@ -993,6 +1008,9 @@ var JSLINT = (function () {
     }
 
     if (typeof Object.keys !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         Object.keys = function (o) {
             var a = [], k;
             for (k in o) {
@@ -1007,6 +1025,9 @@ var JSLINT = (function () {
 // Non standard methods
 
     if (typeof String.prototype.entityify !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         String.prototype.entityify = function () {
             return this
                 .replace(/&/g, '&amp;')
@@ -1016,6 +1037,9 @@ var JSLINT = (function () {
     }
 
     if (typeof String.prototype.isAlpha !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         String.prototype.isAlpha = function () {
             return (this >= 'a' && this <= 'z\uffff') ||
                 (this >= 'A' && this <= 'Z\uffff');
@@ -1023,13 +1047,22 @@ var JSLINT = (function () {
     }
 
     if (typeof String.prototype.isDigit !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         String.prototype.isDigit = function () {
             return (this >= '0' && this <= '9');
         };
     }
 
     if (typeof String.prototype.supplant !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         String.prototype.supplant = function (o) {
+
+            // YOURNAME:
+            // YOURCOMMENT
             return this.replace(/\{([^{}]*)\}/g, function (a, b) {
                 var r = o[b];
                 return typeof r === 'string' || typeof r === 'number' ? r : a;
@@ -1038,6 +1071,9 @@ var JSLINT = (function () {
     }
 
     if (typeof String.prototype.name !== 'function') {
+
+        // YOURNAME:
+        // YOURCOMMENT
         String.prototype.name = function () {
 
 // If the string looks like an identifier, then we can return it as is.
@@ -1050,6 +1086,9 @@ var JSLINT = (function () {
                 return this;
             }
             if (nx.test(this)) {
+
+                // YOURNAME:
+                // YOURCOMMENT
                 return '"' + this.replace(nxg, function (a) {
                     var c = escapes[a];
                     if (c) {
@@ -1063,6 +1102,9 @@ var JSLINT = (function () {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function combine(t, o) {
         var n;
         for (n in o) {
@@ -1072,6 +1114,9 @@ var JSLINT = (function () {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function assume() {
         if (!option.safe) {
             if (option.rhino) {
@@ -1095,6 +1140,9 @@ var JSLINT = (function () {
 
 // Produce an error warning.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function quit(m, l, ch) {
         throw {
             name: 'JSLintError',
@@ -1105,6 +1153,9 @@ var JSLINT = (function () {
         };
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function warning(m, t, a, b, c, d) {
         var ch, l, w;
         t = t || nexttoken;
@@ -1136,6 +1187,9 @@ var JSLINT = (function () {
         return w;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function warningAt(m, l, ch, a, b, c, d) {
         return warning(m, {
             line: l,
@@ -1143,11 +1197,17 @@ var JSLINT = (function () {
         }, a, b, c, d);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function error(m, t, a, b, c, d) {
         var w = warning(m, t, a, b, c, d);
         quit("Stopping, unable to continue.", w.line, w.character);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function errorAt(m, l, ch, a, b, c, d) {
         return error(m, {
             line: l,
@@ -1159,11 +1219,17 @@ var JSLINT = (function () {
 
 // lexical analysis and token construction
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var lex = (function lex() {
         var character, from, line, s;
 
 // Private lex methods
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function nextLine() {
             var at;
             if (line >= lines.length) {
@@ -1189,6 +1255,9 @@ var JSLINT = (function () {
 
 // Produce a token object.  The token inherits from a syntax symbol.
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function it(type, value) {
             var i, t;
             if (type === '(color)' || type === '(range)') {
@@ -1233,6 +1302,9 @@ var JSLINT = (function () {
 // Public lex methods
 
         return {
+
+            // YOURNAME:
+            // YOURCOMMENT
             init: function (source) {
                 if (typeof source === 'string') {
                     lines = source
@@ -1247,6 +1319,9 @@ var JSLINT = (function () {
                 from = 1;
             },
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             range: function (begin, end) {
                 var c, value = '';
                 from = character;
@@ -1277,9 +1352,15 @@ var JSLINT = (function () {
 
 // token -- this is called by advance to get the next token.
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             token: function () {
                 var b, c, captures, d, depth, high, i, l, low, q, t;
 
+
+                // YOURNAME:
+                // YOURCOMMENT
                 function match(x) {
                     var r = x.exec(s), r1;
                     if (r) {
@@ -1293,6 +1374,9 @@ var JSLINT = (function () {
                     }
                 }
 
+
+                // YOURNAME:
+                // YOURCOMMENT
                 function string(x) {
                     var c, j, r = '';
 
@@ -1305,6 +1389,9 @@ var JSLINT = (function () {
                         return it('(punctuator)', x);
                     }
 
+
+                    // YOURNAME:
+                    // YOURCOMMENT
                     function esc(n) {
                         var i = parseInt(s.substr(j + 1, n), 16);
                         j += n;
@@ -1895,6 +1982,9 @@ klass:                                  do {
     }());
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function addlabel(t, type) {
 
         if (option.safe && funct['(global)'] &&
@@ -1925,6 +2015,9 @@ klass:                                  do {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doOption() {
         var b, obj, filter, o = nexttoken.value, t, v;
         switch (o) {
@@ -2030,6 +2123,9 @@ loop:   for (;;) {
 // from
 //     for ( var i = ...
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function peek(p) {
         var i = p || 0, j = 0, t;
 
@@ -2047,6 +2143,9 @@ loop:   for (;;) {
 
 // Produce the next token. It looks for programming errors.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function advance(id, t) {
         switch (token.id) {
         case '(number)':
@@ -2117,6 +2216,9 @@ loop:   for (;;) {
 
 // They are elements of the parsing method called Top Down Operator Precedence.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function expression(rbp, initial) {
         var left;
         if (nexttoken.id === '(end)') {
@@ -2164,6 +2266,9 @@ loop:   for (;;) {
 
 // Functions for conformance of style.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function adjacent(left, right) {
         left = left || token;
         right = right || nexttoken;
@@ -2174,6 +2279,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nobreak(left, right) {
         left = left || token;
         right = right || nexttoken;
@@ -2182,6 +2290,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nospace(left, right) {
         left = left || token;
         right = right || nexttoken;
@@ -2192,6 +2303,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nonadjacent(left, right) {
         if (option.white) {
             left = left || token;
@@ -2203,6 +2317,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nobreaknonadjacent(left, right) {
         left = left || token;
         right = right || nexttoken;
@@ -2218,6 +2335,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function indentation(bias) {
         var i;
         if (option.white && nexttoken.id !== '(end)') {
@@ -2230,6 +2350,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function nolinebreak(t) {
         t = t || token;
         if (t.line !== nexttoken.line) {
@@ -2238,6 +2361,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function comma() {
         if (token.line !== nexttoken.line) {
             if (!option.laxbreak) {
@@ -2254,6 +2380,9 @@ loop:   for (;;) {
 // Functional constructors for making the symbols that will be inherited by
 // tokens.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function symbol(s, p) {
         var x = syntax[s];
         if (!x || typeof x !== 'object') {
@@ -2267,11 +2396,17 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function delim(s) {
         return symbol(s, 0);
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function stmt(s, f) {
         var x = delim(s);
         x.identifier = x.reserved = true;
@@ -2280,6 +2415,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function blockstmt(s, f) {
         var x = stmt(s, f);
         x.block = true;
@@ -2287,6 +2425,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function reserveName(x) {
         var c = x.id.charAt(0);
         if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
@@ -2296,9 +2437,15 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function prefix(s, f) {
         var x = symbol(s, 150);
         reserveName(x);
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.nud = (typeof f === 'function') ? f : function () {
             this.right = expression(150);
             this.arity = 'unary';
@@ -2316,6 +2463,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function type(s, f) {
         var x = delim(s);
         x.type = s;
@@ -2324,6 +2474,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function reserve(s, f) {
         var x = type(s, f);
         x.identifier = x.reserved = true;
@@ -2331,7 +2484,13 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function reservevar(s, v) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         return reserve(s, function () {
             if (typeof v === 'function') {
                 v(this);
@@ -2341,9 +2500,15 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function infix(s, f, p, w) {
         var x = symbol(s, p);
         reserveName(x);
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.led = function (left) {
             if (!w) {
                 nobreaknonadjacent(prevtoken, token);
@@ -2361,8 +2526,14 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function relation(s, f) {
         var x = symbol(s, 100);
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.led = function (left) {
             nobreaknonadjacent(prevtoken, token);
             nonadjacent(token, nexttoken);
@@ -2386,6 +2557,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function isPoorRelation(node) {
         return node &&
               ((node.type === '(number)' && +node.value === 0) ||
@@ -2397,8 +2571,14 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function assignop(s, f) {
         symbol(s, 20).exps = true;
+
+        // YOURNAME:
+        // YOURCOMMENT
         return infix(s, function (left, that) {
             var l;
             that.left = left;
@@ -2442,9 +2622,15 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function bitwise(s, f, p) {
         var x = symbol(s, p);
         reserveName(x);
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.led = (typeof f === 'function') ? f : function (left) {
             if (option.bitwise) {
                 warning("Unexpected use of '{a}'.", this, this.id);
@@ -2457,8 +2643,14 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function bitwiseassignop(s) {
         symbol(s, 20).exps = true;
+
+        // YOURNAME:
+        // YOURCOMMENT
         return infix(s, function (left, that) {
             if (option.bitwise) {
                 warning("Unexpected use of '{a}'.", that, that.id);
@@ -2483,8 +2675,14 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function suffix(s, f) {
         var x = symbol(s, 150);
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.led = function (left) {
             if (option.plusplus) {
                 warning("Unexpected use of '{a}'.", this, this.id);
@@ -2499,6 +2697,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function optionalidentifier() {
         if (nexttoken.identifier) {
             advance();
@@ -2513,11 +2714,17 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function identifier() {
         var i = optionalidentifier();
         if (i) {
             return i;
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         if (token.id === 'function' && nexttoken.id === '(') {
             warning("Missing name in function statement.");
         } else {
@@ -2527,6 +2734,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function reachable(s) {
         var i = 0, t;
         if (nexttoken.id !== ';' || noreach) {
@@ -2551,6 +2761,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function statement(noindent) {
         var i = indent, r, s = scope, t = nexttoken;
 
@@ -2616,6 +2829,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function use_strict() {
         if (nexttoken.value === 'use strict') {
             advance();
@@ -2630,6 +2846,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function statements(begin) {
         var a = [], f, p;
         if (begin && !use_strict() && option.strict) {
@@ -2707,6 +2926,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function block(f) {
         var a, b = inblock, old_indent = indent, s = scope, t;
         inblock = f;
@@ -2746,6 +2968,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function countMember(m) {
         if (membersOnly && typeof membersOnly[m] !== 'boolean') {
             warning("Unexpected /*member '{a}'.", token, m);
@@ -2758,6 +2983,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function note_implied(token) {
         var name = token.value, line = token.line, a = implied[name];
         if (typeof a === 'function') {
@@ -2774,6 +3002,9 @@ loop:   for (;;) {
 
 // CSS parsing.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssName() {
         if (nexttoken.identifier) {
             advance();
@@ -2782,6 +3013,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssNumber() {
         if (nexttoken.id === '-') {
             advance('-');
@@ -2795,6 +3029,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssString() {
         if (nexttoken.type === '(string)') {
             advance();
@@ -2803,6 +3040,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssColor() {
         var i, number, value;
         if (nexttoken.identifier) {
@@ -2862,6 +3102,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssLength() {
         if (nexttoken.id === '-') {
             advance('-');
@@ -2884,6 +3127,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssLineHeight() {
         if (nexttoken.id === '-') {
             advance('-');
@@ -2902,6 +3148,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssWidth() {
         if (nexttoken.identifier) {
             switch (nexttoken.value) {
@@ -2917,6 +3166,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssMargin() {
         if (nexttoken.identifier) {
             if (nexttoken.value === 'auto') {
@@ -2928,6 +3180,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssAttr() {
         if (nexttoken.identifier && nexttoken.value === 'attr') {
             advance();
@@ -2944,6 +3199,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssCommaList() {
         while (nexttoken.id !== ';') {
             if (!cssName() && !cssString()) {
@@ -2958,6 +3216,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssCounter() {
         if (nexttoken.identifier && nexttoken.value === 'counter') {
             advance();
@@ -3005,6 +3266,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssShape() {
         var i;
         if (nexttoken.identifier && nexttoken.value === 'rect') {
@@ -3024,6 +3288,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function cssUrl() {
         var c, url;
         if (nexttoken.identifier && nexttoken.value === 'url') {
@@ -3054,6 +3321,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     cssAny = [cssUrl, function () {
         for (;;) {
             if (nexttoken.identifier) {
@@ -3277,6 +3547,9 @@ loop:   for (;;) {
         'z-index': ['auto', cssNumber]
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function styleAttribute() {
         var v;
         while (nexttoken.id === '*' || nexttoken.id === '#' ||
@@ -3319,6 +3592,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function styleValue(v) {
         var i = 0,
             n,
@@ -3385,6 +3661,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function styleChild() {
         if (nexttoken.id === '(number)') {
             advance();
@@ -3412,6 +3691,9 @@ loop:   for (;;) {
         warning("Unexpected token '{a}'.", nexttoken, nexttoken.value);
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function substyle() {
         var v;
         for (;;) {
@@ -3452,6 +3734,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function styleSelector() {
         if (nexttoken.identifier) {
             if (!is_own(htmltag, option.cap ?
@@ -3571,6 +3856,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function stylePattern() {
         if (nexttoken.id === '{') {
             warning("Expected a style pattern, and instead saw '{a}'.", nexttoken,
@@ -3588,6 +3876,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function stylelist() {
         while (nexttoken.id !== '</' && nexttoken.id !== '(end)') {
             stylePattern();
@@ -3603,6 +3894,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function styles() {
         var i;
         while (nexttoken.id === '@') {
@@ -3650,6 +3944,9 @@ loop:   for (;;) {
 
 // HTML parsing.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doBegin(n) {
         if (n !== 'html' && !option.fragment) {
             if (n === 'div' && option.adsafe) {
@@ -3676,6 +3973,9 @@ loop:   for (;;) {
         assume();
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doAttribute(n, a, v) {
         var u, x;
         if (a === 'id') {
@@ -3738,6 +4038,9 @@ loop:   for (;;) {
         }
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doTag(n, a) {
         var i, t = htmltag[n], x;
         src = false;
@@ -3860,10 +4163,16 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function closetag(n) {
         return '</' + n + '>';
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function html() {
         var a, attributes, e, n, q, t, v, w = option.white, wmode;
         xmode = 'html';
@@ -4065,9 +4374,15 @@ loop:   for (;;) {
 
 // Build the syntax table by declaring the syntactic elements of the language.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     type('(number)', function () {
         return this;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     type('(string)', function () {
         return this;
     });
@@ -4076,6 +4391,9 @@ loop:   for (;;) {
         type: '(identifier)',
         lbp: 0,
         identifier: true,
+
+        // YOURNAME:
+        // YOURCOMMENT
         nud: function () {
             var v = this.value,
                 s = scope[v],
@@ -4183,12 +4501,18 @@ loop:   for (;;) {
             }
             return this;
         },
+
+        // YOURNAME:
+        // YOURCOMMENT
         led: function () {
             error("Expected an operator and instead saw '{a}'.",
                 nexttoken, nexttoken.value);
         }
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     type('(regexp)', function () {
         return this;
     });
@@ -4219,6 +4543,9 @@ loop:   for (;;) {
     reserve('catch');
     reserve('default').reach = true;
     reserve('finally');
+
+    // YOURNAME:
+    // YOURCOMMENT
     reservevar('arguments', function (x) {
         if (strict_mode && funct['(global)']) {
             warning("Strict violation.", x);
@@ -4226,6 +4553,9 @@ loop:   for (;;) {
             warning("ADsafe violation.", x);
         }
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     reservevar('eval', function (x) {
         if (option.safe) {
             warning("ADsafe violation.", x);
@@ -4235,6 +4565,9 @@ loop:   for (;;) {
     reservevar('Infinity');
     reservevar('NaN');
     reservevar('null');
+
+    // YOURNAME:
+    // YOURCOMMENT
     reservevar('this', function (x) {
         if (strict_mode && ((funct['(statement)'] &&
                 funct['(name)'].charAt(0) > 'Z') || funct['(global)'])) {
@@ -4249,6 +4582,9 @@ loop:   for (;;) {
     assignop('+=', 'assignadd', 20);
     assignop('-=', 'assignsub', 20);
     assignop('*=', 'assignmult', 20);
+
+    // YOURNAME:
+    // YOURCOMMENT
     assignop('/=', 'assigndiv', 20).nud = function () {
         error("A regular expression literal can be confused with '/='.");
     };
@@ -4259,6 +4595,9 @@ loop:   for (;;) {
     bitwiseassignop('<<=', 'assignshiftleft', 20);
     bitwiseassignop('>>=', 'assignshiftright', 20);
     bitwiseassignop('>>>=', 'assignshiftrightunsigned', 20);
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('?', function (left, that) {
         that.left = left;
         that.right = expression(10);
@@ -4272,6 +4611,9 @@ loop:   for (;;) {
     bitwise('|', 'bitor', 70);
     bitwise('^', 'bitxor', 80);
     bitwise('&', 'bitand', 90);
+
+    // YOURNAME:
+    // YOURCOMMENT
     relation('==', function (left, right) {
         if (option.eqeqeq) {
             warning("Expected '{a}' and instead saw '{b}'.",
@@ -4286,6 +4628,9 @@ loop:   for (;;) {
         return this;
     });
     relation('===');
+
+    // YOURNAME:
+    // YOURCOMMENT
     relation('!=', function (left, right) {
         if (option.eqeqeq) {
             warning("Expected '{a}' and instead saw '{b}'.",
@@ -4309,6 +4654,9 @@ loop:   for (;;) {
     bitwise('>>>', 'shiftrightunsigned', 120);
     infix('in', 'in', 120);
     infix('instanceof', 'instanceof', 120);
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('+', function (left, that) {
         var right = expression(130);
         if (left && right && left.id === '(string)' && right.id === '(string)') {
@@ -4324,12 +4672,18 @@ loop:   for (;;) {
         return that;
     }, 130);
     prefix('+', 'num');
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('+++', function () {
         warning("Confusing pluses.");
         this.right = expression(150);
         this.arity = 'unary';
         return this;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('+++', function (left) {
         warning("Confusing pluses.");
         this.left = left;
@@ -4338,12 +4692,18 @@ loop:   for (;;) {
     }, 130);
     infix('-', 'sub', 130);
     prefix('-', 'neg');
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('---', function () {
         warning("Confusing minuses.");
         this.right = expression(150);
         this.arity = 'unary';
         return this;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('---', function (left) {
         warning("Confusing minuses.");
         this.left = left;
@@ -4361,6 +4721,9 @@ loop:   for (;;) {
     suffix('--', 'postdec');
     prefix('--', 'predec');
     syntax['--'].exps = true;
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('delete', function () {
         var p = expression(0);
         if (!p || (p.id !== '.' && p.id !== '[')) {
@@ -4371,6 +4734,9 @@ loop:   for (;;) {
     }).exps = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('~', function () {
         if (option.bitwise) {
             warning("Unexpected '{a}'.", this, '~');
@@ -4378,6 +4744,9 @@ loop:   for (;;) {
         expression(150);
         return this;
     });
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('!', function () {
         this.right = expression(150);
         this.arity = 'unary';
@@ -4387,6 +4756,9 @@ loop:   for (;;) {
         return this;
     });
     prefix('typeof', 'typeof');
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('new', function () {
         var c = expression(155), i;
         if (c && c.id !== 'function') {
@@ -4450,6 +4822,9 @@ loop:   for (;;) {
     });
     syntax['new'].exps = true;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('.', function (left, that) {
         adjacent(prevtoken, token);
         nobreak();
@@ -4517,6 +4892,9 @@ loop:   for (;;) {
         return that;
     }, 160, true);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('(', function (left, that) {
         if (prevtoken.id !== '}' && prevtoken.id !== ')') {
             nobreak(prevtoken, token);
@@ -4587,6 +4965,9 @@ loop:   for (;;) {
         return that;
     }, 155, true).exps = true;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('(', function () {
         nospace();
         if (nexttoken.id === 'function') {
@@ -4608,6 +4989,9 @@ loop:   for (;;) {
         return v;
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     infix('[', function (left, that) {
         nobreak(prevtoken, token);
         nospace();
@@ -4642,6 +5026,9 @@ loop:   for (;;) {
         return that;
     }, 160, true);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('[', function () {
         var b = token.line !== nexttoken.line;
         this.first = [];
@@ -4682,6 +5069,9 @@ loop:   for (;;) {
     }, 160);
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function property_name() {
         var id = optionalidentifier(true);
         if (!id) {
@@ -4703,6 +5093,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function functionparams() {
         var i, t = nexttoken, p = [];
         advance('(');
@@ -4727,6 +5120,9 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function doFunction(i, statement) {
         var f, s = scope;
         scope = Object.create(s);
@@ -4741,10 +5137,16 @@ loop:   for (;;) {
         };
         f = funct;
         token.funct = funct;
+
+        // YOURNAME:
+        // YOURCOMMENT
         functions.push(funct);
         if (i) {
             addlabel(i, 'function');
         }
+
+        // YOURNAME:
+        // YOURCOMMENT
         funct['(params)'] = functionparams();
 
         block(false);
@@ -4755,7 +5157,13 @@ loop:   for (;;) {
     }
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     (function (x) {
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.nud = function () {
             var b, f, i, j, p, seen = {}, t;
             b = token.line !== nexttoken.line;
@@ -4838,12 +5246,18 @@ loop:   for (;;) {
             advance('}', this);
             return this;
         };
+
+        // YOURNAME:
+        // YOURCOMMENT
         x.fud = function () {
             error("Expected to see a statement and instead saw a block.", token);
         };
     }(delim('{')));
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var varstatement = function varstatement(prefix) {
 
 // JavaScript does not have block scope. It only has function scope. So,
@@ -4895,6 +5309,9 @@ loop:   for (;;) {
     stmt('var', varstatement).exps = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('function', function () {
         if (inblock) {
             warning(
@@ -4912,6 +5329,9 @@ loop:   for (;;) {
         return this;
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     prefix('function', function () {
         var i = optionalidentifier();
         if (i) {
@@ -4926,6 +5346,9 @@ loop:   for (;;) {
         return this;
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('if', function () {
         var t = nexttoken;
         advance('(');
@@ -4952,6 +5375,9 @@ loop:   for (;;) {
         return this;
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('try', function () {
         var b, e, s;
         if (option.adsafe) {
@@ -4988,6 +5414,9 @@ loop:   for (;;) {
         return this;
     });
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('while', function () {
         var t = nexttoken;
         funct['(breakage)'] += 1;
@@ -5011,6 +5440,9 @@ loop:   for (;;) {
 
     reserve('with');
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('switch', function () {
         var t = nexttoken,
             g = false;
@@ -5101,6 +5533,9 @@ loop:   for (;;) {
         }
     }).labelled = true;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmt('debugger', function () {
         if (!option.debug) {
             warning("All 'debugger' statements should be removed.");
@@ -5108,7 +5543,13 @@ loop:   for (;;) {
         return this;
     }).exps = true;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     (function () {
+
+        // YOURNAME:
+        // YOURCOMMENT
         var x = stmt('do', function () {
             funct['(breakage)'] += 1;
             funct['(loopage)'] += 1;
@@ -5134,6 +5575,9 @@ loop:   for (;;) {
         x.exps = true;
     }());
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     blockstmt('for', function () {
         var f = option.forin, s, t = nexttoken;
         funct['(breakage)'] += 1;
@@ -5219,6 +5663,9 @@ loop:   for (;;) {
     }).labelled = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmt('break', function () {
         var v = nexttoken.value;
         if (funct['(breakage)'] === 0) {
@@ -5241,6 +5688,9 @@ loop:   for (;;) {
     }).exps = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmt('continue', function () {
         var v = nexttoken.value;
         if (funct['(breakage)'] === 0) {
@@ -5265,6 +5715,9 @@ loop:   for (;;) {
     }).exps = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmt('return', function () {
         nolinebreak(this);
         if (nexttoken.id === '(regexp)') {
@@ -5279,6 +5732,9 @@ loop:   for (;;) {
     }).exps = true;
 
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     stmt('throw', function () {
         nolinebreak(this);
         nonadjacent(token, nexttoken);
@@ -5312,8 +5768,14 @@ loop:   for (;;) {
 
 // Parse JSON
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function jsonValue() {
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function jsonObject() {
             var o = {}, t = nexttoken;
             advance('{');
@@ -5352,6 +5814,9 @@ loop:   for (;;) {
             advance('}');
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function jsonArray() {
             var t = nexttoken;
             advance('[');
@@ -5406,6 +5871,9 @@ loop:   for (;;) {
 
 // The actual JSLINT function itself.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var itself = function (s, o) {
         var a, i, k;
         JSLINT.errors = [];
@@ -5566,6 +6034,9 @@ loop:   for (;;) {
 
 // Data summary.
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     itself.data = function () {
 
         var data = {functions: []}, fu, globals, implieds = [], f, i, j,
@@ -5617,6 +6088,9 @@ loop:   for (;;) {
                             unused.push({
                                 name: n,
                                 line: f['(line)'],
+
+                                // YOURNAME:
+                                // YOURCOMMENT
                                 'function': f['(name)']
                             });
                         }
@@ -5632,6 +6106,9 @@ loop:   for (;;) {
             fu.param = f['(params)'];
             fu.line = f['(line)'];
             fu.last = f['(last)'];
+
+            // YOURNAME:
+            // YOURCOMMENT
             data.functions.push(fu);
         }
 
@@ -5650,11 +6127,17 @@ loop:   for (;;) {
         return data;
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     itself.report = function (option) {
         var data = itself.data();
 
         var a = [], c, e, err, f, i, k, l, m = '', n, o = [], s;
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         function detail(h, array) {
             var b, i, singularity;
             if (array) {
@@ -5797,6 +6280,9 @@ Copyright (c) 2002 Douglas Crockford  (www.JSLint.com) Rhino Edition
 
 /*extern JSLINT */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function (a) {
     if (!a[0]) {
         print("Usage: jslint.js file.js");

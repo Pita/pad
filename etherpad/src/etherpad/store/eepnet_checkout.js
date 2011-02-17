@@ -28,15 +28,24 @@ var COST_PER_USER = 99;
 var SUPPORT_COST_PCT = 20;
 var SUPPORT_MIN_COST = 50;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPurchaseByEmail(email) {
   return sqlobj.selectSingle('checkout_purchase', {email: email});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function hasEmailAlreadyPurchased(email) {
   var purchase = getPurchaseByEmail(email);
   return purchase && purchase.licenseKey ? true : false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function mailLostLicense(email) {
   var purchase = getPurchaseByEmail(email);
   if (purchase && purchase.licenseKey) {
@@ -49,18 +58,30 @@ function mailLostLicense(email) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updatePurchaseWithKey(id, key) {
   sqlobj.updateSingle('checkout_purchase', {id: id}, {licenseKey: key});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function updatePurchaseWithReceipt(id, text) {
   sqlobj.updateSingle('checkout_purchase', {id: id}, {receiptEmail: text});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPurchaseByInvoiceId(id) {
   sqlobj.selectSingle('checkout_purchase', {invoiceId: id});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function generateLicenseKey(cart) {
   var licenseKey = licensing.generateNewKey(cart.ownerName, cart.orgName, null, 2, cart.userCount);
   cart.licenseKey = licenseKey;
@@ -68,6 +89,9 @@ function generateLicenseKey(cart) {
   return licenseKey;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function receiptEmailText(cart) {
   return renderTemplateAsString('email/eepnet_purchase_receipt.ejs', {
     cart: cart, 
@@ -76,6 +100,9 @@ function receiptEmailText(cart) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function licenseEmailText(userName, licenseKey) {
   return renderTemplateAsString('email/eepnet_license_info.ejs', {
       userName: userName,
@@ -84,6 +111,9 @@ function licenseEmailText(userName, licenseKey) {
     });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendReceiptEmail(cart) {
   var receipt = cart.receiptEmail || receiptEmailText(cart);
   
@@ -92,6 +122,9 @@ function sendReceiptEmail(cart) {
              {}, receipt);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendLicenseEmail(cart) {
   var licenseEmail = licenseEmailText(cart.ownerName, cart.licenseKey);
   

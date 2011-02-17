@@ -15,6 +15,9 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(document).ready(function() {
   if ($("#signin-form").length > 0) {
     $("#email").focus();

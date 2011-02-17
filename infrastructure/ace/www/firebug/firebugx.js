@@ -22,5 +22,8 @@ if (!("console" in window) || !("firebug" in console))
 
     window.console = {};
     for (var i = 0; i < names.length; ++i)
+
+        // YOURNAME:
+        // YOURCOMMENT
         window.console[names[i]] = function() {}
 }

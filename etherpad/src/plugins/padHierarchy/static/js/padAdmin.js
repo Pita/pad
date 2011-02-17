@@ -1,4 +1,10 @@
+
+// YOURNAME:
+// YOURCOMMENT
 $(function(){
+
+// YOURNAME:
+// YOURCOMMENT
 	$('#new select').change(function(){
 		var $this = $(this);
 		var path = $this.val().replace(/\/$/,'') + "/";

@@ -2,6 +2,9 @@ import("etherpad.log");
 import("plugins.licenseTag.hooks");
 import("plugins.licenseTag.static.js.main");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function licenseTagInit() {
  this.hooks = ['twitterStyleTagsTagSelector'];
  this.description = 'License tag inserter (for twitterStyleTags).';
@@ -11,10 +14,16 @@ function licenseTagInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing licenseTag");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling licenseTag");
 }

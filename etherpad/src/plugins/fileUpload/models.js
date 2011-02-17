@@ -32,6 +32,9 @@ jimport("java.io.File",
 
 
 /* Normal base64 encoding, except we don't care about adding newlines and we encode padding as - and we use - instead of / */
+
+// YOURNAME:
+// YOURCOMMENT
 function base64Encode(stringArray) {
   base64code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789" + "+-";
 
@@ -57,12 +60,18 @@ function base64Encode(stringArray) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeSymlink(destination, source) {
   return Runtime.getRuntime().exec(['ln', '-s', source.getPath(), destination.getPath()]).waitFor();
 }
 
 
 /* Reads a File and updates a digest with its content */
+
+// YOURNAME:
+// YOURCOMMENT
 function updateDigestFromFile(digest, handle) {
   var bytes = java.lang.reflect.Array.newInstance(Byte.TYPE, 512);
   var nbytes = 0;  
@@ -75,6 +84,9 @@ function updateDigestFromFile(digest, handle) {
 
 
 /* Stores a org.apache.commons.fileupload.disk.DiskFileItem permanently and returns a filename. */
+
+// YOURNAME:
+// YOURCOMMENT
 function storeFile(fileItem) {
   var nameParts = fileItem.name.split('.');
   var extension = nameParts[nameParts.length-1];

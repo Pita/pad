@@ -30,28 +30,46 @@
  * @name connections
  * @return {array} An array of the string ids of all connected clients.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function connections() {
   return Packages.net.appjet.ajstdlib.Comet.connections(appjet.context);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getNumCurrentConnections() {
   return Packages.net.appjet.ajstdlib.Comet.getNumCurrentConnections();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isConnected(id) {
   return Packages.net.appjet.ajstdlib.Comet.isConnected(id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function disconnect(id) {
   Packages.net.appjet.ajstdlib.Comet.disconnect(id);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAttribute(id, key) {
   var ret = Packages.net.appjet.ajstdlib.Comet.getAttribute(appjet.context, id, key);
   if (ret != null)
     return String(ret);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setAttribute(id, key, value) {
   Packages.net.appjet.ajstdlib.Comet.setAttribute(appjet.context, id, key, value);
 }
@@ -63,14 +81,26 @@ function setAttribute(id, key, value) {
  * @param {string} id The <tt>id</tt> of the client to send to.
  * @param {string} data The string data to send to the client.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function sendMessage(id, msg) {
   Packages.net.appjet.ajstdlib.Comet.write(id, msg);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function headInclude() { return '<script src="'+appjet.config.cometPrefix+'/js/client.js"></script>'; };
+
+// YOURNAME:
+// YOURCOMMENT
 function clientCode() {
   return Packages.net.appjet.ajstdlib.Comet.getClientCode(appjet.context);
 };
+
+// YOURNAME:
+// YOURCOMMENT
 function clientMTime() {
   return Packages.net.appjet.ajstdlib.Comet.getClientMTime(appjet.context);
 };

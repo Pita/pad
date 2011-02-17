@@ -15,7 +15,13 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 var padcookie = (function(){
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getRawCookie() {
     // returns null if can't get cookie text
     if (! document.cookie) {
@@ -28,11 +34,17 @@ var padcookie = (function(){
     }
     return regexResult[1];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function setRawCookie(safeText) {
     var expiresDate = new Date();
     expiresDate.setFullYear(3000);
     document.cookie = ('prefs='+safeText+';expires='+expiresDate.toGMTString());
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function parseCookie(text) {
     // returns null if can't parse cookie.
 
@@ -44,9 +56,15 @@ var padcookie = (function(){
       return null;
     }
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function stringifyCookie(data) {
     return escape(JSON.stringify(data));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function saveCookie() {
     if (! inited) {
       return;
@@ -68,6 +86,9 @@ var padcookie = (function(){
   var inited = false;
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     init: function(prefsToSet) {
       var rawCookie = getRawCookie();
       if (rawCookie) {
@@ -88,10 +109,19 @@ var padcookie = (function(){
       inited = true;
       saveCookie();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     wasNoCookie: function() { return wasNoCookie; },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getPref: function(prefName) {
       return cookieData[prefName];
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     setPref: function(prefName, value) {
       cookieData[prefName] = value;
       saveCookie();

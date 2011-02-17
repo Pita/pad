@@ -56,6 +56,9 @@ var speed=35;
 var counter =0;
 var threadSuspended = false; //added by kwalrath
 
+
+// YOURNAME:
+// YOURCOMMENT
 function init() {
         this.resize(150,50);
         this.setFont(new Font("TimesRoman",Font.BOLD,36));
@@ -66,6 +69,9 @@ function init() {
         separated = s.split('');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function start() {
         if(killme == null)
         {
@@ -74,10 +80,16 @@ function start() {
         }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function stop() {
         killme = null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
         while (killme != null) {
         try {Thread.sleep(100);} catch (e){}
@@ -86,6 +98,9 @@ function run() {
         killme = null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function paint(g) {
         for(i=0;i<separated.length;i++)
         {
@@ -96,6 +111,9 @@ function paint(g) {
 }
 
 /* Added by kwalrath. */
+
+// YOURNAME:
+// YOURCOMMENT
 function mouseDown(evt, x, y) {
         if (threadSuspended) {
             killme.resume();

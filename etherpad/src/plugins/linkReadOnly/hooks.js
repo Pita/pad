@@ -3,6 +3,9 @@ import("etherpad.utils.*");
 import("etherpad.collab.server_utils");
 import("etherpad.pad.padutils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function docbarItemsPad() {
     var padId = request.path.split("/")[1];
     return ["<a href='/ep/pad/view/" +

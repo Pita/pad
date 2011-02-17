@@ -19,28 +19,49 @@
  * @fileDescription
  * Sosme profiling functions.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 var time = function() {
   return Packages.net.appjet.oui.profiler.time();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var record = function(op, time) {
   Packages.net.appjet.oui.profiler.record(op, time);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var recordCumulative = function(op, time) {
   Packages.net.appjet.oui.profiler.recordCumulative(op, time);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var reset = function() {
   Packages.net.appjet.oui.profiler.reset();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var print = function() {
   Packages.net.appjet.oui.profiler.print();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var rcb = function(op, cumulative) {
   var start = time();
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     var end = time();
     (cumulative ? recordCumulative : record)(op, end-start);

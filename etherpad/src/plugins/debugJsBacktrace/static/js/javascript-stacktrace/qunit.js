@@ -8,11 +8,17 @@
  * and GPL (GPL-LICENSE.txt) licenses.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 (function(window) {
 
 var QUnit = {
 
 	// Initialize the configuration options
+
+// YOURNAME:
+// YOURCOMMENT
 	init: function() {
 		config = {
 			stats: { all: 0, bad: 0 },
@@ -43,9 +49,15 @@ var QUnit = {
 	},
 	
 	// call on start of module test to prepend name to all tests
+
+// YOURNAME:
+// YOURCOMMENT
 	module: function(name, testEnvironment) {
 		config.currentModule = name;
 
+
+// YOURNAME:
+// YOURCOMMENT
 		synchronize(function() {
 			if ( config.currentModule ) {
 				QUnit.moduleDone( config.currentModule, config.moduleStats.bad, config.moduleStats.all );
@@ -59,6 +71,9 @@ var QUnit = {
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	asyncTest: function(testName, expected, callback) {
 		if ( arguments.length === 2 ) {
 			callback = expected;
@@ -68,6 +83,9 @@ var QUnit = {
 		QUnit.test(testName, expected, callback, true);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	test: function(testName, expected, callback, async) {
 		var name = testName, testEnvironment, testEnvironmentArg;
 
@@ -89,11 +107,20 @@ var QUnit = {
 			return;
 		}
 
+
+// YOURNAME:
+// YOURCOMMENT
 		synchronize(function() {
 			QUnit.testStart( testName );
 
 			testEnvironment = extend({
+
+// YOURNAME:
+// YOURCOMMENT
 				setup: function() {},
+
+// YOURNAME:
+// YOURCOMMENT
 				teardown: function() {}
 			}, config.moduleTestEnvironment);
 			if (testEnvironmentArg) {
@@ -135,6 +162,9 @@ var QUnit = {
 			}
 		});
 
+
+// YOURNAME:
+// YOURCOMMENT
 		synchronize(function() {
 			try {
 				checkPollution();
@@ -183,11 +213,17 @@ var QUnit = {
 				var b = document.createElement("strong");
 				b.innerHTML = name + " <b style='color:black;'>(<b class='fail'>" + bad + "</b>, <b class='pass'>" + good + "</b>, " + config.assertions.length + ")</b>";
 				
+
+// YOURNAME:
+// YOURCOMMENT
 				addEvent(b, "click", function() {
 					var next = b.nextSibling, display = next.style.display;
 					next.style.display = display === "none" ? "block" : "none";
 				});
 				
+
+// YOURNAME:
+// YOURCOMMENT
 				addEvent(b, "dblclick", function(e) {
 					var target = e && e.target ? e.target : window.event.srcElement;
 					if ( target.nodeName.toLowerCase() === "strong" ) {
@@ -239,6 +275,9 @@ var QUnit = {
 		});
 
 		if ( window.setTimeout && !config.doneTimer ) {
+
+// YOURNAME:
+// YOURCOMMENT
 			config.doneTimer = window.setTimeout(function(){
 				if ( !config.queue.length ) {
 					done();
@@ -252,6 +291,9 @@ var QUnit = {
 	/**
 	 * Specify the number of expected assertions to gurantee that failed test (no assertions are run at all) don't slip through.
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	expect: function(asserts) {
 		config.expected = asserts;
 	},
@@ -260,6 +302,9 @@ var QUnit = {
 	 * Asserts true.
 	 * @example ok( "asdfasdf".length > 5, "There must be at least 5 chars" );
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	ok: function(a, msg) {
 		QUnit.log(a, msg);
 
@@ -281,33 +326,57 @@ var QUnit = {
 	 * @param Object expected
 	 * @param String message (optional)
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	equal: function(actual, expected, message) {
 		push(expected == actual, actual, expected, message);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	notEqual: function(actual, expected, message) {
 		push(expected != actual, actual, expected, message);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	deepEqual: function(a, b, message) {
 		push(QUnit.equiv(a, b), a, b, message);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	notDeepEqual: function(a, b, message) {
 		push(!QUnit.equiv(a, b), a, b, message);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	strictEqual: function(actual, expected, message) {
 		push(expected === actual, actual, expected, message);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	notStrictEqual: function(actual, expected, message) {
 		push(expected !== actual, actual, expected, message);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	start: function() {
 		// A slight delay, to avoid any current callbacks
 		if ( window.setTimeout ) {
+
+// YOURNAME:
+// YOURCOMMENT
 			window.setTimeout(function() {
 				if ( config.timeout ) {
 					clearTimeout(config.timeout);
@@ -322,10 +391,16 @@ var QUnit = {
 		}
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	stop: function(timeout) {
 		config.blocking = true;
 
 		if ( timeout && window.setTimeout ) {
+
+// YOURNAME:
+// YOURCOMMENT
 			config.timeout = window.setTimeout(function() {
 				QUnit.ok( false, "Test timed out" );
 				QUnit.start();
@@ -336,6 +411,9 @@ var QUnit = {
 	/**
 	 * Resets the test setup. Useful for tests that modify the DOM.
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	reset: function() {
 		if ( window.jQuery ) {
 			jQuery("#main").html( config.fixture );
@@ -352,6 +430,9 @@ var QUnit = {
 	 * @param DOMElement elem
 	 * @param String type
 	 */
+
+// YOURNAME:
+// YOURCOMMENT
 	triggerEvent: function( elem, type, event ) {
 		if ( document.createEvent ) {
 			event = document.createEvent("MouseEvents");
@@ -365,16 +446,37 @@ var QUnit = {
 	},
 	
 	// Safe object type checking
+
+// YOURNAME:
+// YOURCOMMENT
 	is: function( type, obj ) {
 		return Object.prototype.toString.call( obj ) === "[object "+ type +"]";
 	},
 	
 	// Logging callbacks
+
+// YOURNAME:
+// YOURCOMMENT
 	done: function(failures, total) {},
+
+// YOURNAME:
+// YOURCOMMENT
 	log: function(result, message) {},
+
+// YOURNAME:
+// YOURCOMMENT
 	testStart: function(name) {},
+
+// YOURNAME:
+// YOURCOMMENT
 	testDone: function(name, failures, total) {},
+
+// YOURNAME:
+// YOURCOMMENT
 	moduleStart: function(name, testEnvironment) {},
+
+// YOURNAME:
+// YOURCOMMENT
 	moduleDone: function(name, failures, total) {}
 };
 
@@ -392,6 +494,9 @@ var config = {
 };
 
 // Load paramaters
+
+// YOURNAME:
+// YOURCOMMENT
 (function() {
 	var location = window.location || { search: "", protocol: "file:" },
 		GETParams = location.search.slice(1).split('&');
@@ -429,6 +534,9 @@ if ( typeof document === "undefined" || document.readyState === "complete" ) {
 	config.autorun = true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 addEvent(window, "load", function() {
 	// Initialize the config, saving the execution queue
 	var oldconfig = extend({}, config);
@@ -450,6 +558,9 @@ addEvent(window, "load", function() {
 		filter.type = "checkbox";
 		filter.id = "qunit-filter-pass";
 		filter.disabled = true;
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent( filter, "click", function() {
 			var li = document.getElementsByTagName("li");
 			for ( var i = 0; i < li.length; i++ ) {
@@ -469,6 +580,9 @@ addEvent(window, "load", function() {
 		missing.type = "checkbox";
 		missing.id = "qunit-filter-missing";
 		missing.disabled = true;
+
+// YOURNAME:
+// YOURCOMMENT
 		addEvent( missing, "click", function() {
 			var li = document.getElementsByTagName("li");
 			for ( var i = 0; i < li.length; i++ ) {
@@ -497,6 +611,9 @@ addEvent(window, "load", function() {
 	QUnit.start();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 function done() {
 	if ( config.doneTimer && window.clearTimeout ) {
 		window.clearTimeout( config.doneTimer );
@@ -504,6 +621,9 @@ function done() {
 	}
 
 	if ( config.queue.length ) {
+
+// YOURNAME:
+// YOURCOMMENT
 		config.doneTimer = window.setTimeout(function(){
 			if ( !config.queue.length ) {
 				done();
@@ -548,6 +668,9 @@ function done() {
 	QUnit.done( config.stats.bad, config.stats.all );
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function validTest( name ) {
 	var i = config.filters.length,
 		run = false;
@@ -576,11 +699,17 @@ function validTest( name ) {
 	return run;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function push(result, actual, expected, message) {
 	message = message || (result ? "okay" : "failed");
 	QUnit.ok( result, result ? message + ": " + expected : message + ", expected: " + QUnit.jsDump.parse(expected) + " result: " + QUnit.jsDump.parse(actual) );
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function synchronize( callback ) {
 	config.queue.push( callback );
 
@@ -589,12 +718,18 @@ function synchronize( callback ) {
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function process() {
 	while ( config.queue.length && !config.blocking ) {
 		config.queue.shift()();
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function saveGlobal() {
 	config.pollution = [];
 	
@@ -605,6 +740,9 @@ function saveGlobal() {
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkPollution( name ) {
 	var old = config.pollution;
 	saveGlobal();
@@ -623,6 +761,9 @@ function checkPollution( name ) {
 }
 
 // returns a new Array with the elements that are in a but not in b
+
+// YOURNAME:
+// YOURCOMMENT
 function diff( a, b ) {
 	var result = a.slice();
 	for ( var i = 0; i < result.length; i++ ) {
@@ -637,6 +778,9 @@ function diff( a, b ) {
 	return result;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function fail(message, exception, callback) {
 	if ( typeof console !== "undefined" && console.error && console.warn ) {
 		console.error(message);
@@ -648,6 +792,9 @@ function fail(message, exception, callback) {
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extend(a, b) {
 	for ( var prop in b ) {
 		a[prop] = b[prop];
@@ -656,6 +803,9 @@ function extend(a, b) {
 	return a;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function addEvent(elem, type, fn) {
 	if ( elem.addEventListener ) {
 		elem.addEventListener( type, fn, false );
@@ -666,6 +816,9 @@ function addEvent(elem, type, fn) {
 	}
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function id(name) {
 	return !!(typeof document !== "undefined" && document && document.getElementById) &&
 		document.getElementById( name );
@@ -675,6 +828,9 @@ function id(name) {
 // Discussions and reference: http://philrathe.com/articles/equiv
 // Test suites: http://philrathe.com/tests/equiv
 // Author: Philippe Rathé <prathe@gmail.com>
+
+// YOURNAME:
+// YOURCOMMENT
 QUnit.equiv = function () {
 
     var innerEquiv; // the real equiv function
@@ -682,6 +838,9 @@ QUnit.equiv = function () {
 
 
     // Determine what is o.
+
+    // YOURNAME:
+    // YOURCOMMENT
     function hoozit(o) {
         if (QUnit.is("String", o)) {
             return "string";
@@ -730,6 +889,9 @@ QUnit.equiv = function () {
     }
 
     // Call the o related callback with the given arguments.
+
+    // YOURNAME:
+    // YOURCOMMENT
     function bindCallbacks(o, callbacks, args) {
         var prop = hoozit(o);
         if (prop) {
@@ -741,9 +903,15 @@ QUnit.equiv = function () {
         }
     }
     
+
+    // YOURNAME:
+    // YOURCOMMENT
     var callbacks = function () {
 
         // for string, boolean, number and null
+
+        // YOURNAME:
+        // YOURCOMMENT
         function useStrictEquality(b, a) {
             if (b instanceof a.constructor || a instanceof b.constructor) {
                 // to catch short annotaion VS 'new' annotation of a declaration
@@ -762,14 +930,23 @@ QUnit.equiv = function () {
             "null": useStrictEquality,
             "undefined": useStrictEquality,
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             "nan": function (b) {
                 return isNaN(b);
             },
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             "date": function (b, a) {
                 return hoozit(b) === "date" && a.valueOf() === b.valueOf();
             },
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             "regexp": function (b, a) {
                 return hoozit(b) === "regexp" &&
                     a.source === b.source && // the regex itself
@@ -781,12 +958,18 @@ QUnit.equiv = function () {
             // - skip when the property is a method of an instance (OOP)
             // - abort otherwise,
             //   initial === would have catch identical references anyway
+
+            // YOURNAME:
+            // YOURCOMMENT
             "function": function () {
                 var caller = callers[callers.length - 1];
                 return caller !== Object &&
                         typeof caller !== "undefined";
             },
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             "array": function (b, a) {
                 var i;
                 var len;
@@ -808,6 +991,9 @@ QUnit.equiv = function () {
                 return true;
             },
 
+
+            // YOURNAME:
+            // YOURCOMMENT
             "object": function (b, a) {
                 var i;
                 var eq = true; // unless we can proove it
@@ -842,12 +1028,18 @@ QUnit.equiv = function () {
         };
     }();
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     innerEquiv = function () { // can take multiple arguments
         var args = Array.prototype.slice.apply(arguments);
         if (args.length < 2) {
             return true; // end transition
         }
 
+
+        // YOURNAME:
+        // YOURCOMMENT
         return (function (a, b) {
             if (a === b) {
                 return true; // catch the most you can
@@ -875,13 +1067,25 @@ QUnit.equiv = function () {
  * @author Ariel Flesler
  * @link {http://flesler.blogspot.com/2008/05/jsdump-pretty-dump-of-any-javascript.html}
  */
+
+// YOURNAME:
+// YOURCOMMENT
 QUnit.jsDump = (function() {
+
+// YOURNAME:
+// YOURCOMMENT
 	function quote( str ) {
 		return '"' + str.toString().replace(/"/g, '\\"') + '"';
 	};
+
+// YOURNAME:
+// YOURCOMMENT
 	function literal( o ) {
 		return o + '';	
 	};
+
+// YOURNAME:
+// YOURCOMMENT
 	function join( pre, arr, post ) {
 		var s = jsDump.separator(),
 			base = jsDump.indent(),
@@ -892,6 +1096,9 @@ QUnit.jsDump = (function() {
 			return pre + post;
 		return [ pre, inner + arr, base + post ].join(s);
 	};
+
+// YOURNAME:
+// YOURCOMMENT
 	function array( arr ) {
 		var i = arr.length,	ret = Array(i);					
 		this.up();
@@ -901,17 +1108,29 @@ QUnit.jsDump = (function() {
 		return join( '[', ret, ']' );
 	};
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	var reName = /^function (\w+)/;
 	
 	var jsDump = {
+
+// YOURNAME:
+// YOURCOMMENT
 		parse:function( obj, type ) { //type is used mostly internally, you can fix a (custom)type in advance
 			var	parser = this.parsers[ type || this.typeOf(obj) ];
 			type = typeof parser;			
 			
+
+// YOURNAME:
+// YOURCOMMENT
 			return type == 'function' ? parser.call( this, obj ) :
 				   type == 'string' ? parser :
 				   this.parsers.error;
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		typeOf:function( obj ) {
 			var type;
 			if ( obj === null ) {
@@ -939,9 +1158,15 @@ QUnit.jsDump = (function() {
 			}
 			return type;
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		separator:function() {
 			return this.multiline ?	this.HTML ? '<br />' : '\n' : this.HTML ? '&nbsp;' : ' ';
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		indent:function( extra ) {// extra can be a number, shortcut for increasing-calling-decreasing
 			if ( !this.multiline )
 				return '';
@@ -950,12 +1175,21 @@ QUnit.jsDump = (function() {
 				chr = chr.replace(/\t/g,'   ').replace(/ /g,'&nbsp;');
 			return Array( this._depth_ + (extra||0) ).join(chr);
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		up:function( a ) {
 			this._depth_ += a || 1;
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		down:function( a ) {
 			this._depth_ -= a || 1;
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		setParser:function( name, parser ) {
 			this.parsers[name] = parser;
 		},
@@ -973,6 +1207,9 @@ QUnit.jsDump = (function() {
 			unknown: '[Unknown]',
 			'null':'null',
 			undefined:'undefined',
+
+// YOURNAME:
+// YOURCOMMENT
 			'function':function( fn ) {
 				var ret = 'function',
 					name = 'name' in fn ? fn.name : (reName.exec(fn)||[])[1];//functions never have name in IE
@@ -980,12 +1217,18 @@ QUnit.jsDump = (function() {
 					ret += ' ' + name;
 				ret += '(';
 				
+
+// YOURNAME:
+// YOURCOMMENT
 				ret = [ ret, this.parse( fn, 'functionArgs' ), '){'].join('');
 				return join( ret, this.parse(fn,'functionCode'), '}' );
 			},
 			array: array,
 			nodelist: array,
 			arguments: array,
+
+// YOURNAME:
+// YOURCOMMENT
 			object:function( map ) {
 				var ret = [ ];
 				this.up();
@@ -994,6 +1237,9 @@ QUnit.jsDump = (function() {
 				this.down();
 				return join( '{', ret, '}' );
 			},
+
+// YOURNAME:
+// YOURCOMMENT
 			node:function( node ) {
 				var open = this.HTML ? '&lt;' : '<',
 					close = this.HTML ? '&gt;' : '>';
@@ -1008,6 +1254,9 @@ QUnit.jsDump = (function() {
 				}
 				return ret + close + open + '/' + tag + close;
 			},
+
+// YOURNAME:
+// YOURCOMMENT
 			functionArgs:function( fn ) {//function calls it internally, it's the arguments part of the function
 				var l = fn.length;
 				if ( !l ) return '';				

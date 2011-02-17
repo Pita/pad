@@ -56,6 +56,9 @@ get cache() {
 },
 
 get cacheRoot() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function(name) {
     return Packages.net.appjet.ajstdlib.ajstdlib.attributes()
       .getOrElseUpdate("cache-"+(name?name:""), scalaF0({}));
@@ -94,6 +97,9 @@ get config() {
  * tells appjet not to re-use this "scope"/"server"
  */
 get retireScope() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() { this.context.runner().reuseOk_$eq(false); }
 },
   

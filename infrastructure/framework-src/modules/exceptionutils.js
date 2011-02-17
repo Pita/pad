@@ -19,6 +19,9 @@ import("funhtml.*");
 import("jsutils.{scalaF0,scalaF1}");
 import("stringutils.{toHTML,sprintf}");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getException(ex) {
   if (ex instanceof java.lang.Throwable) {
     return new net.appjet.bodylock.JSRuntimeException(ex.getMessage(), ex);
@@ -31,11 +34,17 @@ function _getException(ex) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _convertStackFrameToTable(id, frame) {
   var r = frame.errorContext(4);
   var out = [];
   var t = TABLE({className: "codecontext"});
   var counter = r._1();
+
+  // YOURNAME:
+  // YOURCOMMENT
   r._3().foreach(scalaF1(function(s) {
     var row = TR(TD({className: "linecell"}, counter++), TD(String(s)));
     if (counter-1 == frame.errorLine())
@@ -49,9 +58,15 @@ function _convertStackFrameToTable(id, frame) {
                  SPAN({className: "errordetail"}, "...was called from "+frame.name()+ " (line "+frame.errorLine()+"):"),
                  SPAN({className: "sourceline"}, " "+frame.errorContext(0)._3().first())));
   out.push(DIV({id: 'frame'+id, style: (id == 0 ? "" : "display: none;")}, t));
+
+  // YOURNAME:
+  // YOURCOMMENT
   return out.map(function(tag) { return toHTML(tag); }).join("");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStackTraceHTML(ex) {
   ex = _getException(ex);
   if (ex.frames().isEmpty()) 
@@ -61,17 +76,26 @@ function getStackTraceHTML(ex) {
   var firstFrame = ex.frames().first();
   out.push(toHTML(DIV({id: "errortitle"}, "Error in "+firstFrame.name())));
   out.push(toHTML(DIV({id: "errormessage"}, ""+ex.cause().getMessage()+" at "+firstFrame.name()+" (Line "+firstFrame.errorLine()+")")));
+
+  // YOURNAME:
+  // YOURCOMMENT
   ex.frames().foreach(scalaF1(function(frame) {
     out.push(_convertStackFrameToTable(counter++, frame));
   }));
   return out.join("");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStackTraceFullpage(ex) {
   var tmpl = new EJS({text: _tmpl});
   return tmpl.render({trace: getStackTraceHTML(ex)});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getStackTracePlain(ex) {
   ex = _getException(ex);
   if (ex.frames().isEmpty()) {
@@ -85,6 +109,9 @@ function getStackTracePlain(ex) {
   out.push("Error in "+firstFrame.name());
   out.push(""+ex.cause().getMessage()+" at "+firstFrame.name()+" (Line "+firstFrame.errorLine()+")");
   var counter = 0;
+
+  // YOURNAME:
+  // YOURCOMMENT
   ex.frames().foreach(scalaF1(function(frame) {
     if (counter++ > 0) {
       out.push("");
@@ -92,6 +119,9 @@ function getStackTracePlain(ex) {
     }
     var r = frame.errorContext(4);
     var c2 = r._1();
+
+    // YOURNAME:
+    // YOURCOMMENT
     r._3().foreach(scalaF1(function(s) {
       var pre = " ";
       if (c2 == frame.errorLine())
@@ -114,6 +144,9 @@ var _tmpl = """<!DOCTYPE HTML PUBLIC
   <meta http-equiv="Content-Language" content="en-us" />
   <script type="text/javascript" src="http://appjet.com/js/343607636acfee88faa2b638330a3370/jquery-1.2.6.js"></script>
   <script type="text/javascript">
+
+// YOURNAME:
+// YOURCOMMENT
 function toggleFrameView(frameId) {
   var hidden = $("#frame"+frameId+":hidden")
   var visible = $("#frame"+frameId+":visible")
@@ -126,6 +159,9 @@ function toggleFrameView(frameId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function toggleErrorView() {
   var hidden = $("#hiddentrace:hidden");
   var visible = $("#hiddentrace:visible");
@@ -137,6 +173,9 @@ function toggleErrorView() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function load() {
   $(".zippy").attr("src", "http://appjet.com/img/open-arrow.png")
 }

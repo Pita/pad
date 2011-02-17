@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 (function(){
 /*
  * jQuery 1.2.1 - New Wave Javascript
@@ -14,6 +17,9 @@
 if ( typeof jQuery != "undefined" )
 	var _jQuery = jQuery;
 
+
+// YOURNAME:
+// YOURCOMMENT
 var jQuery = window.jQuery = function(selector, context) {
 	// If the context is a namespace object, return a new object
 	return this instanceof jQuery ?
@@ -31,6 +37,9 @@ window.$ = jQuery;
 var quickExpr = /^[^<]*(<(.|\s)+>)[^>]*$|^#(\w+)$/;
 
 jQuery.fn = jQuery.prototype = {
+
+// YOURNAME:
+// YOURCOMMENT
 	init: function(selector, context) {
 		// Make sure that a selection was provided
 		selector = selector || document;
@@ -83,12 +92,18 @@ jQuery.fn = jQuery.prototype = {
 	
 	jquery: "1.2.1",
 
+
+// YOURNAME:
+// YOURCOMMENT
 	size: function() {
 		return this.length;
 	},
 	
 	length: 0,
 
+
+// YOURNAME:
+// YOURCOMMENT
 	get: function( num ) {
 		return num == undefined ?
 
@@ -99,30 +114,48 @@ jQuery.fn = jQuery.prototype = {
 			this[num];
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	pushStack: function( a ) {
 		var ret = jQuery(a);
 		ret.prevObject = this;
 		return ret;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	setArray: function( a ) {
 		this.length = 0;
 		Array.prototype.push.apply( this, a );
 		return this;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	each: function( fn, args ) {
 		return jQuery.each( this, fn, args );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	index: function( obj ) {
 		var pos = -1;
+
+// YOURNAME:
+// YOURCOMMENT
 		this.each(function(i){
 			if ( this == obj ) pos = i;
 		});
 		return pos;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	attr: function( key, value, type ) {
 		var obj = key;
 		
@@ -136,6 +169,9 @@ jQuery.fn = jQuery.prototype = {
 			}
 		
 		// Check to see if we're setting style values
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(index){
 			// Set all the styles
 			for ( var prop in obj )
@@ -146,16 +182,28 @@ jQuery.fn = jQuery.prototype = {
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	css: function( key, value ) {
 		return this.attr( key, value, "curCSS" );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	text: function(e) {
 		if ( typeof e != "object" && e != null )
 			return this.empty().append( document.createTextNode( e ) );
 
 		var t = "";
+
+// YOURNAME:
+// YOURCOMMENT
 		jQuery.each( e || this, function(){
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( this.childNodes, function(){
 				if ( this.nodeType != 8 )
 					t += this.nodeType != 1 ?
@@ -165,12 +213,18 @@ jQuery.fn = jQuery.prototype = {
 		return t;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	wrapAll: function(html) {
 		if ( this[0] )
 			// The elements to wrap the target around
 			jQuery(html, this[0].ownerDocument)
 				.clone()
 				.insertBefore(this[0])
+
+// YOURNAME:
+// YOURCOMMENT
 				.map(function(){
 					var elem = this;
 					while ( elem.firstChild )
@@ -182,54 +236,105 @@ jQuery.fn = jQuery.prototype = {
 		return this;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	wrapInner: function(html) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			jQuery(this).contents().wrapAll(html);
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	wrap: function(html) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			jQuery(this).wrapAll(html);
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	append: function() {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.domManip(arguments, true, 1, function(a){
 			this.appendChild( a );
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	prepend: function() {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.domManip(arguments, true, -1, function(a){
 			this.insertBefore( a, this.firstChild );
 		});
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	before: function() {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.domManip(arguments, false, 1, function(a){
 			this.parentNode.insertBefore( a, this );
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	after: function() {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.domManip(arguments, false, -1, function(a){
 			this.parentNode.insertBefore( a, this.nextSibling );
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	end: function() {
 		return this.prevObject || jQuery([]);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	find: function(t) {
+
+// YOURNAME:
+// YOURCOMMENT
 		var data = jQuery.map(this, function(a){ return jQuery.find(t,a); });
 		return this.pushStack( /[^+>] [^+>]/.test( t ) || t.indexOf("..") > -1 ?
 			jQuery.unique( data ) : data );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	clone: function(events) {
 		// Do the clone
+
+// YOURNAME:
+// YOURCOMMENT
 		var ret = this.map(function(){
 			return this.outerHTML ? jQuery(this.outerHTML)[0] : this.cloneNode(true);
 		});
@@ -237,6 +342,9 @@ jQuery.fn = jQuery.prototype = {
 		// Need to set the expando to null on the cloned set if it exists
 		// removeData doesn't work here, IE removes it from the original as well
 		// this is primarily for IE but the data expando shouldn't be copied over in any browser
+
+// YOURNAME:
+// YOURCOMMENT
 		var clone = ret.find("*").andSelf().each(function(){
 			if ( this[ expando ] != undefined )
 				this[ expando ] = null;
@@ -244,6 +352,9 @@ jQuery.fn = jQuery.prototype = {
 		
 		// Copy the events from the original to the clone
 		if (events === true)
+
+// YOURNAME:
+// YOURCOMMENT
 			this.find("*").andSelf().each(function(i) {
 				var events = jQuery.data(this, "events");
 				for ( var type in events )
@@ -255,9 +366,15 @@ jQuery.fn = jQuery.prototype = {
 		return ret;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	filter: function(t) {
 		return this.pushStack(
 			jQuery.isFunction( t ) &&
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.grep(this, function(el, index){
 				return t.apply(el, [index]);
 			}) ||
@@ -265,11 +382,17 @@ jQuery.fn = jQuery.prototype = {
 			jQuery.multiFilter(t,this) );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	not: function(t) {
 		return this.pushStack(
 			t.constructor == String &&
 			jQuery.multiFilter(t, this, true) ||
 
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.grep(this, function(a) {
 				return ( t.constructor == Array || t.jquery )
 					? jQuery.inArray( a, t ) < 0
@@ -278,6 +401,9 @@ jQuery.fn = jQuery.prototype = {
 		);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	add: function(t) {
 		return this.pushStack( jQuery.merge(
 			this.get(),
@@ -288,14 +414,23 @@ jQuery.fn = jQuery.prototype = {
 		);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	is: function(expr) {
 		return expr ? jQuery.multiFilter(expr,this).length > 0 : false;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	hasClass: function(expr) {
 		return this.is("." + expr);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	val: function( val ) {
 		if ( val == undefined ) {
 			if ( this.length ) {
@@ -335,6 +470,9 @@ jQuery.fn = jQuery.prototype = {
 					return this[0].value.replace(/\r/g, "");
 			}
 		} else
+
+// YOURNAME:
+// YOURCOMMENT
 			return this.each(function(){
 				if ( val.constructor == Array && /radio|checkbox/.test(this.type) )
 					this.checked = (jQuery.inArray(this.value, val) >= 0 ||
@@ -342,6 +480,9 @@ jQuery.fn = jQuery.prototype = {
 				else if ( jQuery.nodeName(this, "select") ) {
 					var tmp = val.constructor == Array ? val : [val];
 
+
+// YOURNAME:
+// YOURCOMMENT
 					jQuery("option", this).each(function(){
 						this.selected = (jQuery.inArray(this.value, tmp) >= 0 ||
 						jQuery.inArray(this.text, tmp) >= 0);
@@ -354,37 +495,64 @@ jQuery.fn = jQuery.prototype = {
 			});
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	html: function( val ) {
 		return val == undefined ?
 			( this.length ? this[0].innerHTML : null ) :
 			this.empty().append( val );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	replaceWith: function( val ) {
 		return this.after( val ).remove();
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	eq: function(i){
 		return this.slice(i, i+1);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	slice: function() {
 		return this.pushStack( Array.prototype.slice.apply( this, arguments ) );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	map: function(fn) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.pushStack(jQuery.map( this, function(elem,i){
 			return fn.call( elem, i, elem );
 		}));
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	andSelf: function() {
 		return this.add( this.prevObject );
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	domManip: function(args, table, dir, fn) {
 		var clone = this.length > 1, a; 
 
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			if ( !a ) {
 				a = jQuery.clean(args, this.ownerDocument);
@@ -397,6 +565,9 @@ jQuery.fn = jQuery.prototype = {
 			if ( table && jQuery.nodeName(this, "table") && jQuery.nodeName(a[0], "tr") )
 				obj = this.getElementsByTagName("tbody")[0] || this.appendChild(document.createElement("tbody"));
 
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( a, function(){
 				var elem = clone ? this.cloneNode(true) : this;
 				if ( !evalScript(0, elem) )
@@ -406,6 +577,9 @@ jQuery.fn = jQuery.prototype = {
 	}
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function evalScript(i, elem){
 	var script = jQuery.nodeName(elem, "script");
 
@@ -424,6 +598,9 @@ function evalScript(i, elem){
 	return script;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 jQuery.extend = jQuery.fn.extend = function() {
 	// copy reference to target object
 	var target = arguments[0] || {}, a = 1, al = arguments.length, deep = false;
@@ -467,6 +644,9 @@ jQuery.extend = jQuery.fn.extend = function() {
 var expando = "jQuery" + (new Date()).getTime(), uuid = 0, win = {};
 
 jQuery.extend({
+
+// YOURNAME:
+// YOURCOMMENT
 	noConflict: function(deep) {
 		window.$ = _$;
 		if ( deep )
@@ -476,12 +656,21 @@ jQuery.extend({
 
 	// This may seem like some crazy code, but trust me when I say that this
 	// is the only cross-browser way to do this. --John
+
+// YOURNAME:
+// YOURCOMMENT
 	isFunction: function( fn ) {
 		return !!fn && typeof fn != "string" && !fn.nodeName && 
+
+// YOURNAME:
+// YOURCOMMENT
 			fn.constructor != Array && /function/i.test( fn + "" );
 	},
 	
 	// check if an element is in a XML document
+
+// YOURNAME:
+// YOURCOMMENT
 	isXMLDoc: function(elem) {
 		return elem.documentElement && !elem.body ||
 			elem.tagName && elem.ownerDocument && !elem.ownerDocument.body;
@@ -489,6 +678,9 @@ jQuery.extend({
 
 	// Evalulates a script in a global context
 	// Evaluates Async. in Safari 2 :-(
+
+// YOURNAME:
+// YOURCOMMENT
 	globalEval: function( data ) {
 		data = jQuery.trim( data );
 		if ( data ) {
@@ -502,12 +694,18 @@ jQuery.extend({
 		}
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	nodeName: function( elem, name ) {
 		return elem.nodeName && elem.nodeName.toUpperCase() == name.toUpperCase();
 	},
 	
 	cache: {},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	data: function( elem, name, data ) {
 		elem = elem == window ? win : elem;
 
@@ -530,6 +728,9 @@ jQuery.extend({
 		return name ? jQuery.cache[ id ][ name ] : id;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	removeData: function( elem, name ) {
 		elem = elem == window ? win : elem;
 
@@ -566,6 +767,9 @@ jQuery.extend({
 	},
 
 	// args is for internal usage only
+
+// YOURNAME:
+// YOURCOMMENT
 	each: function( obj, fn, args ) {
 		if ( args ) {
 			if ( obj.length == undefined )
@@ -588,6 +792,9 @@ jQuery.extend({
 		return obj;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	prop: function(elem, value, type, index, prop){
 			// Handle executable functions
 			if ( jQuery.isFunction( value ) )
@@ -604,7 +811,13 @@ jQuery.extend({
 
 	className: {
 		// internal only, use addClass("class")
+
+// YOURNAME:
+// YOURCOMMENT
 		add: function( elem, c ){
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( (c || "").split(/\s+/), function(i, cur){
 				if ( !jQuery.className.has( elem.className, cur ) )
 					elem.className += ( elem.className ? " " : "" ) + cur;
@@ -612,19 +825,31 @@ jQuery.extend({
 		},
 
 		// internal only, use removeClass("class")
+
+// YOURNAME:
+// YOURCOMMENT
 		remove: function( elem, c ){
 			elem.className = c != undefined ?
+
+// YOURNAME:
+// YOURCOMMENT
 				jQuery.grep( elem.className.split(/\s+/), function(cur){
 					return !jQuery.className.has( c, cur );	
 				}).join(" ") : "";
 		},
 
 		// internal only, use is(".class")
+
+// YOURNAME:
+// YOURCOMMENT
 		has: function( t, c ) {
 			return jQuery.inArray( c, (t.className || t).toString().split(/\s+/) ) > -1;
 		}
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	swap: function(e,o,f) {
 		for ( var i in o ) {
 			e.style["old"+i] = e.style[i];
@@ -635,15 +860,24 @@ jQuery.extend({
 			e.style[i] = e.style["old"+i];
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	css: function(e,p) {
 		if ( p == "height" || p == "width" ) {
 			var old = {}, oHeight, oWidth, d = ["Top","Bottom","Right","Left"];
 
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( d, function(){
 				old["padding" + this] = 0;
 				old["border" + this + "Width"] = 0;
 			});
 
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.swap( e, old, function() {
 				if ( jQuery(e).is(':visible') ) {
 					oHeight = e.offsetHeight;
@@ -675,10 +909,16 @@ jQuery.extend({
 		return jQuery.curCSS( e, p );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	curCSS: function(elem, prop, force) {
 		var ret, stack = [], swap = [];
 
 		// A helper method for determining if an element's values are broken
+
+// YOURNAME:
+// YOURCOMMENT
 		function color(a){
 			if ( !jQuery.browser.safari )
 				return false;
@@ -740,6 +980,9 @@ jQuery.extend({
 				ret = "1";
 
 		} else if (elem.currentStyle) {
+
+// YOURNAME:
+// YOURCOMMENT
 			var newProp = prop.replace(/\-(\w)/g,function(m,c){return c.toUpperCase();});
 			ret = elem.currentStyle[prop] || elem.currentStyle[newProp];
 
@@ -762,10 +1005,16 @@ jQuery.extend({
 		return ret;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	clean: function(a, doc) {
 		var r = [];
 		doc = doc || document;
 
+
+// YOURNAME:
+// YOURCOMMENT
 		jQuery.each( a, function(i,arg){
 			if ( !arg ) return;
 
@@ -775,6 +1024,9 @@ jQuery.extend({
 			// Convert html string into DOM nodes
 			if ( typeof arg == "string" ) {
 				// Fix "XHTML"-style tags in all browsers
+
+// YOURNAME:
+// YOURCOMMENT
 				arg = arg.replace(/(<(\w+)[^>]*?)\/>/g, function(m, all, tag){
 					return tag.match(/^(abbr|br|col|img|input|link|meta|param|hr|area)$/i)? m : all+"></"+tag+">";
 				});
@@ -853,6 +1105,9 @@ jQuery.extend({
 		return r;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	attr: function(elem, name, value){
 		var fix = jQuery.isXMLDoc(elem) ? {} : jQuery.props;
 
@@ -902,16 +1157,25 @@ jQuery.extend({
 				return elem.filter ? 
 					(parseFloat( elem.filter.match(/opacity=([^)]*)/)[1] ) / 100).toString() : "";
 			}
+
+// YOURNAME:
+// YOURCOMMENT
 			name = name.replace(/-([a-z])/ig,function(z,b){return b.toUpperCase();});
 			if ( value != undefined ) elem[name] = value;
 			return elem[name];
 		}
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	trim: function(t){
 		return (t||"").replace(/^\s+|\s+$/g, "");
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	makeArray: function( a ) {
 		var r = [];
 
@@ -925,6 +1189,9 @@ jQuery.extend({
 		return r;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	inArray: function( b, a ) {
 		for ( var i = 0, al = a.length; i < al; i++ )
 			if ( a[i] == b )
@@ -932,6 +1199,9 @@ jQuery.extend({
 		return -1;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	merge: function(first, second) {
 		// We have to loop this way because IE & Opera overwrite the length
 		// expando of getElementsByTagName
@@ -949,6 +1219,9 @@ jQuery.extend({
 		return first;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	unique: function(first) {
 		var r = [], done = {};
 
@@ -967,10 +1240,16 @@ jQuery.extend({
 		return r;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	grep: function(elems, fn, inv) {
 		// If a string is passed in for the function, make a function
 		// for it (a handy shortcut)
 		if ( typeof fn == "string" )
+
+// YOURNAME:
+// YOURCOMMENT
 			fn = eval("false||function(a,i){return " + fn + "}");
 
 		var result = [];
@@ -984,10 +1263,16 @@ jQuery.extend({
 		return result;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	map: function(elems, fn) {
 		// If a string is passed in for the function, make a function
 		// for it (a handy shortcut)
 		if ( typeof fn == "string" )
+
+// YOURNAME:
+// YOURCOMMENT
 			fn = eval("false||function(a){return " + fn + "}");
 
 		var result = [];
@@ -1053,7 +1338,13 @@ jQuery.each({
 	siblings: "jQuery.sibling(a.parentNode.firstChild,a)",
 	children: "jQuery.sibling(a.firstChild)",
 	contents: "jQuery.nodeName(a,'iframe')?a.contentDocument||a.contentWindow.document:jQuery.makeArray(a.childNodes)"
+
+// YOURNAME:
+// YOURCOMMENT
 }, function(i,n){
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[ i ] = function(a) {
 		var ret = jQuery.map(this,n);
 		if ( a && typeof a == "string" )
@@ -1068,9 +1359,18 @@ jQuery.each({
 	insertBefore: "before",
 	insertAfter: "after",
 	replaceAll: "replaceWith"
+
+// YOURNAME:
+// YOURCOMMENT
 }, function(i,n){
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[ i ] = function(){
 		var a = arguments;
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			for ( var j = 0, al = a.length; j < al; j++ )
 				jQuery(a[j])[n]( this );
@@ -1079,41 +1379,74 @@ jQuery.each({
 });
 
 jQuery.each( {
+
+// YOURNAME:
+// YOURCOMMENT
 	removeAttr: function( key ) {
 		jQuery.attr( this, key, "" );
 		this.removeAttribute( key );
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	addClass: function(c){
 		jQuery.className.add(this,c);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	removeClass: function(c){
 		jQuery.className.remove(this,c);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	toggleClass: function( c ){
 		jQuery.className[ jQuery.className.has(this,c) ? "remove" : "add" ](this, c);
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	remove: function(a){
 		if ( !a || jQuery.filter( a, [this] ).r.length ) {
 			jQuery.removeData( this );
 			this.parentNode.removeChild( this );
 		}
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	empty: function() {
 		// Clean up the cache
+
+// YOURNAME:
+// YOURCOMMENT
 		jQuery("*", this).each(function(){ jQuery.removeData(this); });
 
 		while ( this.firstChild )
 			this.removeChild( this.firstChild );
 	}
+
+// YOURNAME:
+// YOURCOMMENT
 }, function(i,n){
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[ i ] = function() {
 		return this.each( n, arguments );
 	};
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 jQuery.each( [ "Height", "Width" ], function(i,name){
 	var n = name.toLowerCase();
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[ n ] = function(h) {
 		return this[0] == window ?
 			jQuery.browser.safari && self["inner" + name] ||
@@ -1192,6 +1525,9 @@ jQuery.extend({
 			header: "/h\\d/i.test(a.nodeName)",
 
 			// :animated
+
+// YOURNAME:
+// YOURCOMMENT
 			animated: "jQuery.grep(jQuery.timers,function(fn){return a==fn.elem;}).length"
 		}
 	},
@@ -1208,6 +1544,9 @@ jQuery.extend({
 		new RegExp("^([:.#]*)(" + chars + "+)")
 	],
 
+
+// YOURNAME:
+// YOURCOMMENT
 	multiFilter: function( expr, elems, not ) {
 		var old, cur = [];
 
@@ -1221,6 +1560,9 @@ jQuery.extend({
 		return cur;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	find: function( t, context ) {
 		// Quickly handle non-string expressions
 		if ( typeof t != "string" )
@@ -1412,6 +1754,9 @@ jQuery.extend({
 		return done;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	classFilter: function(r,m,not){
 		m = " " + m + " ";
 		var tmp = [];
@@ -1423,6 +1768,9 @@ jQuery.extend({
 		return tmp;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	filter: function(t,r,not) {
 		var last;
 
@@ -1518,6 +1866,9 @@ jQuery.extend({
 					f = jQuery.expr[m[1]][m[2]];
 
 				// Build a custom macro to enclose it
+
+// YOURNAME:
+// YOURCOMMENT
 				f = eval("false||function(a,i){return " + f + "}");
 
 				// Execute it against the current filter
@@ -1530,6 +1881,9 @@ jQuery.extend({
 		return { r: r, t: t };
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	dir: function( elem, dir ){
 		var matched = [];
 		var cur = elem[dir];
@@ -1541,6 +1895,9 @@ jQuery.extend({
 		return matched;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	nth: function(cur,result,dir,elem){
 		result = result || 1;
 		var num = 0;
@@ -1552,6 +1909,9 @@ jQuery.extend({
 		return cur;
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	sibling: function( n, elem ) {
 		var r = [];
 
@@ -1572,6 +1932,9 @@ jQuery.event = {
 
 	// Bind an event to an element
 	// Original by Dean Edwards
+
+// YOURNAME:
+// YOURCOMMENT
 	add: function(element, type, handler, data) {
 		// For whatever reason, IE has trouble passing the window object
 		// around, causing it to be cloned in the process
@@ -1588,6 +1951,9 @@ jQuery.event = {
 			var fn = handler; 
 
 			// Create unique handler function, wrapped around original handler 
+
+// YOURNAME:
+// YOURCOMMENT
 			handler = function() { 
 				// Pass arguments and context to original handler 
 				return fn.apply(this, arguments); 
@@ -1608,6 +1974,9 @@ jQuery.event = {
 		// Init the element's event structure
 		var events = jQuery.data(element, "events") || jQuery.data(element, "events", {});
 		
+
+// YOURNAME:
+// YOURCOMMENT
 		var handle = jQuery.data(element, "handle", function(){
 			// returned undefined or false
 			var val;
@@ -1647,6 +2016,9 @@ jQuery.event = {
 	global: {},
 
 	// Detach an event or set of events from an element
+
+// YOURNAME:
+// YOURCOMMENT
 	remove: function(element, type, handler) {
 		var events = jQuery.data(element, "events"), ret, index;
 
@@ -1700,6 +2072,9 @@ jQuery.event = {
 		}
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	trigger: function(type, data, element, donative, extra) {
 		// Clone the incoming data, if any
 		data = jQuery.makeArray(data || []);
@@ -1751,6 +2126,9 @@ jQuery.event = {
 		return val;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	handle: function(event) {
 		// returned undefined or false
 		var val;
@@ -1793,6 +2171,9 @@ jQuery.event = {
 		return val;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	fix: function(event) {
 		// store a copy of the original event object 
 		// and clone to set read-only properties
@@ -1801,6 +2182,9 @@ jQuery.event = {
 		
 		// add preventDefault and stopPropagation since 
 		// they will not work on the clone
+
+// YOURNAME:
+// YOURCOMMENT
 		event.preventDefault = function() {
 			// if preventDefault exists run it on the original event
 			if (originalEvent.preventDefault)
@@ -1808,6 +2192,9 @@ jQuery.event = {
 			// otherwise set the returnValue property of the original event to false (IE)
 			originalEvent.returnValue = false;
 		};
+
+// YOURNAME:
+// YOURCOMMENT
 		event.stopPropagation = function() {
 			// if stopPropagation exists run it on the original event
 			if (originalEvent.stopPropagation)
@@ -1853,14 +2240,29 @@ jQuery.event = {
 };
 
 jQuery.fn.extend({
+
+// YOURNAME:
+// YOURCOMMENT
 	bind: function( type, data, fn ) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return type == "unload" ? this.one(type, data, fn) : this.each(function(){
 			jQuery.event.add( this, type, fn || data, fn && data );
 		});
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	one: function( type, data, fn ) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.event.add( this, type, function(event) {
 				jQuery(this).unbind(event);
 				return (fn || data).apply( this, arguments);
@@ -1868,27 +2270,48 @@ jQuery.fn.extend({
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	unbind: function( type, fn ) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			jQuery.event.remove( this, type, fn );
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	trigger: function( type, data, fn ) {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			jQuery.event.trigger( type, data, this, true, fn );
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	triggerHandler: function( type, data, fn ) {
 		if ( this[0] )
 			return jQuery.event.trigger( type, data, this[0], false, fn );
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	toggle: function() {
 		// Save reference to arguments for access in closure
 		var a = arguments;
 
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.click(function(e) {
 			// Figure out which function to execute
 			this.lastToggle = 0 == this.lastToggle ? 1 : 0;
@@ -1901,9 +2324,15 @@ jQuery.fn.extend({
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	hover: function(f,g) {
 		
 		// A private function for handling mouse 'hovering'
+
+// YOURNAME:
+// YOURCOMMENT
 		function handleHover(e) {
 			// Check if mouse(over|out) are still within the same parent element
 			var p = e.relatedTarget;
@@ -1922,6 +2351,9 @@ jQuery.fn.extend({
 		return this.mouseover(handleHover).mouseout(handleHover);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	ready: function(f) {
 		// Attach the listeners
 		bindReady();
@@ -1934,6 +2366,9 @@ jQuery.fn.extend({
 		// Otherwise, remember the function for later
 		else
 			// Add the function to the wait list
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.readyList.push( function() { return f.apply(this, [jQuery]); } );
 	
 		return this;
@@ -1948,6 +2383,9 @@ jQuery.extend({
 	readyList: [],
 	
 	// Handle when the DOM is ready
+
+// YOURNAME:
+// YOURCOMMENT
 	ready: function() {
 		// Make sure that the DOM is not already loaded
 		if ( !jQuery.isReady ) {
@@ -1957,6 +2395,9 @@ jQuery.extend({
 			// If there are functions bound, to execute
 			if ( jQuery.readyList ) {
 				// Execute all of them
+
+// YOURNAME:
+// YOURCOMMENT
 				jQuery.each( jQuery.readyList, function(){
 					this.apply( document );
 				});
@@ -1970,6 +2411,9 @@ jQuery.extend({
 			
 			// Remove script element used by IE hack
 			if( !window.frames.length ) // don't remove if frames are present (#1187)
+
+// YOURNAME:
+// YOURCOMMENT
 				jQuery(window).load(function(){ jQuery("#__ie_init").remove(); });
 		}
 	}
@@ -1977,9 +2421,15 @@ jQuery.extend({
 
 jQuery.each( ("blur,focus,load,resize,scroll,unload,click,dblclick," +
 	"mousedown,mouseup,mousemove,mouseover,mouseout,change,select," + 
+
+// YOURNAME:
+// YOURCOMMENT
 	"submit,keydown,keypress,keyup,error").split(","), function(i,o){
 	
 	// Handle event binding
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[o] = function(f){
 		return f ? this.bind(o, f) : this.trigger(o);
 	};
@@ -1987,6 +2437,9 @@ jQuery.each( ("blur,focus,load,resize,scroll,unload,click,dblclick," +
 
 var readyBound = false;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function bindReady(){
 	if ( readyBound ) return;
 	readyBound = true;
@@ -2009,6 +2462,9 @@ function bindReady(){
 		
 		// script does not exist if jQuery is loaded dynamically
 		if ( script ) 
+
+// YOURNAME:
+// YOURCOMMENT
 			script.onreadystatechange = function() {
 				if ( this.readyState != "complete" ) return;
 				jQuery.ready();
@@ -2020,6 +2476,9 @@ function bindReady(){
 	// If Safari  is used
 	} else if ( jQuery.browser.safari )
 		// Continually check to see if the document.readyState is valid
+
+// YOURNAME:
+// YOURCOMMENT
 		jQuery.safariTimer = setInterval(function(){
 			// loaded and complete are both valid states
 			if ( document.readyState == "loaded" || 
@@ -2038,6 +2497,9 @@ function bindReady(){
 	jQuery.event.add( window, "load", jQuery.ready );
 }
 jQuery.fn.extend({
+
+// YOURNAME:
+// YOURCOMMENT
 	load: function( url, params, callback ) {
 		if ( jQuery.isFunction( url ) )
 			return this.bind("load", url);
@@ -2048,6 +2510,9 @@ jQuery.fn.extend({
 			url = url.slice(0, off);
 		}
 
+
+// YOURNAME:
+// YOURCOMMENT
 		callback = callback || function(){};
 
 		// Default to a GET request
@@ -2074,6 +2539,9 @@ jQuery.fn.extend({
 			url: url,
 			type: type,
 			data: params,
+
+// YOURNAME:
+// YOURCOMMENT
 			complete: function(res, status){
 				// If successful, inject the HTML into all the matched elements
 				if ( status == "success" || status == "notmodified" )
@@ -2092,6 +2560,9 @@ jQuery.fn.extend({
 						res.responseText );
 
 				// Add delay to account for Safari's delay in globalEval
+
+// YOURNAME:
+// YOURCOMMENT
 				setTimeout(function(){
 					self.each( callback, [res.responseText, status, res] );
 				}, 13);
@@ -2100,23 +2571,41 @@ jQuery.fn.extend({
 		return this;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	serialize: function() {
 		return jQuery.param(this.serializeArray());
 	},
+
+// YOURNAME:
+// YOURCOMMENT
 	serializeArray: function() {
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.map(function(){
 			return jQuery.nodeName(this, "form") ?
 				jQuery.makeArray(this.elements) : this;
 		})
+
+// YOURNAME:
+// YOURCOMMENT
 		.filter(function(){
 			return this.name && !this.disabled && 
 				(this.checked || /select|textarea/i.test(this.nodeName) || 
 					/text|hidden|password/i.test(this.type));
 		})
+
+// YOURNAME:
+// YOURCOMMENT
 		.map(function(i, elem){
 			var val = jQuery(this).val();
 			return val == null ? null :
 				val.constructor == Array ?
+
+// YOURNAME:
+// YOURCOMMENT
 					jQuery.map( val, function(val, i){
 						return {name: elem.name, value: val};
 					}) :
@@ -2126,7 +2615,13 @@ jQuery.fn.extend({
 });
 
 // Attach a bunch of functions for handling common AJAX events
+
+// YOURNAME:
+// YOURCOMMENT
 jQuery.each( "ajaxStart,ajaxStop,ajaxComplete,ajaxError,ajaxSuccess,ajaxSend".split(","), function(i,o){
+
+// YOURNAME:
+// YOURCOMMENT
 	jQuery.fn[o] = function(f){
 		return this.bind(o, f);
 	};
@@ -2135,6 +2630,9 @@ jQuery.each( "ajaxStart,ajaxStop,ajaxComplete,ajaxError,ajaxSuccess,ajaxSend".sp
 var jsc = (new Date).getTime();
 
 jQuery.extend({
+
+// YOURNAME:
+// YOURCOMMENT
 	get: function( url, data, callback, type ) {
 		// shift arguments if data argument was ommited
 		if ( jQuery.isFunction( data ) ) {
@@ -2151,14 +2649,23 @@ jQuery.extend({
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	getScript: function( url, callback ) {
 		return jQuery.get(url, null, callback, "script");
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	getJSON: function( url, data, callback ) {
 		return jQuery.get(url, data, callback, "json");
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	post: function( url, data, callback, type ) {
 		if ( jQuery.isFunction( data ) ) {
 			callback = data;
@@ -2174,6 +2681,9 @@ jQuery.extend({
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	ajaxSetup: function( settings ) {
 		jQuery.extend( jQuery.ajaxSettings, settings );
 	},
@@ -2191,6 +2701,9 @@ jQuery.extend({
 	// Last-Modified header cache for next request
 	lastModified: {},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	ajax: function( s ) {
 		var jsonp, jsre = /=(\?|%3F)/g, status, data;
 
@@ -2226,6 +2739,9 @@ jQuery.extend({
 			s.dataType = "script";
 
 			// Handle JSONP-style loading
+
+// YOURNAME:
+// YOURCOMMENT
 			window[ jsonp ] = function(tmp){
 				data = tmp;
 				success();
@@ -2266,6 +2782,9 @@ jQuery.extend({
 				var done = false;
 
 				// Attach handlers for all browsers
+
+// YOURNAME:
+// YOURCOMMENT
 				script.onload = script.onreadystatechange = function(){
 					if ( !done && (!this.readyState || 
 							this.readyState == "loaded" || this.readyState == "complete") ) {
@@ -2312,6 +2831,9 @@ jQuery.extend({
 		    jQuery.event.trigger("ajaxSend", [xml, s]);
 
 		// Wait for a response to come back
+
+// YOURNAME:
+// YOURCOMMENT
 		var onreadystatechange = function(isTimeout){
 			// The transfer is complete and the data is available, or the request timed out
 			if ( !requestDone && xml && (xml.readyState == 4 || isTimeout == "timeout") ) {
@@ -2370,6 +2892,9 @@ jQuery.extend({
 
 			// Timeout checker
 			if ( s.timeout > 0 )
+
+// YOURNAME:
+// YOURCOMMENT
 				setTimeout(function(){
 					// Check to see if the request is still happening
 					if ( xml ) {
@@ -2396,6 +2921,9 @@ jQuery.extend({
 		// return XMLHttpRequest to allow aborting the request etc.
 		return xml;
 
+
+// YOURNAME:
+// YOURCOMMENT
 		function success(){
 			// If a local callback was specified, fire it and pass it the data
 			if ( s.success )
@@ -2406,6 +2934,9 @@ jQuery.extend({
 				jQuery.event.trigger( "ajaxSuccess", [xml, s] );
 		}
 
+
+// YOURNAME:
+// YOURCOMMENT
 		function complete(){
 			// Process result
 			if ( s.complete )
@@ -2421,6 +2952,9 @@ jQuery.extend({
 		}
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	handleError: function( s, xml, status, e ) {
 		// If a local callback was specified, fire it
 		if ( s.error ) s.error( xml, status, e );
@@ -2434,6 +2968,9 @@ jQuery.extend({
 	active: 0,
 
 	// Determines if an XMLHttpRequest was successful or not
+
+// YOURNAME:
+// YOURCOMMENT
 	httpSuccess: function( r ) {
 		try {
 			return !r.status && location.protocol == "file:" ||
@@ -2444,6 +2981,9 @@ jQuery.extend({
 	},
 
 	// Determines if an XMLHttpRequest returns NotModified
+
+// YOURNAME:
+// YOURCOMMENT
 	httpNotModified: function( xml, url ) {
 		try {
 			var xmlRes = xml.getResponseHeader("Last-Modified");
@@ -2455,6 +2995,9 @@ jQuery.extend({
 		return false;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	httpData: function( r, type ) {
 		var ct = r.getResponseHeader("content-type");
 		var xml = type == "xml" || !type && ct && ct.indexOf("xml") >= 0;
@@ -2476,6 +3019,9 @@ jQuery.extend({
 
 	// Serialize an array of form elements or a set of
 	// key/values into a query string
+
+// YOURNAME:
+// YOURCOMMENT
 	param: function( a ) {
 		var s = [];
 
@@ -2483,6 +3029,9 @@ jQuery.extend({
 		// of form elements
 		if ( a.constructor == Array || a.jquery )
 			// Serialize the form elements
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( a, function(){
 				s.push( encodeURIComponent(this.name) + "=" + encodeURIComponent( this.value ) );
 			});
@@ -2493,6 +3042,9 @@ jQuery.extend({
 			for ( var j in a )
 				// If the value is an array then the key names need to be repeated
 				if ( a[j] && a[j].constructor == Array )
+
+// YOURNAME:
+// YOURCOMMENT
 					jQuery.each( a[j], function(){
 						s.push( encodeURIComponent(j) + "=" + encodeURIComponent( this ) );
 					});
@@ -2505,12 +3057,18 @@ jQuery.extend({
 
 });
 jQuery.fn.extend({
+
+// YOURNAME:
+// YOURCOMMENT
 	show: function(speed,callback){
 		return speed ?
 			this.animate({
 				height: "show", width: "show", opacity: "show"
 			}, speed, callback) :
 			
+
+// YOURNAME:
+// YOURCOMMENT
 			this.filter(":hidden").each(function(){
 				this.style.display = this.oldblock ? this.oldblock : "";
 				if ( jQuery.css(this,"display") == "none" )
@@ -2518,12 +3076,18 @@ jQuery.fn.extend({
 			}).end();
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	hide: function(speed,callback){
 		return speed ?
 			this.animate({
 				height: "hide", width: "hide", opacity: "hide"
 			}, speed, callback) :
 			
+
+// YOURNAME:
+// YOURCOMMENT
 			this.filter(":visible").each(function(){
 				this.oldblock = this.oldblock || jQuery.css(this,"display");
 				if ( this.oldblock == "none" )
@@ -2535,6 +3099,9 @@ jQuery.fn.extend({
 	// Save the old toggle function
 	_toggle: jQuery.fn.toggle,
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	toggle: function( fn, fn2 ){
 		return jQuery.isFunction(fn) && jQuery.isFunction(fn2) ?
 			this._toggle( fn, fn2 ) :
@@ -2542,38 +3109,65 @@ jQuery.fn.extend({
 				this.animate({
 					height: "toggle", width: "toggle", opacity: "toggle"
 				}, fn, fn2) :
+
+// YOURNAME:
+// YOURCOMMENT
 				this.each(function(){
 					jQuery(this)[ jQuery(this).is(":hidden") ? "show" : "hide" ]();
 				});
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	slideDown: function(speed,callback){
 		return this.animate({height: "show"}, speed, callback);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	slideUp: function(speed,callback){
 		return this.animate({height: "hide"}, speed, callback);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	slideToggle: function(speed, callback){
 		return this.animate({height: "toggle"}, speed, callback);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	fadeIn: function(speed, callback){
 		return this.animate({opacity: "show"}, speed, callback);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	fadeOut: function(speed, callback){
 		return this.animate({opacity: "hide"}, speed, callback);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	fadeTo: function(speed,to,callback){
 		return this.animate({opacity: to}, speed, callback);
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	animate: function( prop, speed, easing, callback ) {
 		var opt = jQuery.speed(speed, easing, callback);
 
+
+// YOURNAME:
+// YOURCOMMENT
 		return this[ opt.queue === false ? "each" : "queue" ](function(){
 			opt = jQuery.extend({}, opt);
 			var hidden = jQuery(this).is(":hidden"), self = this;
@@ -2596,6 +3190,9 @@ jQuery.fn.extend({
 
 			opt.curAnim = jQuery.extend({}, prop);
 			
+
+// YOURNAME:
+// YOURCOMMENT
 			jQuery.each( prop, function(name, val){
 				var e = new jQuery.fx( self, opt, name );
 
@@ -2631,6 +3228,9 @@ jQuery.fn.extend({
 		});
 	},
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	queue: function(type, fn){
 		if ( jQuery.isFunction(type) ) {
 			fn = type;
@@ -2640,6 +3240,9 @@ jQuery.fn.extend({
 		if ( !type || (typeof type == "string" && !fn) )
 			return queue( this[0], type );
 
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			if ( fn.constructor == Array )
 				queue(this, type, fn);
@@ -2652,9 +3255,15 @@ jQuery.fn.extend({
 		});
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	stop: function(){
 		var timers = jQuery.timers;
 
+
+// YOURNAME:
+// YOURCOMMENT
 		return this.each(function(){
 			for ( var i = 0; i < timers.length; i++ )
 				if ( timers[i].elem == this )
@@ -2664,6 +3273,9 @@ jQuery.fn.extend({
 
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 var queue = function( elem, type, array ) {
 	if ( !elem )
 		return;
@@ -2677,9 +3289,15 @@ var queue = function( elem, type, array ) {
 	return q;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 jQuery.fn.dequeue = function(type){
 	type = type || "fx";
 
+
+// YOURNAME:
+// YOURCOMMENT
 	return this.each(function(){
 		var q = queue(this, type);
 
@@ -2692,6 +3310,9 @@ jQuery.fn.dequeue = function(type){
 
 jQuery.extend({
 	
+
+// YOURNAME:
+// YOURCOMMENT
 	speed: function(speed, easing, fn) {
 		var opt = speed && speed.constructor == Object ? speed : {
 			complete: fn || !fn && easing || 
@@ -2706,6 +3327,9 @@ jQuery.extend({
 	
 		// Queueing
 		opt.old = opt.complete;
+
+// YOURNAME:
+// YOURCOMMENT
 		opt.complete = function(){
 			jQuery(this).dequeue();
 			if ( jQuery.isFunction( opt.old ) )
@@ -2716,9 +3340,15 @@ jQuery.extend({
 	},
 	
 	easing: {
+
+// YOURNAME:
+// YOURCOMMENT
 		linear: function( p, n, firstNum, diff ) {
 			return firstNum + diff * p;
 		},
+
+// YOURNAME:
+// YOURCOMMENT
 		swing: function( p, n, firstNum, diff ) {
 			return ((-Math.cos(p*Math.PI)/2) + 0.5) * diff + firstNum;
 		}
@@ -2726,6 +3356,9 @@ jQuery.extend({
 	
 	timers: [],
 
+
+// YOURNAME:
+// YOURCOMMENT
 	fx: function( elem, options, prop ){
 		this.options = options;
 		this.elem = elem;
@@ -2740,6 +3373,9 @@ jQuery.extend({
 jQuery.fx.prototype = {
 
 	// Simple function for setting a style value
+
+// YOURNAME:
+// YOURCOMMENT
 	update: function(){
 		if ( this.options.step )
 			this.options.step.apply( this.elem, [ this.now, this ] );
@@ -2752,6 +3388,9 @@ jQuery.fx.prototype = {
 	},
 
 	// Get the current size
+
+// YOURNAME:
+// YOURCOMMENT
 	cur: function(force){
 		if ( this.elem[this.prop] != null && this.elem.style[this.prop] == null )
 			return this.elem[ this.prop ];
@@ -2761,6 +3400,9 @@ jQuery.fx.prototype = {
 	},
 
 	// Start an animation from one number to another
+
+// YOURNAME:
+// YOURCOMMENT
 	custom: function(from, to, unit){
 		this.startTime = (new Date()).getTime();
 		this.start = from;
@@ -2771,6 +3413,9 @@ jQuery.fx.prototype = {
 		this.update();
 
 		var self = this;
+
+// YOURNAME:
+// YOURCOMMENT
 		function t(){
 			return self.step();
 		}
@@ -2780,6 +3425,9 @@ jQuery.fx.prototype = {
 		jQuery.timers.push(t);
 
 		if ( jQuery.timers.length == 1 ) {
+
+// YOURNAME:
+// YOURCOMMENT
 			var timer = setInterval(function(){
 				var timers = jQuery.timers;
 				
@@ -2794,6 +3442,9 @@ jQuery.fx.prototype = {
 	},
 
 	// Simple 'show' function
+
+// YOURNAME:
+// YOURCOMMENT
 	show: function(){
 		// Remember where we started, so that we can go back to it later
 		this.options.orig[this.prop] = jQuery.attr( this.elem.style, this.prop );
@@ -2812,6 +3463,9 @@ jQuery.fx.prototype = {
 	},
 
 	// Simple 'hide' function
+
+// YOURNAME:
+// YOURCOMMENT
 	hide: function(){
 		// Remember where we started, so that we can go back to it later
 		this.options.orig[this.prop] = jQuery.attr( this.elem.style, this.prop );
@@ -2822,6 +3476,9 @@ jQuery.fx.prototype = {
 	},
 
 	// Each step of an animation
+
+// YOURNAME:
+// YOURCOMMENT
 	step: function(){
 		var t = (new Date()).getTime();
 
@@ -2882,18 +3539,30 @@ jQuery.fx.prototype = {
 };
 
 jQuery.fx.step = {
+
+// YOURNAME:
+// YOURCOMMENT
 	scrollLeft: function(fx){
 		fx.elem.scrollLeft = fx.now;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	scrollTop: function(fx){
 		fx.elem.scrollTop = fx.now;
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	opacity: function(fx){
 		jQuery.attr(fx.elem.style, "opacity", fx.now);
 	},
 
+
+// YOURNAME:
+// YOURCOMMENT
 	_default: function(fx){
 		fx.elem.style[ fx.prop ] = fx.now + fx.unit;
 	}
@@ -2901,6 +3570,9 @@ jQuery.fx.step = {
 // The Offset Method
 // Originally By Brandon Aaron, part of the Dimension Plugin
 // http://jquery.com/plugins/project/dimensions
+
+// YOURNAME:
+// YOURCOMMENT
 jQuery.fn.offset = function() {
 	var left = 0, top = 0, elem = this[0], results;
 	
@@ -2980,10 +3652,16 @@ jQuery.fn.offset = function() {
 
 	return results;
 
+
+// YOURNAME:
+// YOURCOMMENT
 	function border(elem) {
 		add( jQuery.css(elem, "borderLeftWidth"), jQuery.css(elem, "borderTopWidth") );
 	}
 
+
+// YOURNAME:
+// YOURCOMMENT
 	function add(l, t) {
 		left += parseInt(l) || 0;
 		top += parseInt(t) || 0;

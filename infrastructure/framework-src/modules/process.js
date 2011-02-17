@@ -14,10 +14,16 @@ jimport("java.io.BufferedOutputStream");
 jimport("java.lang.System");
 
 /* returns a process */
+
+// YOURNAME:
+// YOURCOMMENT
 function exec(process) {
   return new Process(process);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Process(cmd) {
   this.cmd = cmd;
   this.proc = Runtime.getRuntime().exec(cmd);
@@ -31,12 +37,18 @@ Process.CHUNK_SIZE = 1024;
 Process.READ_ALL = -1;
 Process.READ_AVAILABLE = -2;
 
+
+// YOURNAME:
+// YOURCOMMENT
 Process.prototype.write = function(stdinText) {
   this.outputStream.write(new java.lang.String(stdinText).getBytes());
   this.outputStream.flush();
   return this;
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Process.prototype.writeAndClose = function(stdinText) {
   this.write(stdinText);
   this.outputStream.close();
@@ -44,6 +56,9 @@ Process.prototype.writeAndClose = function(stdinText) {
 };
 
 /* Python file-like behavior: read specified number of bytes, else until EOF*/
+
+// YOURNAME:
+// YOURCOMMENT
 Process.prototype.read = function(nbytesToRead, stream) {
   var inputStream = stream || this.inputStream;
   var availBytes = inputStream.available();
@@ -75,6 +90,9 @@ Process.prototype.read = function(nbytesToRead, stream) {
   return new String(result);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Process.prototype.result = function() {
   this.outputStream.close();
   this.proc.waitFor();
@@ -82,6 +100,9 @@ Process.prototype.result = function() {
   return new String(this.resultText);
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 Process.prototype.resultOrError = function() {
   this.proc.waitFor();
   this.read(Process.READ_ALL, this.inputStream);

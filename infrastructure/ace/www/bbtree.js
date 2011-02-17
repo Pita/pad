@@ -15,14 +15,23 @@
  */
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeBBTree(transferContents, augment) {
 
   var nil = [];
   nil.push(nil,nil);
   nil.level = 0;
   var root = nil;
+
+  // YOURNAME:
+  // YOURCOMMENT
   augment = (augment || (function(n) {}));
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function skew(t) {
     if (t != nil && t[0].level == t.level) {
       // rotate right
@@ -36,6 +45,9 @@ function makeBBTree(transferContents, augment) {
     return t;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function split(t) {
     if (t != nil && t[1][1].level == t.level) {
       // rotate left
@@ -50,14 +62,23 @@ function makeBBTree(transferContents, augment) {
     return t;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function reaugment(n) {
     if (n != nil) augment(n);
   }
   
   var self = {};
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   self.insert = function(compare) {
     var n;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function recurse(t) {
       if (t == nil) {
 	t = [nil,nil];
@@ -82,10 +103,16 @@ function makeBBTree(transferContents, augment) {
     return n;
   }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   self.remove = function(compare) {
     var deleted = nil;
     var last;
     var deletedEqual = false;
+
+    // YOURNAME:
+    // YOURCOMMENT
     function recurse(t) {
       if (t != nil) {
 	last = t;
@@ -127,7 +154,13 @@ function makeBBTree(transferContents, augment) {
     root = recurse(root);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   self.find = function(compare) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function recurse(t) {
       if (t == nil) return t;
       var cmp = compare(t);
@@ -145,9 +178,18 @@ function makeBBTree(transferContents, augment) {
     return (result != nil && result) || null;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   self.root = function() { return root; }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   self.forEach = function(func) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     function recurse(t) {
       if (t != nil) {
 	recurse(t[0]);
@@ -161,18 +203,36 @@ function makeBBTree(transferContents, augment) {
   return self;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeBBList() {
   var length = 0;
   var totalWidth = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _treeSize(n) { return n.size || 0; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _treeWidth(n) { return n.width || 0; }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _width(n) { return (n && n.entry && n.entry.width) || 0; }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _transferContents(a, b) {
     b.key = a.key;
     b.entry = a.entry;
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _augment(n) {
     n.size = _treeSize(n[0]) + _treeSize(n[1]) + 1;
     n.width = _treeWidth(n[0]) + _treeWidth(n[1]) + _width(n);
@@ -182,8 +242,14 @@ function makeBBList() {
   
   var bb = makeBBTree(transferContents, augment);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function makeIndexComparator(indexFunc) {
     var curIndex = _treeSize(bb.root()[0]);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function (n) {
       var dir = indexFunc(curIndex, n);
       if (dir < 0) {
@@ -196,8 +262,14 @@ function makeBBList() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function makeWidthComparator(widthFunc) {
     var curIndex = _treeWidth(bb.root()[0]);
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function (n) {
       var dir = indexFunc(curIndex, n);
       if (dir < 0) {
@@ -210,10 +282,19 @@ function makeBBList() {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function numcomp(a,b) { if (a < b) return -1; if (a > b) return 1; return 0; }
   
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeByIndex(idx) {
     var entry;
+
+    // YOURNAME:
+    // YOURCOMMENT
     bb.remove(makeComparator(function (curIndex, n) {
       var cmp = numcomp(idx, curIndex);
       if (cmp == 0) entry = n.entry;
@@ -222,7 +303,13 @@ function makeBBList() {
     return entry;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function insertAtIndex(idx, entry) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     var newNode = bb.insert(makeComparator(function (curIndex) {
       if (idx <= curIndex) return -1;
       return 1;
@@ -234,6 +321,9 @@ function makeBBList() {
   var entriesByKey = {};
   
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     splice: function (start, deleteCount, newEntryArray) {
       for(var i=0;i<deleteCount;i++) {
 	var oldEntry = removeByIndex(start);
@@ -249,6 +339,9 @@ function makeBBList() {
 	entriesByKey[entry.key] = entry;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     next: function (entry) {
       
     }
@@ -257,21 +350,36 @@ function makeBBList() {
   return self;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 /*function size(n) {
   return n.size || 0;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 var a = makeBBTree(function (a,b) {
   b.data = a.data;
 },
+
+// YOURNAME:
+// YOURCOMMENT
 		   function (n) {
 		     n.size = size(n[0]) + size(n[1]) + 1;
 		   });
 
 var arrayRep = [];
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeComparator(indexFunc) {
   var curIndex = size(a.root()[0]);
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (n) {
     var dir = indexFunc(curIndex);
     if (dir < 0) {
@@ -284,8 +392,14 @@ function makeComparator(indexFunc) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function insert(idx, data) {
   arrayRep.splice(idx, 0, data);
+
+  // YOURNAME:
+  // YOURCOMMENT
   var newNode = a.insert(makeComparator(function (curIndex) {
     if (idx <= curIndex) return -1;
     return 1;
@@ -294,26 +408,44 @@ function insert(idx, data) {
   checkRep();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function remove(idx) {
   arrayRep.splice(idx, 1);
+
+  // YOURNAME:
+  // YOURCOMMENT
   a.remove(makeComparator(function (curIndex) {
     return numcomp(idx, curIndex);
   }));
   checkRep();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function genArray() {
   var array = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   a.forEach(function (n) { array.push(n.data); });
   return array;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkRep() {
   var array2 = genArray();
   var str1 = array2.join(',');
   var str2 = arrayRep.join(',');
   if (str1 != str2) console.error(str1+" != "+str2);
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   a.forEach(function(n) {
     if (size(n) != size(n[0]) + size(n[1]) + 1) {
       console.error("size of "+n.data+" is wrong");
@@ -321,6 +453,9 @@ function checkRep() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function print() {
   console.log(genArray().join(','));
 }
@@ -333,14 +468,35 @@ insert(4,5);
 insert(0,6);
 print();
 
+
+// YOURNAME:
+// YOURCOMMENT
 function numcomp(a,b) { if (a < b) return -1; if (a > b) return 1; return 0; }
 */
+
+// YOURNAME:
+// YOURCOMMENT
 /*var tree = makeBBTree(function(a, b) { b.key = a.key; });
+
+// YOURNAME:
+// YOURCOMMENT
 function insert(x) { tree.insert(function(n) { return numcomp(x, n.key) }).key = x; }
+
+// YOURNAME:
+// YOURCOMMENT
 function remove(x) { tree.remove(function (n) { return numcomp(x, n.key); }); }
+
+// YOURNAME:
+// YOURCOMMENT
 function contains(x) { return !! tree.find(function (n) { return numcomp(x, n.key); }); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function print() {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function recurse(t) {
     if (! ('key' in t)) return '';
     return '('+recurse(t[0])+','+t.key+','+recurse(t[1])+')';

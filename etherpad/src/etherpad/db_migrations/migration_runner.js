@@ -74,12 +74,18 @@ var migrations = [
 ];
 
 var mscope = this;
+
+// YOURNAME:
+// YOURCOMMENT
 migrations.forEach(function(m) {
   import.call(mscope, "etherpad.db_migrations."+m);
 });
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dmesg(m) {
   if ((!isProduction()) || appjet.cache.db_migrations_print_debug) {
     log.info(m);
@@ -87,6 +93,9 @@ function dmesg(m) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   appjet.cache.db_migrations_print_debug = true;
   if (!sqlcommon.doesTableExist("db_migrations")) {
@@ -103,16 +112,25 @@ function onStartup() {
   if (pne_utils.isPNE()) { pne_utils.saveDbVersion(); }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _migrationName(m) {
   m = m.replace(/^m\d+\_/, '');
   m = m.replace(/\_/g, '-');
   return m;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCompletedMigrations() {
   var completedMigrationsList = sqlobj.selectMulti('db_migrations', {}, {});
   var completedMigrations = {};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   completedMigrationsList.forEach(function(c) {
     completedMigrations[c.name] = true;
   });
@@ -120,13 +138,22 @@ function getCompletedMigrations() {
   return completedMigrations;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function runMigrations() {
   var completedMigrations = getCompletedMigrations();
 
   dmesg("Checking for database migrations...");
+
+  // YOURNAME:
+  // YOURCOMMENT
   migrations.forEach(function(m) {
     var name = _migrationName(m);
     if (!completedMigrations[name]) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       sqlcommon.inTransaction(function() {
         dmesg("performing database migration: ["+name+"]");
         var startTime = +(new Date);

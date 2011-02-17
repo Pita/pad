@@ -47,8 +47,14 @@ jimport("java.io.File");
 //----------------------------------------------------------------
 
 // returns globally-unique padId
+
+// YOURNAME:
+// YOURCOMMENT
 function randomUniquePadId() {
   var id = stringutils.randomString(10);
+
+  // YOURNAME:
+  // YOURCOMMENT
   while (model.accessPadGlobal(id, function(p) { return p.exists(); }, "r")) {
     id = stringutils.randomString(10);
   }
@@ -59,6 +65,9 @@ function randomUniquePadId() {
 // template rendering
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function findExistsingFile(files) {
   for (var i = 0; i < files.length; i++) {
     var f = new File('./src' + files[i]);
@@ -67,6 +76,9 @@ function findExistsingFile(files) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function findThemeFile(filename, pluginList) {
   var files = [];
   var theme = appjet.config.theme;
@@ -75,6 +87,9 @@ function findThemeFile(filename, pluginList) {
     theme = request.params._theme;
   }
   if (pluginList != undefined)
+
+    // YOURNAME:
+    // YOURCOMMENT
     pluginList.forEach(function (plugin) {
       if (plugin != undefined) {
 	files.push('/themes/' + theme + '/plugins/' + plugin + '/' + filename);
@@ -88,10 +103,16 @@ function findThemeFile(filename, pluginList) {
   return findExistsingFile(files);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function findTemplate(filename, pluginList) {
  return findThemeFile('templates/' + filename, pluginList);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Template(params, pluginList) {
  this._defines = {}
  this._params = params;
@@ -99,11 +120,17 @@ function Template(params, pluginList) {
  this._pluginList = pluginList;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.define = function(name, fn) {
  this._defines[name] = fn;
  return '';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.use = function (name, fn, arg) {
   if (this._defines[name] != undefined)
     return this._defines[name](arg);
@@ -113,10 +140,16 @@ Template.prototype.use = function (name, fn, arg) {
     return '';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.inherit = function (template) {
   return renderTemplateAsString(template, this._params, this._pluginList);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.include = function (template, params, pluginList) {
   var sendArgs = {};
   for (var name in this._params)
@@ -134,6 +167,9 @@ Template.prototype.include = function (template, params, pluginList) {
   return renderTemplateAsString(template, sendArgs, pluginList);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.callHook = function (hookName, args) {
   var sendArgs = {template:this};
   if (args != undefined)
@@ -142,6 +178,9 @@ Template.prototype.callHook = function (hookName, args) {
   return plugins.callHook(hookName, sendArgs);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 Template.prototype.callHookStr = function (hookName, args, sep, pre, post) {
   var sendArgs = {template:this};
   if (typeof args !== 'undefined')
@@ -150,6 +189,9 @@ Template.prototype.callHookStr = function (hookName, args, sep, pre, post) {
   return plugins.callHookStr(hookName, sendArgs, sep, pre, post);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderTemplateAsString(filename, data, pluginList) {
   data = data || {};
   data.helpers = helpers; // global helpers
@@ -165,6 +207,9 @@ function renderTemplateAsString(filename, data, pluginList) {
   var cacheObj = appjet.scopeCache.ejs[filename];
   if (cacheObj === undefined || fileLastModified(f) > cacheObj.mtime) {
     var templateText = readFile(f);
+
+    // YOURNAME:
+    // YOURCOMMENT
     templateText += "<%: template.use('body', function () { return ''; }); %> ";
     cacheObj = {};
     cacheObj.tmpl = new EJS({text: templateText, name: filename});
@@ -175,6 +220,9 @@ function renderTemplateAsString(filename, data, pluginList) {
   return html;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderTemplate(filename, data, pluginList) {
   response.write(renderTemplateAsString(filename, data, pluginList));
   if (request.acceptsGzip) {
@@ -182,6 +230,9 @@ function renderTemplate(filename, data, pluginList) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderHtml(bodyFileName, data, pluginList) {
   var bodyHtml = renderTemplateAsString(bodyFileName, data, pluginList);
   response.write(renderTemplateAsString("html.ejs", {bodyHtml: bodyHtml}));
@@ -190,11 +241,17 @@ function renderHtml(bodyFileName, data, pluginList) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderFramedHtml(contentHtml, plugin) {
   var getContentHtml;
   if (typeof(contentHtml) == 'function') {
     getContentHtml = contentHtml;
   } else {
+
+    // YOURNAME:
+    // YOURCOMMENT
     getContentHtml = function() { return contentHtml; }
   }
 
@@ -212,13 +269,22 @@ function renderFramedHtml(contentHtml, plugin) {
   }, plugin);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderFramed(bodyFileName, data, plugin) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function _getContentHtml() {
     return renderTemplateAsString(bodyFileName, data, plugin);
   }
   renderFramedHtml(_getContentHtml);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderFramedError(error, plugin) {
   var content = DIV({className: 'fpcontent'},
                   DIV({style: "padding: 2em 1em;"},
@@ -227,14 +293,23 @@ function renderFramedError(error, plugin) {
   renderFramedHtml(content, plugin);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderNotice(bodyFileName, data, plugin) {
   renderNoticeString(renderTemplateAsString(bodyFileName, data, plugin), plugin);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderNoticeString(contentHtml, plugin) {
   renderFramed("notice.ejs", {content: contentHtml}, plugin);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render404(noStop, plugin) {
   response.reset();
   response.setStatusCode(404);
@@ -247,6 +322,9 @@ function render404(noStop, plugin) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render500(ex, plugin) {
   response.reset();
   response.setStatusCode(500);
@@ -257,6 +335,9 @@ function render500(ex, plugin) {
   renderFramed("500_body.ejs", {trace: trace}, plugin);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderEtherpadDotComHeader(data) {
   if (!data) {
     data = {selected: ''};
@@ -269,6 +350,9 @@ function _renderEtherpadDotComHeader(data) {
   return renderTemplateAsString("framed/framedheader.ejs", data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderProHeader(data) {
   if (!pro_accounts.isAccountSignedIn()) {
     return '<div style="height: 140px;">&nbsp;</div>';
@@ -287,6 +371,9 @@ function _renderProHeader(data) {
   return renderTemplateAsString("framed/framedheader-pro.ejs", data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderMainHeader(data) {
   if (isProDomainRequest()) {
     return _renderProHeader(data);
@@ -295,6 +382,9 @@ function renderMainHeader(data) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderMainFooter() {
   return renderTemplateAsString("framed/framedfooter.ejs", {
     isProDomainRequest: isProDomainRequest()
@@ -307,6 +397,9 @@ function renderMainFooter() {
 
 // TODO: make better and use the better version on the client in
 // various places as well (pad.js and etherpad.js)
+
+// YOURNAME:
+// YOURCOMMENT
 function isValidEmail(x) {
   return (x &&
           ((x.length > 0) &&
@@ -315,9 +408,15 @@ function isValidEmail(x) {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function timeAgo(d, now) {
   if (!now) { now = new Date(); }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function format(n, word) {
     n = Math.round(n);
     return ('' + n + ' ' + word + (n != 1 ? 's' : '') + ' ago');
@@ -337,9 +436,15 @@ function timeAgo(d, now) {
 //----------------------------------------------------------------
 // linking to a set of new CGI parameters
 //----------------------------------------------------------------
+
+// YOURNAME:
+// YOURCOMMENT
 function qpath(m) {
   var q = {};
   if (request.query) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     request.query.split('&').forEach(function(kv) {
       if (kv) {
         var parts = kv.split('=');
@@ -347,10 +452,16 @@ function qpath(m) {
       }
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(m, function(k,v) {
     q[k] = v;
   });
   var r = request.path + '?';
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(q, function(k,v) {
     if (v !== undefined && v !== null) {
       r += ('&' + k + '=' + v);
@@ -361,6 +472,9 @@ function qpath(m) {
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function ipToHostname(ip) {
   var DNS = Packages.org.xbill.DNS;
 
@@ -376,6 +490,9 @@ function ipToHostname(ip) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function extractGoogleQuery(ref) {
   ref = String(ref);
   ref = ref.toLowerCase();
@@ -386,6 +503,9 @@ function extractGoogleQuery(ref) {
   ref = ref.split('?')[1];
 
   var q = "";
+
+  // YOURNAME:
+  // YOURCOMMENT
   ref.split("&").forEach(function(x) {
     var parts = x.split("=");
     if (parts[0] == "q") {
@@ -399,24 +519,39 @@ function extractGoogleQuery(ref) {
   return q;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isTestEmail(x) {
   return (x.indexOf("+appjetseleniumtest+") >= 0);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isPrivateNetworkEdition() {
   return pne_utils.isPNE();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProDomainRequest() {
   return pro_utils.isProDomainRequest();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function hasOffice() {
   return appjet.config["etherpad.soffice"] || appjet.config["etherpad.sofficeConversionServer"];
 }
 
 ////////// console progress bar
 
+
+// YOURNAME:
+// YOURCOMMENT
 function startConsoleProgressBar(barWidth, updateIntervalSeconds) {
   barWidth = barWidth || 40;
   updateIntervalSeconds = ((typeof updateIntervalSeconds) == "number" ? updateIntervalSeconds : 1.0);
@@ -425,6 +560,9 @@ function startConsoleProgressBar(barWidth, updateIntervalSeconds) {
   var lastPrintTime = 0;
   var column = 0;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function replaceLineWith(str) {
     //print((new Array(column+1)).join('\b')+str);
     print('\r'+str);
@@ -432,6 +570,9 @@ function startConsoleProgressBar(barWidth, updateIntervalSeconds) {
   }
 
   var bar = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     update: function(frac, msg, force) {
       var t = +new Date();
       if ((!force) && ((t - lastPrintTime)/1000 < updateIntervalSeconds)) {
@@ -453,6 +594,9 @@ function startConsoleProgressBar(barWidth, updateIntervalSeconds) {
         lastPrintTime = t;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     finish: function() {
       if (unseenStatus) {
         bar.update(unseenStatus.frac, unseenStatus.msg, true);
@@ -467,12 +611,18 @@ function startConsoleProgressBar(barWidth, updateIntervalSeconds) {
   return bar;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isStaticRequest() {
   return (startsWith(request.path, '/static/') ||
           startsWith(request.path, '/favicon.ico') ||
           startsWith(request.path, '/robots.txt'));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function httpsHost(h) {
   h = h.split(":")[0];  // strip any existing port
   if (appjet.config.listenSecurePort != "443" && !appjet.config.hidePorts) {
@@ -481,6 +631,9 @@ function httpsHost(h) {
   return h;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function httpHost(h) {
   h = h.split(":")[0];  // strip any existing port
   if (appjet.config.listenPort != "80" && !appjet.config.hidePorts) {
@@ -489,6 +642,9 @@ function httpHost(h) {
   return h;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function toJavaException(e) {
   var exc = ((e instanceof java.lang.Throwable) && e) || e.rhinoException || e.javaException ||
     new java.lang.Throwable(e.message+"/"+e.fileName+"/"+e.lineNumber);

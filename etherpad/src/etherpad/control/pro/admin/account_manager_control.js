@@ -35,6 +35,9 @@ import("etherpad.billing.team_billing");
 
 jimport("java.lang.System.out.println");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _err(m) {
   if (m) {
     getSession().accountManagerError = m;
@@ -42,6 +45,9 @@ function _err(m) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _renderTopDiv(mid, htmlId) {
   var m = getSession()[mid];
   if (m) {
@@ -52,13 +58,28 @@ function _renderTopDiv(mid, htmlId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _errorDiv() { return _renderTopDiv('accountManagerError', 'error-message'); }
+
+// YOURNAME:
+// YOURCOMMENT
 function _messageDiv() { return _renderTopDiv('accountManagerMessage', 'message'); }
+
+// YOURNAME:
+// YOURCOMMENT
 function _warningDiv() { return _renderTopDiv('accountManagerWarning', 'warning'); }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onRequest() {
   var parts = request.path.split('/');
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function dispatchAccountAction(action, handlerGet, handlerPost) {
     if ((parts[4] == action) && (isNumeric(parts[5]))) {
       if (request.isGet) { handlerGet(+parts[5]); }
@@ -78,6 +99,9 @@ function onRequest() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_main() {
   var accountList = pro_accounts.listAllDomainAccounts();
   pro_admin_control.renderAdminPage('account-manager', {
@@ -87,6 +111,9 @@ function render_main() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_new_get() {
   pro_admin_control.renderAdminPage('new-account', {
     oldData: getSession().accountManagerFormData || {},
@@ -95,6 +122,9 @@ function render_new_get() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _ensureBillingOK() {
   var activeAccounts = pro_accounts.getCachedActiveCount(domains.getRequestDomainId());
   if (activeAccounts < PRO_FREE_ACCOUNTS) {
@@ -111,6 +141,9 @@ function _ensureBillingOK() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_new_post() {
   if (request.params.cancel) {
     response.redirect('/ep/admin/account-manager/');
@@ -155,6 +188,9 @@ function render_new_post() {
   response.redirect('/ep/admin/account-manager/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function sendWelcomeEmail(account, tempPass) {
   var subj = "Welcome to "+ appjet.config.customBrandingName +" on "+pro_utils.getFullProDomain()+"!";
   var toAddr = account.email;
@@ -181,6 +217,9 @@ function sendWelcomeEmail(account, tempPass) {
 }
 
 // Managing a single account.
+
+// YOURNAME:
+// YOURCOMMENT
 function render_account_get(accountId) {
   var account = pro_accounts.getAccountById(accountId);
   if (!account) {
@@ -194,6 +233,9 @@ function render_account_get(accountId) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_account_post(accountId) {
   if (request.params.cancel) {
     response.redirect('/ep/admin/account-manager/');
@@ -223,6 +265,9 @@ function render_account_post(accountId) {
   response.redirect('/ep/admin/account-manager/');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_delete_account_get(accountId) {
   var account = pro_accounts.getAccountById(accountId);
   if (!account) {
@@ -235,6 +280,9 @@ function render_delete_account_get(accountId) {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function render_delete_account_post(accountId) {
   if (request.params.cancel) {
     response.redirect("/ep/admin/account-manager/account/"+accountId);

@@ -30,30 +30,57 @@ jimport("java.io.StringWriter");
  * variable renaming, making the operation very safe.
  * <p>
  * For example,
+
+ // YOURNAME:
+ // YOURCOMMENT
  * yuicompressor.compressJS("function foo() { var longVariableName = 3; return longVariableName }");
  * produces
+
+ // YOURNAME:
+ // YOURCOMMENT
  * "function foo(){var A=3;return A;}"
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function compressJS(code) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getComplaint(message, sourceName, line, lineSource, lineOffset) {
     if (line < 0) return message;
     else return (line+":"+lineOffset+":"+message);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function complaintHandler(func) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function(message, sourceName, line, lineSource, lineOffset) {
       return func(getComplaint(message, sourceName, line, lineSource, lineOffset));
     }
   }
   var myErrorReporter = new JavaAdapter(ErrorReporter, {
+
+    // YOURNAME:
+    // YOURCOMMENT
     warning: complaintHandler(function (msg) {
       if (msg.indexOf("Try to use a single 'var' statement per scope.") >= 0)
 	return;
       err.println("yuicompressor.compressJS warning: "+msg);
     }),
+
+    // YOURNAME:
+    // YOURCOMMENT
     error: complaintHandler(function (msg) {
       throw new Error("yuicompressor.compressJS error: "+msg);
     }),
+
+    // YOURNAME:
+    // YOURCOMMENT
     runtimeError: complaintHandler(function (msg) {
       throw new Error("yuicompressor.compressJS error: "+msg);
     })
@@ -76,6 +103,9 @@ function compressJS(code) {
  * to preserve common "hacks" that take advantage of browser differences in parsing.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function compressCSS(code) {
   var compressor = new CssCompressor(new StringReader(code));
   var wrapPos = 100; // characters, no wrap == -1

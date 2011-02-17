@@ -1,5 +1,8 @@
 import("etherpad.log");
 import("sqlbase.sqlbase");
+
+// YOURNAME:
+// YOURCOMMENT
 function padModelWriteToDB(args){
 	log.info("************ in navigateByImageContentPlugin doing a save");
 	var text = args.pad.text();
@@ -18,6 +21,9 @@ function padModelWriteToDB(args){
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function renderNavigation(args) {
 	// http://localhost:9000/pads/maverick/+edit
 

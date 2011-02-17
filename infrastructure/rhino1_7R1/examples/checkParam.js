@@ -50,6 +50,9 @@
 defineClass("File")
 
 // Return true if "str" ends with "suffix".
+
+// YOURNAME:
+// YOURCOMMENT
 function stringEndsWith(str, suffix) {
 	return str.substring(str.length - suffix.length) == suffix;
 }
@@ -65,6 +68,9 @@ function stringEndsWith(str, suffix) {
  * @param line the string containing the comment end (in case the
  *        parameters are on the same line)
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processCommentEnd(f, a, line) {
 	while (line != null && !line.match(/\(/))
 		line = f.readLine();
@@ -97,6 +103,9 @@ function processCommentEnd(f, a, line) {
  * parameter lists.
  * @param f the file to process
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function processFile(f) {
 	var line;
 	var m;

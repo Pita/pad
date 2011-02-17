@@ -4,6 +4,9 @@ import("plugins.twitterStyleTags.static.js.main");
 import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function twitterStyleTagsInit() {
  this.hooks = ['aceGetFilterStack', 'aceCreateDomLine', 'padModelWriteToDB', 'docbarItemsSearch', 'editBarItemsLeftPad', 'queryToSql', 'queryExtra', 'querySummary', 'queryRefiner', 'queryFormat', 'queryAccessSql'];
  this.client = new main.twitterStyleTagsInit();
@@ -25,6 +28,9 @@ function twitterStyleTagsInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing Twitter-style tags");
 
@@ -45,6 +51,9 @@ function install() {
 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling Twitter-style tags");
 }

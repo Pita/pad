@@ -30,20 +30,32 @@ import("etherpad.helpers");
 jimport("java.lang.System.out.println");
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setCurrentPad(p) {
   appjet.context.attributes().update("currentPadId", p);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function clearCurrentPad() {
   appjet.context.attributes()['$minus$eq']("currentPadId");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getCurrentPad() {
   var padOpt = appjet.context.attributes().get("currentPadId");
   if (padOpt.isEmpty()) return null;
   return padOpt.get();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _parseCookie(text) {
   try {
     var cookieData = fastJSON.parse(unescape(text));
@@ -54,6 +66,9 @@ function _parseCookie(text) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPrefsCookieData() {
   var prefsCookie = request.cookies['prefs'];
   if (!prefsCookie) {
@@ -63,6 +78,9 @@ function getPrefsCookieData() {
   return _parseCookie(prefsCookie);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getPrefsCookieUserId() {
   var cookieData = getPrefsCookieData();
   if (! cookieData) {
@@ -74,12 +92,21 @@ function getPrefsCookieUserId() {
 /**
  * Not valid to call this function outisde a HTTP request.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function accessPadLocal(localPadId, fn, rwMode) {
   if (!request.isDefined) {
     throw Error("accessPadLocal() cannot run outside an HTTP request.");
   }
   var globalPadId = getGlobalPadId(localPadId);
+
+  // YOURNAME:
+  // YOURCOMMENT
   var fnwrap = function(pad) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     pad.getLocalId = function() {
       return getLocalPadId(pad);
     };
@@ -91,6 +118,9 @@ function accessPadLocal(localPadId, fn, rwMode) {
 /**
  * Not valid to call this function outisde a HTTP request.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function getGlobalPadId(localPadId) {
   if (!request.isDefined) {
     throw Error("getGlobalPadId() cannot run outside an HTTP request.");
@@ -103,10 +133,16 @@ function getGlobalPadId(localPadId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeGlobalId(domainId, localPadId) {
   return [domainId, localPadId].map(String).join('$');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function globalToLocalId(globalId) {
   var parts = globalId.split('$');
   if (parts.length == 1) {
@@ -116,19 +152,31 @@ function globalToLocalId(globalId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLocalPadId(pad) {
   var globalId = pad.getId();
   return globalToLocalId(globalId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProPadId(globalPadId) {
   return (globalPadId.indexOf("$") > 0);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProPad(pad) {
   return isProPadId(pad.getId());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getDomainId(globalPadId) {
   var parts = globalPadId.split("$");
   if (parts.length < 2) {
@@ -138,10 +186,16 @@ function getDomainId(globalPadId) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function makeValidLocalPadId(str) {
   return str.replace(/[^a-zA-Z0-9\-]/g, '-');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getProDisplayTitle(localPadId, title) {
   if (title) {
     return title;
@@ -154,6 +208,9 @@ function getProDisplayTitle(localPadId, title) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setOptsAndCookiePrefs(request) {
   opts = {};
   if (request.params.fullScreen) { // tokbox, embedding

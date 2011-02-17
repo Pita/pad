@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 $(function() {
   billing.initFieldDisplay();
   billing.initCcValidation();
 });
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.initFieldDisplay = function() {
   var id = $('#billingselect input:checked').attr("value");
   $('.billingfield').not('.billingfield.'+id+'req').hide();
@@ -28,6 +34,9 @@ billing.initFieldDisplay = function() {
   billing.selectCountry();
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.selectCountry = function() {
   var countryCode = $('#billingCountry').attr("value");
   var id = $('#billingselect input:checked').attr("value");
@@ -40,6 +49,9 @@ billing.selectCountry = function() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.countryAntiSelector = function() {
   var countryCode = $('#billingCountry').attr("value");
   if (countryCode != 'US') {
@@ -49,6 +61,9 @@ billing.countryAntiSelector = function() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.selectPaymentType = function() {
   var radio = $(this).children('input');
   var id = radio.attr("value");
@@ -60,6 +75,9 @@ billing.selectPaymentType = function() {
 
   if (toShow.size() > 0 && toHide.size() > 0) {
     toHide.fadeOut(200);
+
+    // YOURNAME:
+    // YOURCOMMENT
     setTimeout(function() {
       toShow.fadeIn(200);
     }, 200);
@@ -69,6 +87,9 @@ billing.selectPaymentType = function() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.extractCcType = function(numsrc) {
   var number = $(numsrc).val();
   var newType = billing.getCcType(number);
@@ -86,6 +107,9 @@ billing.extractCcType = function(numsrc) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.handleCcFieldChange = function(target, event) {
   if (event && 
       ! (event.keyCode == 8 || 
@@ -97,15 +121,27 @@ billing.handleCcFieldChange = function(target, event) {
     return;
   }
   billing.lastCcValue = ccValue;
+
+  // YOURNAME:
+  // YOURCOMMENT
   setTimeout(function() {
     billing.extractCcType(target);
   }, 0);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 billing.initCcValidation = function() {
   $('input[name=billingCCNumber]').keydown(
+
+    // YOURNAME:
+    // YOURCOMMENT
     function(event) { billing.handleCcFieldChange(this, event); });
   $('input[name=billingCCNumber]').blur(
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { billing.handleCcFieldChange(this) });
   billing.lastCcValue = $('input[name=billingCCNumber]').val();
 }

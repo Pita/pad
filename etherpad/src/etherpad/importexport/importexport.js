@@ -33,10 +33,16 @@ import("execution");
 import("varz");
 import("exceptionutils");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _log(obj) {
   log.custom("import-export", obj);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() {
   execution.initTaskThreadPool("importexport", 1);
 }
@@ -49,6 +55,9 @@ var formats = {
   txt: 'text/plain; charset=utf-8'
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _createTempFile(bytes, type) {
         var f = File.createTempFile("ooconvert-", (type === null ? null : (type == "" ? "" : "."+type)));
 	if (bytes) {
@@ -58,6 +67,9 @@ function _createTempFile(bytes, type) {
 	return f;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _initConverterClient(convertServer) {
   if (convertServer) {
     var convertHost = convertServer.split(":")[0];
@@ -75,21 +87,33 @@ function _initConverterClient(convertServer) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _conversionSarsFailure() {
   delete appjet.scopeCache.converter;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function errorUnsupported(from) {
   return "Unsupported file type"+(from ? ": <strong>"+from+"</strong>." : ".")+" Etherpad can only import <strong>txt</strong>, <strong>html</strong>, <strong>rtf</strong>, <strong>doc</strong>, and <strong>docx</strong> files.";
 } 
 var errorTemporary = "A temporary failure occurred; please try again later.";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function doSlowFileConversion(from, to, bytes, continuation) {
   var bytes = convertFileSlowly(from, to, bytes);
   continuation.resume();
   return bytes;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _convertOverNetwork(convertServer, from, to, bytes) {
   var c = _initConverterClient(convertServer);
   var reqBytes = new ByteArrayOutputStream();
@@ -134,6 +158,9 @@ function _convertOverNetwork(convertServer, from, to, bytes) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function convertFileSlowly(from, to, bytes) {
   var convertServer = appjet.config["etherpad.sofficeConversionServer"];
   if (convertServer) {
@@ -157,26 +184,44 @@ function convertFileSlowly(from, to, bytes) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteConversionAttempt() {
   varz.incrementInt("importexport-conversions-attempted");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteConversionSuccess() {
   varz.incrementInt("importexport-conversions-successful");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteConversionFailure() {
   varz.incrementInt("importexport-conversions-failed");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteConversionTimeout() {
   varz.incrementInt("importexport-conversions-timeout");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _noteConversionImpossible() {
   varz.incrementInt("importexport-conversions-impossible"); 
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function precomputedConversionResult(from, to, bytes) {
   try {
     var retBytes = request.cache.conversionCallable.get(500, java.util.concurrent.TimeUnit.MILLISECONDS);
@@ -211,6 +256,9 @@ function precomputedConversionResult(from, to, bytes) {
   }  
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function convertFile(from, to, bytes) {
   if (request.cache.conversionCallable) {
     return precomputedConversionResult(from, to, bytes);

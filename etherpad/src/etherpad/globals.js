@@ -25,14 +25,23 @@ var COLOR_PALETTE = ['#ffc7c7','#fff1c7','#e3ffc7','#c7ffd5','#c7ffff','#c7d5ff'
 
 var trueRegex = /\s*true\s*/i;
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProduction() {
   return (trueRegex.test(appjet.config['etherpad.isProduction']));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isProAccountEnabled() {
   return (appjet.config['etherpad.proAccounts'] == "true");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function domainEnabled(domain) {
   var enabled = appjet.config.topdomains.split(',');
   for (var i = 0; i < enabled.length; i++)

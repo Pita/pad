@@ -28,10 +28,16 @@ import("stringutils.randomHash");
 
 var _table = cachedSqlTable('pad_guests', 'pad_guests',
                             ['id', 'privateKey', 'userId'], processGuestRow);
+
+// YOURNAME:
+// YOURCOMMENT
 function processGuestRow(row) {
   row.data = fastJSON.parse(row.data);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function notifySignIn() {
   /*if (pro_accounts.isAccountSignedIn()) {
     var proId = getUserId();
@@ -52,12 +58,18 @@ function notifySignIn() {
   }*/
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function notifyActive() {
   if (isGuest(getUserId())) {
     _updateGuest('userId', getUserId(), {});
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function notifyUserData(userData) {
   var uid = getUserId();
   if (isGuest(uid)) {
@@ -69,6 +81,9 @@ function notifyUserData(userData) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getUserId() {
   if (pro_accounts.isAccountSignedIn()) {
     return "p."+(getSessionProAccount().id);
@@ -78,6 +93,9 @@ function getUserId() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getUserName() {
   var uid = getUserId();
   if (isGuest(uid)) {
@@ -89,6 +107,9 @@ function getUserName() {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getAccountIdForProAuthor(uid) {
   if (uid.indexOf("p.") == 0) {
     return Number(uid.substring(2));
@@ -98,6 +119,9 @@ function getAccountIdForProAuthor(uid) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getNameForUserId(uid) {
   if (isGuest(uid)) {
     return _getGuestByKey('userId', uid).data.name || null;
@@ -113,10 +137,16 @@ function getNameForUserId(uid) {
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isGuest(userId) {
   return /^g/.test(userId);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getGuestUserId() {
   // cache the userId in the requestCache,
   // for efficiency and consistency
@@ -127,6 +157,9 @@ function getGuestUserId() {
   return c.padGuestUserId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getGuestTrackerId() {
   // get ET cookie
   var tid = sessions.getTrackingId();
@@ -146,6 +179,9 @@ function _getGuestTrackerId() {
   return domain+"$"+tid;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _insertGuest(obj) {
   // only requires 'userId' in obj
 
@@ -165,12 +201,21 @@ function _insertGuest(obj) {
   return _table.insert(obj);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getGuestByKey(keyColumn, value) {
   return _table.getByKey(keyColumn, value);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateGuest(keyColumn, value, obj) {
   var obj2 = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   eachProperty(obj, function(k,v) {
     if (k == "data" && (typeof v) == "object") {
       obj2.data = fastJSON.stringify(v);
@@ -185,10 +230,16 @@ function _updateGuest(keyColumn, value, obj) {
   _table.updateByKey(keyColumn, value, obj2);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _newGuestUserId() {
   return "g."+_randomString(16);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _computeGuestUserId() {
   // always returns some userId
 
@@ -219,6 +270,9 @@ function _computeGuestUserId() {
     if ('name' in prefsCookieData) {
       data.name = prefsCookieData.name;
     }
+
+    // YOURNAME:
+    // YOURCOMMENT
     /*['fullWidth','viewZoom'].forEach(function(pref) {
       if (pref in prefsCookieData) {
         data.prefs[pref] = prefsCookieData[pref];
@@ -230,6 +284,9 @@ function _computeGuestUserId() {
   return userId;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getPrefsCookieData() {
   // get userId from old prefs cookie if possible,
   // but don't allow modern usernames
@@ -255,6 +312,9 @@ function _getPrefsCookieData() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _randomString(len) {
   // use only numbers and lowercase letters
   var pieces = [];
@@ -265,6 +325,9 @@ function _randomString(len) {
 }
 
 
+
+// YOURNAME:
+// YOURCOMMENT
 function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
   // Keeps a cache of sqlobj rows for the case where
   // you want to select one row at a time by a single column
@@ -277,8 +340,14 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
   if ((typeof keyColumns) == "string") {
     keyColumns = [keyColumns];
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   processFetched = processFetched || (function(o) {});
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getCache() {
     // this function is normally fast, only slow when cache
     // needs to be created for the first time
@@ -289,6 +358,9 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
     else {
       // initialize in a synchronized block (double-checked locking);
       // uses same lock as cache_utils.syncedWithCache would use.
+
+      // YOURNAME:
+      // YOURCOMMENT
       sync.doWithStringLock("cache/"+cacheName, function() {
         if (! appjet.cache[cacheName]) {
           // values expire after 10 minutes
@@ -300,33 +372,60 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
     }
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function cacheKey(keyColumn, value) {
     // e.g. "id$4"
     return keyColumn+"$"+String(value);
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function getFromCache(keyColumn, value) {
     return getCache().get(cacheKey(keyColumn, value));
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function putInCache(obj) {
     var cache = getCache();
     // put in cache, keyed on all keyColumns we care about
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyColumns.forEach(function(keyColumn) {
       cache.put(cacheKey(keyColumn, obj[keyColumn]), obj);
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function touchInCache(obj) {
     var cache = getCache();
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyColumns.forEach(function(keyColumn) {
       cache.touch(cacheKey(keyColumn, obj[keyColumn]));
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeObjFromCache(obj) {
     var cache = getCache();
+
+    // YOURNAME:
+    // YOURCOMMENT
     keyColumns.forEach(function(keyColumn) {
       cache.remove(cacheKey(keyColumn, obj[keyColumn]));
     });
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function removeFromCache(keyColumn, value) {
     var cached = getFromCache(keyColumn, value);
     if (cached) {
@@ -335,9 +434,15 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
   }
 
   var self = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     clearCache: function() {
       getCache().clear();
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     getByKey: function(keyColumn, value) {
       // get cached object, if any
       var cached = getFromCache(keyColumn, value);
@@ -359,6 +464,9 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
         return cached;
       }
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     updateByKey: function(keyColumn, value, obj) {
       var keyToValue = {};
       keyToValue[keyColumn] = value;
@@ -368,6 +476,9 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
       // is likely a partial object
       removeFromCache(keyColumn, value);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     insert: function(obj) {
       var returnVal = sqlobj.insert(tableName, obj);
       // remove old object from caches but
@@ -376,6 +487,9 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
       removeObjFromCache(obj);
       return returnVal;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     deleteByKey: function(keyColumn, value) {
       var keyToValue = {};
       keyToValue[keyColumn] = value;
@@ -386,10 +500,16 @@ function cachedSqlTable(cacheName, tableName, keyColumns, processFetched) {
   return self;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getClientIp() {
   return (request.isDefined && request.clientIp) || '';
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getUserIdCreatedDate(userId) {
   var record = sqlobj.selectSingle('pad_cookie_userids', {id: userId});
   if (! record) { return; } // hm. weird case.

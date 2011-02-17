@@ -24,12 +24,18 @@ jimport("java.lang.System.out.println");
 
 var _COOKIE_NAME = "PUAS";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function dmesg(m) {
   if (false) {
     println("[pro-account-auto-sign-in]: "+m);
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function checkAutoSignin() {
   dmesg("checking auto sign-in...");
   if (pro_accounts.isAccountSignedIn()) {
@@ -61,6 +67,9 @@ function checkAutoSignin() {
   response.redirect('/ep/account/sign-in?cont='+encodeURIComponent(request.url));
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setAutoSigninCookie(rememberMe) {
   if (!pro_accounts.isAccountSignedIn()) {
     return; // only call this function after account is already signed in.

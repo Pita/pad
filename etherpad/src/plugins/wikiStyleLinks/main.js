@@ -21,6 +21,9 @@ import("sqlbase.sqlobj");
    but main.init is run on the server side AS WELL to
    establish the connection between client and server. */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function wikiStyleLinksInit() {
  this.hooks = ['aceGetFilterStack', 'aceCreateDomLine', 'padModelWriteToDB', 'queryToSql', 'queryRefiner', 'querySummary'];
  this.client = new main.wikiStyleLinksInit();
@@ -40,6 +43,9 @@ function wikiStyleLinksInit() {
    directories or get an API or whatever); general setup
    stuff. */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing Wiki-style links");
 
@@ -58,6 +64,9 @@ function install() {
 /* You probably don't want uninstalling to delete data.
    But you can do something here if you want. */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling Wiki-style links");
 }

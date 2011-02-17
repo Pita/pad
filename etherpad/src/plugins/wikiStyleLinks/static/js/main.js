@@ -5,6 +5,9 @@
  * client-side hooks are defined in this file, is why.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function wikiStyleLinksInit() {
   this.hooks = ['aceInitInnerdocbodyHead', 'aceGetFilterStack', 'aceCreateDomLine'];
   this.aceInitInnerdocbodyHead = aceInitInnerdocbodyHead;
@@ -14,6 +17,9 @@ function wikiStyleLinksInit() {
 
 /* All this iframe stuff is obviously client-side. */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function aceInitInnerdocbodyHead(args) {
   args.iframeHTML.push('\'<link rel="stylesheet" type="text/css" href="/static/css/plugins/wikiStyleLinks/pad.css"/>\'');
 }
@@ -53,6 +59,9 @@ function aceInitInnerdocbodyHead(args) {
  *  -- then indicate the 1st bracketed expression.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function aceGetFilterStack(args) {
   return [getWikiLinkFilter(args.linestylefilter)];
 }
@@ -69,6 +78,9 @@ function aceGetFilterStack(args) {
  * args.cls.indexOf >= 0 means that the thing is contained in the list
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function aceCreateDomLine(args) {
   if (args.cls.indexOf('wikilink') >= 0) {
     var href;
@@ -77,6 +89,9 @@ function aceCreateDomLine(args) {
      * is a list of valid CSS classes. 
      * cls = "whatever-class other-class wikilink:[[whatever goes here]] yet-another-class"
      */
+
+    // YOURNAME:
+    // YOURCOMMENT
     cls = args.cls.replace(/wikilink:(\S+)/g, function(x0,linktext) {
       /* At the same time we convert the name of the pad
        * into a proper URL.
@@ -111,7 +126,13 @@ function aceCreateDomLine(args) {
  * it returns a function.  But that doesn't happen here.
  */
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getWikiLinkFilter (linestylefilter) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function (lineText, textAndClassFunc) {
 
     var regExp = new RegExp("\\[\\[[^\\[\\]]*]]", "g");
@@ -134,6 +155,9 @@ function getWikiLinkFilter (linestylefilter) {
 
     if (! regExpMatchs) return textAndClassFunc;
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     function regExpMatchForIndex(idx) {
       for(var k=0; k<regExpMatchs.length; k++) {
 	var u = regExpMatchs[k];
@@ -144,8 +168,14 @@ function getWikiLinkFilter (linestylefilter) {
       return false;
     }
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     var handleRegExpMatchsAfterSplit = (function() {
       var curIndex = 0;
+
+      // YOURNAME:
+      // YOURCOMMENT
       return function(txt, cls) {
 	var txtlen = txt.length;
 	var newCls = cls;

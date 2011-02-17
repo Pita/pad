@@ -41,6 +41,9 @@ var _editionNames = {
   2: 'PRIVATE_NETWORK'
 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onStartup() { }
 
 //----------------------------------------------------------------
@@ -49,69 +52,117 @@ function onStartup() { }
  * expires is a long timestamp (set to null for never expiring).
  * maxUsers is also a long (set to -1 for infinite users).
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function generateNewKey(personName, orgName, expires, editionId, maxUsers) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function decodeLicenseInfoFromKey(key) {
   return null;
 }
 
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getCache() {
   return {};
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _readKeyFile(f) {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _readLicenseKey() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function reloadLicense() {
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getLicense() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isPrivateNetworkEdition() {
   return false;
 }
 
 // should really only be called for PNE requests.
 // see etherpad.quotas module
+
+// YOURNAME:
+// YOURCOMMENT
 function getMaxUsersPerPad() {
   return 1e9;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getEditionId(editionName) {
   return _editionNames[0];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getEditionName(editionId) {
   return _editionNames[editionId];
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isEvaluation() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isExpired() {
   return false;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isValidKey(key) {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getVersionString() {
   return "0";
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isVersionTooOld() {
   return false;
 }
@@ -120,10 +171,16 @@ function isVersionTooOld() {
 // counting active users
 //----------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActiveUserQuota() {
   return 1e9;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _previousMidnight() {
   // return midnight of today.
   var d = new Date();
@@ -134,28 +191,49 @@ function _previousMidnight() {
   return d;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _resetActiveUserStats() {
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActiveUserWindowStart() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActiveUserWindowHours() {
   return null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getActiveUserCount() {
   return 0;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function canSessionUserJoin() {
   return true;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserJoin(userInfo) {
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function onUserLeave() {
   // do nothing.
 }

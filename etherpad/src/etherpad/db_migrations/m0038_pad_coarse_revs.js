@@ -16,6 +16,9 @@
 
 import("sqlbase.sqlbase");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
 
   sqlbase.createStringArrayTable("PAD_REVS10");

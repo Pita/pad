@@ -19,6 +19,9 @@ if (serverhandlers.sarsHandler === undefined) {
 }
 
 if (serverhandlers.sarsHandler !== undefined) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   (function() {
     var ret = serverhandlers.sarsHandler(appjet.context.attributes().apply("sarsRequest"));
     if (ret)

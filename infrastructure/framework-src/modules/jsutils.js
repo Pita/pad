@@ -30,6 +30,9 @@ var pastels = {
   green: "#cfc",
   blue: "#ccf"
 };
+
+// YOURNAME:
+// YOURCOMMENT
 eachProperty(pastels, function(key, value) {
   print(DIV({style: 'background: '+value+';'}, key));
 });
@@ -37,6 +40,9 @@ eachProperty(pastels, function(key, value) {
  * @param {object} obj The object over which to iterate.
  * @param {function} func The function to run on each [key,value] pair.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function eachProperty(obj, func) {
   var r;
   for (k in obj) {
@@ -56,7 +62,13 @@ function eachProperty(obj, func) {
  * @param {object} parent The parent object.
  * @return {object} A new object whose prototype is parent.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function object(parent) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function f() {};
   f.prototype = parent;
   return new f();
@@ -69,6 +81,9 @@ function object(parent) {
  *
  * @example
 // Prints "abc"
+
+// YOURNAME:
+// YOURCOMMENT
 keys({a: 1, b: 2, c: 3}).forEach(function(k) {
   print(k);
 }
@@ -80,6 +95,9 @@ print(keys(appjet).join('\n'));
  *
  * @param {object} obj
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function keys(obj) {
   var array = [];
   var o = obj;
@@ -101,6 +119,9 @@ function keys(obj) {
  * @param {object} b
  * @return {number} -1, 0, or +1
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function cmp(a,b) {
   if (a < b) {
     return -1;
@@ -111,14 +132,23 @@ function cmp(a,b) {
   return 0;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function arrayToSet(arr) {
   var set = {};
+
+  // YOURNAME:
+  // YOURCOMMENT
   arr.forEach(function(x) {
     set[x] = true;
   });
   return set;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function mergeArrays(mergeFunction, a1, a2, etc) {
   var len = a1.length;
   var arrays = Array.prototype.slice.call(arguments, 1);
@@ -129,15 +159,24 @@ function mergeArrays(mergeFunction, a1, a2, etc) {
   }
   out = [];
   for (var i = 0; i < a1.length; ++i) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     out.push(mergeFunction.apply(this, arrays.map(function(array) { return array[i]; })));
   }
   return out;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function debug(obj) {
   if (typeof(obj) == 'object') {
     var ret = [];
     if (obj) {
+
+      // YOURNAME:
+      // YOURCOMMENT
       eachProperty(obj, function(k, v) {
         ret.push(k+" -> "+debug(v));
       });
@@ -153,6 +192,9 @@ function debug(obj) {
 /**
  * Create a scala function out of the given JS function.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function scalaFn(nargs, f) {
   if (typeof(f) == 'function') {
     return new Packages.scala['Function'+nargs]({
@@ -160,15 +202,24 @@ function scalaFn(nargs, f) {
     });
   } else {
     return new Packages.scala['Function'+nargs]({
+
+      // YOURNAME:
+      // YOURCOMMENT
       apply: function() { return f; }
     })
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function scalaF0(f) {
   return scalaFn(0, f);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function scalaF1(f) {
   return scalaFn(1, f);
 }
@@ -176,15 +227,27 @@ function scalaF1(f) {
 /** 
  * Some bonus functions for functional programming.
  */
+
+// YOURNAME:
+// YOURCOMMENT
 function f_curry(thisPtr, f, arg1, arg2, etc) {
   var curriedArgs = Array.prototype.slice.call(arguments, 2);
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     var args = Array.prototype.slice.call(arguments, 0);
     return f.apply(thisPtr, curriedArgs.concat(args));
   }
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function f_limitArgs(thisPtr, f, n) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   return function() {
     var args = Array.prototype.slice.call(arguments, 0, n);
     return f.apply(thisPtr, args);

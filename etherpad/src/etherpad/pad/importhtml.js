@@ -25,11 +25,17 @@ import("etherpad.collab.ace.easysync2.{Changeset,AttribPool}");
 import("etherpad.collab.ace.contentcollector.makeContentCollector");
 import("etherpad.collab.collab_server");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setPadHTML(pad, html) {
   var atext = htmlToAText(html, pad.pool());
   collab_server.setPadAText(pad, atext);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _html2pyx(html) {
   var p = new Parser();
   var w = new StringWriter();
@@ -41,10 +47,16 @@ function _html2pyx(html) {
   return w.toString().replace(/\r\n|\r|\n/g, '\n');
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _htmlBody2js(html) {
   var pyx = _html2pyx(html);
   var plines = pyx.split("\n");
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   function pyxUnescape(s) {
     return s.replace(/\\t/g, '\t').replace(/\\/g, '\\');
   }
@@ -55,6 +67,9 @@ function _htmlBody2js(html) {
 
   var bodyNode = {name:"body"};
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   plines.forEach(function(pline) {
     var t = pline.charAt(0);
     var v = pline.substring(1);
@@ -107,10 +122,19 @@ function _htmlBody2js(html) {
   return bodyNode;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _trimDomNode(n) {
+
+  // YOURNAME:
+  // YOURCOMMENT
   function isWhitespace(str) {
     return /^\s*$/.test(str);
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function trimBeginningOrEnd(n, endNotBeginning) {
     var cc = n.children;
     var backwards = endNotBeginning;
@@ -145,6 +169,9 @@ function _trimDomNode(n) {
           i += (backwards ? -1 : 1);
         }
       }
+
+      // YOURNAME:
+      // YOURCOMMENT
       n.children = n.children.filter(function(x) { return !!x; });
       return hitActualText;
     }
@@ -154,32 +181,59 @@ function _trimDomNode(n) {
   trimBeginningOrEnd(n, true);
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function htmlToAText(html, apool) {
   var body = _htmlBody2js(html);
   _trimDomNode(body);
 
   var dom = {
+
+    // YOURNAME:
+    // YOURCOMMENT
     isNodeText: function(n) {
       return (typeof n) == "string";
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeTagName: function(n) {
       return ((typeof n) == "object") && n.name;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeValue: function(n) {
       return String(n);
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeNumChildren: function(n) {
       return (((typeof n) == "object") && n.children && n.children.length) || 0;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeChild: function(n, i) {
       return (((typeof n) == "object") && n.children && n.children[i]) || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeProp: function(n, p) {
       return (((typeof n) == "object") && n.attrs && n.attrs[p]) || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     nodeAttr: function(n, a) {
       return (((typeof n) == "object") && n.attrs && n.attrs[a]) || null;
     },
+
+    // YOURNAME:
+    // YOURCOMMENT
     optNodeInnerHTML: function(n) {
       return null;
     }
@@ -211,6 +265,9 @@ function htmlToAText(html, apool) {
   return atext;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _joinLineAttribs(lineAttribs) {
   var assem = Changeset.smartOpAssembler();
 
@@ -218,6 +275,9 @@ function _joinLineAttribs(lineAttribs) {
   newline.chars = 1;
   newline.lines = 1;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   lineAttribs.forEach(function(aline) {
     var iter = Changeset.opIterator(aline);
     while (iter.hasNext()) {

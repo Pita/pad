@@ -21,6 +21,9 @@
 
 Ace2Editor.registry = { nextId: 1 };
 
+
+// YOURNAME:
+// YOURCOMMENT
 function Ace2Editor() {
   var thisFunctionsName = "Ace2Editor";
   var ace2 = Ace2Editor;
@@ -30,10 +33,19 @@ function Ace2Editor() {
   var loaded = false;
 
   var actionsPendingInit = [];
+
+  // YOURNAME:
+  // YOURCOMMENT
   function pendingInit(func, optDoNow) {
+
+    // YOURNAME:
+    // YOURCOMMENT
     return function() {
       var that = this;
       var args = arguments;
+
+      // YOURNAME:
+      // YOURCOMMENT
       function action() {
 	func.apply(that, args);
       }
@@ -48,6 +60,9 @@ function Ace2Editor() {
       }
     };
   }
+
+  // YOURNAME:
+  // YOURCOMMENT
   function doActionsPendingInit() {
     for(var i=0;i<actionsPendingInit.length;i++) {
       actionsPendingInit[i]();
@@ -57,28 +72,73 @@ function Ace2Editor() {
 
   ace2.registry[info.id] = info;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.importText = pendingInit(function(newCode, undoable) {
     info.ace_importText(newCode, undoable); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.importAText = pendingInit(function(newCode, apoolJsonObj, undoable) {
     info.ace_importAText(newCode, apoolJsonObj, undoable); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.exportText = function() {
     if (! loaded) return "(awaiting init)\n";
     return info.ace_exportText();
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.getFrame = function() { return info.frame || null; };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.focus = pendingInit(function() { info.ace_focus(); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setEditable = pendingInit(function(newVal) { info.ace_setEditable(newVal); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.getFormattedCode = function() { return info.ace_getFormattedCode(); };
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setOnKeyPress = pendingInit(function (handler) { info.ace_setOnKeyPress(handler); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setOnKeyDown = pendingInit(function (handler) { info.ace_setOnKeyDown(handler); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setNotifyDirty = pendingInit(function (handler) { info.ace_setNotifyDirty(handler); });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setProperty = pendingInit(function(key, value) { info.ace_setProperty(key, value); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.getDebugProperty = function(prop) { return info.ace_getDebugProperty(prop); };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setBaseText = pendingInit(function(txt) { info.ace_setBaseText(txt); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setBaseAttributedText = pendingInit(function(atxt, apoolJsonObj) {
     info.ace_setBaseAttributedText(atxt, apoolJsonObj); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.applyChangesToBase = pendingInit(function (changes, optAuthor,apoolJsonObj) {
     info.ace_applyChangesToBase(changes, optAuthor, apoolJsonObj); });
   // prepareUserChangeset:
@@ -90,62 +150,107 @@ function Ace2Editor() {
   // to prepareUserChangeset will return an updated changeset that takes into account the
   // latest user changes, and modify the changeset to be applied by applyPreparedChangesetToBase
   // accordingly.
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.prepareUserChangeset = function() {
     if (! loaded) return null;
     return info.ace_prepareUserChangeset();
   };
   editor.applyPreparedChangesetToBase = pendingInit(
+
+    // YOURNAME:
+    // YOURCOMMENT
     function() { info.ace_applyPreparedChangesetToBase(); });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setUserChangeNotificationCallback = pendingInit(function(callback) {
     info.ace_setUserChangeNotificationCallback(callback);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setAuthorInfo = pendingInit(function(author, authorInfo) {
     info.ace_setAuthorInfo(author, authorInfo);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.setAuthorSelectionRange = pendingInit(function(author, start, end) {
     info.ace_setAuthorSelectionRange(author, start, end);
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.getUnhandledErrors = function() {
     if (! loaded) return [];
     // returns array of {error: <browser Error object>, time: +new Date()}
     return info.ace_getUnhandledErrors();
   };
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.callWithAce = pendingInit(function(fn, callStack, normalize) {
     return info.ace_callWithAce(fn, callStack, normalize);
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.execCommand = pendingInit(function(cmd, arg1) {
     info.ace_execCommand(cmd, arg1);
   });
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.replaceRange = pendingInit(function(start, end, text) {
     info.ace_replaceRange(start, end, text);
   });
 
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   // calls to these functions ($$INCLUDE_...)  are replaced when this file is processed
   // and compressed, putting the compressed code from the named file directly into the
   // source here.
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var $$INCLUDE_CSS = function(fileName) {
     return '<link rel="stylesheet" type="text/css" href="'+fileName+'"/>';
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   var $$INCLUDE_JS = function(fileName) {
     return '\x3cscript type="text/javascript" src="'+fileName+'">\x3c/script>';
   };
   var $$INCLUDE_JS_DEV = $$INCLUDE_JS;
   var $$INCLUDE_CSS_DEV = $$INCLUDE_CSS;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   var $$INCLUDE_CSS_Q = function(fileName) {
     return '\'<link rel="stylesheet" type="text/css" href="'+fileName+'"/>\'';
   };
+
+  // YOURNAME:
+  // YOURCOMMENT
   var $$INCLUDE_JS_Q = function(fileName) {
     return '\'\\x3cscript type="text/javascript" src="'+fileName+'">\\x3c/script>\'';
   };
   var $$INCLUDE_JS_Q_DEV = $$INCLUDE_JS_Q;
   var $$INCLUDE_CSS_Q_DEV = $$INCLUDE_CSS_Q;
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.destroy = pendingInit(function() {
     info.ace_dispose();
     info.frame.parentNode.removeChild(info.frame);
@@ -153,16 +258,25 @@ function Ace2Editor() {
     info = null; // prevent IE 6 closure memory leaks
   });
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   editor.init = function(containerId, initialCode, doneFunc) {
 
     editor.importText(initialCode);
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     info.onEditorReady = function() {
       loaded = true;
       doActionsPendingInit();
       doneFunc();
     };
 
+
+    // YOURNAME:
+    // YOURCOMMENT
     (function() {
       var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '+
 	'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -183,14 +297,23 @@ function Ace2Editor() {
 
       var outerScript = 'editorId = "'+info.id+'"; editorInfo = parent.'+
 	thisFunctionsName+'.registry[editorId]; '+
+
+// YOURNAME:
+// YOURCOMMENT
 	'window.onload = function() '+
 	'{ window.onload = null; setTimeout'+
+
+// YOURNAME:
+// YOURCOMMENT
 	'(function() '+
 	'{ var iframe = document.createElement("IFRAME"); '+
 	'iframe.scrolling = "no"; var outerdocbody = document.getElementById("outerdocbody"); '+
 	'iframe.frameBorder = 0; iframe.allowTransparency = true; '+ // for IE
 	'outerdocbody.insertBefore(iframe, outerdocbody.firstChild); '+
 	'iframe.ace_outerWin = window; '+
+
+// YOURNAME:
+// YOURCOMMENT
 	'readyFunc = function() { editorInfo.onEditorReady(); readyFunc = null; editorInfo = null; }; '+
 	'var doc = iframe.contentWindow.document; doc.open(); doc.write('+
 	iframeHTML.join('+')+'); doc.close(); '+
@@ -205,7 +328,13 @@ function Ace2Editor() {
 	'</head><body id="outerdocbody"><div id="sidediv"><!-- --></div><div id="linemetricsdiv">x</div><div id="overlaysdiv"><!-- --></div></body></html>'];
 
 
+
+      // YOURNAME:
+      // YOURCOMMENT
       if (!Array.prototype.map) Array.prototype.map = function(fun) { //needed for IE
+
+        // YOURNAME:
+        // YOURCOMMENT
         if (typeof fun != "function") throw new TypeError();
         var len = this.length;
         var res = new Array(len);

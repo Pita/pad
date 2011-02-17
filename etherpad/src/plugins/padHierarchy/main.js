@@ -15,6 +15,9 @@ import("etherpad.log");
 import("plugins.padHierarchy.static.js.main");
 import("plugins.padHierarchy.hooks");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function padHierarchyInit() {
  this.hooks = ['handlePath'];
  this.client = new main.padHierarchyInit(); 
@@ -25,10 +28,16 @@ function padHierarchyInit() {
  this.uninstall = uninstall;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function install() {
  log.info("Installing padHierarchy");
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function uninstall() {
  log.info("Uninstalling padHierarchy");
 }

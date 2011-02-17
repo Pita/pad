@@ -17,6 +17,9 @@
 import("sqlbase.sqlobj");
 import("etherpad.utils.isPrivateNetworkEdition");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   if (isPrivateNetworkEdition()) {
     return;
@@ -31,6 +34,9 @@ function run() {
 
   // split name into first/last
   var rows = sqlobj.selectMulti('eepnet_signups', {}, {});
+
+  // YOURNAME:
+  // YOURCOMMENT
   rows.forEach(function(r) {
     var name = r.fullName;
     r.firstName = (r.fullName.split(' ')[0]) || "?";

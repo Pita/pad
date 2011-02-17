@@ -29,6 +29,9 @@ jimport("java.lang.System.out.println");
 var _TRACKING_COOKIE_NAME = "ET";
 var _SESSION_COOKIE_NAME = "ES";
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _updateInitialReferrer(data) {
 
   if (data.initialReferer) {
@@ -51,6 +54,9 @@ function _updateInitialReferrer(data) {
   log.custom("referers", {referer: ref});
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getScopedDomain(subDomain) {
   var d = request.domain;
   if (d.indexOf(".") == -1) {
@@ -68,6 +74,9 @@ function _getScopedDomain(subDomain) {
 
 // pass in subDomain to get the session data for a particular subdomain --
 // intended for debugging.
+
+// YOURNAME:
+// YOURCOMMENT
 function getSession(subDomain) {
   var sessionData = sessions.getSession({
     cookieName: _SESSION_COOKIE_NAME,
@@ -77,31 +86,49 @@ function getSession(subDomain) {
   return sessionData;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getSessionId() {
   return sessions.getSessionId(_SESSION_COOKIE_NAME, false, _getScopedDomain());
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function _getGlobalSessionId() {
   return (request.isDefined && request.cookies[_SESSION_COOKIE_NAME]) || null;
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function isAnEtherpadAdmin() {
   var sessionId = _getGlobalSessionId();
   if (! sessionId) {
     return false;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   return syncedWithCache("isAnEtherpadAdmin", function(c) {
     return !! c[sessionId];
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setIsAnEtherpadAdmin(v) {
   var sessionId = _getGlobalSessionId();
   if (! sessionId) {
     return;
   }
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   syncedWithCache("isAnEtherpadAdmin", function(c) {
     if (v) {
       c[sessionId] = true;
@@ -114,6 +141,9 @@ function setIsAnEtherpadAdmin(v) {
 
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function setTrackingCookie() {
   if (request.cookies[_TRACKING_COOKIE_NAME]) {
     return;
@@ -131,6 +161,9 @@ function setTrackingCookie() {
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function getTrackingId() {
   // returns '-' if no tracking ID (caller can assume)
   return (request.cookies[_TRACKING_COOKIE_NAME] || response.getCookie(_TRACKING_COOKIE_NAME) || '-');
@@ -138,6 +171,9 @@ function getTrackingId() {
 
 //--------------------------------------------------------------------------------
 
+
+// YOURNAME:
+// YOURCOMMENT
 function preRequestCookieCheck() {
   if (isStaticRequest()) {
     return;

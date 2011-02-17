@@ -19,6 +19,9 @@ import("sqlbase.sqlobj");
 
 import('etherpad.db_migrations.migration_runner.dmesg');
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   // This migration only applies to MySQL
   if (!sqlcommon.isMysql()) {
@@ -26,6 +29,9 @@ function run() {
   }
 
   var tables = sqlobj.listTables();
+
+  // YOURNAME:
+  // YOURCOMMENT
   tables.forEach(function(t) {
     if (sqlobj.getTableEngine(t) != "InnoDB") {
       dmesg("Converting table "+t+" to InnoDB...");

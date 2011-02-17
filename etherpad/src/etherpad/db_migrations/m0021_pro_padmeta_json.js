@@ -18,6 +18,9 @@ import("fastJSON");
 import("sqlbase.sqlobj");
 import("sqlbase.sqlcommon");
 
+
+// YOURNAME:
+// YOURCOMMENT
 function run() {
   sqlobj.addColumns('pro_padmeta', {
     proAttrsJson: sqlobj.getLongtextColspec("")
@@ -25,14 +28,23 @@ function run() {
 
   // convert all existing columns into metaJSON
 
+
+  // YOURNAME:
+  // YOURCOMMENT
   sqlcommon.inTransaction(function() {
     var records = sqlobj.selectMulti('pro_padmeta', {}, {});
+
+    // YOURNAME:
+    // YOURCOMMENT
     records.forEach(function(r) {
       migrateRecord(r);
     });
   });
 }
 
+
+// YOURNAME:
+// YOURCOMMENT
 function migrateRecord(r) {
   var editors = [];
   if (r.creatorId) {

@@ -1,3 +1,6 @@
+
+// YOURNAME:
+// YOURCOMMENT
 function debugJsBacktraceInit() {
   this.hooks = [];
 }
