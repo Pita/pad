@@ -21,66 +21,24 @@ import java.net.{Socket, ServerSocket, InetSocketAddress, SocketException};
 import java.io.{DataInputStream, DataOutputStream, IOException}
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
-//YOURNAME:
-//YOURCOMMENT
 trait SarsMessageHandler {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def handle(s: String): Option[String] = None;
-
-  //YOURNAME:
-  //YOURCOMMENT
   def handle(b: Array[Byte]): Option[Array[Byte]] = None;
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 class SarsException(m: String) extends RuntimeException(m);
-
-//YOURNAME:
-//YOURCOMMENT
 class ChannelClosedUnexpectedlyException extends SarsException("Sars channel closed unexpectedly.");
-
-//YOURNAME:
-//YOURCOMMENT
 class BadAuthKeyException extends SarsException("Sars authKey not accepted.");
-
-//YOURNAME:
-//YOURCOMMENT
 class NotAuthenticatedException extends SarsException("Sars must authenticate before sending message.");
-
-//YOURNAME:
-//YOURCOMMENT
 class UnknownTypeException(t: String) extends SarsException("Sars type unknown: "+t);
 
-private[sars]
- //YOURNAME:
- //YOURCOMMENT
- trait SarsMessageReaderWriter {
-
-  //YOURNAME:
-  //YOURCOMMENT
+private[sars] trait SarsMessageReaderWriter {
   def byteArray = 1;
-
-  //YOURNAME:
-  //YOURCOMMENT
   def utf8String = 2;
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def inputStream: DataInputStream;
-
-  //YOURNAME:
-  //YOURCOMMENT
   def outputStream: DataOutputStream;
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readMessage: Option[Any] = {
     val messageType = inputStream.readInt;
     if (messageType == byteArray) {
@@ -102,45 +60,27 @@ private[sars]
       throw new UnknownTypeException("type "+messageType);
     }
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readString: Option[String] = {
     val m = readMessage;
     m.filter(_.isInstanceOf[String]).asInstanceOf[Option[String]];
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readBytes: Option[Array[Byte]] = {
     val m = readMessage;
     m.filter(_.isInstanceOf[Array[Byte]]).asInstanceOf[Option[Array[Byte]]];
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def writeMessage(bytes: Array[Byte]) {
     outputStream.writeInt(byteArray);
     outputStream.writeInt(bytes.length);
     outputStream.write(bytes);
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def writeMessage(string: String) {
     outputStream.writeInt(utf8String);
     outputStream.writeUTF(string);
   }
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 class SarsClient(authKey: String, host: String, port: Int) {
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   class SarsClientHandler(s: Socket) {
     val readerWriter = new SarsMessageReaderWriter {
       val inputStream = new DataInputStream(s.getInputStream());
@@ -148,9 +88,6 @@ class SarsClient(authKey: String, host: String, port: Int) {
     }
     var authenticated = false;
 
-
-    //YOURNAME:
-    //YOURCOMMENT
     def auth() {
       val challenge = readerWriter.readString;
       if (challenge.isEmpty) { 
@@ -165,9 +102,6 @@ class SarsClient(authKey: String, host: String, port: Int) {
       authenticated = true;
     }
 
-
-    //YOURNAME:
-    //YOURCOMMENT
     def message[T](q: T, writer: T => Unit, reader: Unit => Option[T]): T = {
       if (! authenticated) {
         throw new NotAuthenticatedException;
@@ -189,21 +123,12 @@ class SarsClient(authKey: String, host: String, port: Int) {
       }
     }
     
-
-    //YOURNAME:
-    //YOURCOMMENT
     def message(s: String): String =
       message[String](s, readerWriter.writeMessage, Unit => readerWriter.readString);
     
-
-    //YOURNAME:
-    //YOURCOMMENT
     def message(b: Array[Byte]): Array[Byte] = 
       message[Array[Byte]](b, readerWriter.writeMessage, Unit => readerWriter.readBytes);
 
-
-    //YOURNAME:
-    //YOURCOMMENT
     def close() {
       if (! s.isClosed) {
         s.close();
@@ -215,23 +140,14 @@ class SarsClient(authKey: String, host: String, port: Int) {
   var connectTimeout = 0;
   var readTimeout = 0;
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def setConnectTimeout(timeout: Int) {
     connectTimeout = timeout;
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def setReadTimeout(timeout: Int) {
     readTimeout = timeout;
   }
   
   var client: SarsClientHandler = null;
-
-  //YOURNAME:
-  //YOURCOMMENT
   def connect() {
     if (socket != null && ! socket.isClosed) {
       socket.close();
@@ -243,9 +159,6 @@ class SarsClient(authKey: String, host: String, port: Int) {
     client.auth();
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def message(q: String) = {
     if (! socket.isConnected || socket.isClosed) {
       connect();
@@ -253,9 +166,6 @@ class SarsClient(authKey: String, host: String, port: Int) {
     client.message(q);
   }
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def message(b: Array[Byte]) = {
     if (! socket.isConnected || socket.isClosed) {
       connect();
@@ -263,9 +173,6 @@ class SarsClient(authKey: String, host: String, port: Int) {
     client.message(b);
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def close() {
     if (client != null) {
       client.close();
@@ -273,22 +180,13 @@ class SarsClient(authKey: String, host: String, port: Int) {
   }
 }   
       
-
-//YOURNAME:
-//YOURCOMMENT
 class SarsServer(authKey: String, handler: SarsMessageHandler, host: Option[String], port: Int) {
 
   // handles a single client.
-
-  //YOURNAME:
-  //YOURCOMMENT
   class SarsServerHandler(cs: Socket) extends Runnable {
     var thread: Thread = null;
     var running = new AtomicBoolean(false);
     
-
-    //YOURNAME:
-    //YOURCOMMENT
     def run() {
       try {
         thread = Thread.currentThread();
@@ -327,9 +225,6 @@ class SarsServer(authKey: String, handler: SarsMessageHandler, host: Option[Stri
       }
     }
 
-
-    //YOURNAME:
-    //YOURCOMMENT
     def stop() {
       if (running.compareAndSet(true, false)) {
         thread.interrupt();
@@ -348,19 +243,13 @@ class SarsServer(authKey: String, handler: SarsMessageHandler, host: Option[Stri
   var daemon = false;
   val server = this;
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def start() {
     if (hasRun)
       throw new RuntimeException("Can't reuse server.");
     hasRun = true;
     if (running.compareAndSet(false, true)) {
       serverThread = new Thread() {
-        override
- //YOURNAME:
- //YOURCOMMENT
- def run() {
+        override def run() {
           while(running.get()) {
             val cs = try {
               ss.accept();
@@ -400,9 +289,6 @@ class SarsServer(authKey: String, handler: SarsMessageHandler, host: Option[Stri
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def stop() {
     if (running.compareAndSet(true, false)) {
       if (! ss.isClosed) {
@@ -418,27 +304,15 @@ class SarsServer(authKey: String, handler: SarsMessageHandler, host: Option[Stri
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def join() {
     serverThread.join();
   }
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 object test {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def main(args: Array[String]) { 
     val handler = new SarsMessageHandler {
-      override
- //YOURNAME:
- //YOURCOMMENT
- def handle(s: String) = {
+      override def handle(s: String) = {
         println("SERVER: "+s);
         if (s == "hello!") {
           Some("hey there.");
@@ -446,10 +320,7 @@ object test {
           None;
         }
       }
-      override
- //YOURNAME:
- //YOURCOMMENT
- def handle(b: Array[Byte]) = {
+      override def handle(b: Array[Byte]) = {
         var actually = new String(b, "UTF-8");
         println("SERVER: "+actually);
         if (actually == "hello!") {

@@ -26,14 +26,8 @@ import java.io.{ObjectInputStream, ObjectOutputStream, FileInputStream, FileOutp
 
 import net.appjet.common.util.BetterFile;
 
-
-//YOURNAME:
-//YOURCOMMENT
 // object EncryptomaticTest {
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def main(args: Array[String]) {
+//   def main(args: Array[String]) {
 //     args(0) match {
 //       case "genkeys" => {
 // 	val keyPair = Encryptomatic.generateKeyPair;
@@ -87,18 +81,9 @@ import net.appjet.common.util.BetterFile;
 //   }
 // }
 
-
-//YOURNAME:
-//YOURCOMMENT
 object Encryptomatic {
-  private val chars = "0123456789abc
-//YOURNAME:
-//YOURCOMMENT
-defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  private val chars = "0123456789abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def bytesToAscii(bytes: Array[Byte]) = {
     var i = BigInt(bytes);
     val neg = i < 0;
@@ -113,9 +98,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     sb.append(chars(i.intValue));
     (if (neg) "-" else "")+sb.toString.reverse;
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def asciiToBytes(src: String) = {
     var i = BigInt(0);
     val Pair(isNegative, b) = 
@@ -131,9 +113,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     i.toByteArray
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def generateKeyPair(keyType: String) = {
     val keyGen = KeyPairGenerator.getInstance(keyType);
     val random = SecureRandom.getInstance("SHA1PRNG", "SUN");
@@ -141,9 +120,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     keyGen.generateKeyPair();
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def keyPairBytes(keyPair: KeyPair) = {
     val pubKey = keyPair.getPublic();
     if (pubKey.getFormat != "X.509")
@@ -156,9 +132,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     (pubKey.getEncoded, privKey.getEncoded)
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def writeKeyPair(keyPair: KeyPair, publicKey: String, privateKey: String) {
     val pubOutputStream = new PrintWriter(new FileOutputStream(publicKey));
     val privOutputStream = new PrintWriter(new FileOutputStream(privateKey));
@@ -168,44 +141,26 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     List(pubOutputStream, privOutputStream).foreach(x => {x.flush(); x.close()});
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   class AsciiToBytesInputStream(in: InputStream) extends InputStream {
     val reader = new BufferedReader(new InputStreamReader(in));
     val bytes = new ByteArrayInputStream(asciiToBytes(reader.readLine()));
-
-    //YOURNAME:
-    //YOURCOMMENT
     def read(): Int = bytes.read();
   }
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readPublicKey(keyType: String, publicKey: InputStream) = {
     val pubKeySpec = new X509EncodedKeySpec(BetterFile.getStreamBytes(new AsciiToBytesInputStream(publicKey)));
     KeyFactory.getInstance(keyType).generatePublic(pubKeySpec);
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readPrivateKey(keyType: String, privateKey: InputStream) = {
     val privKeySpec = new PKCS8EncodedKeySpec(BetterFile.getStreamBytes(new AsciiToBytesInputStream(privateKey)));    
     KeyFactory.getInstance(keyType).generatePrivate(privKeySpec);
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def readKeyPair(keyType: String, publicKey: InputStream, privateKey: InputStream) = {
     new KeyPair(readPublicKey(keyType, publicKey),
 		readPrivateKey(keyType, privateKey));
   }  
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def sign(source: InputStream, key: PrivateKey): Array[byte] = {
     val dsa = Signature.getInstance("SHA1withDSA");
     dsa.initSign(key);
@@ -218,9 +173,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     dsa.sign();
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def verify(source: InputStream, key: PublicKey, sig: Array[byte]): Boolean = {
     val dsa = Signature.getInstance("SHA1withDSA");
     dsa.initVerify(key);
@@ -233,9 +185,6 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     dsa.verify(sig)
   }
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def encrypt(source: InputStream, key: PublicKey): Array[byte] = {
     val cipher = Cipher.getInstance("RSA");
     cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -254,14 +203,8 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     outBytesStream.toByteArray();
   }
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def decrypt(source: InputStream, key: PrivateKey): Array[byte] = {
     val in = new DataInputStream(source);
-
-    //YOURNAME:
-    //YOURCOMMENT
     def readBlock() = {
       val length = in.readShort();
       if (length > 0) {
@@ -284,13 +227,7 @@ defghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   }
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 object Encryptor {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def main(args: Array[String]) {
     args(0) match {
       case "genkeys" => {

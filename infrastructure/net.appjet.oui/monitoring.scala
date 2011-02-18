@@ -16,14 +16,8 @@
 
 package net.appjet.oui;
 
-
-//YOURNAME:
-//YOURCOMMENT
 object monitoring {
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def startMonitoringServer() {
     // remote JMX monitoring
     // see: http://java.sun.com/javase/6/docs/technotes/guides/management/agent.html
@@ -33,13 +27,7 @@ object monitoring {
     import javax.management.ObjectName;
     import javax.management.remote.{JMXServiceURL, JMXConnectorServerFactory};
     
-
-    //YOURNAME:
-    //YOURCOMMENT
     def REGISTRY_PORT = config.listenMonitoringPrimaryPort;
-
-    //YOURNAME:
-    //YOURCOMMENT
     def SECONDARY_PORT = config.listenMonitoringSecondaryPort;
     System.setProperty("java.rmi.server.randomIDs", "true");
     
@@ -58,10 +46,7 @@ object monitoring {
     LocateRegistry.createRegistry(REGISTRY_PORT);
     val mbs = ManagementFactory.getPlatformMBeanServer();
 
-    mbs.createMBean(
-//YOURNAME:
-//YOURCOMMENT
-classOf[JSExecutor].getName, new ObjectName("net.appjet:type=JSExecutor"));
+    mbs.createMBean(classOf[JSExecutor].getName, new ObjectName("net.appjet:type=JSExecutor"));
     
     val env = new java.util.HashMap[String,Object]();
     //val csf = new javax.rmi.ssl.SslRMIClientSocketFactory();
@@ -70,9 +55,6 @@ classOf[JSExecutor].getName, new ObjectName("net.appjet:type=JSExecutor"));
     //env.put(javax.management.remote.rmi.RMIConnectorServer.RMI_SERVER_SOCKET_FACTORY_ATTRIBUTE, ssf);
     val PASSWORD_FILE_PATH = "data/jconsole-password.properties";
     val ACCESS_FILE_PATH = "data/jconsole-access.properties";
-
-    //YOURNAME:
-    //YOURCOMMENT
     def writeStringToFile(str: String, path: String) {
       val out = new java.io.PrintStream(new java.io.BufferedOutputStream(
 	new java.io.FileOutputStream(path)));
@@ -108,37 +90,22 @@ classOf[JSExecutor].getName, new ObjectName("net.appjet:type=JSExecutor"));
   
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 trait JSExecutorMXBean {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def executeJS(code: String): String;
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 class JSExecutor extends JSExecutorMXBean {
   import org.mozilla.javascript.{Context,ContextFactory,ContextAction};
   import org.mozilla.javascript.tools.ToolErrorReporter;
   import org.mozilla.javascript.tools.shell.{Global, ShellContextFactory};
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def executeJS(code: String): String = {
     val outStream = new java.io.ByteArrayOutputStream;
     val out = new java.io.PrintStream(outStream, true, "UTF-8");
 
     val contextFactory = new ShellContextFactory;
     try {
-      contextFactory.call(new ContextAction {
- //YOURNAME:
- //YOURCOMMENT
- def run(cx: Context): Object = {
+      contextFactory.call(new ContextAction { def run(cx: Context): Object = {
 	val global = new Global(cx);
 	global.setOut(out);
 	global.setErr(out);

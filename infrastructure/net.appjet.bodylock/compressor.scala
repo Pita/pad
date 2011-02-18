@@ -19,38 +19,20 @@ package net.appjet.bodylock;
 import java.io.{StringWriter, StringReader}
 import net.appjet.common.util.BetterFile;
 
-
-//YOURNAME:
-//YOURCOMMENT
 object compressor {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def compress(code: String): String = {
     import yuicompressor.org.mozilla.javascript.{ErrorReporter, EvaluatorException};
-
-    //YOURNAME:
-    //YOURCOMMENT
     object MyErrorReporter extends ErrorReporter {
-
-      //YOURNAME:
-      //YOURCOMMENT
       def warning(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
 	if (message startsWith "Try to use a single 'var' statement per scope.") return;
 	if (line < 0) System.err.println("\n[WARNING] " + message);
 	else System.err.println("\n[WARNING] " + line + ':' + lineOffset + ':' + message);
       }
-
-      //YOURNAME:
-      //YOURCOMMENT
       def error(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
 	if (line < 0) System.err.println("\n[ERROR] " + message);
 	else System.err.println("\n[ERROR] " + line + ':' + lineOffset + ':' + message);
 	java.lang.System.exit(1);
       }
-
-      //YOURNAME:
-      //YOURCOMMENT
       def runtimeError(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int): EvaluatorException = {
 	error(message, sourceName, line, lineSource, lineOffset);
 	return new EvaluatorException(message);
@@ -67,9 +49,6 @@ object compressor {
     writer.toString;
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def main(args: Array[String]) {
     for (fname <- args) {
       try {
@@ -94,18 +73,12 @@ object compressor {
 
 // import java.io._;
 
-//
- //YOURNAME:
- //YOURCOMMENT
- def doMake {
+// def doMake {
 
 //   lazy val isEtherPad = (args.length >= 2 && args(1) == "etherpad");
 //   lazy val isNoHelma = (args.length >= 2 && args(1) == "nohelma");
     
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def getFile(path:String): String = {
+//   def getFile(path:String): String = {
 //     val builder = new StringBuilder(1000);
 //     val reader = new BufferedReader(new FileReader(path));
 //     val buf = new Array[Char](1024);
@@ -117,52 +90,31 @@ object compressor {
 //     return builder.toString;
 //   }
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def putFile(str: String, path: String): Unit = {
+//   def putFile(str: String, path: String): Unit = {
 //     val writer = new FileWriter(path);
 //     writer.write(str);
 //     writer.close;
 //   }
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def writeToString(func:(Writer=>Unit)): String = {
+//   def writeToString(func:(Writer=>Unit)): String = {
 //     val writer = new StringWriter;
 //     func(writer);
 //     return writer.toString;
 //   }
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def compressJS(code: String, wrap: Boolean): String = {
+//   def compressJS(code: String, wrap: Boolean): String = {
 //     import org.mozilla.javascript.{ErrorReporter, EvaluatorException};
-
-//YOURNAME:
-//YOURCOMMENT
 //     object MyErrorReporter extends ErrorReporter {
-//
-       //YOURNAME:
-       //YOURCOMMENT
-       def warning(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
+//       def warning(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
 // 	if (message startsWith "Try to use a single 'var' statement per scope.") return;
 // 	if (line < 0) System.err.println("\n[WARNING] " + message);
 // 	else System.err.println("\n[WARNING] " + line + ':' + lineOffset + ':' + message);
 //       }
-//
-       //YOURNAME:
-       //YOURCOMMENT
-       def error(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
+//       def error(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int) {
 // 	if (line < 0) System.err.println("\n[ERROR] " + message);
 // 	else System.err.println("\n[ERROR] " + line + ':' + lineOffset + ':' + message);
 //       }
-//
-       //YOURNAME:
-       //YOURCOMMENT
-       def runtimeError(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int): EvaluatorException = {
+//       def runtimeError(message:String, sourceName:String, line:Int, lineSource:String, lineOffset:Int): EvaluatorException = {
 // 	error(message, sourceName, line, lineSource, lineOffset);
 // 	return new EvaluatorException(message);
 //       }
@@ -175,20 +127,14 @@ object compressor {
 //     return writeToString(compressor.compress(_, if (wrap) 100 else -1, munge, verbose, true, !optimize));
 //   }
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def compressCSS(code: String, wrap: Boolean): String = {
+//   def compressCSS(code: String, wrap: Boolean): String = {
 //     val compressor = new com.yahoo.platform.yui.compressor.CssCompressor(new StringReader(code));
 //     return writeToString(compressor.compress(_, if (wrap) 100 else -1));  
 //   }
 
 //   import java.util.regex.{Pattern, Matcher, MatchResult};
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def stringReplace(orig: String, regex: String, groupReferences:Boolean, func:(MatchResult=>String)): String = {
+//   def stringReplace(orig: String, regex: String, groupReferences:Boolean, func:(MatchResult=>String)): String = {
 //     val buf = new StringBuffer;
 //     val m = Pattern.compile(regex).matcher(orig);
 //     while (m.find) {
@@ -202,10 +148,7 @@ object compressor {
 //     return buf.toString;
 //   }
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def stringToExpression(str: String): String = {
+//   def stringToExpression(str: String): String = {
 //     val contents = str.replace("\\", "\\\\").replace("'", "\\'").replace("<", "\\x3c").replace("\n", "\\n").
 //     replace("\r", "\\n").replace("\t", "\\t");
 //     return "'"+contents+"'";
@@ -268,10 +211,7 @@ object compressor {
 
 //   putFile(getFile(srcDir+"/testcode.js"), destDir+"/testcode.js");
 
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def copyFile(fromFile: String, toFile: String) {
+//   def copyFile(fromFile: String, toFile: String) {
 //     if (0 != Runtime.getRuntime.exec("cp "+fromFile+" "+toFile).waitFor) {
 //       printf("copy failed (%s -> %s).\n", fromFile, toFile);
 //     }      
@@ -287,15 +227,9 @@ object compressor {
 //   }
 // }
 
-//
- //YOURNAME:
- //YOURCOMMENT
- def remakeLoop {
+// def remakeLoop {
   
-//
-   //YOURNAME:
-   //YOURCOMMENT
-   def getStamp: Long = {
+//   def getStamp: Long = {
 //     return new java.io.File("www").listFiles.
 //     filter(! _.getName.endsWith("~")).
 //     filter(! _.getName.endsWith("#")).

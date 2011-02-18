@@ -20,19 +20,10 @@ import org.mozilla.javascript.{Context,Scriptable,ScriptableObject};
 import net.sf.json.util.JSONStringer;
 import net.sf.json.{JSONObject,JSONArray};
 
-
-//YOURNAME:
-//YOURCOMMENT
 object FastJSON {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def stringify(rhinoObj: Scriptable): String = {
     return FastJSONStringify.stringify(rhinoObj);
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def parse(exctx: ExecutionContext, source: String): Scriptable = {
     return (new FastJSONParser(exctx)).parse(source);
   }
@@ -41,28 +32,16 @@ object FastJSON {
 //----------------------------------------------------------------
 // FastJSONStringify
 //----------------------------------------------------------------
-
-//YOURNAME:
-//YOURCOMMENT
 object FastJSONStringify {
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def stringify(rhinoObj: Scriptable): String = {
     val stringer = new JSONStringer();
     stringerizeScriptable(stringer, rhinoObj);
     return stringer.toString();
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def stringerize(s: JSONStringer, v: Object) {
-    if (v == Context.getUn
-//YOURNAME:
-//YOURCOMMENT
-definedValue) {
+  private def stringerize(s: JSONStringer, v: Object) {
+    if (v == Context.getUndefinedValue) {
       return;
     }
     v match {
@@ -80,10 +59,7 @@ definedValue) {
     }
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def stringerizeScriptable(stringer: JSONStringer, rhinoObj: Scriptable) {
+  private def stringerizeScriptable(stringer: JSONStringer, rhinoObj: Scriptable) {
     if (rhinoObj.getClassName() == "Array") {
       stringerizeArray(stringer, rhinoObj);
     } else {
@@ -91,13 +67,7 @@ definedValue) {
     }
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def stringerizeObj(stringer: JSONStringer, rhinoObj: Scriptable) {
-
-    //YOURNAME:
-    //YOURCOMMENT
+  private def stringerizeObj(stringer: JSONStringer, rhinoObj: Scriptable) {
     stringer.`object`();
 
     for (id <- rhinoObj.getIds()) {
@@ -109,10 +79,7 @@ definedValue) {
         case _ => {}
       }
       
-      if (v != null && v != Scriptable.NOT_FOUND && v != Context.getUn
-//YOURNAME:
-//YOURCOMMENT
-definedValue) {
+      if (v != null && v != Scriptable.NOT_FOUND && v != Context.getUndefinedValue) {
         stringer.key(k);
         stringerize(stringer, v);
       }
@@ -121,10 +88,7 @@ definedValue) {
     stringer.endObject();
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def stringerizeArray(stringer: JSONStringer, rhinoArray: Scriptable) {
+  private def stringerizeArray(stringer: JSONStringer, rhinoArray: Scriptable) {
     stringer.`array`();
 
     val ids:Array[Object] = rhinoArray.getIds();
@@ -151,14 +115,8 @@ definedValue) {
 //----------------------------------------------------------------
 // FastJSONParse
 //----------------------------------------------------------------
-
-//YOURNAME:
-//YOURCOMMENT
 class FastJSONParser(val ctx:ExecutionContext) {
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def parse(source: String): Scriptable = {
     if (source(0) == '[') {
       jsonToRhino(JSONArray.fromObject(source)).asInstanceOf[Scriptable];
@@ -167,24 +125,15 @@ class FastJSONParser(val ctx:ExecutionContext) {
     }
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def newObj(): Scriptable = {
+  private def newObj(): Scriptable = {
     Context.getCurrentContext().newObject(ctx.runner.globalScope);
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def newArray(): Scriptable = {
+  private def newArray(): Scriptable = {
     Context.getCurrentContext().newArray(ctx.runner.globalScope, 0);
   }
   
-  private
- //YOURNAME:
- //YOURCOMMENT
- def jsonToRhino(json: Object): Object = {
+  private def jsonToRhino(json: Object): Object = {
     json match {
       case (o:JSONArray) => jsonArrayToRhino(o);
       case (o:JSONObject) if (o.isNullObject()) => null;
@@ -193,10 +142,7 @@ class FastJSONParser(val ctx:ExecutionContext) {
     }
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def jsonArrayToRhino(json: JSONArray): Scriptable = {
+  private def jsonArrayToRhino(json: JSONArray): Scriptable = {
     val o:Scriptable = newArray();
     for (i <- 0 until json.size()) {
       o.put(i, o, jsonToRhino(json.get(i)));
@@ -204,10 +150,7 @@ class FastJSONParser(val ctx:ExecutionContext) {
     return o;
   }
 
-  private
- //YOURNAME:
- //YOURCOMMENT
- def jsonObjectToRhino(json: JSONObject): Scriptable = {
+  private def jsonObjectToRhino(json: JSONObject): Scriptable = {
     val o:Scriptable = newObj();
     val names:Array[Object] = json.names().toArray();
     if (names != null) {

@@ -18,14 +18,8 @@ package net.appjet.common.rhino;
 
 import java.lang.reflect.Modifier;
 
-
-//YOURNAME:
-//YOURCOMMENT
 object rhinospect {
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def visitFields(obj: Object, func: (String,Any)=>Unit) {
     var cls: Class[_] = obj.getClass;
 
@@ -45,17 +39,11 @@ object rhinospect {
 	    func(nm, vl);
 	  }
 	}
-	cls = cls.getSuper
-//YOURNAME:
-//YOURCOMMENT
-class;
+	cls = cls.getSuperclass;
       }
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def dumpFields(obj: Object, depth: Int, prefix: String): String = {
     val s = new java.io.StringWriter();
     val out = new java.io.PrintWriter(s);

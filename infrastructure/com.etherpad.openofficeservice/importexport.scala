@@ -31,56 +31,29 @@ import com.sun.star.frame.{XComponentLoader,XStorable};
 import com.sun.star.lang.{XComponent,XMultiComponentFactory};
 import com.sun.star.uno.{UnoRuntime,XComponentContext};
 
-
-//YOURNAME:
-//YOURCOMMENT
 class OOSException(m: String) extends RuntimeException(m);
-
-//YOURNAME:
-//YOURCOMMENT
 class UnsupportedFormatException(format: String) extends OOSException("Unsupported format: "+format);
-
-//YOURNAME:
-//YOURCOMMENT
 object TemporaryFailure extends OOSException("Temporary failure");
 
-
-//YOURNAME:
-//YOURCOMMENT
 object OpenOfficeServerUtility {
-
-  //YOURNAME:
-  //YOURCOMMENT
   def checkServerAvailability(host: String, port: Int): Boolean = {
     // Assume the server is running; this is the responsibility of the user
     return true;
   }
-
-  //YOURNAME:
-  //YOURCOMMENT
   def runOpenOfficeServer(path: String, host: String, port: Int, timeout: Int, wait: Boolean) {
     // nothing
   }
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 class OpenOfficeFileConverter {
   var host: String = "localhost";
   var port: Int = 8100;
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def setOpenOfficeServerDetails(host: String, port: Int) {
     this.host = host;
     this.port = port;
   }
   
-
-  //YOURNAME:
-  //YOURCOMMENT
   def convertFile(src: File, dst: File, converter: String, extension: String): Boolean = {
     try {
       val fromFile: String = "file:///" + src.getAbsolutePath();
@@ -89,45 +62,27 @@ class OpenOfficeFileConverter {
       val cnx: String = "socket,host="+this.host+",port="+this.port+"";
       val xRemoteContext: XComponentContext  = com.sun.star.comp.helper.Bootstrap.createInitialComponentContext(null);
       val x: Object = xRemoteContext.getServiceManager().createInstanceWithContext("com.sun.star.connection.Connector", xRemoteContext);
-      val xConnector: XConnector  = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XConnector], x).asInstanceOf[XConnector];
+      val xConnector: XConnector  = UnoRuntime.queryInterface(classOf[XConnector], x).asInstanceOf[XConnector];
       val connection: XConnection  = xConnector.connect(cnx);
 
       if(connection == null) {
         throw new OOSException("Connection failure");
       }
       val x2: Object = xRemoteContext.getServiceManager().createInstanceWithContext("com.sun.star.bridge.BridgeFactory", xRemoteContext);
-      val xBridgeFactory: XBridgeFactory = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XBridgeFactory], x2).asInstanceOf[XBridgeFactory];
+      val xBridgeFactory: XBridgeFactory = UnoRuntime.queryInterface(classOf[XBridgeFactory], x2).asInstanceOf[XBridgeFactory];
       val xBridge: XBridge = xBridgeFactory.createBridge("", "urp", connection, null);
       val x3: Object = xBridge.getInstance("StarOffice.ServiceManager");
       if (x3 == null) {
         throw new OOSException("Failed to get bridge");
       }
 
-      val xMultiComponentFactory: XMultiComponentFactory  = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XMultiComponentFactory], x3).asInstanceOf[XMultiComponentFactory];
-      val xProperySet: XPropertySet  = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XPropertySet], xMultiComponentFactory).asInstanceOf[XPropertySet];
+      val xMultiComponentFactory: XMultiComponentFactory  = UnoRuntime.queryInterface(classOf[XMultiComponentFactory], x3).asInstanceOf[XMultiComponentFactory];
+      val xProperySet: XPropertySet  = UnoRuntime.queryInterface(classOf[XPropertySet], xMultiComponentFactory).asInstanceOf[XPropertySet];
       val oDefaultContext: Object  = xProperySet.getPropertyValue("DefaultContext");
-      val xComponentContext: XComponentContext = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XComponentContext], oDefaultContext).asInstanceOf[XComponentContext];
+      val xComponentContext: XComponentContext = UnoRuntime.queryInterface(classOf[XComponentContext], oDefaultContext).asInstanceOf[XComponentContext];
 
       val desktopObj: Object  = xMultiComponentFactory.createInstanceWithContext("com.sun.star.frame.Desktop", xComponentContext);
-      val xcomponentloader: XComponentLoader = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XComponentLoader], desktopObj).asInstanceOf[XComponentLoader];
+      val xcomponentloader: XComponentLoader = UnoRuntime.queryInterface(classOf[XComponentLoader], desktopObj).asInstanceOf[XComponentLoader];
 
       if(xcomponentloader == null) {
         throw new OOSException("XComponent Loader could not be loaded");
@@ -153,10 +108,7 @@ classOf[XComponentLoader], desktopObj).asInstanceOf[XComponentLoader];
       convProps(0).Name = "FilterName";
       convProps(0).Value = converter;
 
-      val xstorable: XStorable = UnoRuntime.queryInterface(
-//YOURNAME:
-//YOURCOMMENT
-classOf[XStorable],component).asInstanceOf[XStorable];
+      val xstorable: XStorable = UnoRuntime.queryInterface(classOf[XStorable],component).asInstanceOf[XStorable];
       if (xstorable == null) {
           throw new OOSException("Storable could not be loaded");
       }
@@ -173,9 +125,6 @@ classOf[XStorable],component).asInstanceOf[XStorable];
   }
 }
 
-
-//YOURNAME:
-//YOURCOMMENT
 object OpenOfficeService {
   val formats = Map(
     "pdf" -> "writer_pdf_Export",
@@ -186,9 +135,6 @@ object OpenOfficeService {
     "txt" -> "Text"
   );
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def createTempFile(bytes: Array[byte], suffix: String) = {
     var f = File.createTempFile("ooconvert-", if (suffix == null) { null } else if (suffix == "") { "" } else { "."+suffix });
   	if (bytes != null) {
@@ -199,9 +145,6 @@ object OpenOfficeService {
   }
 
   var soffice = "soffice";
-
-  //YOURNAME:
-  //YOURCOMMENT
   def setExecutable(exec: String) {
     soffice = exec;
   }
@@ -209,17 +152,11 @@ object OpenOfficeService {
   var openOfficeServerHost: String = "localhost";
   var openOfficeServerPort: Int = 8100;
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def setOpenOfficeServer(host: String, port: Int) {
     openOfficeServerHost = host;
     openOfficeServerPort = port;
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def convertFile(from: String, to: String, bytes: Array[byte]): Array[byte] = {
     if (from == to) {
       return bytes;
@@ -267,9 +204,6 @@ object OpenOfficeService {
   	net.appjet.common.util.BetterFile.getFileBytes(outFile);
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def main(args: Array[String]) {
     if (args.length > 0) {
       soffice = args(0);
@@ -288,10 +222,7 @@ object OpenOfficeService {
     //               type - 0: unknown failure.
     //                    - 1: unsupported format
     val handler = new SarsMessageHandler {
-      override
- //YOURNAME:
- //YOURCOMMENT
- def handle(b: Array[byte]): Option[Array[byte]] = {
+      override def handle(b: Array[byte]): Option[Array[byte]] = {
         val is = new DataInputStream(new ByteArrayInputStream(b));
         val from = is.readUTF;
         val to = is.readUTF;

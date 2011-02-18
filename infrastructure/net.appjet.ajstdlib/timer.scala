@@ -19,18 +19,12 @@ package net.appjet.ajstdlib;
 import scala.collection.mutable.{HashMap,ListBuffer};
 import java.util.concurrent.locks.ReentrantLock;
 
-
-//YOURNAME:
-//YOURCOMMENT
 object timer {
 
   var _timings = new HashMap[String,ListBuffer[double]];
   var _lock = new ReentrantLock;
   var _callstack = new ThreadLocal[ListBuffer[String]];
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def start(opname: String) = {
     var _localcallstack = _callstack.get();
     if (_localcallstack == null) {
@@ -42,9 +36,6 @@ object timer {
     val startTime: long = System.nanoTime();
 
     new {
-
-      //YOURNAME:
-      //YOURCOMMENT
       def done() {
 	val elapsedTimeMs: double = (System.nanoTime() - startTime) / 1.0e6;
 
@@ -65,9 +56,6 @@ object timer {
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def getOpNames(): Array[String] = {
     _lock.lock();
     try {
@@ -77,9 +65,6 @@ object timer {
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def getStats(opname: String): Array[double] = {
     _lock.lock();
 
@@ -92,9 +77,6 @@ object timer {
     }
   }
 
-
-  //YOURNAME:
-  //YOURCOMMENT
   def reset() {
     _lock.lock();
     _timings = new HashMap[String,ListBuffer[double]];
