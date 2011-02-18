@@ -1,0 +1,7 @@
+PATH:  etherpad/src/plugins/copyPad/static/html
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+editbar_copy.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+editbar_find_links.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

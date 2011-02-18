@@ -1,0 +1,5 @@
+PATH:  etherpad/src/plugins/padHierarchy/static
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

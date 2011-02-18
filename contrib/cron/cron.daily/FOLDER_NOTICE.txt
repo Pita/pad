@@ -1,0 +1,6 @@
+PATH:  contrib/cron/cron.daily
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+etherpad-remove-ooconvert: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

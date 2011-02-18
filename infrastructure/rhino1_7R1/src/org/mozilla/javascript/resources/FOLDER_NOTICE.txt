@@ -1,0 +1,7 @@
+PATH:  infrastructure/rhino1_7R1/src/org/mozilla/javascript/resources
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+Messages_fr.properties: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+Messages.properties: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

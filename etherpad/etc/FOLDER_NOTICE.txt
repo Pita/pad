@@ -1,0 +1,7 @@
+PATH:  etherpad/etc
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+etherpad.localdev-default.properties: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+etherpad.local.properties.tmpl: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

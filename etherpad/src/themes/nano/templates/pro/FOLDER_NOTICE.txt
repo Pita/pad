@@ -1,0 +1,6 @@
+PATH:  etherpad/src/themes/nano/templates/pro
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+pro_home.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

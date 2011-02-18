@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/langTag/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+langTagTagSelectors.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

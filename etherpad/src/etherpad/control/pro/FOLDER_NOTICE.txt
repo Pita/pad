@@ -1,0 +1,8 @@
+PATH:  etherpad/src/etherpad/control/pro
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+account_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_main_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_padlist_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

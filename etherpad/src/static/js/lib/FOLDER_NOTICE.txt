@@ -1,0 +1,6 @@
+PATH:  etherpad/src/static/js/lib
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+jquery.contextmenu.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

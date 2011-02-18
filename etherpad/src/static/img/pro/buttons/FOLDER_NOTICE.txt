@@ -1,0 +1,6 @@
+PATH:  etherpad/src/static/img/pro/buttons
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+bluebutton120.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

@@ -1,0 +1,5 @@
+PATH:  infrastructure/rhino1_7R1/src/org/mozilla
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

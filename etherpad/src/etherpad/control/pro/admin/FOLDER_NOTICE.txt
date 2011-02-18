@@ -1,0 +1,10 @@
+PATH:  etherpad/src/etherpad/control/pro/admin
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+account_manager_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+license_manager_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_admin_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_config_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+team_billing_control.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

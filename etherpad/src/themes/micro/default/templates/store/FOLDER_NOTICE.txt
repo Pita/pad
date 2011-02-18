@@ -1,0 +1,9 @@
+PATH:  etherpad/src/themes/micro/default/templates/store
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+csc-help.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+eepnet_download.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+eepnet_eval_nextsteps.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+eepnet_eval_signup.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

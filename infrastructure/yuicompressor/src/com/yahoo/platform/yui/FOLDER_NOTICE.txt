@@ -1,0 +1,5 @@
+PATH:  infrastructure/yuicompressor/src/com/yahoo/platform/yui
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

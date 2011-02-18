@@ -1,0 +1,9 @@
+PATH:  infrastructure/rhino1_7R1/javadoc/org/mozilla/javascript/optimizer
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+ClassCompiler.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+package-frame.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+package-summary.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+package-tree.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

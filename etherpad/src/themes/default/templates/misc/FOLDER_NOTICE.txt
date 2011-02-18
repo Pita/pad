@@ -1,0 +1,6 @@
+PATH:  etherpad/src/themes/default/templates/misc
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+pad_default.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

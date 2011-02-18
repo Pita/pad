@@ -1,0 +1,5 @@
+PATH:  etherpad/src/static/img/lib
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

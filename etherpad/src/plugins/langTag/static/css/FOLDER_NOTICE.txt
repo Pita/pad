@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/langTag/static/css
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+langTag.css: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

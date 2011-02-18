@@ -1,0 +1,6 @@
+PATH:  etherpad/src/static/img/davy/btn
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+createpad-small.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

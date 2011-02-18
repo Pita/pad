@@ -1,0 +1,6 @@
+PATH:  etherpad/src/themes/nano/default/templates/beta
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+signup.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

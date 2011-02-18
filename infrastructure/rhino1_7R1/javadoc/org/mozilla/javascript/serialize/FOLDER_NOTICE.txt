@@ -1,0 +1,10 @@
+PATH:  infrastructure/rhino1_7R1/javadoc/org/mozilla/javascript/serialize
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+package-frame.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+package-summary.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+package-tree.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+ScriptableInputStream.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+ScriptableOutputStream.html: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

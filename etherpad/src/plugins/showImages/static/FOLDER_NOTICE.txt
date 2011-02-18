@@ -1,0 +1,5 @@
+PATH:  etherpad/src/plugins/showImages/static
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

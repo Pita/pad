@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/debugFirebugLite/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+langTagEditbarButtons.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

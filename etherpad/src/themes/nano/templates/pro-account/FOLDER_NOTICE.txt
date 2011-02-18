@@ -1,0 +1,7 @@
+PATH:  etherpad/src/themes/nano/templates/pro-account
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+recover.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+sign-in.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

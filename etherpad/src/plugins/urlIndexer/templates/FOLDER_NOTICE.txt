@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/urlIndexer/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+urlBrowser.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

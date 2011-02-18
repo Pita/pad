@@ -1,0 +1,7 @@
+PATH:  etherpad/src/themes/micro/templates/pro-help
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+main.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro-help-template.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

@@ -1,0 +1,5 @@
+PATH:  etherpad/src/plugins/search/static
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

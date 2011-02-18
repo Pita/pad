@@ -1,0 +1,5 @@
+PATH:  etherpad/src/themes/nano/default
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

@@ -1,0 +1,7 @@
+PATH:  etherpad/src/themes/micro/templates/main
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+home.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_signup_body.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

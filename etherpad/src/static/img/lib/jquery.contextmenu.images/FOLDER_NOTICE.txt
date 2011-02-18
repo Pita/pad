@@ -1,0 +1,13 @@
+PATH:  etherpad/src/static/img/lib/jquery.contextmenu.images
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+cmenu-gloss-cyan-menu-item-hover.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-gloss-menu-item-hover.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-gloss-semitransparent-menu-item-hover.png: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-human-menu-item-hover.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-osx-menu-item-hover.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-vista-bg.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-vista-menu-item-hover.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+cmenu-xp-bg.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

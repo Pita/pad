@@ -1,0 +1,6 @@
+PATH:  etherpad/src/static/img/pro/box
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+blue-boxtop.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

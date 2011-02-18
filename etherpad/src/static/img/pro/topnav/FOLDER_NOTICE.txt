@@ -1,0 +1,7 @@
+PATH:  etherpad/src/static/img/pro/topnav
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+pro-topnav-back.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro-topnav-notch.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

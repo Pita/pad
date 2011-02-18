@@ -1,0 +1,6 @@
+PATH:  etherpad/src/themes/nano/default/templates/statistics
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+stat_page.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

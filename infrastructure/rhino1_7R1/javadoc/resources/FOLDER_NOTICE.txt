@@ -1,0 +1,6 @@
+PATH:  infrastructure/rhino1_7R1/javadoc/resources
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+inherit.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

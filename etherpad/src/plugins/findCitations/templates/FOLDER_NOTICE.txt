@@ -1,0 +1,7 @@
+PATH:  etherpad/src/plugins/findCitations/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+findCitationsQueryRefiner.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+findCitationsQuerySummary.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

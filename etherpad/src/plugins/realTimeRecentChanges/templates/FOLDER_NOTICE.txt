@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/realTimeRecentChanges/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+realTimeRecentChanges.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

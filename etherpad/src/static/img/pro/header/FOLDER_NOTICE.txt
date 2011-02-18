@@ -1,0 +1,7 @@
+PATH:  etherpad/src/static/img/pro/header
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+pro-header-logo.png: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro-header-plustopnav-back.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

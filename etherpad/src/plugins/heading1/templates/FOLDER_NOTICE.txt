@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/heading1/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+heading1EditbarButtons.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

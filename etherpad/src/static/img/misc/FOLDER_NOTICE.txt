@@ -1,0 +1,6 @@
+PATH:  etherpad/src/static/img/misc
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+status-ball.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

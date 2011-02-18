@@ -1,0 +1,5 @@
+PATH:  etherpad/src/plugins/heading1/static
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

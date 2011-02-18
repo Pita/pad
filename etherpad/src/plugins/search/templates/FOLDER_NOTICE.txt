@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/search/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+browser.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

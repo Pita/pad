@@ -1,0 +1,5 @@
+PATH:  etherpad/src/plugins/twitterStyleTags/static
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/debugJsBacktrace/static/css
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+javascript-stacktrace: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

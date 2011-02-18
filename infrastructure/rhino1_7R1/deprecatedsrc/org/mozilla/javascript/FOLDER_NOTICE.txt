@@ -1,0 +1,8 @@
+PATH:  infrastructure/rhino1_7R1/deprecatedsrc/org/mozilla/javascript
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+ClassDefinitionException.java: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+NotAFunctionException.java: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+PropertyException.java: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

@@ -1,0 +1,5 @@
+PATH:  infrastructure/yuicompressor/src/yuicompressor/org/mozilla
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

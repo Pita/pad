@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/licenseTag/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+licenseTagTagSelectors.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

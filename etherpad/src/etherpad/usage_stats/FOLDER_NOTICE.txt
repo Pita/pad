@@ -1,0 +1,6 @@
+PATH:  etherpad/src/etherpad/usage_stats
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+usage_stats.js: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

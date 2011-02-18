@@ -1,0 +1,7 @@
+PATH:  etherpad/src/plugins/wikiStyleLinks/templates
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+wikiStyleLinkQueryRefiner.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+wikiStyleLinkQuerySummary.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

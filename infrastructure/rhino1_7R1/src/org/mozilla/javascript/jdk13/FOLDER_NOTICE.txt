@@ -1,0 +1,6 @@
+PATH:  infrastructure/rhino1_7R1/src/org/mozilla/javascript/jdk13
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+VMBridge_jdk13.java: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

@@ -1,0 +1,5 @@
+PATH:  infrastructure/yuicompressor/src
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

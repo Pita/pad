@@ -1,0 +1,5 @@
+PATH:  etherpad/src/static/img/davy
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

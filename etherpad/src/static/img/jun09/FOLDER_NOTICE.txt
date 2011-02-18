@@ -1,0 +1,5 @@
+PATH:  etherpad/src/static/img/jun09
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+

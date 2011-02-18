@@ -1,0 +1,6 @@
+PATH:  etherpad/src/themes/micro/templates/pro/padlist
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+pro-padlist.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/langTag/static/html
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+editbar_langtag.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

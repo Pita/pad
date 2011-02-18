@@ -1,0 +1,11 @@
+PATH:  etherpad/src/themes/default/templates/email
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+eepnet_license_info.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+eepnet_purchase_receipt.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+padinvite.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_beta_invite.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_payment_failure.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
+pro_payment_receipt.ejs: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE

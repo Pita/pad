@@ -1,0 +1,6 @@
+PATH:  etherpad/src/plugins/licenseTag/static/html
+
+YOURNAME:
+YOURCOMMENT ABOUT THIS FILES FOLDER
+
+editbar_licensetag.gif: YOUR COMMENT ABOUT THE PURPOSE OF THIS FILE
