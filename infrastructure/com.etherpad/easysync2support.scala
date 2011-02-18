@@ -16,18 +16,32 @@
 
 package com.etherpad;
 
+//YOURNAME:
+//YOURCOMMENT
 object Easysync2Support {
 
+  //YOURNAME:
+  //YOURCOMMENT
   def numToString(d: Int): String = java.lang.Integer.toString(d.toInt, 36); // lowercase
+  //YOURNAME:
+  //YOURCOMMENT
   def stringToNum(s: String): Int = java.lang.Integer.parseInt(s, 36);
   
+  //YOURNAME:
+  //YOURCOMMENT
   def opAssembler() = new OpAssembler();
   
+  //YOURNAME:
+  //YOURCOMMENT
   class OpAssembler() {
     val buf = new StringBuilder(1000);
+    //YOURNAME:
+    //YOURCOMMENT
     def append(op: Op) {
       append(op.opcode, op.chars, op.lines, op.attribs);
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def append(opcode: String, chars: Int, lines: Int, attribs: String) {
       buf.append(attribs);
       if (lines > 0) {
@@ -37,21 +51,39 @@ object Easysync2Support {
       buf.append(opcode);
       buf.append(numToString(chars));
     }
+    //YOURNAME:
+    //YOURCOMMENT
     override def toString(): String = buf.toString;
+    //YOURNAME:
+    //YOURCOMMENT
     def clear() { buf.clear; }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def isAlphanum(c: Char) = (c >= '0' && c <= '9' || c >= 'a' && c <= 'z');
 
+  //YOURNAME:
+  //YOURCOMMENT
   case object OpParseError extends Error;  
   
+  //YOURNAME:
+  //YOURCOMMENT
   def nextOpInString(str: String, startIndex: Int): Object = {
     var i = startIndex;
 
     try {
+      //YOURNAME:
+      //YOURCOMMENT
       def lookingAt(c: Char) = (i < str.length && str.charAt(i) == c);
+      //YOURNAME:
+      //YOURCOMMENT
       def lookingAtAlphanum() = (i < str.length && isAlphanum(str.charAt(i)));
+      //YOURNAME:
+      //YOURCOMMENT
       def atEnd() = (i >= str.length);
+      //YOURNAME:
+      //YOURCOMMENT
       def readAlphanum(): Int = {
         if (! lookingAtAlphanum()) {
           throw OpParseError;
@@ -98,17 +130,27 @@ object Easysync2Support {
     catch { case OpParseError => null }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   case class Op(var opcode: String, var chars: Int, var lines: Int, var attribs: String);
+  //YOURNAME:
+  //YOURCOMMENT
   def newOp() = Op("", 0, 0, "");
+  //YOURNAME:
+  //YOURCOMMENT
   def clearOp(op: Op) { op.opcode = ""; op.chars = 0; op.lines = 0; op.attribs = ""; }
   
   // ported from easysync2.js
+  //YOURNAME:
+  //YOURCOMMENT
   class MergingOpAssembler {
     val assem = opAssembler();
     var bufOp = newOp();
 
     var bufOpAdditionalCharsAfterNewline = 0;
 
+    //YOURNAME:
+    //YOURCOMMENT
     def flush(isEndDocument: Boolean) {
       if (bufOp.opcode.length > 0) {
         if (isEndDocument && bufOp.opcode == "=" && bufOp.attribs.length == 0) {
@@ -126,6 +168,8 @@ object Easysync2Support {
         bufOp.opcode = "";
       }
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def append(opcode: String, chars: Int, lines: Int, attribs: String) {
       if (chars > 0) {
         if (bufOp.opcode == opcode && bufOp.attribs == attribs) {
@@ -150,18 +194,26 @@ object Easysync2Support {
         }
       }
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def endDocument() {
       flush(true);
     }
+    //YOURNAME:
+    //YOURCOMMENT
     override def toString() = {
       flush(false);
       assem.toString();
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def clear() {
       assem.clear();
       clearOp(bufOp);
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def mergingOpAssembler() = new MergingOpAssembler();
 }

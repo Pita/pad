@@ -29,7 +29,11 @@ import net.appjet.common.util.LenientFormatter;
 import org.mortbay.jetty.nio.SelectChannelConnector;
 import org.mortbay.util.ajax.ContinuationSupport;
 
+//YOURNAME:
+//YOURCOMMENT
 object ajstdlib {
+  //YOURNAME:
+  //YOURCOMMENT
   def runModuleInNewScope(cx: ExecutionContext, moduleName: String): Any = {
     val newScope = BodyLock.subScope(cx.runner.globalScope);
     if (! libraryExists(moduleName))
@@ -45,12 +49,18 @@ object ajstdlib {
   }
 
   private val modules = new HashMap[String, DiskLibrary] with SynchronizedMap[String, DiskLibrary];
+  //YOURNAME:
+  //YOURCOMMENT
   private def library(name: String) = modules.getOrElseUpdate(name+".js", new VariableDiskLibrary(name+".js"));
+  //YOURNAME:
+  //YOURCOMMENT
   private def libraryExists(name: String) = {
     val lib = library(name);
     // ScopeReuseManager.watch(lib);
     lib.exists;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   private def libraryExecutable(name: String) = {
     val lib = library(name);
     // ScopeReuseManager.watch(lib);
@@ -60,13 +70,19 @@ object ajstdlib {
   val globalLock = new ReentrantLock();
   val attributes = new HashMap[String, Any] with SynchronizedMap[String, Any];
 
+  //YOURNAME:
+  //YOURCOMMENT
   def init() {
     // any other ajstdlib initialization goes here.
     Comet.init();
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object printf {
+  //YOURNAME:
+  //YOURCOMMENT
   def printf(format: String, list: Array[Object]): String = {
 //     val list: Array[Object] = new Array[Object](argList.getLength)
 //     for (i <- List.range(0, list.length))
@@ -91,11 +107,17 @@ object printf {
 
 import java.security.MessageDigest;
 
+//YOURNAME:
+//YOURCOMMENT
 object md5 {
+  //YOURNAME:
+  //YOURCOMMENT
   def md5(input: String): String = {
     val bytes = input.getBytes("UTF-8");
     md5(bytes);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def md5(bytes: Array[byte]): String = {
     var md = MessageDigest.getInstance("MD5");
     var digest = md.digest(bytes);
@@ -108,11 +130,17 @@ object md5 {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object execution {
+  //YOURNAME:
+  //YOURCOMMENT
   def runAsync(ec: ExecutionContext, f: Function) {
     ec.asyncs += f;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def executeCodeInNewScope(parentScope: Scriptable, 
                             code: String, name: String, 
                             startLine: Int): Scriptable = {
@@ -136,6 +164,8 @@ object execution {
     scope;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def runTask(taskName: String, args: Array[Object]): AnyRef = {
     val ec = net.appjet.oui.execution.runOutOfBand(
       net.appjet.oui.execution.scheduledTaskExecutable,
@@ -151,6 +181,8 @@ object execution {
     ec.result;    
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def runTaskSimply(taskName: String, args: Array[Object]): AnyRef = {
     net.appjet.oui.execution.runOutOfBandSimply(
       net.appjet.oui.execution.scheduledTaskExecutable,
@@ -158,9 +190,13 @@ object execution {
                "taskArguments" -> args)));
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def wrapRunTask(taskName: String, args: Array[Object], 
                   returnType: Class[_]): Function0[AnyRef] = {
     new Function0[AnyRef] {
+      //YOURNAME:
+      //YOURCOMMENT
       def apply = Context.jsToJava(runTaskSimply(taskName, args), returnType);
     }
   }
@@ -168,32 +204,46 @@ object execution {
   val threadpools = new HashMap[String, ScheduledThreadPoolExecutor] 
                       with SynchronizedMap[String, ScheduledThreadPoolExecutor];
 
+  //YOURNAME:
+  //YOURCOMMENT
   def createNamedTaskThreadPool(name: String, poolSize: Int) {
     threadpools.put(name, new ScheduledThreadPoolExecutor(poolSize));
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   class TaskRunner(val taskName: String, args: Array[Object]) extends Callable[AnyRef] {
+    //YOURNAME:
+    //YOURCOMMENT
     def call(): AnyRef = {
       runTask(taskName, args);
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def scheduleTaskInPool(poolName: String, taskName: String, delayMillis: Long, args: Array[Object]) = {
     val pool = threadpools.getOrElse(poolName, throw new RuntimeException("No such task threadpool: "+poolName));
     pool.schedule(new TaskRunner(taskName, args), delayMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def shutdownAndWaitOnTaskThreadPool(poolName: String, timeoutMillis: Long) = {
     val pool = threadpools.getOrElse(poolName, throw new RuntimeException("No such task threadpool: "+poolName));
     pool.shutdown();
     pool.awaitTermination(timeoutMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def getContinuation(ec: ExecutionContext) = {
     val req = ec.request.req;
     ContinuationSupport.getContinuation(req, req).asInstanceOf[SelectChannelConnector.RetryContinuation];
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def sync[T](obj: AnyRef)(block: => T): T = {
     obj.synchronized {
       block;
@@ -205,7 +255,11 @@ import javax.mail._;
 import javax.mail.internet._;
 import java.util.Properties;
 
+//YOURNAME:
+//YOURCOMMENT
 object email {
+  //YOURNAME:
+  //YOURCOMMENT
   def sendEmail(toAddr: Array[String], fromAddr: String, subject: String, headers: Scriptable, content: String): String = {
     try {
       val badAddresses = for (a <- toAddr if (a.indexOf("@") == -1)) yield a;
@@ -223,6 +277,8 @@ object email {
           props.put("mail.smtp.auth", "true");
 
         val session = Session.getInstance(props, if (config.smtpUser != "") new Authenticator {
+          //YOURNAME:
+          //YOURCOMMENT
           override def getPasswordAuthentication() =
             new PasswordAuthentication(config.smtpUser, config.smtpPass);
         } else null);

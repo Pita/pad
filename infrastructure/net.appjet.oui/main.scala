@@ -41,13 +41,19 @@ import net.appjet.bodylock.JSCompileException;
 
 import Util.enumerationToRichEnumeration;
 
+//YOURNAME:
+//YOURCOMMENT
 object main {
   val startTime = new java.util.Date();
   
+  //YOURNAME:
+  //YOURCOMMENT
   def quit(status: Int) {
     java.lang.Runtime.getRuntime().halt(status);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def setupFilesystem() {
     val logdir = new File(config.logDir+"/backend/access");
     if (! logdir.isDirectory())
@@ -61,6 +67,8 @@ object main {
       new CliOption(m.getName(), cp.value(), if (cp.argName().length > 0) Some(cp.argName()) else None);
     }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def printUsage() {
     println("\n--------------------------------------------------------------------------------");
     println("usage:");
@@ -68,6 +76,8 @@ object main {
     println("--------------------------------------------------------------------------------\n");
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def extractOptions(args: Array[String]) {
     val parser = new CliParser(options);
     val opts = 
@@ -91,6 +101,8 @@ object main {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def extractOptions(props: Properties) {
     for (k <- for (o <- props.propertyNames()) yield o.asInstanceOf[String]) {
       config.values(k) = props.getProperty(k);
@@ -98,6 +110,8 @@ object main {
   }
 
   val startupExecutable = (new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onstartup.js"))).executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def runOnStartup() {
     execution.runOutOfBand(startupExecutable, "Startup", None, { error => 
       error match {
@@ -111,6 +125,8 @@ object main {
   }
 
   lazy val shutdownExecutable = (new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onshutdown.js"))).executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def runOnShutdown() {
     execution.runOutOfBand(shutdownExecutable, "Shutdown", None, { error =>
       error match {
@@ -122,6 +138,8 @@ object main {
     });
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def runOnSars(q: String) = {
     val ec = execution.runOutOfBand(execution.sarsExecutable, "SARS", Some(Map("sarsRequest" -> q)), { error =>
       error match {
@@ -134,6 +152,8 @@ object main {
     ec.attributes.get("sarsResponse").map(_.toString());
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def stfu() {
     System.setProperty("org.mortbay.log.class", "net.appjet.oui.STFULogger");
     System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
@@ -143,6 +163,8 @@ object main {
   var sarsServer: net.appjet.common.sars.SarsServer = null;
 
   var loggers = new HashSet[GenericLogger];
+  //YOURNAME:
+  //YOURCOMMENT
   def main(args: Array[String]) {
     val etherpadProperties = getClass.getResource("/etherpad.properties");
     if (etherpadProperties != null) {
@@ -231,6 +253,8 @@ object main {
     // set up apache-style logging
     val requestLogHandler = new RequestLogHandler();
     val requestLog = new NCSARequestLog(config.logDir+"/backend/access/access-yyyy_mm_dd.request.log") {
+      //YOURNAME:
+      //YOURCOMMENT
       override def log(req: Request, res: Response) {
         try {
           if (config.devMode || config.specialDebug)
@@ -284,6 +308,8 @@ object main {
       try {
         import net.appjet.common.sars._;
         sarsServer = new SarsServer(config.sarsAuthKey, 
+                                    //YOURNAME:
+                                    //YOURCOMMENT
                                     new SarsMessageHandler { override def handle(q: String) = runOnSars(q) },
                                     if (config.listenSarsHost.length > 0) Some(config.listenSarsHost) else None,
                                     config.listenSarsPort);
@@ -299,8 +325,12 @@ object main {
 
     // start server
     java.lang.Runtime.getRuntime().addShutdownHook(new Thread() {
+      //YOURNAME:
+      //YOURCOMMENT
       override def run() {
   val df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+  //YOURNAME:
+  //YOURCOMMENT
   def printts(str: String) {
     println("["+df.format(new Date())+"]: "+str);
   }
@@ -318,6 +348,8 @@ object main {
       }
     });
 
+    //YOURNAME:
+    //YOURCOMMENT
     def socketError(c: org.mortbay.jetty.Connector, e: java.net.SocketException) {
       var msg = e.getMessage();
       println("SOCKET ERROR: "+msg+" - "+(c match {

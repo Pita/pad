@@ -16,7 +16,11 @@
 
 package com.etherpad;
 
+//YOURNAME:
+//YOURCOMMENT
 object main {
+  //YOURNAME:
+  //YOURCOMMENT
   def main(args: Array[String]) {
     net.appjet.oui.main.main(args);
   }

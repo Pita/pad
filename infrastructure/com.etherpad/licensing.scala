@@ -24,24 +24,38 @@ import java.io.{FileInputStream, FileOutputStream, ByteArrayInputStream, ByteArr
 import java.security._;
 import java.security.spec._;    
 
+//YOURNAME:
+//YOURCOMMENT
 object Licensing {
   val publicKey = "s0dD94jKFjlSHIumgDQ4ldcyIyna1vMHmG5tsgkP987eBTW88XeEIUTo5JtWOjPzb252GURUrr7MReTqMz6NnsOupeJMqtXgjuVxcXbK8AnckxkxhRqMiFfBW39T9NzPgq09yBdH4tKGlPZQmgaBvjFI8cXTYa7a64LrDnrzrpDhDdJsZPZI2kE7G4vBCGijuhsZpyowK8zT5y2cKqIgIdLxUnXNFtayDi0oyuX1ywfBds2OEil9fEUQOQvkcHAt6kYfPXkE2XgQZFasAv0DPeWMUEtaHTbMaQn1U6BsfmsKjHlLhM3oWEzp0wEwUWxCC39iHYjxa5QKtxm5BNvUTTqJgkoEvk7Uu08j8jhFeCFosph6igDWPmyfAPKTnETXJobO2VON83bVHlX8UfKonnalMy0Hnw2C0I7c0UE0MtMIRtJxtwU62a311Ohp1EVrY4LwKIFfqRMVWKDP0cjXDkJyjJS58rC1DRU7SfPspgfuOy5YZo9sLKztXfzAPzNbXerQ24m2AjmYLV4JQked7MnaKQ6VfyZbFBK5th9NFcJwY1bGbIHW2EsKmiKUoNjPKRJ6VMC7odUCIXQyE9J";
 
   val pkhash = "f7a3dd5940a3f79904b81e4d32a08e2efaa0b2ab";
   val keyVersion = 2.toByte;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def thanksForStealingFromPoorHackersTryingToEkeAMeagerLivingFromThisCruelWorld =
     Encryptomatic.bytesToAscii(MessageDigest.getInstance("SHA1").digest(publicKey.getBytes())) == pkhash;
+  //YOURNAME:
+  //YOURCOMMENT
   def sha1(b: Array[Byte]): String = Encryptomatic.bytesToAscii(MessageDigest.getInstance("SHA1").digest(b));
+  //YOURNAME:
+  //YOURCOMMENT
   def sha1(s: String): String = sha1(s.getBytes("UTF-8"));
 
+  //YOURNAME:
+  //YOURCOMMENT
   def toBytes(i: Int): Array[Byte] = 
     Array((i >> 24).toByte,
           (i >> 16).toByte,
           (i >> 8).toByte,
           i.toByte);
+  //YOURNAME:
+  //YOURCOMMENT
   def toByte(i: Int): Array[Byte] =
     Array(i.toByte);
+  //YOURNAME:
+  //YOURCOMMENT
   def toBytes(l: Long): Array[Byte] =
     Array((l >> 56).toByte,
           (l >> 48).toByte,
@@ -52,22 +66,34 @@ object Licensing {
           (l >> 8).toByte,
           l.toByte);
 
+  //YOURNAME:
+  //YOURCOMMENT
   def toInt(b0: Array[Byte]): Int = {
     val b = b0.map(_.toInt & 0x00FF);
     (b(0) << 24) | (b(1) << 16) | (b(2) << 8) | b(3);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def toInt(b: Byte): Int = b.toInt & 0x00FF;
     
+  //YOURNAME:
+  //YOURCOMMENT
   def toLong(b0: Array[Byte]): Long = {
     val b = b0.map(_.toLong & 0x000000FF);
     (b(0) << 56) | (b(1) << 48) | (b(2) << 40) | (b(3) << 32) | (b(4) << 24) | (b(5) << 16) | (b(6) << 8) | b(7);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def generateKey(personName: String, organizationName: String, expiresDate: Long, editionId: Int, userQuota: Int, majorVersion: Int, minorVersion: Int, patchVersion: Int) = {
     if (config.licenseGeneratorKey == null) {
       throw new RuntimeException("No private key available to generate license key.");
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def privateKey = Encryptomatic.readPrivateKey("DSA", new FileInputStream(config.licenseGeneratorKey));
+    //YOURNAME:
+    //YOURCOMMENT
     def clean(s: String) = s.replaceAll(":", "-");
     val keyPrefix =
       List(personName, organizationName, expiresDate.toString, editionId.toString, userQuota.toString, majorVersion.toString, minorVersion.toString, patchVersion.toString).map(clean).mkString(":");
@@ -85,6 +111,8 @@ object Licensing {
                          sig));
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def decodeKey(key: String) = try {
     val Array(personName0, organizationName0, sigAndInfo) = key.split(":");
     val sigAndInfoBytes = Encryptomatic.asciiToBytes(sigAndInfo);
@@ -112,13 +140,29 @@ object Licensing {
       null;
     } else {
       new {
+        //YOURNAME:
+        //YOURCOMMENT
         def personName = personName0;
+        //YOURNAME:
+        //YOURCOMMENT
         def organizationName = organizationName0;
+        //YOURNAME:
+        //YOURCOMMENT
         def expiresDate = expiresDate0;
+        //YOURNAME:
+        //YOURCOMMENT
         def editionId = editionId0;
+        //YOURNAME:
+        //YOURCOMMENT
         def userQuota = userQuota0;
+        //YOURNAME:
+        //YOURCOMMENT
         def majorVersion = majorVersion0;
+        //YOURNAME:
+        //YOURCOMMENT
         def minorVersion = minorVersion0;
+        //YOURNAME:
+        //YOURCOMMENT
         def patchVersion = patchVersion0;
       }
     }
@@ -126,6 +170,8 @@ object Licensing {
     case e => null;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def main(args: Array[String]) {
     args(0) match {
       case "genkeypair" => {

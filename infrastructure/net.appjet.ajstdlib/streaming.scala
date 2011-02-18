@@ -33,18 +33,32 @@ import net.appjet.oui._;
 import net.appjet.oui.Util.enumerationToRichEnumeration;
 import net.appjet.common.util.HttpServletRequestFactory;
 
+//YOURNAME:
+//YOURCOMMENT
 trait SocketConnectionHandler {
+  //YOURNAME:
+  //YOURCOMMENT
   def message(sender: StreamingSocket, data: String, req: HttpServletRequest);
+  //YOURNAME:
+  //YOURCOMMENT
   def connect(socket: StreamingSocket, req: HttpServletRequest);
+  //YOURNAME:
+  //YOURCOMMENT
   def disconnect(socket: StreamingSocket, req: HttpServletRequest);
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object SocketManager {
   val sockets = new HashMap[String, StreamingSocket] with SynchronizedMap[String, StreamingSocket];
   val handler = new SocketConnectionHandler {
     val cometLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "oncomet.js"));
+    //YOURNAME:
+    //YOURCOMMENT
     def cometExecutable = cometLib.executable;
     
+    //YOURNAME:
+    //YOURCOMMENT
     def message(socket: StreamingSocket, data: String, req: HttpServletRequest) {
       val t1 = profiler.time;
 //      println("Message from: "+socket.id+": "+data);
@@ -63,6 +77,8 @@ object SocketManager {
 				Some(cometExecutable));
       cometlatencies.register(((profiler.time-t1)/1000).toInt);
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def connect(socket: StreamingSocket, req: HttpServletRequest) {
 //      println("Connect on: "+socket);
       val runner = ScopeReuseManager.getRunner;
@@ -78,8 +94,12 @@ object SocketManager {
         () => { ScopeReuseManager.freeRunner(runner); }, 
 				Some(cometExecutable));      
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def disconnect(socket: StreamingSocket, req: HttpServletRequest) {
       val toRun = new Runnable {
+        //YOURNAME:
+        //YOURCOMMENT
         def run() {
       	  val runner = ScopeReuseManager.getRunner;
       	  val ec = ExecutionContext(new RequestWrapper(req), new ResponseWrapper(null), runner);
@@ -98,6 +118,8 @@ object SocketManager {
       main.server.getThreadPool().dispatch(toRun);
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def apply(id: String, create: Boolean) = {
     if (create) {
       Some(sockets.getOrElseUpdate(id, new StreamingSocket(id, handler)));
@@ -107,12 +129,18 @@ object SocketManager {
       sockets.get(id);
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   class HandlerException(val sc: Int, val msg: String, val cause: Exception) 
     extends RuntimeException("An error occurred while handling a request: "+sc+" - "+msg, cause);
 }
 
 // And this would be the javascript interface. Whee.
+//YOURNAME:
+//YOURCOMMENT
 object Comet extends CometSupport.CometHandler {
+  //YOURNAME:
+  //YOURCOMMENT
   def init() {
     CometSupport.cometHandler = this;
     context.start();
@@ -137,6 +165,8 @@ object Comet extends CometSupport.CometHandler {
   context.addServlet(holder, "/*");
   context.setMaxFormContentSize(1024*1024);
   
+  //YOURNAME:
+  //YOURCOMMENT
   def handleCometRequest(req: HttpServletRequest, res: HttpServletResponse) {
     context.handle(req.getRequestURI().substring(config.transportPrefix.length), req, res, Handler.FORWARD);
   }
@@ -145,15 +175,21 @@ object Comet extends CometSupport.CometHandler {
     override val classBase = "/net/appjet/ajstdlib/";
     override val fileSep = "/../../net.appjet.ajstdlib/";
   });
+  //YOURNAME:
+  //YOURCOMMENT
   def clientCode(contextPath: String, acceptableChannelTypes: String) = {
     ccLib.contents.replaceAll("%contextPath%", contextPath).replaceAll("\"%acceptableChannelTypes%\"", acceptableChannelTypes).replaceAll("\"%canUseSubdomains%\"", if (config.transportUseWildcardSubdomains) "true" else "false");
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def clientMTime = ccLib.fileLastModified;
   
   lazy val ccFrame = new FixedDiskResource(new JarOrNotFile(config.ajstdlibHome, "streaming-iframe.html") {
     override val classBase = "/net/appjet/ajstdlib/";
     override val fileSep = "/../../net.appjet.ajstdlib/";
   });
+  //YOURNAME:
+  //YOURCOMMENT
   def frameCode = {    
     if (! config.devMode) 
       ccFrame.contents.replace("<head>\n<script>", """<head>
@@ -167,11 +203,15 @@ object Comet extends CometSupport.CometHandler {
   
   
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def connections(ec: ExecutionContext): Scriptable = {
     JSContext.getCurrentContext().newArray(ec.runner.globalScope, SocketManager.sockets.keys.toList.toArray[Object]);
   }
   
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def connectionStatus = {
     val m = new HashMap[String, Int];
     for (socket <- SocketManager.sockets.values) {
@@ -182,46 +222,66 @@ object Comet extends CometSupport.CometHandler {
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def getNumCurrentConnections = SocketManager.sockets.size;
 
   // public 
+  //YOURNAME:
+  //YOURCOMMENT
   def write(id: String, msg: String) {
     SocketManager.sockets.get(id).foreach(_.sendMessage(false, msg));
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def isConnected(id: String): java.lang.Boolean = {
     SocketManager.sockets.contains(id);
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def getTransportType(id: String): String = {
     SocketManager.sockets.get(id).map(_.currentChannel.map(_.kind.toString()).getOrElse("none")).getOrElse("none");
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def disconnect(id: String) {
     SocketManager.sockets.get(id).foreach(x => x.close());
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def setAttribute(ec: ExecutionContext, id: String, key: String, value: String) {
     ec.attributes.get("cometSocket").map(x => Some(x.asInstanceOf[StreamingSocket])).getOrElse(SocketManager.sockets.get(id))
       .foreach(_.attributes(key) = value);
   }
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def getAttribute(ec: ExecutionContext, id: String, key: String): String = {
     ec.attributes.get("cometSocket").map(x => Some(x.asInstanceOf[StreamingSocket])).getOrElse(SocketManager.sockets.get(id))
       .map(_.attributes.getOrElse(key, null)).getOrElse(null);
   }
 
   // public
+  //YOURNAME:
+  //YOURCOMMENT
   def getClientCode(ec: ExecutionContext) = {
     clientCode(config.transportPrefix, acceptableTransports);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getClientMTime(ec: ExecutionContext) = clientMTime;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   var hasConnected = false;
   var shutdown = false;
@@ -232,6 +292,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   
   lazy val attributes = new HashMap[String, String] with SynchronizedMap[String, String];
   
+  //YOURNAME:
+  //YOURCOMMENT
   def channel(typ: String, create: Boolean, subType: String): Option[Channel] = {
     val channelType = ChannelType.valueOf(typ);
     if (channelType.isEmpty) {
@@ -254,6 +316,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   var lastConfirmedSeqNumber = 0;
   
   // external API
+  //YOURNAME:
+  //YOURCOMMENT
   def sendMessage(isControl: boolean, body: String) {
     if (hasConnected && ! shutdown) {
       synchronized {
@@ -265,11 +329,15 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
       currentChannel.foreach(_.messageWaiting());
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def close() {
     synchronized {
       sendMessage(true, "kill");
       shutdown = true;
       Channels.timer.schedule(new TimerTask {
+        //YOURNAME:
+        //YOURCOMMENT
         def run() {
           kill("server request, timeout");
         }
@@ -279,6 +347,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   
   var creatingRequest: Option[HttpServletRequest] = None;
   // internal API
+  //YOURNAME:
+  //YOURCOMMENT
   def kill(reason: String) {
     synchronized {
       if (! killed) {
@@ -297,10 +367,14 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
       }
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def receiveMessage(body: String, req: HttpServletRequest) {
 //    println("Message received on "+id+": "+body);
     handler.message(this, body, req);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getWaitingMessage(channel: Channel): Option[SocketMessage] = {
     synchronized {
       if (currentChannel.isDefined && currentChannel.get == channel && 
@@ -311,6 +385,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
       }
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getUnconfirmedMessages(channel: Channel): Collection[SocketMessage] = {
     synchronized {
       if (currentChannel.isDefined && currentChannel.get == channel) {
@@ -321,6 +397,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
       }
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def updateConfirmedSeqNumber(channel: Channel, received: Int) {
     synchronized {
       if (received > lastConfirmedSeqNumber && (channel == null || (currentChannel.isDefined && channel == currentChannel.get))) {
@@ -334,6 +412,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   }
   
   var lastChannelUpdate = 0;
+  //YOURNAME:
+  //YOURCOMMENT
   def useChannel(seqNo: Int, channelType0: String, req: HttpServletRequest) = synchronized {
     if (seqNo <= lastChannelUpdate) false else {
       lastChannelUpdate = seqNo;
@@ -361,6 +441,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
         false;
     }
   }
+//YOURNAME:
+//YOURCOMMENT
 //   def handleReceivedMessage(seq: Int, data: String) {
 //     synchronized {
 //       handler.message(this, data)
@@ -373,18 +455,24 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
 // //      }
 //     }
 //   }
+  //YOURNAME:
+  //YOURCOMMENT
   def hiccup(channel: Channel) = synchronized {
     if (currentChannel.isDefined && channel == currentChannel.get) {
 //      println("hiccuping: "+id);
       scheduleTimeout();
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def revive(channel: Channel) = synchronized {
     if (currentChannel.isDefined && channel == currentChannel.get) {
 //      println("reviving: "+id);
       cancelTimeout();
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def prepareForReconnect() = synchronized {
 //    println("client-side hiccup: "+id);
     activeChannels.foreach(_._2.close());
@@ -396,10 +484,14 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   // helpers
   var timeoutTask: TimerTask = null;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def scheduleTimeout() {
     if (timeoutTask != null) return;
     val p = new WeakReference(this);
     timeoutTask = new TimerTask {
+  //YOURNAME:
+  //YOURCOMMENT
   	  def run() {
     	  val socket = p.get();
     	  if (socket != null) {
@@ -409,6 +501,8 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
   	}
   	Channels.timer.schedule(timeoutTask, 15*1000);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def cancelTimeout() {
     if (timeoutTask != null)
       timeoutTask.cancel();
@@ -422,11 +516,17 @@ class StreamingSocket(val id: String, handler: SocketConnectionHandler) {
     "connection" -> id));
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object ChannelType extends Enumeration("shortpolling", "longpolling", "streaming") {
   val ShortPolling, LongPolling, Streaming = Value;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object Channels {
+  //YOURNAME:
+  //YOURCOMMENT
   def createNew(typ: ChannelType.Value, socket: StreamingSocket, subType: String): Channel = {
     typ match {
       case ChannelType.ShortPolling => new ShortPollingChannel(socket);
@@ -444,47 +544,91 @@ object Channels {
   val timer = new Timer(true);
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class SocketMessage(val seq: Int, val isControl: Boolean, val body: String) {
+  //YOURNAME:
+  //YOURCOMMENT
   def payload = seq+":"+(if (isControl) "1" else "0")+":"+body;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 trait Channel {
+  //YOURNAME:
+  //YOURCOMMENT
   def messageWaiting();
+  //YOURNAME:
+  //YOURCOMMENT
   def close();
+  //YOURNAME:
+  //YOURCOMMENT
   def handle(req: HttpServletRequest, res: HttpServletResponse);
+  //YOURNAME:
+  //YOURCOMMENT
   def isConnected: Boolean;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def kind: ChannelType.Value;
+  //YOURNAME:
+  //YOURCOMMENT
   def sendRestartFailure(ec: ExecutionContext);
 }
 
+//YOURNAME:
+//YOURCOMMENT
 trait XhrChannel extends Channel {
+  //YOURNAME:
+  //YOURCOMMENT
   def wrapBody(msg: String) = msg.length+":"+msg;
 
   // wire format: msgLength:seq:[01]:msg
+  //YOURNAME:
+  //YOURCOMMENT
   def wireFormat(msg: SocketMessage) = wrapBody(msg.payload);
+  //YOURNAME:
+  //YOURCOMMENT
   def controlMessage(data: String) = wrapBody("oob:"+data);
   
+  //YOURNAME:
+  //YOURCOMMENT
   def sendRestartFailure(ec: ExecutionContext) {
     ec.response.write(controlMessage("restart-fail"));
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 // trait IFrameChannel extends Channel {
+//YOURNAME:
+//YOURCOMMENT
 //   def wireFormat(msg: SocketMessage)
 // }
 
+//YOURNAME:
+//YOURCOMMENT
 class ShortPollingChannel(val socket: StreamingSocket) extends Channel with XhrChannel {
+  //YOURNAME:
+  //YOURCOMMENT
   def kind = ChannelType.ShortPolling;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def messageWaiting() {
     // do nothing.
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def close() {
     // do nothing
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def isConnected = false;
     
+  //YOURNAME:
+  //YOURCOMMENT
   def handle(req: HttpServletRequest, res: HttpServletResponse) {
     val ec = req.getAttribute("executionContext").asInstanceOf[ExecutionContext];
     val out = new StringBuilder();
@@ -513,7 +657,11 @@ class ShortPollingChannel(val socket: StreamingSocket) extends Channel with XhrC
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 trait IFrameChannel extends StreamingChannel {
+  //YOURNAME:
+  //YOURCOMMENT
   override def wrapBody(msgBody: String) = {
     val txt = "<script type=\"text/javascript\">p('"+
         msgBody.replace("\\","\\\\").replace("'", "\\'")+"');</script>";
@@ -523,6 +671,8 @@ trait IFrameChannel extends StreamingChannel {
       txt;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def header(req: HttpServletRequest) = {
     val document_domain = 
         "\""+req.getHeader("Host").split("\\.").slice(2).mkString(".").split(":")(0)+"\"";
@@ -533,11 +683,15 @@ var p = function(data) { try { parent.comet.pass_data } catch (err) { /* failed 
 var d = parent.comet.disconnect;"""+(if(!config.devMode)"\nwindow.onerror = function() { /* silently drop errors */ }\n" else "")+"</script>"; // " - damn textmate mode!
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def sendRestartFailure(ec: ExecutionContext) {
     ec.response.write(header(ec.request.req));
     ec.response.write(controlMessage("restart-fail"));
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def handleNewConnection(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     super.handleNewConnection(req, res, out);
     res.setContentType("text/html; charset=utf-8");
@@ -545,24 +699,38 @@ var d = parent.comet.disconnect;"""+(if(!config.devMode)"\nwindow.onerror = func
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 trait OperaChannel extends StreamingChannel {
+  //YOURNAME:
+  //YOURCOMMENT
   override def wrapBody(msgBody: String) = {
     "Event: message\ndata: "+msgBody+"\n\n";
   }
+  //YOURNAME:
+  //YOURCOMMENT
   override def handleNewConnection(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     super.handleNewConnection(req, res, out);
     res.setContentType("application/x-dom-event-stream");
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChannel {
+  //YOURNAME:
+  //YOURCOMMENT
   def kind = ChannelType.Streaming;
   
   var c: Option[SelectChannelConnector.RetryContinuation] = None;
   var doClose = false;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def messageWaiting() {
     main.server.getThreadPool().dispatch(new Runnable() {
+      //YOURNAME:
+      //YOURCOMMENT
       def run() {
         socket.synchronized {
           c.filter(_.isPending()).foreach(_.resume());
@@ -571,6 +739,8 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     });
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def setSequenceNumberIfAppropriate(req: HttpServletRequest) {
     if (c.get.isNew) {
       val lastReceivedSeq = java.lang.Integer.parseInt(req.getParameter("seq"));
@@ -578,16 +748,22 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def sendHandshake(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     out.append(controlMessage("ok"));
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def sendUnconfirmedMessages(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     for (msg <- socket.getUnconfirmedMessages(this)) {
       out.append(wireFormat(msg));
     }    
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def sendWaitingMessages(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     var msg = socket.getWaitingMessage(this);
     while (msg.isDefined) {
@@ -596,6 +772,8 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     }    
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def handleUnexpectedDisconnect(req: HttpServletRequest, res: HttpServletResponse, ep: KnowsAboutDispatch) {
     socket.synchronized {
       socket.hiccup(this);
@@ -603,12 +781,16 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     ep.close();    
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def writeAndFlush(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder, ep: KnowsAboutDispatch) {
 //    println("Writing to "+socket.id+": "+out.toString);
     res.getWriter.print(out.toString);
     res.getWriter.flush();
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def suspendIfNecessary(req: HttpServletRequest, res: HttpServletResponse,
                          out: StringBuilder, ep: KnowsAboutDispatch) {
     scheduleKeepalive(50*1000);
@@ -616,22 +798,30 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     c.get.suspend(0);    
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def sendKeepaliveIfNecessary(out: StringBuilder, sendKeepalive: Boolean) {
     if (out.length == 0 && sendKeepalive) {
       out.append(controlMessage("keepalive"));
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def shouldHandshake(req: HttpServletRequest, res: HttpServletResponse) = c.get.isNew;
   
   var sendKeepalive = false;
   var keepaliveTask: TimerTask = null;
+  //YOURNAME:
+  //YOURCOMMENT
   def scheduleKeepalive(timeout: Int) {
     if (keepaliveTask != null) {
       keepaliveTask.cancel();
     }
     val p = new WeakReference(this);
     keepaliveTask = new TimerTask {
+  //YOURNAME:
+  //YOURCOMMENT
   	  def run() {
     	  val channel = p.get();
     	  if (channel != null) {
@@ -645,6 +835,8 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     Channels.timer.schedule(keepaliveTask, timeout);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def handleNewConnection(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     req.setAttribute("StreamingSocketServlet_channel", this);
     res.setHeader("Connection", "close");
@@ -652,6 +844,8 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     res.setContentType("text/messages; charset=utf-8");
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def handle(req: HttpServletRequest, res: HttpServletResponse) {
     val ec = req.getAttribute("executionContext").asInstanceOf[ExecutionContext];
     val ep = HttpConnection.getCurrentConnection.getEndPoint.asInstanceOf[KnowsAboutDispatch];
@@ -693,26 +887,40 @@ class StreamingChannel(val socket: StreamingSocket) extends Channel with XhrChan
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def close() {
     doClose = true;
     messageWaiting();
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def isConnected = ! doClose;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class LongPollingChannel(socket: StreamingSocket) extends StreamingChannel(socket) {
 //  println("creating longpoll!");
+  //YOURNAME:
+  //YOURCOMMENT
   override def kind = ChannelType.LongPolling;
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def shouldHandshake(req: HttpServletRequest, res: HttpServletResponse) = 
     req.getParameter("new") == "yes";
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def sendHandshake(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
 //    println("sending handshake");
     out.append(controlMessage("ok"));
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def suspendIfNecessary(req: HttpServletRequest, res: HttpServletResponse, 
                                   out: StringBuilder, ep: KnowsAboutDispatch) {
     if (out.length == 0) {
@@ -725,6 +933,8 @@ class LongPollingChannel(socket: StreamingSocket) extends StreamingChannel(socke
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def writeAndFlush(req: HttpServletRequest, res: HttpServletResponse, 
                              out: StringBuilder, ep: KnowsAboutDispatch) {
     if (out.length > 0) {
@@ -741,19 +951,27 @@ class LongPollingChannel(socket: StreamingSocket) extends StreamingChannel(socke
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def handleNewConnection(req: HttpServletRequest, res: HttpServletResponse, out: StringBuilder) {
     socket.revive(this);
     req.setAttribute("StreamingSocketServlet_channel", this);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def isConnected = socket.synchronized {
     c.isDefined;
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class StreamingSocketServlet extends HttpServlet {
   val version = 2;
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def doGet(req: HttpServletRequest, res: HttpServletResponse) {
 //    describeRequest(req);
     val ec = req.getAttribute("executionContext").asInstanceOf[ExecutionContext];
@@ -810,6 +1028,8 @@ class StreamingSocketServlet extends HttpServlet {
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def describeRequest(req: HttpServletRequest) {
     println(req.getMethod+" on "+req.getRequestURI()+"?"+req.getQueryString());
     for (pname <- 
@@ -818,6 +1038,8 @@ class StreamingSocketServlet extends HttpServlet {
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def doPost(req: HttpServletRequest, res: HttpServletResponse) {
     val v = req.getParameter("v");
     if (v == null || java.lang.Integer.parseInt(v) != version) {

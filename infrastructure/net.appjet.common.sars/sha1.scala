@@ -20,9 +20,13 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
  
+//YOURNAME:
+//YOURCOMMENT
 object SimpleSHA1 {
   private val chars = Map(0 -> '0', 1 -> '1', 2 -> '2', 3 -> '3', 4 -> '4', 5 -> '5', 6 -> '6', 7 -> '7',
 			  8 -> '8', 9 -> '9', 10 -> 'a', 11 -> 'b', 12 -> 'c', 13 -> 'd', 14 -> 'e', 15 -> 'f');
+  //YOURNAME:
+  //YOURCOMMENT
   private def convertToHex(data: Array[Byte]): String = {
     val buf = new StringBuilder();
     for (b <- data) {
@@ -32,6 +36,8 @@ object SimpleSHA1 {
     buf.toString();
   }
  
+  //YOURNAME:
+  //YOURCOMMENT
   def apply(text: String): String = {
     val md = MessageDigest.getInstance("SHA-1");
     md.update(text.getBytes("UTF-8"), 0, text.length());

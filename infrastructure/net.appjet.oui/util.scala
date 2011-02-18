@@ -22,7 +22,11 @@ import java.util.Enumeration;
 import java.util.zip.GZIPOutputStream;
 import java.io.ByteArrayOutputStream;
 
+//YOURNAME:
+//YOURCOMMENT
 object Util {
+  //YOURNAME:
+  //YOURCOMMENT
   def noCacheHeaders =
     Map("Expires" -> "Sat, 5 Feb 1983 07:07:07 GMT",
         "Last-Modified" -> (new java.util.Date()).toGMTString(),
@@ -30,26 +34,46 @@ object Util {
         "Pragma" -> "no-cache");
 
 
+  //YOURNAME:
+  //YOURCOMMENT
   class RichEnumeration[T](enumeration: Enumeration[T]) extends Iterator[T] {
+    //YOURNAME:
+    //YOURCOMMENT
     def hasNext: Boolean =  enumeration.hasMoreElements();
+    //YOURNAME:
+    //YOURCOMMENT
     def next: T = enumeration.nextElement();
   }
+  //YOURNAME:
+  //YOURCOMMENT
   class RichIterator[T](iterator: java.util.Iterator[T]) extends Iterator[T] {
+    //YOURNAME:
+    //YOURCOMMENT
     def hasNext: Boolean = iterator.hasNext();
+    //YOURNAME:
+    //YOURCOMMENT
     def next: T = iterator.next();
   }
+  //YOURNAME:
+  //YOURCOMMENT
   implicit def enumerationToRichEnumeration[T](
       enumeration: Enumeration[T]): RichEnumeration[T] = {
     new RichEnumeration(enumeration)
   }
+  //YOURNAME:
+  //YOURCOMMENT
   implicit def iteratorToRichIterator[T](
       iterator: java.util.Iterator[T]): RichIterator[T] = {
     new RichIterator(iterator);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def enumerationToArray[T](e: Enumeration[T]): Array[T] =
     enumerationToRichEnumeration(e).toList.toArray;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def stringToHTML(str: String): String = {
     val result = new StringBuilder(str.length);
     var lastCharBlank = false;
@@ -94,6 +118,8 @@ object Util {
     return result.toString;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def gzip(bytes: Array[Byte]): Array[Byte] = {
     val baos = new ByteArrayOutputStream();
     val gzos = new GZIPOutputStream(baos);
@@ -103,8 +129,12 @@ object Util {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object timekeeper {
   var timestamp: Long = 0;
+  //YOURNAME:
+  //YOURCOMMENT
   def time: Long = {
     val t = System.currentTimeMillis();
     synchronized {
@@ -116,13 +146,19 @@ object timekeeper {
       timestamp
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def update(t: Long) = synchronized {
     if (t > timestamp)
       timestamp = t+1;
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 trait LoggingHandler extends org.mortbay.jetty.handler.AbstractHandler {
+  //YOURNAME:
+  //YOURCOMMENT
   abstract override def handle(target: String, req: javax.servlet.http.HttpServletRequest, res: javax.servlet.http.HttpServletResponse, dispatch: Int) {
     println("all ("+isStarted+") handling: "+(this match {
       case hc: org.mortbay.jetty.handler.HandlerCollection => hc.getHandlers.mkString(", ");
@@ -131,6 +167,8 @@ trait LoggingHandler extends org.mortbay.jetty.handler.AbstractHandler {
     }));
     super.handle(target, req, res, dispatch);
   }
+  //YOURNAME:
+  //YOURCOMMENT
   override def doStart() {
     println("all started.");
     //	Thread.dumpStack();
@@ -145,6 +183,8 @@ trait LoggingHandler extends org.mortbay.jetty.handler.AbstractHandler {
       println("and: "+isStarted);
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   override def doStop() {
     println("all stopped.");
     //	Thread.dumpStack();

@@ -37,18 +37,26 @@ import Util.enumerationToRichEnumeration;
 // Removed due to licensing issues; REMOVED_COS_OF_COS
 // import com.oreilly.servlet.MultipartFilter;
 
+//YOURNAME:
+//YOURCOMMENT
 class RequestWrapper(val req: HttpServletRequest) {
   req.setCharacterEncoding("UTF-8");
 // REMOVED_COS_OF_COS ... ?
 //   private lazy val parameterNames =
 //     (for (i <- Conversions.convertSet(req.getParameterMap.keySet().asInstanceOf[java.util.Set[String]])) yield i).toList.toArray
+//YOURNAME:
+//YOURCOMMENT
 //   private def parameterValues(k: String) = req.getParameterValues(k);
+  //YOURNAME:
+  //YOURCOMMENT
   def headerCapitalize(s: String) =
     s.split("-").map(
       s =>
         if (s == null || s.length < 1) s
         else s.substring(0, 1).toUpperCase()+s.substring(1).toLowerCase()
     ).mkString("-");
+  //YOURNAME:
+  //YOURCOMMENT
   def isFake = false;
   lazy val path = req.getRequestURI();
   lazy val host = {
@@ -67,6 +75,8 @@ class RequestWrapper(val req: HttpServletRequest) {
   lazy val scheme = req.getScheme();
   lazy val clientAddr = req.getRemoteAddr();
   
+  //YOURNAME:
+  //YOURCOMMENT
   def decodeWwwFormUrlencoded(content: => String): Map[String, Array[String]] = {
     val map = new HashMap[String, ArrayBuffer[String]];
     if (content != null) {
@@ -81,7 +91,11 @@ class RequestWrapper(val req: HttpServletRequest) {
     Map((for ((k, v) <- map) yield (k, v.toArray)).toSeq: _*);    
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def postParams = decodeWwwFormUrlencoded(content.asInstanceOf[String]);
+  //YOURNAME:
+  //YOURCOMMENT
   def getParams = decodeWwwFormUrlencoded(query);
 
   lazy val params_i = {
@@ -98,11 +112,15 @@ class RequestWrapper(val req: HttpServletRequest) {
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def params(globalScope: Scriptable) = new ScriptableFromMapOfStringArrays(
     globalScope,
     params_i.keys.toList,
     params_i.get(_),
     false);
+  //YOURNAME:
+  //YOURCOMMENT
   def headers(globalScope: Scriptable) = new ScriptableFromMapOfStringArrays(
     globalScope, 
     req.getHeaderNames().asInstanceOf[Enumeration[String]]
@@ -130,6 +148,8 @@ class RequestWrapper(val req: HttpServletRequest) {
     }
 
   // Depends on cos.jar; REMOVED_COS_OF_COS
+  //YOURNAME:
+  //YOURCOMMENT
   def files(globalScope: Scriptable): Object = {
 //    if (! req.isInstanceOf[com.oreilly.servlet.MultipartWrapper]) {
       new ScriptableAdapter();
@@ -162,6 +182,8 @@ class RequestWrapper(val req: HttpServletRequest) {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class ResponseWrapper(val res: HttpServletResponse) {
   private lazy val outputStrings = new ListBuffer[String];
   private lazy val outputBytes = new ListBuffer[Array[byte]];
@@ -169,11 +191,15 @@ class ResponseWrapper(val res: HttpServletResponse) {
   private var contentType = "text/html; charset=utf-8";
   private var redirect: String = null;
   private lazy val headers = new LinkedHashSet[(String, String, HttpServletResponse => Unit)] {
+    //YOURNAME:
+    //YOURCOMMENT
     def removeAll(k: String) {
       this.foreach(x => if (x._1 == k) remove(x));
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   private[oui] def overwriteOutputWithError(code: Int, errorStr: String) {
     statusCode = code;
     outputStrings.clear();
@@ -185,6 +211,8 @@ class ResponseWrapper(val res: HttpServletResponse) {
     contentType = "text/html; charset=utf-8";
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def reset() {
     outputStrings.clear();
     outputBytes.clear();
@@ -194,61 +222,97 @@ class ResponseWrapper(val res: HttpServletResponse) {
     statusCode = 200;
     contentType = "text/html; charset=utf-8";
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def error(code: Int, errorStr: String) {
     overwriteOutputWithError(code, errorStr);
     stop();
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def stop() {
     throw AppGeneratedStopException;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def write(s: String) {
     outputStrings += s;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getOutput() = outputStrings.mkString("");
+  //YOURNAME:
+  //YOURCOMMENT
   def writeBytes(bytes: String) {
     val a = new Array[byte](bytes.length());
     bytes.getBytes(0, bytes.length(), a, 0);
     outputBytes += a;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def writeBytes(bytes: Array[Byte]) {
     outputBytes += bytes;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getOutputBytes() = outputBytes.flatMap(x => x).toArray
+  //YOURNAME:
+  //YOURCOMMENT
   def setContentType(s: String) {
     contentType = s;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getCharacterEncoding() = {
     res.setContentType(contentType);
     res.getCharacterEncoding();
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def setStatusCode(sc: Int) {
     statusCode = sc;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getStatusCode() = statusCode;
+  //YOURNAME:
+  //YOURCOMMENT
   def redirect(loc: String) {
     statusCode = 302;
     redirect = loc;
     stop();
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def setHeader(name: String, value: String) {
     headers += ((name, value, res => res.setHeader(name, value)));
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def addHeader(name: String, value: String) {
     headers += ((name, value, res => res.addHeader(name, value)));
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def getHeader(name: String) = {
     headers.filter(_._1 == name).map(_._2).toSeq.toArray;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def removeHeader(name: String) {
     headers.removeAll(name);
   }
 
   var gzipOutput = false;
+  //YOURNAME:
+  //YOURCOMMENT
   def setGzip(gzip: Boolean) {
     gzipOutput = gzip;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def print() {
     if (redirect != null && statusCode == 302) {
       headers.foreach(_._3(res));
@@ -273,40 +337,84 @@ class ResponseWrapper(val res: HttpServletResponse) {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class ScriptableAdapter extends Scriptable {
+  //YOURNAME:
+  //YOURCOMMENT
   private def unsupported() = throw UnsupportedOperationException;
+  //YOURNAME:
+  //YOURCOMMENT
   def delete(index: Int) { unsupported(); }
+  //YOURNAME:
+  //YOURCOMMENT
   def delete(name: String) { unsupported(); }
+  //YOURNAME:
+  //YOURCOMMENT
   def get(index: Int, start: Scriptable): Object = Context.getUndefinedValue();
+  //YOURNAME:
+  //YOURCOMMENT
   def get(name: String, start: Scriptable): Object = Context.getUndefinedValue();
+  //YOURNAME:
+  //YOURCOMMENT
   def getClassName() = getClass.getName();
+  //YOURNAME:
+  //YOURCOMMENT
   def getDefaultValue(hint: Class[_]) = "[ScriptableAdapter]";
+  //YOURNAME:
+  //YOURCOMMENT
   def getIds(): Array[Object] = Array[Object]();
+  //YOURNAME:
+  //YOURCOMMENT
   def getParentScope: Scriptable = null;
+  //YOURNAME:
+  //YOURCOMMENT
   def getPrototype: Scriptable = null;
+  //YOURNAME:
+  //YOURCOMMENT
   def has(index: Int, start: Scriptable): Boolean = false;
+  //YOURNAME:
+  //YOURCOMMENT
   def has(name: String, start: Scriptable): Boolean = false;
+  //YOURNAME:
+  //YOURCOMMENT
   def hasInstance(instance: Scriptable): Boolean = false;
+  //YOURNAME:
+  //YOURCOMMENT
   def put(index: Int, start: Scriptable, value: Object) { unsupported(); }
+  //YOURNAME:
+  //YOURCOMMENT
   def put(name: String, start: Scriptable, value: Object) { unsupported(); }
+  //YOURNAME:
+  //YOURCOMMENT
   def setParentScope(parent: Scriptable) { unsupported(); }
+  //YOURNAME:
+  //YOURCOMMENT
   def setPrototype(prototype: Scriptable) { unsupported(); }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class ScriptableFromMapOfStringArrays(globalScope: Scriptable,
   keys: Seq[String], values: String => Option[Array[String]],
   zeroMeansNone: Boolean) extends ScriptableFromMapOfArrays[String](
     globalScope, keys, values, zeroMeansNone);
 
+//YOURNAME:
+//YOURCOMMENT
 class ScriptableFromMapOfScriptableArrays(globalScope: Scriptable,
   keys: Seq[String], values: String => Option[Array[Scriptable]],
   zeroMeansNone: Boolean) extends ScriptableFromMapOfArrays[Scriptable](
     globalScope, keys, values, zeroMeansNone);
 
 
+//YOURNAME:
+//YOURCOMMENT
 class ScriptableFromMapOfArrays[V <: Object](globalScope: Scriptable,
                                 keys: Seq[String], values: String => Option[Array[V]], 
                                 zeroMeansNone: Boolean) extends ScriptableAdapter {
+  //YOURNAME:
+  //YOURCOMMENT
   override def get(n: String, start: Scriptable): Object = {
     val v = values(n);
     if (v.isEmpty || (zeroMeansNone && v.get.length == 0)) {
@@ -317,26 +425,46 @@ class ScriptableFromMapOfArrays[V <: Object](globalScope: Scriptable,
       Context.getCurrentContext().newArray(globalScope, v.get.map(x => x.asInstanceOf[Object]));
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   override def getIds(): Array[Object] = keys.toArray[Object];
+  //YOURNAME:
+  //YOURCOMMENT
   override def getPrototype = ScriptableObject.getObjectPrototype(globalScope);
+  //YOURNAME:
+  //YOURCOMMENT
   override def has(n: String, start: Scriptable): Boolean = ! (values(n).isEmpty || (zeroMeansNone && values(n).get.length == 0));
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object AppGeneratedStopException extends JSRuntimeException("User-generated stop.", null);
+//YOURNAME:
+//YOURCOMMENT
 class NoHandlerException(msg: String) extends JSRuntimeException(msg, null);
+//YOURNAME:
+//YOURCOMMENT
 object UnsupportedOperationException extends JSRuntimeException("Unsupported operation.", null);
 
+//YOURNAME:
+//YOURCOMMENT
 object ExecutionContextUtils {
   val uniqueIds = new AtomicLong(0);
 
   val ecVar = new NoninheritedDynamicVariable[ExecutionContext](null);
+  //YOURNAME:
+  //YOURCOMMENT
   def withContext[E](ec: ExecutionContext)(block: => E): E = {
     ecVar.withValue(ec)(block);
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def currentContext = ecVar.value;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 case class ExecutionContext(
   val request: RequestWrapper,
   val response: ResponseWrapper,
@@ -348,42 +476,66 @@ case class ExecutionContext(
   var result: AnyRef = null;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object CometSupport {
+  //YOURNAME:
+  //YOURCOMMENT
   trait CometHandler {
+    //YOURNAME:
+    //YOURCOMMENT
     def handleCometRequest(req: HttpServletRequest, res: HttpServletResponse);
   }
   var cometHandler: CometHandler = null;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class OuiServlet extends HttpServlet {
+  //YOURNAME:
+  //YOURCOMMENT
   override def doGet(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doPost(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doHead(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doPut(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doDelete(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doTrace(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def doOptions(req: HttpServletRequest, res: HttpServletResponse) {
     execute(req, res);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def execute(req: HttpServletRequest, res: HttpServletResponse) {
     if (req.getProtocol() == "HTTP/1.1" && req.getHeader("Host") == null) {
       res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid HTTP/1.1 request: No \"Host\" header found.");
@@ -415,6 +567,8 @@ class OuiServlet extends HttpServlet {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object execution {
   // maybe find a better place for this?
   { // initialize ajstdlib
@@ -431,14 +585,30 @@ object execution {
   val onSyntaxErrorLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onsyntaxerror.js"));
   val sarsLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onsars.js"));
   val scheduledTaskLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onscheduledtask.js"));
+  //YOURNAME:
+  //YOURCOMMENT
   def requestExecutable = requestLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def errorExecutable = errorLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def printExecutable = printLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def syntaxErrorExecutable = syntaxErrorLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def onSyntaxErrorExecutable = onSyntaxErrorLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def sarsExecutable = sarsLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def scheduledTaskExecutable = scheduledTaskLib.executable;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def postSuccessfulRun(ec: ExecutionContext) {
     try {
       for (f <- ec.asyncs) {
@@ -451,6 +621,8 @@ object execution {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def onprint(ec: ExecutionContext, scope: Scriptable) { 
     try {
 //      ec.runner.globalScope.put("_appjetcontext_", ec.runner.globalScope, ec);
@@ -460,6 +632,8 @@ object execution {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def execute(req: HttpServletRequest, res: HttpServletResponse) {
     val runner = try {
       ScopeReuseManager.getRunner;
@@ -491,11 +665,15 @@ object execution {
             None);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def errorToHTML(e: Throwable) = {
     val trace = new java.io.StringWriter();
     e.printStackTrace(new java.io.PrintWriter(trace));
     trace.toString().split("\n").mkString("<br>\n");
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def execute(ec: ExecutionContext, 
               errorHandler: (Int, String) => Unit, 
               doneWritingHandler: () => Unit, 
@@ -543,6 +721,8 @@ object execution {
       doneWritingHandler();
       if (ec.completed && ! ec.asyncs.isEmpty) {
         main.server.getThreadPool().dispatch(new Runnable {
+          //YOURNAME:
+          //YOURCOMMENT
           def run() {
             postSuccessfulRun(ec);
             completedHandler();
@@ -553,6 +733,8 @@ object execution {
       }
     }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def runOutOfBandSimply(executable: Executable,
                          props: Option[Map[String, Any]]) = {
     // there must be a context already.
@@ -598,6 +780,8 @@ object execution {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def runOutOfBand(executable: Executable, name: String, 
                    props: Option[Map[String, Any]], 
                    onFailure: Any => Unit) = {

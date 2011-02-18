@@ -26,9 +26,13 @@ import java.util.WeakHashMap;
 import scala.collection.mutable.{Subscriber, Message, Reset=>SReset};
 import scala.collection.jcl.Conversions._;
 
+//YOURNAME:
+//YOURCOMMENT
 trait WeakPublisher[A, This <: WeakPublisher[A, This]] { self: This => 
   val subscribers = new WeakHashMap[Subscriber[A, This], Unit];
   
+  //YOURNAME:
+  //YOURCOMMENT
   protected def publish(event: A): Unit = {
     subscribers.synchronized {
       val subsCopy = for (sub <- subscribers.keySet()) yield sub;
@@ -38,12 +42,16 @@ trait WeakPublisher[A, This <: WeakPublisher[A, This]] { self: This =>
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def subscribe(sub: Subscriber[A, This]): Unit = {
     subscribers.synchronized {
       subscribers.put(sub, ());
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def removeSubscription(sub: Subscriber[A, This]): Unit = {
     subscribers.synchronized {
       subscribers.remove(sub);
@@ -51,11 +59,17 @@ trait WeakPublisher[A, This <: WeakPublisher[A, This]] { self: This =>
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object Reset extends SReset[Unit];
 
+//YOURNAME:
+//YOURCOMMENT
 object FileCache {
   val files = new ConcurrentHashMap[String, CachedFile];
   
+  //YOURNAME:
+  //YOURCOMMENT
   def file(path: String): CachedFile = {
     if (files.containsKey(path)) {
       files.get(path);
@@ -70,12 +84,16 @@ object FileCache {
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def file(path: String, subscriber: Subscriber[Message[Unit], CachedFile]): CachedFile = {
     val f = file(path);
     f.subscribe(subscriber);
     f;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def testFiles() = {
     val iter = files.values().iterator();
     var filesHaveChanged = false;
@@ -88,17 +106,25 @@ object FileCache {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class CachedFile(f: File) extends WeakPublisher[Message[Unit], CachedFile] {
   var cachedContent: Option[Array[Byte]] = None;
+  //YOURNAME:
+  //YOURCOMMENT
   def content = synchronized { 
     if (cachedContent.isEmpty) {
       cachedContent = Some(BetterFile.getFileBytes(f));
     }
     cachedContent.get;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def stream = new ByteArrayInputStream(content);
 
   var cachedExistence: Option[Boolean] = None;
+  //YOURNAME:
+  //YOURCOMMENT
   def exists = synchronized {
     if (cachedExistence.isEmpty) {
       cachedExistence = Some(f.exists());
@@ -107,6 +133,8 @@ class CachedFile(f: File) extends WeakPublisher[Message[Unit], CachedFile] {
   }
   
   var cachedDirectory: Option[Boolean] = None;
+  //YOURNAME:
+  //YOURCOMMENT
   def isDirectory = synchronized {
     if (cachedDirectory.isEmpty) {
       cachedDirectory = Some(f.isDirectory());
@@ -114,11 +142,17 @@ class CachedFile(f: File) extends WeakPublisher[Message[Unit], CachedFile] {
     cachedDirectory.get;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def underlyingLastModified = f.lastModified;
   var lastModified = underlyingLastModified;
     
+  //YOURNAME:
+  //YOURCOMMENT
   def hasBeenModified = underlyingLastModified != lastModified;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def test() = synchronized {
     if (hasBeenModified) {
       reset;
@@ -128,6 +162,8 @@ class CachedFile(f: File) extends WeakPublisher[Message[Unit], CachedFile] {
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def reset = synchronized {
     lastModified = underlyingLastModified;
     cachedContent = None;
@@ -137,21 +173,33 @@ class CachedFile(f: File) extends WeakPublisher[Message[Unit], CachedFile] {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class SpecialJarOrNotFile(root: String, fname: String) extends JarOrNotFile(root, fname) {
   override val classBase = "/net/appjet/ajstdlib/";
   override val fileSep = "/../";
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def clone(fname: String) = new SpecialJarOrNotFile(root, fname);
 }
 
 // A JarOrNotFile that reads from the /mirror directory in the classpath.
+//YOURNAME:
+//YOURCOMMENT
 class MirroredJarOrNotFile(root: String, fname: String) extends JarOrNotFile(root, fname) {
   override val classBase = "/mirror/";
+  //YOURNAME:
+  //YOURCOMMENT
   override def clone(fname: String) = new MirroredJarOrNotFile(root, fname);
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class JarVirtualFile(fname: String) extends MirroredJarOrNotFile(config.useVirtualFileRoot, fname);
 
+//YOURNAME:
+//YOURCOMMENT
 class JarOrNotFile(root: String, fname: String) extends Subscriber[Message[Unit], CachedFile] with WeakPublisher[Message[Unit], JarOrNotFile] {
   val classBase = "/net/appjet/ajstdlib/modules/";
   val fileSep = "/";
@@ -159,28 +207,42 @@ class JarOrNotFile(root: String, fname: String) extends Subscriber[Message[Unit]
   val streamBase = if (isJar) getClass().getResource((classBase+fname).replaceAll("/+", "/")) else null;
   val file = if (! isJar) FileCache.file(root+fileSep+fname, this) else null;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def openStream() = {
     if (isJar) streamBase.openStream;
     else file.stream;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def exists = {
     if (isJar) streamBase != null;
     else file.exists;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def isDirectory = if (isJar) false else file.isDirectory;
 
   lazy val streamModified = streamBase.openConnection().getLastModified();
+  //YOURNAME:
+  //YOURCOMMENT
   def lastModified = {
     if (isJar) streamModified;
     else file.lastModified;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def name = fname;
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def toString() = 
     getClass.getName+": "+hashCode()+"; fname: "+fname+"; streambase: "+streamBase+"; file: "+file+(if (isJar) " from: "+classBase+fname else "");
+//YOURNAME:
+//YOURCOMMENT
 //   override def equals(o: AnyRef) =
 //     o match {
 //       case jf: JarOrNotFile => {
@@ -191,30 +253,50 @@ class JarOrNotFile(root: String, fname: String) extends Subscriber[Message[Unit]
 //       }
 //       case _ => false
 //     }
+//YOURNAME:
+//YOURCOMMENT
 //   override def hashCode() =
 //     classBase.hashCode + fileSep.hashCode + root.hashCode + fname.hashCode
 
+  //YOURNAME:
+  //YOURCOMMENT
   def notify(pub: CachedFile, event: Message[Unit]) = synchronized {
     publish(event);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def clone(fname: String) = new JarOrNotFile(root, fname);
 }
 
+//YOURNAME:
+//YOURCOMMENT
 abstract class AutoUpdateFile(val fname: String) extends Subscriber[Message[Unit], JarOrNotFile] {
+  //YOURNAME:
+  //YOURCOMMENT
   def files: Array[JarOrNotFile]; // = config.moduleRoots.map(f => new JarOrNotFile(f, libName));
 
+  //YOURNAME:
+  //YOURCOMMENT
   def exists = files.exists(_.exists);
+  //YOURNAME:
+  //YOURCOMMENT
   def file = files.find(_.exists).getOrElse(null);
+  //YOURNAME:
+  //YOURCOMMENT
   def fileLastModified = if (exists) file.lastModified else 0L;
 
   // var lastModified = fileLastModified;
   // var cachedContents: Option[String] = None;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def fail(): Nothing = {
     throw new FileNotFoundException("No such module: "+fname);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   // def hasBeenModified = {
   //   if (exists) {
   //     val newModTime = try {
@@ -229,6 +311,8 @@ abstract class AutoUpdateFile(val fname: String) extends Subscriber[Message[Unit
   //   }
   // }
 
+  //YOURNAME:
+  //YOURCOMMENT
   // def update() = synchronized {
   //   try {
   //     lastModified = fileLastModified;
@@ -246,6 +330,8 @@ abstract class AutoUpdateFile(val fname: String) extends Subscriber[Message[Unit
   //   }
   // }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def notify(pub: JarOrNotFile, event: Message[Unit]) {
     event match {
       case Reset => cachedContents = None;
@@ -253,27 +339,39 @@ abstract class AutoUpdateFile(val fname: String) extends Subscriber[Message[Unit
   }
   
   var cachedContents: Option[String] = None;
+  //YOURNAME:
+  //YOURCOMMENT
   def update() = synchronized {
     if (cachedContents.isEmpty) {
       cachedContents = Some(BetterFile.getStreamContents(file.openStream()).replace("\r\n", "\n").replace("\r", "\n"));
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def contents = synchronized {
     update();
     cachedContents.get;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def toString() = "[AutoUpdateFile: "+fname+"]";
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class FixedDiskResource(srcfile: JarOrNotFile) extends AutoUpdateFile(srcfile.name) {
   lazy val files0 = Array(srcfile);
   files0.foreach(_.subscribe(this));
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def files = files0;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 abstract class DiskLibrary(fname: String) extends AutoUpdateFile(fname) {
   var cachedExecutable: Option[Executable] = None;
 
@@ -289,15 +387,27 @@ abstract class DiskLibrary(fname: String) extends AutoUpdateFile(fname) {
     newFile.subscribe(this);
     newFile;
   });
+  //YOURNAME:
+  //YOURCOMMENT
   def className(fname: String): String = "JS$"+fname.split("\\.").reverse.drop(1).reverse.mkString(".").replaceAll("[^A-Za-z0-9]", "\\$");
+  //YOURNAME:
+  //YOURCOMMENT
   def className: String = classFile.name.split("\\.").reverse.drop(1).reverse.mkString(".");
   
+  //YOURNAME:
+  //YOURCOMMENT
   override def exists = super.exists || classFiles.exists(_.exists);
+  //YOURNAME:
+  //YOURCOMMENT
   override def file = if (super.exists) super.file else classFile;
+  //YOURNAME:
+  //YOURCOMMENT
   def classFile = classFiles.find(_.exists).getOrElse(null);
 
 //  println("Made DiskLibrary on "+fname+", with classFile: "+classFile);
 
+  //YOURNAME:
+  //YOURCOMMENT
   def updateExecutable() = synchronized {
     if (classFile == null)
       super.update();
@@ -314,11 +424,15 @@ abstract class DiskLibrary(fname: String) extends AutoUpdateFile(fname) {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def executable = synchronized {
     updateExecutable();
     cachedExecutable.get
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def notify(pub: JarOrNotFile, event: Message[Unit]) = synchronized {
     super.notify(pub, event);
     event match {
@@ -326,6 +440,8 @@ abstract class DiskLibrary(fname: String) extends AutoUpdateFile(fname) {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def equals(o: Any) = 
     o match {
       case dl: DiskLibrary => {
@@ -334,22 +450,32 @@ abstract class DiskLibrary(fname: String) extends AutoUpdateFile(fname) {
       }
       case _ => false;
     }
+  //YOURNAME:
+  //YOURCOMMENT
   override def hashCode() =
     getClass.getName.hashCode + fname.hashCode
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class FixedDiskLibrary(srcfile: JarOrNotFile) extends DiskLibrary(srcfile.name) {
   lazy val files0 = Array(srcfile);
   files0.foreach(_.subscribe(this));
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def files = files0;
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class VariableDiskLibrary(libName: String) extends DiskLibrary(libName) {
   lazy val files0 = 
     Array.concat(Array(new MirroredJarOrNotFile(null, libName)),
                  config.moduleRoots.map(f => new JarOrNotFile(f, libName)))
   files0.foreach(_.subscribe(this));
 
+  //YOURNAME:
+  //YOURCOMMENT
   override def files = files0;
 }

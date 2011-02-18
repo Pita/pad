@@ -18,14 +18,22 @@ package net.appjet.common.cli;
 
 import org.apache.commons.lang.WordUtils;
 
+//YOURNAME:
+//YOURCOMMENT
 class CliOption(val name: String, val description: String, val argName: Option[String]);
 
+//YOURNAME:
+//YOURCOMMENT
 class ParseException(message: String) extends RuntimeException(message);
 
+//YOURNAME:
+//YOURCOMMENT
 class CliParser(predef: Array[CliOption]) {
   val displayWidth = 80;
   val options = Map((for (opt <- predef) yield ((opt.name, opt))): _*);
 
+  //YOURNAME:
+  //YOURCOMMENT
   def parseOptions(args0: Array[String]): (Map[String, String], Array[String]) = {
     val (opts, args) = args0.partition(_.startsWith("-"));
     (Map((for (arg <- opts) yield {
@@ -38,11 +46,15 @@ class CliParser(predef: Array[CliOption]) {
      args.toArray);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def dprint(prefix: String, value: String) = {
 //    println(prefix+": "+value+"\n");
     value;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def usage = {
     val sb = new StringBuilder();
     var maxLength = predef.map(opt => 2 + opt.name.length + opt.argName.map(_.length + 1).getOrElse(0) ).reduceRight(Math.max)+2;

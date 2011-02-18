@@ -25,15 +25,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.appjet.bodylock.{BodyLock, JSCompileException};
 
+//YOURNAME:
+//YOURCOMMENT
 object ScopeReuseManager {
   // reset handling.
   // val filesToWatch = new ConcurrentHashMap[CachedFile, Unit];
+  //YOURNAME:
+  //YOURCOMMENT
   // def watch(libs: DiskLibrary*) {
   //   for(lib <- libs) {
   //     filesToWatch.put(lib,());
   //   }
   // }
   val t = new java.util.TimerTask {
+    //YOURNAME:
+    //YOURCOMMENT
     def run() {
       try {
         // val t1 = System.currentTimeMillis;
@@ -69,8 +75,14 @@ object ScopeReuseManager {
   val mainLib = new VariableDiskLibrary("main.js");
   val preambleLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "preamble.js"));
   val postambleLib = new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "postamble.js"));
+  //YOURNAME:
+  //YOURCOMMENT
   def mainExecutable = mainLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def preambleExecutable = preambleLib.executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def postambleExecutable = postambleLib.executable;
 
   val mainGlobalScope = BodyLock.newScope;
@@ -79,6 +91,8 @@ object ScopeReuseManager {
   val freeRunners = new ConcurrentLinkedQueue[Runner]();
   var lastReset = new AtomicLong(0);
   val resetLock = new ReentrantReadWriteLock(true);
+  //YOURNAME:
+  //YOURCOMMENT
   def readLocked[E](block: => E): E = {
     resetLock.readLock().lock();
     try {
@@ -87,6 +101,8 @@ object ScopeReuseManager {
       resetLock.readLock().unlock();
     }
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def writeLocked[E](block: => E): E = {
     resetLock.writeLock().lock();
     try {
@@ -96,6 +112,8 @@ object ScopeReuseManager {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   case class Runner(val globalScope: org.mozilla.javascript.Scriptable) {
     var count = 0;
     val created = timekeeper.time;
@@ -103,6 +121,8 @@ object ScopeReuseManager {
     val mainScope = BodyLock.subScope(globalScope);
     var reuseOk = true;
     var trace: Option[Array[StackTraceElement]] = None;
+    //YOURNAME:
+    //YOURCOMMENT
     override def finalize() {
       trace.foreach(t => eventlog(Map(
         "type" -> "error",
@@ -114,6 +134,8 @@ object ScopeReuseManager {
     val attributes = new scala.collection.mutable.HashMap[String, Object];
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def newRunner = {
     // watch(mainLib, preambleLib, postambleLib);
     val startTime = System.currentTimeMillis();
@@ -134,6 +156,8 @@ object ScopeReuseManager {
     r;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def getRunner = readLocked {
     val runner = freeRunners.poll();
     if (runner == null) {
@@ -146,6 +170,8 @@ object ScopeReuseManager {
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def getEmpty(block: Runner => Unit): Runner = readLocked {
     // watch(preambleLib, postambleLib);
     val scope = BodyLock.newScope;
@@ -159,8 +185,12 @@ object ScopeReuseManager {
     r;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def getEmpty: Runner = getEmpty(r => {});
 
+  //YOURNAME:
+  //YOURCOMMENT
   def freeRunner(r: Runner) {
     r.trace = None;
     if (r.reuseOk && r.created > lastReset.get()) {
@@ -181,6 +211,8 @@ object ScopeReuseManager {
   }
 
   lazy val resetExecutable = (new FixedDiskLibrary(new SpecialJarOrNotFile(config.ajstdlibHome, "onreset.js"))).executable;
+  //YOURNAME:
+  //YOURCOMMENT
   def runOnReset() {
     execution.runOutOfBand(resetExecutable, "Reset", None, { error => 
       error match {
@@ -192,6 +224,8 @@ object ScopeReuseManager {
     });
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def reset() = writeLocked {
     eventlog(Map(
       "type" -> "event",

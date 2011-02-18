@@ -22,9 +22,15 @@ import java.sql.{DriverManager, SQLException, Statement};
 import net.appjet.oui.{profiler, config, NoninheritedDynamicVariable};
 import com.mchange.v2.c3p0._;
 
+//YOURNAME:
+//YOURCOMMENT
 class SQLBase(driverClass: String, url: String, userName: String, password: String) {
 
+  //YOURNAME:
+  //YOURCOMMENT
   def isMysql:Boolean = (url.startsWith("jdbc:mysql:"));
+  //YOURNAME:
+  //YOURCOMMENT
   def isDerby:Boolean = (url.startsWith("jdbc:derby:"));
 
   if (isDerby) {
@@ -69,6 +75,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
 //     }
 //   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   private def getConnectionFromPool = {
     val c = cpds.getConnection();
     c.setAutoCommit(true);
@@ -79,6 +87,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   // .withValue(){} on the call-stack.
   private val currentConnection = new NoninheritedDynamicVariable[Option[java.sql.Connection]](None);
   
+  //YOURNAME:
+  //YOURCOMMENT
   def withConnection[A](block: java.sql.Connection=>A): A = {
     currentConnection.value match {
       case Some(c) => {
@@ -101,6 +111,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
 
   private val currentlyInTransaction = new NoninheritedDynamicVariable(false);
 
+  //YOURNAME:
+  //YOURCOMMENT
   def inTransaction[A](block: java.sql.Connection=>A): A = {
     withConnection(c => {
       if (currentlyInTransaction.value) {
@@ -146,26 +158,42 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     });
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def closing[A](closable: java.sql.Statement)(block: =>A): A = {
     try { block } finally { closable.close(); }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def closing[A](closable: java.sql.ResultSet)(block: =>A): A = {
     try { block } finally { closable.close(); }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def tableName(t: String) = id(t); 
 
   val identifierQuoteString = withConnection(_.getMetaData.getIdentifierQuoteString);
+  //YOURNAME:
+  //YOURCOMMENT
   def quoteIdentifier(s: String) = identifierQuoteString+s+identifierQuoteString;
+  //YOURNAME:
+  //YOURCOMMENT
   private def id(s: String) = quoteIdentifier(s);
   
+  //YOURNAME:
+  //YOURCOMMENT
   def longTextType = if (isDerby) "CLOB" else "MEDIUMTEXT";
 
   // derby seems to do things intelligently w.r.t. case-sensitivity and unicode support.
+  //YOURNAME:
+  //YOURCOMMENT
   def createTableOptions = if (isMysql) " ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin" else "";
 
   // creates table if it doesn't exist already
+  //YOURNAME:
+  //YOURCOMMENT
   def createJSONTable(table: String) {
     withConnection { c=>
       val s = c.createStatement;
@@ -182,6 +210,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   
   // requires: table exists
   // returns null if key doesn't exist
+  //YOURNAME:
+  //YOURCOMMENT
   def getJSON(table: String, key: String): String = {
     withConnection { c=>
       val s = c.prepareStatement("SELECT "+id("JSON")+" FROM "+tableName(table)+" WHERE "+id("ID")+" = ?");
@@ -200,6 +230,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def getAllJSON(table: String, start: Int, count: Int): Array[Object] = {
     withConnection { c =>
       val s = c.prepareStatement("SELECT "+id("ID")+","+id("JSON")+" FROM "+tableName(table)+
@@ -220,6 +252,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def getAllJSONKeys(table: String): Array[String] = {
     withConnection { c =>
       val s = c.prepareStatement("SELECT "+id("ID")+" FROM "+tableName(table));
@@ -238,6 +272,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
 
   // requires: table exists
   // inserts key if it doesn't exist
+  //YOURNAME:
+  //YOURCOMMENT
   def putJSON(table: String, key: String, json: String) {
     withConnection { c=>
       val update = c.prepareStatement("UPDATE "+tableName(table)+" SET "+id("JSON")+"=? WHERE "+id("ID")+"=?");
@@ -258,6 +294,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def deleteJSON(table: String, key: String) {
     // requires: table exists
     withConnection { c=>
@@ -269,9 +307,17 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }    
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   private def metaName(table: String) = table+"_META";
+  //YOURNAME:
+  //YOURCOMMENT
   private def metaTableName(table: String) = tableName(metaName(table));
+  //YOURNAME:
+  //YOURCOMMENT
   private def textTableName(table: String) = tableName(table+"_TEXT");
+  //YOURNAME:
+  //YOURCOMMENT
   private def escapeSearchString(dbm: java.sql.DatabaseMetaData, s: String): String = {
     val e = dbm.getSearchStringEscape();
     s.replace("_", e+"_").replace("%", e+"%");
@@ -279,6 +325,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   
   private final val PAGE_SIZE = 20;
   
+  //YOURNAME:
+  //YOURCOMMENT
   def doesTableExist(connection: java.sql.Connection, table: String): Boolean = {
     val databaseMetadata = connection.getMetaData;
     val tables = databaseMetadata.getTables(null, null,
@@ -288,9 +336,13 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def autoIncrementClause = if (isDerby) "GENERATED BY DEFAULT AS IDENTITY" else "AUTO_INCREMENT";
 
   // creates table if it doesn't exist already
+  //YOURNAME:
+  //YOURCOMMENT
   def createStringArrayTable(table: String) {
     withConnection { c=>
       if (! doesTableExist(c, metaName(table))) { // check to see if the *_META table exists
@@ -314,6 +366,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   
   // requires: table exists
   // returns: null if key or (key,index) doesn't exist, else the value
+  //YOURNAME:
+  //YOURCOMMENT
   def getStringArrayElement(table: String, key: String, index: Int): String = {
     val (pageStart, offset) = getPageStartAndOffset(index);
     val page = new StringArrayPage(table, key, pageStart, true);
@@ -324,6 +378,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   // returns: an array of the mappings present in the page that should hold the
   // particular (key,index) mapping.  the array may be empty or otherwise not
   // contain the given (key,index).
+  //YOURNAME:
+  //YOURCOMMENT
   def getPageStringArrayElements(table: String, key: String, index: Int): Array[IndexValueMapping] = {
     val (pageStart, offset) = getPageStartAndOffset(index);
     val page = new StringArrayPage(table, key, pageStart, true);
@@ -343,6 +399,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   // requires: table exists
   // creates key if doesn't exist
   // value may be null
+  //YOURNAME:
+  //YOURCOMMENT
   def putStringArrayElement(table: String, key: String, index: Int, value: String) {
     val (pageStart, offset) = getPageStartAndOffset(index);
     val page = new StringArrayPage(table, key, pageStart, false);
@@ -350,8 +408,12 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     page.updateDB();
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def putMultipleStringArrayElements(table: String, key: String): Multiputter = new Multiputter {
     var currentPage = None:Option[StringArrayPage];
+    //YOURNAME:
+    //YOURCOMMENT
     def flushPage() {
       if (currentPage.isDefined) {
         val page = currentPage.get;
@@ -359,9 +421,13 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
         currentPage = None;
       }
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def finish() {
       flushPage();
     }
+    //YOURNAME:
+    //YOURCOMMENT
     def put(index: Int, value: String) {
       try {
         val (pageStart, offset) = getPageStartAndOffset(index);
@@ -377,13 +443,23 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   trait Multiputter {
+    //YOURNAME:
+    //YOURCOMMENT
     def put(index: Int, value: String);
+    //YOURNAME:
+    //YOURCOMMENT
     def finish();
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   case class IndexValueMapping(index: Int, value: String);
 
+  //YOURNAME:
+  //YOURCOMMENT
   def clearStringArray(table: String, key: String) {
     withConnection { c=>
       val numid = getStringArrayNumId(c, table, key, false);
@@ -406,6 +482,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   private def getPageStartAndOffset(index: Int): (Int,Int) = {
     val pageStart = (index / PAGE_SIZE) * PAGE_SIZE;
     (pageStart, index - pageStart);
@@ -413,6 +491,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
   
   // requires: table exists
   // returns: numid of new string array
+  //YOURNAME:
+  //YOURCOMMENT
   private def newStringArray(c: java.sql.Connection, table: String, key: String): Int = {
     val s = c.prepareStatement("INSERT INTO "+metaTableName(table)+" ("+id("ID")+") VALUES (?)",
                                Statement.RETURN_GENERATED_KEYS);
@@ -429,6 +509,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
     
+  //YOURNAME:
+  //YOURCOMMENT
   def getStringArrayNumId(c: java.sql.Connection, table: String, key: String, creating: Boolean): Int = {
     val s = c.prepareStatement("SELECT "+id("NUMID")+" FROM "+metaTableName(table)+" WHERE "+id("ID")+"=?");
     closing(s) {
@@ -450,6 +532,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def getStringArrayAllKeys(table: String): Array[String] = {
     withConnection { c=>
       val s = c.prepareStatement("SELECT "+id("ID")+" FROM "+metaTableName(table));
@@ -466,6 +550,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   private class StringArrayPage(table: String, key: String, val pageStart: Int, readonly: Boolean) {
 
     val data = new Array[String](PAGE_SIZE);
@@ -514,6 +600,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
       nid;
     }
 
+    //YOURNAME:
+    //YOURCOMMENT
     def updateDB() {
       if (readonly) {
         error("this is a readonly StringArrayPage");
@@ -548,6 +636,8 @@ class SQLBase(driverClass: String, url: String, userName: String, password: Stri
     }
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def close {
     if (isDerby) {
       cpds.close();

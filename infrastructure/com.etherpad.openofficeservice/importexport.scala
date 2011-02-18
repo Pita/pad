@@ -31,29 +31,47 @@ import com.sun.star.frame.{XComponentLoader,XStorable};
 import com.sun.star.lang.{XComponent,XMultiComponentFactory};
 import com.sun.star.uno.{UnoRuntime,XComponentContext};
 
+//YOURNAME:
+//YOURCOMMENT
 class OOSException(m: String) extends RuntimeException(m);
+//YOURNAME:
+//YOURCOMMENT
 class UnsupportedFormatException(format: String) extends OOSException("Unsupported format: "+format);
+//YOURNAME:
+//YOURCOMMENT
 object TemporaryFailure extends OOSException("Temporary failure");
 
+//YOURNAME:
+//YOURCOMMENT
 object OpenOfficeServerUtility {
+  //YOURNAME:
+  //YOURCOMMENT
   def checkServerAvailability(host: String, port: Int): Boolean = {
     // Assume the server is running; this is the responsibility of the user
     return true;
   }
+  //YOURNAME:
+  //YOURCOMMENT
   def runOpenOfficeServer(path: String, host: String, port: Int, timeout: Int, wait: Boolean) {
     // nothing
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 class OpenOfficeFileConverter {
   var host: String = "localhost";
   var port: Int = 8100;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def setOpenOfficeServerDetails(host: String, port: Int) {
     this.host = host;
     this.port = port;
   }
   
+  //YOURNAME:
+  //YOURCOMMENT
   def convertFile(src: File, dst: File, converter: String, extension: String): Boolean = {
     try {
       val fromFile: String = "file:///" + src.getAbsolutePath();
@@ -125,6 +143,8 @@ class OpenOfficeFileConverter {
   }
 }
 
+//YOURNAME:
+//YOURCOMMENT
 object OpenOfficeService {
   val formats = Map(
     "pdf" -> "writer_pdf_Export",
@@ -135,6 +155,8 @@ object OpenOfficeService {
     "txt" -> "Text"
   );
 
+  //YOURNAME:
+  //YOURCOMMENT
   def createTempFile(bytes: Array[byte], suffix: String) = {
     var f = File.createTempFile("ooconvert-", if (suffix == null) { null } else if (suffix == "") { "" } else { "."+suffix });
   	if (bytes != null) {
@@ -145,6 +167,8 @@ object OpenOfficeService {
   }
 
   var soffice = "soffice";
+  //YOURNAME:
+  //YOURCOMMENT
   def setExecutable(exec: String) {
     soffice = exec;
   }
@@ -152,11 +176,15 @@ object OpenOfficeService {
   var openOfficeServerHost: String = "localhost";
   var openOfficeServerPort: Int = 8100;
 
+  //YOURNAME:
+  //YOURCOMMENT
   def setOpenOfficeServer(host: String, port: Int) {
     openOfficeServerHost = host;
     openOfficeServerPort = port;
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def convertFile(from: String, to: String, bytes: Array[byte]): Array[byte] = {
     if (from == to) {
       return bytes;
@@ -204,6 +232,8 @@ object OpenOfficeService {
   	net.appjet.common.util.BetterFile.getFileBytes(outFile);
   }
 
+  //YOURNAME:
+  //YOURCOMMENT
   def main(args: Array[String]) {
     if (args.length > 0) {
       soffice = args(0);
@@ -222,6 +252,8 @@ object OpenOfficeService {
     //               type - 0: unknown failure.
     //                    - 1: unsupported format
     val handler = new SarsMessageHandler {
+      //YOURNAME:
+      //YOURCOMMENT
       override def handle(b: Array[byte]): Option[Array[byte]] = {
         val is = new DataInputStream(new ByteArrayInputStream(b));
         val from = is.readUTF;
